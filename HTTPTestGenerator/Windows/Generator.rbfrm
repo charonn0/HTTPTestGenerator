@@ -352,12 +352,12 @@ Begin Window Generator
       ConnectionType  =   2
       Height          =   32
       Index           =   -2147483648
-      Left            =   501
+      Left            =   589
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
       TabPanelIndex   =   0
-      Top             =   -15
+      Top             =   -29
       Width           =   32
    End
    Begin TextArea OutputLog
@@ -890,38 +890,6 @@ Begin Window Generator
       Top             =   597
       Width           =   32
    End
-   Begin CheckBox gziprequest
-      AutoDeactivate  =   True
-      Bold            =   False
-      Caption         =   "Request GZip"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   480
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      State           =   1
-      TabIndex        =   9
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   -53
-      Underline       =   False
-      Value           =   True
-      Visible         =   True
-      Width           =   126
-   End
 End
 #tag EndWindow
 
@@ -1117,7 +1085,7 @@ End
 		    IPAddress1.TextColor = &cFF000000
 		    IPAddress.TextColor = &cFF000000
 		    ResponseHeaders.DeleteAllRows
-		    MessageView1.Message.Text = ""
+		    MessageView1.SetData("", "")
 		    MessageView1.PagePanel1.Value = 3
 		    Code.Text = ""
 		    
@@ -1269,13 +1237,6 @@ End
 	#tag Event
 		Sub Action()
 		  Update(Output)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events gziprequest
-	#tag Event
-		Sub Open()
-		  'Me.Enabled = GZIPAvailable
 		End Sub
 	#tag EndEvent
 #tag EndEvents
