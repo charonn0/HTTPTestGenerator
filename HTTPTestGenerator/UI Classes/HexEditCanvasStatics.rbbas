@@ -29,8 +29,8 @@ Protected Module HexEditCanvasStatics
 		  end if
 		  
 		  newData = Uppercase(newData)
-		  sourceData = NewMemoryBlock(lenb(newData))
-		  targetData = NewMemoryBlock(lenb(newData)/2)
+		  sourceData = New MemoryBlock(lenb(newData))
+		  targetData = New MemoryBlock(lenb(newData)/2)
 		  sourceData.StringValue(0, lenb(newData)) = newData
 		  for count = 0 to sourceData.Size -1 Step 2
 		    n1 = sourceData.Byte(count)
@@ -55,7 +55,6 @@ Protected Module HexEditCanvasStatics
 	#tag Method, Flags = &h0
 		Sub ReasonableFonts(aFonts() as string)
 		  dim i as Integer
-		  dim fname as String
 		  dim p as Picture
 		  dim g as Graphics
 		  

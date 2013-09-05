@@ -1164,13 +1164,6 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub DropObject(obj As DragItem, action As Integer)
-		  'if obj.FolderItemAvailable then
-		  'OpenFile obj.FolderItem
-		  'end if
-		End Sub
-	#tag EndEvent
-	#tag Event
 		Function GetFontSize() As integer
 		  'Return 12
 		End Function
