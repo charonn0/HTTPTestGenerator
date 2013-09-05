@@ -21,7 +21,7 @@ Protected Module HexEditCanvasStatics
 		  newData = re.Replace(aStr)
 		  if (lenb(newData) mod 2) <> 0 then
 		    Return ""
-		  end if 
+		  end if
 		  re.SearchPattern = "[^0-9a-fA-F]"
 		  rm = re.Search(newData)
 		  if rm <> nil then

@@ -50,34 +50,6 @@ Begin Window Generator
       Underline       =   False
       Visible         =   True
       Width           =   579
-      Begin MessageView MessageView1
-         AcceptFocus     =   False
-         AcceptTabs      =   True
-         AutoDeactivate  =   True
-         BackColor       =   "&cFFFFFF00"
-         Backdrop        =   0
-         Enabled         =   True
-         EraseBackground =   True
-         HasBackColor    =   False
-         Height          =   393
-         HelpTag         =   ""
-         InitialParent   =   "GroupBox3"
-         Left            =   622
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         PreviewPic      =   0
-         Scope           =   0
-         TabIndex        =   2
-         TabPanelIndex   =   0
-         TabStop         =   True
-         Top             =   195
-         UseFocusRing    =   False
-         Visible         =   True
-         Width           =   569
-      End
       Begin BevelButton CookiesButton
          AcceptFocus     =   False
          AutoDeactivate  =   True
@@ -138,7 +110,7 @@ Begin Window Generator
          HasMenu         =   0
          Height          =   22
          HelpTag         =   "Expanded Header View"
-         Icon            =   849696767
+         Icon            =   1571842047
          IconAlign       =   1
          IconDX          =   0
          IconDY          =   0
@@ -316,6 +288,61 @@ Begin Window Generator
          Underline       =   False
          Visible         =   True
          Width           =   144
+      End
+      Begin ScrollBar HexBar
+         AcceptFocus     =   true
+         AutoDeactivate  =   True
+         Enabled         =   True
+         Height          =   401
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox3"
+         Left            =   1175
+         LineStep        =   1
+         LiveScroll      =   True
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   False
+         LockRight       =   True
+         LockTop         =   True
+         Maximum         =   100
+         Minimum         =   0
+         PageStep        =   20
+         Scope           =   0
+         TabIndex        =   10
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Top             =   189
+         Value           =   0
+         Visible         =   True
+         Width           =   16
+      End
+      Begin HexEditCanvas Message
+         AcceptFocus     =   True
+         AcceptTabs      =   True
+         AutoDeactivate  =   True
+         Backdrop        =   0
+         DoubleBuffer    =   True
+         Enabled         =   True
+         EraseBackground =   False
+         Height          =   401
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "GroupBox3"
+         Left            =   625
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   11
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Top             =   189
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   547
       End
    End
    Begin GroupBox GroupBox2
@@ -968,10 +995,28 @@ End
 		  'Me.Response.MessageBody = GZip.Uncompress(Me.Response.MessageBody, Me.Response.MessageBody.LenB^2)
 		  'End If
 		  '#endif
-		  MessageView1.Response = Me.Response
+		  mSData = Me.Response.MessageBody
+		  Message.Invalidate(False)
+		  
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h21
+		Private LastValue As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mQuietScroll As boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mResponse As HTTP.Response
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mSData As string
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mTheURL As HTTP.URI
@@ -987,6 +1032,10 @@ End
 
 	#tag Property, Flags = &h0
 		Request As HTTP.Request
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		RequestURL As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -1041,6 +1090,92 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag Events HexBar
+	#tag Event
+		Sub ValueChanged()
+		  If (me.Value + 32767) > 0 Then
+		    Message.SetTopLine(me.Value + 32767)
+		  Else
+		    Message.SetTopLine(me.Value - 32767)
+		  End If
+		  
+		  Message.Refresh(False)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Message
+	#tag Event
+		Function GetFont() As string
+		  Return "Courier"
+		  'Return "Comic Sans"
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub DeleteData(aLen as integer, aPosition as integer)
+		  mSData = leftb(mSData, aPosition) + midb(mSData,aPosition+aLen+1)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub ModifyData(aNewData as string, aPosition as integer, aOldLength as integer)
+		  mSData = leftb(mSData, aPosition) + aNewData + midb(mSData,aPosition+aOldLength+1)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SetScrollPosition(aPos as integer)
+		  mQuietScroll = true
+		  HexBar.Value = aPos - 32767
+		  mQuietScroll = False
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  'me.AcceptFileDrop "special/any"
+		  me.SetDrawStripes(True)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SetScrollPageIncrement(aIncrement as integer)
+		  mQuietScroll = true
+		  HexBar.PageStep = aIncrement
+		  mQuietScroll = False
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SetScrollMaximum(aMax as integer)
+		  mQuietScroll = true
+		  HexBar.Maximum = aMax - 32767
+		  HexBar.Minimum = -32767
+		  mQuietScroll = False
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function GetTotalDataLength() As integer
+		  Return lenb(mSData)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function GetData(aLen as integer, aPosition as integer) As string
+		  Return midb(mSData, aPosition+1, aLen)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub InsertData(aData as string, aLoc as integer)
+		  mSData = leftb(mSData, aLoc) + aData + midb(mSData,aLoc+1)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub DropObject(obj As DragItem, action As Integer)
+		  'if obj.FolderItemAvailable then
+		  'OpenFile obj.FolderItem
+		  'end if
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function GetFontSize() As integer
+		  'Return 12
+		End Function
+	#tag EndEvent
+#tag EndEvents
 #tag Events Sock
 	#tag Event
 		Sub Connected()
@@ -1085,8 +1220,6 @@ End
 		    IPAddress1.TextColor = &cFF000000
 		    IPAddress.TextColor = &cFF000000
 		    ResponseHeaders.DeleteAllRows
-		    MessageView1.SetData("", "")
-		    MessageView1.PagePanel1.Value = 3
 		    Code.Text = ""
 		    
 		  Else
@@ -1204,6 +1337,12 @@ End
 		    End If
 		  End If
 		  Me.Invalidate
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  Me.Icon = cookie_icon_grey
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

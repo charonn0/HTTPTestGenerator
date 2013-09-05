@@ -69,7 +69,7 @@ Inherits Canvas
 		  dim newX, newY as Integer
 		  
 		  if y < 0 or y > me.Height then
-		    if y < 0 then 
+		    if y < 0 then
 		      lineOffset = -1
 		    else
 		      lineOffset = 1
@@ -236,7 +236,7 @@ Inherits Canvas
 		  
 		  SetScrollMaximum max(0, (ceil(GetTotalDataLength()/mBytesPerLine))-lines)
 		  SetScrollPageIncrement lines-1
-		  SetScrollPosition GetTopLine 
+		  SetScrollPosition GetTopLine
 		  
 		  mOffsetsAsDisplayed = ""
 		  mTextAsDisplayed = ""
@@ -549,7 +549,7 @@ Inherits Canvas
 
 	#tag Method, Flags = &h0
 		Function HasSelection() As boolean
-		  Return mSelLength > 0 
+		  Return mSelLength > 0
 		End Function
 	#tag EndMethod
 
@@ -971,7 +971,7 @@ Inherits Canvas
 		  fsize = GetFontSize()
 		  if fsize = 0 then
 		    fsize = kFontSize
-		  end if 
+		  end if
 		  aG.TextSize = fsize
 		  
 		  if mLastFontName <> fname or oldSize <> fsize then
@@ -1007,7 +1007,7 @@ Inherits Canvas
 		    mSelStart = aStart
 		    mSelLength = aLen
 		  end if
-		  if mSelStart < 0 then 
+		  if mSelStart < 0 then
 		    mSelStart = 0
 		  elseif mSelStart > GetTotalDataLength() then
 		    mSelStart = GetTotalDataLength()
