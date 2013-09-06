@@ -4,12 +4,16 @@ Inherits ListBox
 	#tag Event
 		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
 		  If row = Me.ListCount And column = Me.ColumnCount -1 Then
-		    g.ForeColor = &c0000FF00
-		    g.DrawString("Add", 0, g.Height)
+		    'g.ForeColor = &c0000FF00
+		    'g.TextSize = 15
+		    'g.DrawString("+", 0, g.Height)
+		    g.DrawPicture(plus, 0, 0)', g.Width, g.Height, 0, 0, plus.Width, plus.Height)
 		    Return True
 		  ElseIf row < Me.ListCount And column = Me.ColumnCount - 1 Then
-		    g.ForeColor = &c80808000
-		    g.DrawString("Remove", 0, g.Height)
+		    'g.ForeColor = &c80808000
+		    'g.TextSize = 15
+		    'g.DrawString("-", 0, g.Height)
+		    g.DrawPicture(minus, 0, 0)', g.Width, g.Height, 0, 0, minus.Width, minus.Height)
 		    Return True
 		  End If
 		  
@@ -22,7 +26,7 @@ Inherits ListBox
 		  a = Me.RowFromXY(X, Y)
 		  b = Me.ColumnFromXY(X, Y)
 		  
-		  If Y > Me.HeaderHeight And Me.RowFromXY(X, Y) = -1 And x >= 0.9 * Me.Width Then
+		  If Y > Me.HeaderHeight And Me.RowFromXY(X, Y) = -1 And x >= 0.95 * Me.Width Then
 		    RaiseEvent AddNew()
 		  ElseIf a < Me.ListCount And b = Me.ColumnCount - 1 Then
 		    RaiseEvent Remove(a)

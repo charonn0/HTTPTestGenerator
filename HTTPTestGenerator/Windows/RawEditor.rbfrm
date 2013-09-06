@@ -136,8 +136,8 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Function EditRaw(Message As HTTP.Request) As String
-		  NewRaw = Message.ToString
+		Function EditRaw(Message As String) As String
+		  NewRaw = Message
 		  TextArea1.Text = NewRaw
 		  Me.ShowModal
 		  Return NewRaw

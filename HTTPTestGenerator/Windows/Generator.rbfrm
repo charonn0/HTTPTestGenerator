@@ -7,7 +7,7 @@ Begin Window Generator
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   605
+   Height          =   3.35e+2
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -20,358 +20,10 @@ Begin Window Generator
    MinimizeButton  =   True
    MinWidth        =   64
    Placement       =   2
-   Resizeable      =   False
+   Resizeable      =   True
    Title           =   "HTTP Request Generator"
    Visible         =   True
-   Width           =   1210
-   Begin GroupBox GroupBox3
-      AutoDeactivate  =   True
-      Bold            =   False
-      Caption         =   "Response"
-      Enabled         =   True
-      Height          =   587
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   618
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   9
-      Underline       =   False
-      Visible         =   True
-      Width           =   579
-      Begin BevelButton CookiesButton
-         AcceptFocus     =   False
-         AutoDeactivate  =   True
-         BackColor       =   "&c00000000"
-         Bevel           =   4
-         Bold            =   False
-         ButtonType      =   0
-         Caption         =   ""
-         CaptionAlign    =   3
-         CaptionDelta    =   0
-         CaptionPlacement=   1
-         Enabled         =   True
-         HasBackColor    =   False
-         HasMenu         =   0
-         Height          =   22
-         HelpTag         =   ""
-         Icon            =   1965037567
-         IconAlign       =   1
-         IconDX          =   0
-         IconDY          =   0
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox3"
-         Italic          =   False
-         Left            =   631
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         MenuValue       =   0
-         Scope           =   0
-         TabIndex        =   1
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextColor       =   "&c00000000"
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   161
-         Underline       =   False
-         Value           =   False
-         Visible         =   False
-         Width           =   22
-      End
-      Begin BevelButton ResponseHeaderView
-         AcceptFocus     =   False
-         AutoDeactivate  =   True
-         BackColor       =   "&c00000000"
-         Bevel           =   4
-         Bold            =   False
-         ButtonType      =   0
-         Caption         =   ""
-         CaptionAlign    =   3
-         CaptionDelta    =   0
-         CaptionPlacement=   1
-         Enabled         =   False
-         HasBackColor    =   False
-         HasMenu         =   0
-         Height          =   22
-         HelpTag         =   "Expanded Header View"
-         Icon            =   1571842047
-         IconAlign       =   1
-         IconDX          =   0
-         IconDY          =   0
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox3"
-         Italic          =   False
-         Left            =   1169
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         MenuValue       =   0
-         Scope           =   0
-         TabIndex        =   3
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextColor       =   "&c00000000"
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   161
-         Underline       =   False
-         Value           =   False
-         Visible         =   True
-         Width           =   22
-      End
-      Begin Label Label3
-         AutoDeactivate  =   True
-         Bold            =   False
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Height          =   20
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox3"
-         Italic          =   False
-         Left            =   867
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Multiline       =   False
-         Scope           =   0
-         Selectable      =   False
-         TabIndex        =   5
-         TabPanelIndex   =   0
-         Text            =   "Status Message:"
-         TextAlign       =   2
-         TextColor       =   "&c00000000"
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   29
-         Transparent     =   False
-         Underline       =   False
-         Visible         =   True
-         Width           =   0
-      End
-      Begin Listbox ResponseHeaders
-         AutoDeactivate  =   True
-         AutoHideScrollbars=   True
-         Bold            =   False
-         Border          =   True
-         ColumnCount     =   2
-         ColumnsResizable=   True
-         ColumnWidths    =   ""
-         DataField       =   ""
-         DataSource      =   ""
-         DefaultRowHeight=   -1
-         Enabled         =   True
-         EnableDrag      =   False
-         EnableDragReorder=   False
-         GridLinesHorizontal=   0
-         GridLinesVertical=   0
-         HasHeading      =   True
-         HeadingIndex    =   -1
-         Height          =   100
-         HelpTag         =   ""
-         Hierarchical    =   False
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox3"
-         InitialValue    =   "Header Name	Header Value"
-         Italic          =   False
-         Left            =   631
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         RequiresSelection=   False
-         Scope           =   0
-         ScrollbarHorizontal=   False
-         ScrollBarVertical=   True
-         SelectionType   =   0
-         TabIndex        =   6
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   61
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   560
-         _ScrollWidth    =   -1
-      End
-      Begin Label IPAddress
-         AutoDeactivate  =   True
-         Bold            =   True
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Height          =   20
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox3"
-         Italic          =   False
-         Left            =   665
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Multiline       =   False
-         Scope           =   0
-         Selectable      =   False
-         TabIndex        =   8
-         TabPanelIndex   =   0
-         Text            =   ""
-         TextAlign       =   0
-         TextColor       =   "&c0000FF00"
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   161
-         Transparent     =   False
-         Underline       =   False
-         Visible         =   True
-         Width           =   112
-      End
-      Begin Label IPAddress1
-         AutoDeactivate  =   True
-         Bold            =   True
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Height          =   20
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox3"
-         Italic          =   False
-         Left            =   1020
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Multiline       =   False
-         Scope           =   0
-         Selectable      =   False
-         TabIndex        =   9
-         TabPanelIndex   =   0
-         Text            =   ""
-         TextAlign       =   2
-         TextColor       =   "&c0000FF00"
-         TextFont        =   "System"
-         TextSize        =   8.0
-         TextUnit        =   0
-         Top             =   161
-         Transparent     =   True
-         Underline       =   False
-         Visible         =   True
-         Width           =   144
-      End
-      Begin ScrollBar HexBar
-         AcceptFocus     =   true
-         AutoDeactivate  =   True
-         Enabled         =   True
-         Height          =   401
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox3"
-         Left            =   1175
-         LineStep        =   1
-         LiveScroll      =   True
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   False
-         LockRight       =   True
-         LockTop         =   True
-         Maximum         =   100
-         Minimum         =   0
-         PageStep        =   20
-         Scope           =   0
-         TabIndex        =   10
-         TabPanelIndex   =   0
-         TabStop         =   True
-         Top             =   189
-         Value           =   0
-         Visible         =   True
-         Width           =   16
-      End
-      Begin HexEditCanvas Message
-         AcceptFocus     =   True
-         AcceptTabs      =   True
-         AutoDeactivate  =   True
-         Backdrop        =   0
-         DoubleBuffer    =   True
-         Enabled         =   True
-         EraseBackground =   False
-         Height          =   401
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox3"
-         Left            =   625
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Scope           =   0
-         TabIndex        =   11
-         TabPanelIndex   =   0
-         TabStop         =   True
-         Top             =   189
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   547
-      End
-   End
-   Begin GroupBox GroupBox2
-      AutoDeactivate  =   True
-      Bold            =   False
-      Caption         =   "Log"
-      Enabled         =   True
-      Height          =   285
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   13
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   311
-      Underline       =   False
-      Visible         =   True
-      Width           =   580
-   End
+   Width           =   7.11e+2
    Begin SSLSocket Sock
       CertificateFile =   ""
       CertificatePassword=   ""
@@ -379,12 +31,12 @@ Begin Window Generator
       ConnectionType  =   2
       Height          =   32
       Index           =   -2147483648
-      Left            =   589
+      Left            =   551
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
       TabPanelIndex   =   0
-      Top             =   -29
+      Top             =   502
       Width           =   32
    End
    Begin TextArea OutputLog
@@ -392,19 +44,19 @@ Begin Window Generator
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   "&c80808000"
+      BackColor       =   &h00EFEFEF
       Bold            =   False
       Border          =   True
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
       Format          =   ""
-      Height          =   254
+      Height          =   328
       HelpTag         =   ""
       HideSelection   =   True
       Index           =   -2147483648
       Italic          =   False
-      Left            =   20
+      Left            =   348
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -422,17 +74,79 @@ Begin Window Generator
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   "&cFFFFFF00"
+      TextColor       =   &h00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   331
+      Top             =   -1
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   560
+      Width           =   363
    End
-   Begin Label Label2
+   Begin Timer DataReceivedTimer
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   505
+      LockedInPosition=   False
+      Mode            =   0
+      Period          =   200
+      Scope           =   0
+      TabPanelIndex   =   0
+      Top             =   502
+      Width           =   32
+   End
+   Begin HeaderList RequestHeaders
+      AutoDeactivate  =   True
+      AutoHideScrollbars=   True
+      Bold            =   False
+      Border          =   True
+      ColumnCount     =   3
+      ColumnsResizable=   True
+      ColumnWidths    =   "47%, 48%, *"
+      DataField       =   ""
+      DataSource      =   ""
+      DefaultRowHeight=   -1
+      Enabled         =   True
+      EnableDrag      =   False
+      EnableDragReorder=   False
+      GridLinesHorizontal=   0
+      GridLinesVertical=   0
+      HasHeading      =   True
+      HeadingIndex    =   -1
+      Height          =   100
+      HelpTag         =   ""
+      Hierarchical    =   False
+      Index           =   -2147483648
+      InitialParent   =   ""
+      InitialValue    =   "Header Name	Header Value	  \r\nConnection	close	\r\nAccept	*/*	"
+      Italic          =   False
+      Left            =   5
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      RequiresSelection=   False
+      Scope           =   0
+      ScrollbarHorizontal=   False
+      ScrollBarVertical=   True
+      SelectionType   =   1
+      TabIndex        =   3
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   30
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   337
+      _ScrollWidth    =   -1
+   End
+   Begin ComboBox RequestMethod
+      AutoComplete    =   True
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
@@ -442,8 +156,286 @@ Begin Window Generator
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
+      InitialValue    =   "GET\r\nHEAD\r\nPOST\r\nTRACE\r\nDELETE\r\nPUT\r\nOPTIONS"
       Italic          =   False
-      Left            =   631
+      Left            =   5
+      ListIndex       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   4
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   4
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   65
+   End
+   Begin HintTextField URL
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   False
+      BackColor       =   "&cFFFFFF00"
+      Bold            =   False
+      Border          =   True
+      CueText         =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      HasText         =   False
+      Height          =   22
+      HelpTag         =   ""
+      HintText        =   "Request URL"
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   72
+      LimitText       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Mask            =   ""
+      Password        =   False
+      ReadOnly        =   False
+      Scope           =   0
+      TabIndex        =   5
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   5
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   188
+   End
+   Begin ComboBox ProtocolVer
+      AutoComplete    =   False
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      InitialValue    =   "HTTP/1.1\r\nHTTP/1.0"
+      Italic          =   False
+      Left            =   262
+      ListIndex       =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   4
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   79
+   End
+   Begin PushButton Sender
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   False
+      Caption         =   "Send"
+      Default         =   False
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   133
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   136
+      Underline       =   False
+      Visible         =   True
+      Width           =   80
+   End
+   Begin BevelButton CookiesButton
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      BackColor       =   "&c00000000"
+      Bevel           =   4
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   ""
+      Icon            =   29616127
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   299
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   306
+      Underline       =   False
+      Value           =   False
+      Visible         =   False
+      Width           =   22
+   End
+   Begin BevelButton ResponseHeaderView
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      BackColor       =   "&c00000000"
+      Bevel           =   4
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   False
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   "Expanded Header View"
+      Icon            =   1571842047
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   320
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   305
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
+   End
+   Begin Listbox ResponseHeaders
+      AutoDeactivate  =   True
+      AutoHideScrollbars=   True
+      Bold            =   False
+      Border          =   True
+      ColumnCount     =   2
+      ColumnsResizable=   True
+      ColumnWidths    =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      DefaultRowHeight=   -1
+      Enabled         =   True
+      EnableDrag      =   False
+      EnableDragReorder=   False
+      GridLinesHorizontal=   0
+      GridLinesVertical=   0
+      HasHeading      =   True
+      HeadingIndex    =   -1
+      Height          =   100
+      HelpTag         =   ""
+      Hierarchical    =   False
+      Index           =   -2147483648
+      InitialParent   =   ""
+      InitialValue    =   "Header Name	Header Value"
+      Italic          =   False
+      Left            =   5
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      RequiresSelection=   False
+      Scope           =   0
+      ScrollbarHorizontal=   False
+      ScrollBarVertical=   True
+      SelectionType   =   0
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   205
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   337
+      _ScrollWidth    =   -1
+   End
+   Begin Label IPAddress
+      AutoDeactivate  =   True
+      Bold            =   True
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   12
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -452,19 +444,19 @@ Begin Window Generator
       Multiline       =   False
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   3
+      TabIndex        =   15
       TabPanelIndex   =   0
-      Text            =   "Status:"
-      TextAlign       =   2
-      TextColor       =   "&c00000000"
+      Text            =   "000.000.000.000"
+      TextAlign       =   0
+      TextColor       =   "&c0000FF00"
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   29
+      Top             =   305
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   55
+      Width           =   99
    End
    Begin Label Code
       AutoDeactivate  =   True
@@ -477,7 +469,7 @@ Begin Window Generator
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   700
+      Left            =   64
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -486,443 +478,213 @@ Begin Window Generator
       Multiline       =   False
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   1
+      TabIndex        =   16
       TabPanelIndex   =   0
-      Text            =   ""
+      Text            =   "000 No Error Code"
       TextAlign       =   0
       TextColor       =   "&cFF000000"
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   29
+      Top             =   175
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   360
+      Width           =   278
    End
-   Begin GroupBox GroupBox1
+   Begin Label Label2
       AutoDeactivate  =   True
       Bold            =   False
-      Caption         =   "Request"
+      DataField       =   ""
+      DataSource      =   ""
       Enabled         =   True
-      Height          =   297
+      Height          =   20
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   13
+      Left            =   6
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
+      Multiline       =   False
       Scope           =   0
-      TabIndex        =   0
+      Selectable      =   False
+      TabIndex        =   17
       TabPanelIndex   =   0
+      Text            =   "Status:"
+      TextAlign       =   2
+      TextColor       =   "&c00000000"
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   9
+      Top             =   175
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   580
-      Begin ComboBox ProtocolVer
-         AutoComplete    =   False
-         AutoDeactivate  =   True
-         Bold            =   False
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Height          =   20
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         InitialValue    =   "HTTP/1.1\r\nHTTP/1.0"
-         Italic          =   False
-         Left            =   480
-         ListIndex       =   0
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Scope           =   0
-         TabIndex        =   2
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   27
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   100
-      End
-      Begin HintTextField URL
-         AcceptTabs      =   False
-         Alignment       =   0
-         AutoDeactivate  =   True
-         AutomaticallyCheckSpelling=   False
-         BackColor       =   "&cFFFFFF00"
-         Bold            =   False
-         Border          =   True
-         CueText         =   ""
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Format          =   ""
-         HasText         =   False
-         Height          =   22
-         HelpTag         =   ""
-         HintText        =   "Request URL"
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         Italic          =   False
-         Left            =   125
-         LimitText       =   0
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Mask            =   ""
-         Password        =   False
-         ReadOnly        =   False
-         Scope           =   0
-         TabIndex        =   1
-         TabPanelIndex   =   0
-         TabStop         =   True
-         Text            =   ""
-         TextColor       =   "&c00000000"
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   27
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   350
-      End
-      Begin HeaderList RequestHeaders
-         AutoDeactivate  =   True
-         AutoHideScrollbars=   True
-         Bold            =   False
-         Border          =   True
-         ColumnCount     =   3
-         ColumnsResizable=   True
-         ColumnWidths    =   "45%, 45%, *"
-         DataField       =   ""
-         DataSource      =   ""
-         DefaultRowHeight=   -1
-         Enabled         =   True
-         EnableDrag      =   False
-         EnableDragReorder=   False
-         GridLinesHorizontal=   0
-         GridLinesVertical=   0
-         HasHeading      =   True
-         HeadingIndex    =   -1
-         Height          =   100
-         HelpTag         =   ""
-         Hierarchical    =   False
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         InitialValue    =   "Header Name	Header Value	  "
-         Italic          =   False
-         Left            =   20
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         RequiresSelection=   False
-         Scope           =   0
-         ScrollbarHorizontal=   False
-         ScrollBarVertical=   True
-         SelectionType   =   1
-         TabIndex        =   3
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   61
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   560
-         _ScrollWidth    =   -1
-      End
-      Begin TextArea MessageBody
-         AcceptTabs      =   False
-         Alignment       =   0
-         AutoDeactivate  =   True
-         AutomaticallyCheckSpelling=   True
-         BackColor       =   "&cFFFFFF00"
-         Bold            =   False
-         Border          =   True
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Format          =   ""
-         Height          =   58
-         HelpTag         =   ""
-         HideSelection   =   True
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         Italic          =   False
-         Left            =   20
-         LimitText       =   0
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Mask            =   ""
-         Multiline       =   True
-         ReadOnly        =   False
-         Scope           =   0
-         ScrollbarHorizontal=   False
-         ScrollbarVertical=   True
-         Styled          =   True
-         TabIndex        =   6
-         TabPanelIndex   =   0
-         TabStop         =   True
-         Text            =   ""
-         TextColor       =   "&c00000000"
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   210
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   560
-      End
-      Begin PushButton Sender
-         AutoDeactivate  =   True
-         Bold            =   False
-         ButtonStyle     =   0
-         Cancel          =   False
-         Caption         =   "Send"
-         Default         =   False
-         Enabled         =   True
-         Height          =   22
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         Italic          =   False
-         Left            =   260
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Scope           =   0
-         TabIndex        =   7
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   277
-         Underline       =   False
-         Visible         =   True
-         Width           =   80
-      End
-      Begin Label Label1
-         AutoDeactivate  =   True
-         Bold            =   False
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Height          =   20
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         Italic          =   False
-         Left            =   34
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Multiline       =   False
-         Scope           =   0
-         Selectable      =   False
-         TabIndex        =   7
-         TabPanelIndex   =   0
-         Text            =   "Message Body:"
-         TextAlign       =   0
-         TextColor       =   "&c00000000"
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   189
-         Transparent     =   False
-         Underline       =   False
-         Visible         =   True
-         Width           =   263
-      End
-      Begin ComboBox RequestMethod
-         AutoComplete    =   True
-         AutoDeactivate  =   True
-         Bold            =   False
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Height          =   20
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         InitialValue    =   "GET\r\nHEAD\r\nPOST\r\nTRACE\r\nDELETE\r\nPUT\r\nOPTIONS"
-         Italic          =   False
-         Left            =   20
-         ListIndex       =   0
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Scope           =   0
-         TabIndex        =   0
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   27
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   100
-      End
-      Begin BevelButton EditCookies
-         AcceptFocus     =   False
-         AutoDeactivate  =   True
-         BackColor       =   "&c00000000"
-         Bevel           =   4
-         Bold            =   False
-         ButtonType      =   0
-         Caption         =   ""
-         CaptionAlign    =   3
-         CaptionDelta    =   0
-         CaptionPlacement=   1
-         Enabled         =   True
-         HasBackColor    =   False
-         HasMenu         =   0
-         Height          =   22
-         HelpTag         =   ""
-         Icon            =   1965037567
-         IconAlign       =   1
-         IconDX          =   0
-         IconDY          =   0
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         Italic          =   False
-         Left            =   20
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         MenuValue       =   0
-         Scope           =   0
-         TabIndex        =   10
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextColor       =   "&c00000000"
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   162
-         Underline       =   False
-         Value           =   False
-         Visible         =   True
-         Width           =   22
-      End
-      Begin PushButton PushButton3
-         AutoDeactivate  =   True
-         Bold            =   False
-         ButtonStyle     =   0
-         Cancel          =   False
-         Caption         =   "HTTP Form"
-         Default         =   False
-         Enabled         =   True
-         Height          =   22
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         Italic          =   False
-         Left            =   480
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Scope           =   0
-         TabIndex        =   12
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   162
-         Underline       =   False
-         Visible         =   True
-         Width           =   97
-      End
-      Begin CheckBox CheckBox1
-         AutoDeactivate  =   True
-         Bold            =   False
-         Caption         =   "Edit Raw"
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Height          =   20
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "GroupBox1"
-         Italic          =   False
-         Left            =   352
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   False
-         LockTop         =   True
-         Scope           =   0
-         State           =   0
-         TabIndex        =   13
-         TabPanelIndex   =   0
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   278
-         Underline       =   False
-         Value           =   False
-         Visible         =   True
-         Width           =   100
-      End
+      Width           =   54
    End
-   Begin Timer DataReceivedTimer
-      Height          =   32
+   Begin ProgressBar ProgressBar1
+      AutoDeactivate  =   True
+      Enabled         =   True
+      Height          =   10
+      HelpTag         =   ""
       Index           =   -2147483648
-      Left            =   -3
+      InitialParent   =   ""
+      Left            =   5
+      LockBottom      =   ""
       LockedInPosition=   False
-      Mode            =   0
-      Period          =   200
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Maximum         =   100
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   597
-      Width           =   32
+      Top             =   159
+      Value           =   0
+      Visible         =   True
+      Width           =   337
+   End
+   Begin BevelButton EditCookies
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      BackColor       =   "&c00000000"
+      Bevel           =   4
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   ""
+      Icon            =   29616127
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   298
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   18
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   133
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
+   End
+   Begin BevelButton RequestHeaderView
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      BackColor       =   "&c00000000"
+      Bevel           =   4
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   "Expanded Header View"
+      Icon            =   1571842047
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   319
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   19
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   133
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
+   End
+   Begin BevelButton EditRaw
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      BackColor       =   "&c00000000"
+      Bevel           =   4
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   ""
+      Icon            =   978827263
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   277
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   20
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   133
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
    End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Method, Flags = &h0
-		Sub Generate()
+	#tag Method, Flags = &h21
+		Private Sub Generate()
 		  mTheURL = Nil
 		  Me.Request = New HTTP.Request()
 		  Me.Request.Method = HTTP.Method(Me.RequestMethod.Text)
@@ -930,6 +692,19 @@ End
 		  Me.Request.Path = theURL
 		  If Me.Request.path.ServerPath = "" Then Me.Request.path.ServerPath = "/"
 		  Me.Request.ProtocolVersion = CDbl(NthField(ProtocolVer.Text, "/", 2))
+		  GenerateHeaders()
+		  Me.Request.MessageBody = Self.Request.MessageBody
+		  
+		  
+		  'If gziprequest.Value Then
+		  'Me.Request.SetHeader("Accept-Encoding", "gzip")
+		  'End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub GenerateHeaders()
+		  If Request = Nil Then Generate()
 		  For i As Integer = 0 To RequestHeaders.ListCount - 1
 		    Me.Request.SetHeader(RequestHeaders.Cell(i, 0)) = RequestHeaders.Cell(i, 1)
 		  Next
@@ -945,13 +720,6 @@ End
 		  If Me.Request.Headers.AcceptableTypes.Ubound <= -1 Then
 		    Me.Request.SetHeader("Accept") = "*/*"
 		  End If
-		  
-		  Me.Request.MessageBody = MessageBody.Text
-		  
-		  
-		  'If gziprequest.Value Then
-		  'Me.Request.SetHeader("Accept-Encoding", "gzip")
-		  'End If
 		End Sub
 	#tag EndMethod
 
@@ -981,13 +749,14 @@ End
 		  CookiesButton.Invalidate(True)
 		  CookiesButton.HelpTag = Str(Response.Headers.CookieCount) + " cookies"
 		  ResponseHeaderView.Enabled = True
+		  ResponseHeaderView.Icon = expand_icon
 		  
 		  If Sock.IsConnected Then
-		    IPAddress1.Text = "Open"
+		    'IPAddress1.Text = "Open"
 		    IPAddress.TextColor = &c00804000
 		  Else
-		    IPAddress1.Text = "Closed by server"
-		    IPAddress1.TextColor = &c80808000
+		    'IPAddress1.Text = "Closed by server"
+		    'IPAddress1.TextColor = &c80808000
 		    IPAddress.TextColor = &c80808000
 		  End If
 		  '#If HTTP.GZIPAvailable Then
@@ -995,28 +764,10 @@ End
 		  'Me.Response.MessageBody = GZip.Uncompress(Me.Response.MessageBody, Me.Response.MessageBody.LenB^2)
 		  'End If
 		  '#endif
-		  mSData = Me.Response.MessageBody
-		  Message.Invalidate(False)
 		  
 		End Sub
 	#tag EndMethod
 
-
-	#tag Property, Flags = &h21
-		Private LastValue As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected mQuietScroll As boolean = True
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mResponse As HTTP.Response
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected mSData As string
-	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mTheURL As HTTP.URI
@@ -1057,142 +808,24 @@ End
 
 #tag EndWindowCode
 
-#tag Events CookiesButton
-	#tag Event
-		Sub Action()
-		  Dim allcookies() As Cookie
-		  For i As Integer = 0 To Response.Headers.CookieCount - 1
-		    allcookies.Append(Response.Headers.Cookie(i))
-		  Next
-		  CookieViewer.ShowCookies(AllCookies)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseEnter()
-		  If Me.Enabled Then
-		    Me.Icon = cookie_icon
-		  Else
-		    Me.Icon = cookie_icon_grey
-		  End If
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExit()
-		  Me.Icon = cookie_icon_grey
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events ResponseHeaderView
-	#tag Event
-		Sub Action()
-		  HeaderViewer.ShowHeaders(Response.Headers)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events HexBar
-	#tag Event
-		Sub ValueChanged()
-		  If (me.Value + 32767) > 0 Then
-		    Message.SetTopLine(me.Value + 32767)
-		  Else
-		    Message.SetTopLine(me.Value - 32767)
-		  End If
-		  
-		  Message.Refresh(False)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events Message
-	#tag Event
-		Function GetFont() As string
-		  Return "Courier"
-		  'Return "Comic Sans"
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub DeleteData(aLen as integer, aPosition as integer)
-		  mSData = leftb(mSData, aPosition) + midb(mSData,aPosition+aLen+1)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub ModifyData(aNewData as string, aPosition as integer, aOldLength as integer)
-		  mSData = leftb(mSData, aPosition) + aNewData + midb(mSData,aPosition+aOldLength+1)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub SetScrollPosition(aPos as integer)
-		  mQuietScroll = true
-		  HexBar.Value = aPos - 32767
-		  mQuietScroll = False
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  'me.AcceptFileDrop "special/any"
-		  me.SetDrawStripes(True)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub SetScrollPageIncrement(aIncrement as integer)
-		  mQuietScroll = true
-		  HexBar.PageStep = aIncrement
-		  mQuietScroll = False
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub SetScrollMaximum(aMax as integer)
-		  mQuietScroll = true
-		  HexBar.Maximum = aMax - 32767
-		  HexBar.Minimum = -32767
-		  mQuietScroll = False
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function GetTotalDataLength() As integer
-		  Return lenb(mSData)
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function GetData(aLen as integer, aPosition as integer) As string
-		  Return midb(mSData, aPosition+1, aLen)
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub InsertData(aData as string, aLoc as integer)
-		  mSData = leftb(mSData, aLoc) + aData + midb(mSData,aLoc+1)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function GetFontSize() As integer
-		  'Return 12
-		End Function
-	#tag EndEvent
-#tag EndEvents
 #tag Events Sock
 	#tag Event
 		Sub Connected()
 		  Output = ""
 		  IPAddress.Text = Me.RemoteAddress
 		  IPAddress.TextColor = &c00804000
-		  IPAddress1.Text = "Connected"
+		  'IPAddress1.Text = "Connected"
 		  IPAddress.TextColor = &c00804000
-		  If CheckBox1.Value And RawText.Trim <> "" Then
-		    Me.Write(RawText)
-		  Else
-		    Me.Write(Request.ToString)
-		  End If
+		  Me.Write(Request.ToString)
 		  URL.AddItem(URL.Text)
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub DataAvailable()
-		  IPAddress1.Text = "Receiving"
+		  'IPAddress1.Text = "Receiving"
 		  IPAddress.TextColor = &c00804000
 		  Output = Output + Me.ReadAll
-		  If Not (RawText.Trim <> "" And CheckBox1.Value) Then
-		    RawText = Self.Request.ToString
-		  End If
+		  RawText = Self.Request.ToString
 		  OutputLog.Text = "-----------Request-----------" + CRLF + RawText + CRLF _
 		  + "-----------Response-----------" + CRLF + OutPut + CRLF
 		  
@@ -1203,23 +836,30 @@ End
 		Sub Error()
 		  Select Case Me.LastErrorCode
 		  Case 102
-		    IPAddress1.Text = "Closed by server"
-		    IPAddress1.TextColor = &c80808000
+		    'IPAddress1.Text = "Closed by server"
+		    'IPAddress1.TextColor = &c80808000
 		    IPAddress.TextColor = &c80808000
 		    
 		  Case 103
 		    IPAddress.Text = TheURL.FQDN
-		    IPAddress1.Text = "Bad domain"
-		    IPAddress1.TextColor = &cFF000000
+		    'IPAddress1.Text = "Bad domain"
+		    'IPAddress1.TextColor = &cFF000000
 		    IPAddress.TextColor = &cFF000000
 		    ResponseHeaders.DeleteAllRows
 		    Code.Text = ""
 		    
 		  Else
-		    IPAddress1.Text = "Socket error: " + Str(Me.LastErrorCode)
-		    IPAddress1.TextColor = &cFF000000
+		    'IPAddress1.Text = "Socket error: " + Str(Me.LastErrorCode)
+		    'IPAddress1.TextColor = &cFF000000
 		    IPAddress.TextColor = &cFF000000
 		  End Select
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events DataReceivedTimer
+	#tag Event
+		Sub Action()
+		  Update(Output)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1257,13 +897,16 @@ End
 		      RequestHeaders.EditCell(RequestHeaders.LastIndex, 0)
 		    End If
 		  End If
+		  GenerateHeaders()
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub Remove(Row As Integer)
 		  If MsgBox("Remove this header?", 52, "Confirm removal") = 6 Then
 		    Me.RemoveRow(row)
+		    GenerateHeaders()
 		  End If
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1272,11 +915,6 @@ End
 		Sub Action()
 		  Output = ""
 		  Generate()
-		  If CheckBox1.Value Then
-		    Dim raw As String = RawEditor.EditRaw(Self.Request)
-		    If raw.Trim = "" Then Return
-		    RawText = raw
-		  End If
 		  Sock.Close
 		  Sock.Address = theURL.FQDN
 		  If Request.Path.Protocol = "https" Then
@@ -1293,6 +931,53 @@ End
 		  End If
 		  
 		  Sock.Connect()
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events CookiesButton
+	#tag Event
+		Sub Action()
+		  Dim allcookies() As Cookie
+		  For i As Integer = 0 To Response.Headers.CookieCount - 1
+		    allcookies.Append(Response.Headers.Cookie(i))
+		  Next
+		  CookieViewer.ShowCookies(AllCookies)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseEnter()
+		  If Me.Enabled Then
+		    Me.Icon = cookie_icon
+		  Else
+		    Me.Icon = cookie_icon_grey
+		  End If
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  Me.Icon = cookie_icon_grey
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ResponseHeaderView
+	#tag Event
+		Sub Action()
+		  HeaderViewer.ShowHeaders(Response.Headers)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events IPAddress
+	#tag Event
+		Sub Open()
+		  Me.Text = ""
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Code
+	#tag Event
+		Sub Open()
+		  Me.Text = ""
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1335,40 +1020,66 @@ End
 	#tag Event
 		Sub Open()
 		  Me.Icon = cookie_icon_grey
-		  
+		  Me.HelpTag = "Add a cookie to request"
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events PushButton3
+#tag Events RequestHeaderView
 	#tag Event
 		Sub Action()
-		  Dim formgen As New FormGenerator
-		  Dim olddata As Dictionary = DecodeFormData(MessageBody.Text)
-		  Dim data As Dictionary = formgen.SetFormData(olddata)
-		  If Data <> Nil Then
-		    MessageBody.Text = EncodeFormData(data)
-		    
-		    For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		      If RequestHeaders.Cell(i, 0) = "Content-Type" Then
-		        RequestHeaders.RemoveRow(i)
+		  If Request <> Nil Then HeaderViewer.ShowHeaders(Request.Headers)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EditRaw
+	#tag Event
+		Sub Open()
+		  Me.HelpTag = "Edit HTTP request body"
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Action()
+		  Dim mnu As New MenuItem("EditRawMenu")
+		  mnu.Append(New MenuItem("HTML form output"))
+		  mnu.Append(New MenuItem("Edit raw"))
+		  Dim res As MenuItem = mnu.PopUp
+		  If res <> Nil Then
+		    If Self.Request = Nil Then Generate()
+		    Select Case res.Text
+		    Case "HTML form output"
+		      Dim formgen As New FormGenerator
+		      Dim olddata As Dictionary = DecodeFormData(Self.Request.MessageBody)
+		      Dim data As Dictionary = formgen.SetFormData(olddata)
+		      If Data <> Nil Then
+		        Self.Request.MessageBody = EncodeFormData(data)
+		        
+		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		          If RequestHeaders.Cell(i, 0) = "Content-Type" Then
+		            RequestHeaders.RemoveRow(i)
+		          End If
+		        Next
+		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		          If RequestHeaders.Cell(i, 0) = "Content-Length" Then
+		            RequestHeaders.RemoveRow(i)
+		          End If
+		        Next
+		        
+		        RequestHeaders.AddRow("Content-Type", "application/x-www-form-URLEncoded", "")
+		        RequestHeaders.AddRow("Content-Length", Str(LenB(Self.Request.MessageBody)), "")
 		      End If
-		    Next
-		    For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		      If RequestHeaders.Cell(i, 0) = "Content-Length" Then
-		        RequestHeaders.RemoveRow(i)
-		      End If
-		    Next
-		    
-		    RequestHeaders.AddRow("Content-Type", "application/x-www-form-URLEncoded", "")
-		    RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBody.Text)), "")
+		    Case "Edit raw"
+		      Dim raw As String = RawEditor.EditRaw(Self.Request.MessageBody)
+		      If raw.Trim = "" Then Return
+		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
+		          RequestHeaders.RemoveRow(i)
+		        End If
+		      Next
+		      Self.Request.MessageBody = raw
+		      RequestHeaders.AddRow("Content-Length", Str(LenB(Self.Request.MessageBody)), "")
+		      
+		    End Select
 		  End If
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events DataReceivedTimer
-	#tag Event
-		Sub Action()
-		  Update(Output)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
