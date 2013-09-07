@@ -1186,49 +1186,48 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub ValueChanged()
-		  If Me.Value Then
-		    Dim mnu As New MenuItem("EditRawMenu")
-		    mnu.Append(New MenuItem("HTML form output"))
-		    mnu.Append(New MenuItem("Edit raw"))
-		    Dim res As MenuItem = mnu.PopUp
-		    If res <> Nil Then
-		      If Self.Request = Nil Then Generate()
-		      Select Case res.Text
-		      Case "HTML form output"
-		        Dim formgen As New FormGenerator
-		        Dim olddata As Dictionary = DecodeFormData(MessageBodyRaw)
-		        Dim data As Dictionary = formgen.SetFormData(olddata)
-		        If Data <> Nil Then
-		          MessageBodyRaw = EncodeFormData(data)
-		          
-		          For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		            If RequestHeaders.Cell(i, 0) = "Content-Type" Then
-		              RequestHeaders.RemoveRow(i)
-		            End If
-		          Next
-		          For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		            If RequestHeaders.Cell(i, 0) = "Content-Length" Then
-		              RequestHeaders.RemoveRow(i)
-		            End If
-		          Next
-		          
-		          RequestHeaders.AddRow("Content-Type", "application/x-www-form-URLEncoded", "")
-		          RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
-		        End If
-		      Case "Edit raw"
-		        Dim raw As String = RawEditor.EditRaw(Self.Request.MessageBody)
-		        If raw.Trim = "" Then Return
+		  Dim mnu As New MenuItem("EditRawMenu")
+		  mnu.Append(New MenuItem("HTML form output"))
+		  mnu.Append(New MenuItem("Edit raw"))
+		  Dim res As MenuItem = mnu.PopUp
+		  If res <> Nil Then
+		    If Self.Request = Nil Then Generate()
+		    Select Case res.Text
+		    Case "HTML form output"
+		      Dim formgen As New FormGenerator
+		      Dim olddata As Dictionary = DecodeFormData(MessageBodyRaw)
+		      Dim data As Dictionary = formgen.SetFormData(olddata)
+		      If Data <> Nil Then
+		        MessageBodyRaw = EncodeFormData(data)
+		        
+		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		          If RequestHeaders.Cell(i, 0) = "Content-Type" Then
+		            RequestHeaders.RemoveRow(i)
+		          End If
+		        Next
 		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
 		          If RequestHeaders.Cell(i, 0) = "Content-Length" Then
 		            RequestHeaders.RemoveRow(i)
 		          End If
 		        Next
-		        MessageBodyRaw = raw
-		        RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
 		        
-		      End Select
-		    End If
+		        RequestHeaders.AddRow("Content-Type", "application/x-www-form-URLEncoded", "")
+		        RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
+		      End If
+		    Case "Edit raw"
+		      Dim raw As String = RawEditor.EditRaw(Self.Request.MessageBody)
+		      If raw.Trim = "" Then Return
+		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
+		          RequestHeaders.RemoveRow(i)
+		        End If
+		      Next
+		      MessageBodyRaw = raw
+		      RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
+		      
+		    End Select
 		  End If
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
