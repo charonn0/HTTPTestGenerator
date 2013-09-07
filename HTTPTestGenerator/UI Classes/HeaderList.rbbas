@@ -28,9 +28,15 @@ Inherits ListBox
 		  
 		  If Y > Me.HeaderHeight And Me.RowFromXY(X, Y) = -1 And x >= 0.95 * Me.Width Then
 		    RaiseEvent AddNew()
+		    Return True
 		  ElseIf a < Me.ListCount And b = Me.ColumnCount - 1 Then
 		    RaiseEvent Remove(a)
+		    Return True
+		  Else
+		    Return False
 		  End If
+		  
+		  
 		End Function
 	#tag EndEvent
 

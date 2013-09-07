@@ -177,24 +177,24 @@ Begin Window Generator
       ConnectionType  =   2
       Height          =   32
       Index           =   -2147483648
-      Left            =   551
+      Left            =   799
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
       TabPanelIndex   =   0
-      Top             =   502
+      Top             =   14
       Width           =   32
    End
    Begin Timer DataReceivedTimer
       Height          =   32
       Index           =   -2147483648
-      Left            =   505
+      Left            =   753
       LockedInPosition=   False
       Mode            =   0
       Period          =   200
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   502
+      Top             =   14
       Width           =   32
    End
    Begin HeaderList RequestHeaders
@@ -220,7 +220,7 @@ Begin Window Generator
       Hierarchical    =   False
       Index           =   -2147483648
       InitialParent   =   ""
-      InitialValue    =   "Header Name	Header Value	  \r\nConnection	close	\r\nAccept	*/*	"
+      InitialValue    =   "Header Name	Header Value	  "
       Italic          =   False
       Left            =   5
       LockBottom      =   True
@@ -804,7 +804,7 @@ End
 		  If Me.Request.path.ServerPath = "" Then Me.Request.path.ServerPath = "/"
 		  Me.Request.ProtocolVersion = CDbl(NthField(ProtocolVer.Text, "/", 2))
 		  GenerateHeaders()
-		  Me.Request.MessageBody = Self.Request.MessageBody
+		  Me.Request.MessageBody = MessageBodyRaw
 		  
 		  
 		  'If gziprequest.Value Then
@@ -902,6 +902,10 @@ End
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h21
+		Private MessageBodyRaw As String
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mTheURL As HTTP.URI
@@ -1044,25 +1048,6 @@ End
 #tag EndEvents
 #tag Events RequestHeaders
 	#tag Event
-		Function HeaderPressed(column as Integer) As Boolean
-		  If column = 2 Then
-		    Dim p As Pair = HeaderEdit.GetHeader()
-		    If p <> Nil Then
-		      If p.Right IsA Date Then
-		        RequestHeaders.AddRow(p.Left, HTTPDate(p.Right.DateValue), "")
-		        RequestHeaders.CellType(RequestHeaders.LastIndex, 0) = Listbox.TypeEditable
-		        RequestHeaders.EditCell(RequestHeaders.LastIndex, 0)
-		      Else
-		        RequestHeaders.AddRow(p.Left, p.Right, "")
-		        RequestHeaders.CellType(RequestHeaders.LastIndex, 0) = Listbox.TypeEditable
-		        RequestHeaders.EditCell(RequestHeaders.LastIndex, 0)
-		      End If
-		    End If
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-	#tag Event
 		Sub AddNew()
 		  Dim p As Pair = HeaderEdit.GetHeader()
 		  If p <> Nil Then
@@ -1075,6 +1060,7 @@ End
 		      RequestHeaders.CellType(RequestHeaders.LastIndex, 0) = Listbox.TypeEditable
 		      RequestHeaders.EditCell(RequestHeaders.LastIndex, 0)
 		    End If
+		    RequestHeaders.RowTag(RequestHeaders.LastIndex) = p
 		  End If
 		  GenerateHeaders()
 		End Sub
@@ -1087,6 +1073,41 @@ End
 		  End If
 		  
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  If Me.ListIndex > -1 Then
+		    Dim p As Pair = Me.RowTag(Me.ListIndex)
+		    p = HeaderEdit.GetHeader(p)
+		    If p <> Nil Then
+		      Me.Cell(Me.ListIndex, 0) = p.Left
+		      If p.Right IsA Date Then
+		        Me.Cell(Me.ListIndex, 1) = HTTPDate(p.Right.DateValue)
+		      Else
+		        Me.Cell(Me.ListIndex, 1) = p.Right
+		      End If
+		      Me.RowTag(Me.ListIndex) = p
+		    End If
+		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  Me.AddRow("Connection", "close")
+		  Me.RowTag(Me.LastIndex) = "Connection":"close"
+		  Me.AddRow("Accept", "text/html,*/*;q=0.8")
+		  Me.RowTag(Me.LastIndex) = "Accept":"text/html,*/*;q=0.8"
+		  Me.HeaderType(2) = Listbox.HeaderTypes.NotSortable
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events URL
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If Asc(key) = &h0D Or Asc(key) = &h03 Then
+		    Perform()
+		  End If
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events Sender
@@ -1175,10 +1196,10 @@ End
 		      Select Case res.Text
 		      Case "HTML form output"
 		        Dim formgen As New FormGenerator
-		        Dim olddata As Dictionary = DecodeFormData(Self.Request.MessageBody)
+		        Dim olddata As Dictionary = DecodeFormData(MessageBodyRaw)
 		        Dim data As Dictionary = formgen.SetFormData(olddata)
 		        If Data <> Nil Then
-		          Self.Request.MessageBody = EncodeFormData(data)
+		          MessageBodyRaw = EncodeFormData(data)
 		          
 		          For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
 		            If RequestHeaders.Cell(i, 0) = "Content-Type" Then
@@ -1192,7 +1213,7 @@ End
 		          Next
 		          
 		          RequestHeaders.AddRow("Content-Type", "application/x-www-form-URLEncoded", "")
-		          RequestHeaders.AddRow("Content-Length", Str(LenB(Self.Request.MessageBody)), "")
+		          RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
 		        End If
 		      Case "Edit raw"
 		        Dim raw As String = RawEditor.EditRaw(Self.Request.MessageBody)
@@ -1202,8 +1223,8 @@ End
 		            RequestHeaders.RemoveRow(i)
 		          End If
 		        Next
-		        Self.Request.MessageBody = raw
-		        RequestHeaders.AddRow("Content-Length", Str(LenB(Self.Request.MessageBody)), "")
+		        MessageBodyRaw = raw
+		        RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
 		        
 		      End Select
 		    End If
