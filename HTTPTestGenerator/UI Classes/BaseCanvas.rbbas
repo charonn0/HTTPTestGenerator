@@ -1,233 +1,280 @@
 #tag Class
-Protected Class ButtonCanvas
-Inherits BoolCanvas
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If Enabled And key = " " Then
-		    Me.Value = True
-		  End If
-		  Return True
-		End Function
-	#tag EndEvent
-
-	#tag Event
-		Sub KeyUp(Key As String)
-		  If Me.Value And Key = " " Then
-		    Me.Value = False
-		    Action()
-		  End If
-		End Sub
-	#tag EndEvent
-
+Protected Class BaseCanvas
+Inherits Canvas
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  #pragma Unused X
-		  #pragma Unused Y
-		  If Enabled Then
-		    Me.Value = True
-		  End If
-		  Return True
+		  If Me.Enabled Then Return RaiseEvent MouseDown(X, Y)
 		End Function
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseDrag(X As Integer, Y As Integer)
-		  if x<0 or y<0 or x>me.width or y>me.height then
-		    //Outside the button
-		    misHovering = False
-		    Update(False)
-		  end
+		  If Me.Enabled Then RaiseEvent MouseDrag(X, Y)
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseEnter()
-		  If Enabled Then
-		    isHovering = True
-		    Me.Hilight = True
-		  End If
+		  If Me.Enabled Then RaiseEvent MouseEnter()
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseExit()
-		  If Enabled Then
-		    isHovering = False
-		    Me.Hilight = False
-		  End If
+		  If Me.Enabled Then RaiseEvent MouseExit()
+		End Sub
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseMove(X As Integer, Y As Integer)
+		  If Me.Enabled Then RaiseEvent MouseMove(X, Y)
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
-		  #pragma Unused X
-		  #pragma Unused Y
-		  If Enabled Then Me.Value = False
-		  If isHovering Then Action()
+		  If Me.Enabled Then RaiseEvent MouseUp(X, Y)
 		End Sub
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint	(g As Graphics)
-		  Dim startColor As Color = &cC0C0C0 //FIXME make colors configurable
-		  Dim endColor As Color = &cE6E6E6
-		  Dim ratio, endratio as Double
-		  For i As Integer = 0 To g.Height
-		    ratio = ((g.Height - i) / g.Height)
-		    endratio = (i / g.Height)
-		    g.ForeColor = RGB(startColor.Red * endratio + endColor.Red * ratio, startColor.Green * endratio + endColor.Green * ratio, _
-		    startColor.Blue * endratio + endColor.Blue * ratio)
-		    g.DrawLine(0, i, g.Width, i)
-		  next
-		  g.ForeColor = endColor
-		  g.DrawLine(0, 0, g.Width, 0)
-		  
-		  If isHovering Or Me.Value Then
-		    If hilightBorder Then
-		      Dim middle1 As Color = RGB(hilightColor.Red * 0.75, hilightColor.Green * 0.75, hilightColor.Blue * 0.75)
-		      Dim inner As Color = RGB(hilightColor.Red * 0.50, hilightColor.Green * 0.50, hilightColor.Blue * 0.50)
-		      
-		      g.ForeColor = hilightColor
-		      g.DrawLine(0, 0, 0, Me.Height)
-		      g.DrawLine(0, 0, Me.Width, 0)
-		      g.DrawLine(Me.Width - 1, Me.Height - 1, Me.Width -1, 1)
-		      g.DrawLine(Me.Width - 1, Me.Height - 1, 1, Me.Height - 1)
-		      
-		      g.ForeColor = middle1
-		      g.DrawLine(1, 1, 1, Me.Height - 1)
-		      g.DrawLine(1, 1, Me.Width - 1, 1)
-		      g.DrawLine(Me.Width - 2, Me.Height - 2, Me.Width -2, 2)
-		      g.DrawLine(Me.Width - 2, Me.Height - 2, 2, Me.Height - 2)
-		    Else
-		      g.ForeColor = &c000000
-		      g.DrawLine(0, 0, 0, Me.Height)
-		      g.DrawLine(0, 0, Me.Width, 0)
-		      g.DrawLine(Me.Width - 1, Me.Height - 1, Me.Width -1, 1)
-		      g.DrawLine(Me.Width - 1, Me.Height - 1, 1, Me.Height - 1)
-		    End If
-		  Else
-		    g.ForeColor = &c000000
-		    g.DrawLine(0, 0, 0, Me.Height)
-		    g.DrawLine(0, 0, Me.Width, 0)
-		    g.DrawLine(Me.Width - 1, Me.Height - 1, Me.Width -1, 1)
-		    g.DrawLine(Me.Width - 1, Me.Height - 1, 1, Me.Height - 1)
+		Function MouseWheel(X As Integer, Y As Integer, deltaX as Integer, deltaY as Integer) As Boolean
+		  If Me.Enabled Then Return RaiseEvent MouseWheel(X, Y, deltaX, deltaY)
+		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub Paint(g As Graphics)
+		  #If RBVersion >= 2012 Then 'areas() was added in RS2012 R1
+		    #pragma Unused areas
+		  #endif
+		  If UpdateClearsBackground Then
+		    g.ClearRect(0, 0, g.Width, g.Height)
 		  End If
+		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then Update(False)
+		  g.DrawPicture(buffer, 0, 0)
 		  
-		  g.TextSize = Me.TextSize
-		  If Enabled Then
-		    g.ForeColor = Me.TextColor
-		  Else
-		    g.ForeColor = RGB(Me.TextColor.Red + ((255 - Me.TextColor.Red) / 2), Me.TextColor.Green + ((255 - Me.TextColor.Green) / 2), _
-		    Me.TextColor.Blue + ((255 - Me.TextColor.Blue) / 2))
-		  End If
-		  g.Bold = bold
-		  g.Italic = italic
-		  g.Underline = underline
+		End Sub
+	#tag EndEvent
+
+
+	#tag Method, Flags = &h0
+		Sub Enabled(Assigns b As Boolean)
+		  RectControl(Me).Enabled = b
+		  Me.Update()
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub Update(AndInvalidate As Boolean = True)
+		  #pragma BreakOnExceptions Off
+		  Dim g As Graphics
+		  Try
+		    buffer = New Picture(Me.Width, Me.Height)
+		    g = Buffer.Graphics
+		  Catch
+		    Buffer = Nil
+		    Return
+		  End Try
+		  #pragma BreakOnExceptions Default
+		  g.Bold = Me.Bold
+		  g.Italic = Me.Italic
 		  g.TextFont = Me.TextFont
 		  g.TextSize = Me.TextSize
-		  Dim strWidth, strHeight As Integer
-		  strWidth = g.StringWidth(Me.Caption)
-		  strHeight = g.StringHeight(Me.Caption, Me.Width)
-		  g.DrawString(Me.Caption, (Me.Width/2) - (strWidth/2), ((Me.Height/2) + (strHeight/4)))
+		  g.Underline = Me.Underline
+		  RaiseEvent Paint(g)
+		  If Not Me.Enabled Then
+		    //Converts the passed Picture to greyscale.
+		    //Can take a few seconds on very large Pictures
+		    //This function was *greatly* optimized by user 'doofus' on the RealSoftware forums:
+		    //http://forums.realsoftware.com/viewtopic.php?f=1&t=42327&sid=4e724091fc9dd70fd5705110098adf67
+		    
+		    Dim surf As RGBSurface = Buffer.RGBSurface
+		    
+		    Dim greyColor(255) As Color //precompute the 256 grey colors
+		    For i As Integer = 0 To 255
+		      greyColor(i) = RGB(i, i, i)
+		    Next
+		    
+		    Dim X, Y, intensity As Integer, c As Color
+		    For X = 0 To Buffer.Width
+		      For Y = 0 To Buffer.Height
+		        c = surf.Pixel(X, Y)
+		        intensity = c.Red * 0.30 + c.Green * 0.59 + c.Blue * 0.11
+		        surf.Pixel(X, Y) = greyColor(intensity) //lookup grey
+		      Next
+		    Next
+		    
+		  ElseIf Me.Hilight Then
+		    Dim map(255) As Integer
+		    For i as Integer = 255 DownTo 0
+		      map(i) = 255 + i + 15
+		    next
+		    Buffer.RGBSurface.Transform(map)
+		  End If
 		  
+		  If AndInvalidate Then Me.Invalidate(False)
 		End Sub
-	#tag EndEvent
-
-	#tag Event
-		Sub ValueChanged()
-		  Return
-		End Sub
-	#tag EndEvent
+	#tag EndMethod
 
 
 	#tag Hook, Flags = &h0
-		Event Action()
+		Event MouseDown(X As Integer, Y As Integer) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseDrag(X As Integer, Y As Integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseEnter()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseExit()
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseMove(X As Integer, Y As Integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseUp(X As Integer, Y As Integer)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event MouseWheel(X As Integer, Y As Integer, deltaX As Integer, deltaY As Integer) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event Paint	(g As Graphics)
 	#tag EndHook
 
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mCaption
+			  return mbold
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mCaption = value
-			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
-			  buffer = New Picture(Me.Width, Me.Height, 24)
+			  mbold = value
 			  Update()
-			  
 			End Set
 		#tag EndSetter
-		Caption As String
+		Bold As Boolean
+	#tag EndComputedProperty
+
+	#tag Property, Flags = &h1
+		Protected Buffer As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Hilight As Boolean
+	#tag EndProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mitalic
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mitalic = value
+			  Update()
+			End Set
+		#tag EndSetter
+		Italic As Boolean
+	#tag EndComputedProperty
+
+	#tag Property, Flags = &h21
+		Private mbold As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mitalic As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mtextColor As Color
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mtextFont As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mtextSize As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private munderline As Boolean
+	#tag EndProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mtextColor
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mtextColor = value
+			  Update()
+			End Set
+		#tag EndSetter
+		TextColor As Color
 	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mhilightBorder
+			  return mtextFont
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mhilightBorder = value
-			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
-			  buffer = New Picture(Me.Width, Me.Height, 24)
+			  mtextFont = value
 			  Update()
-			  
 			End Set
 		#tag EndSetter
-		hilightBorder As Boolean
+		TextFont As String
 	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return mhilightColor
+			  return mtextSize
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mhilightColor = value
-			  If Me.Width <= 0 Or Me.Height <= 0 Then Return
-			  buffer = New Picture(Me.Width, Me.Height, 24)
+			  mtextSize = value
 			  Update()
-			  
 			End Set
 		#tag EndSetter
-		hilightColor As Color
+		TextSize As Single
 	#tag EndComputedProperty
 
-	#tag ComputedProperty, Flags = &h21
+	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  return misHovering
+			  return munderline
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  misHovering = value
+			  munderline = value
 			  Update()
 			End Set
 		#tag EndSetter
-		Private isHovering As Boolean
+		Underline As Boolean
 	#tag EndComputedProperty
 
-	#tag Property, Flags = &h21
-		Private mCaption As String = "Click Me!"
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mhilightBorder As Boolean = True
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mhilightColor As Color = &c00FFFF
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private misHovering As Boolean
+	#tag Property, Flags = &h1
+		Protected UpdateClearsBackground As Boolean = False
 	#tag EndProperty
 
 
@@ -266,14 +313,6 @@ Inherits BoolCanvas
 			Name="Bold"
 			Group="Behavior"
 			Type="Boolean"
-			InheritedFrom="BaseCanvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Caption"
-			Visible=true
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="DoubleBuffer"
@@ -319,21 +358,6 @@ Inherits BoolCanvas
 			Name="Hilight"
 			Group="Behavior"
 			Type="Boolean"
-			InheritedFrom="BaseCanvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="hilightBorder"
-			Visible=true
-			Group="Behavior"
-			InitialValue="True"
-			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="hilightColor"
-			Visible=true
-			Group="Behavior"
-			InitialValue="&c00FFFF"
-			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -351,7 +375,6 @@ Inherits BoolCanvas
 			Name="Italic"
 			Group="Behavior"
 			Type="Boolean"
-			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -430,20 +453,17 @@ Inherits BoolCanvas
 			Group="Behavior"
 			InitialValue="&c000000"
 			Type="Color"
-			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextFont"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextSize"
 			Group="Behavior"
 			Type="Single"
-			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -456,7 +476,6 @@ Inherits BoolCanvas
 			Name="Underline"
 			Group="Behavior"
 			Type="Boolean"
-			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="UseFocusRing"
@@ -465,12 +484,6 @@ Inherits BoolCanvas
 			InitialValue="True"
 			Type="Boolean"
 			InheritedFrom="Canvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Value"
-			Group="Behavior"
-			Type="Boolean"
-			InheritedFrom="BoolCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Visible"

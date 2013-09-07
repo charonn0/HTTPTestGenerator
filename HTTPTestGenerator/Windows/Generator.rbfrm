@@ -12,7 +12,7 @@ Begin Window Generator
    LiveResize      =   True
    MacProcID       =   0
    MaxHeight       =   32000
-   MaximizeButton  =   False
+   MaximizeButton  =   True
    MaxWidth        =   32000
    MenuBar         =   0
    MenuBarVisible  =   True
@@ -24,6 +24,152 @@ Begin Window Generator
    Title           =   "HTTP Request Generator"
    Visible         =   True
    Width           =   7.11e+2
+   Begin TabPanel TabPanel1
+      AutoDeactivate  =   True
+      Bold            =   ""
+      Enabled         =   True
+      Height          =   332
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   347
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Panels          =   ""
+      Scope           =   0
+      SmallTabs       =   ""
+      TabDefinition   =   "HTTP\rRaw"
+      TabIndex        =   21
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   0
+      Underline       =   ""
+      Value           =   1
+      Visible         =   True
+      Width           =   364
+      Begin TextArea OutputLog
+         AcceptTabs      =   False
+         Alignment       =   0
+         AutoDeactivate  =   True
+         AutomaticallyCheckSpelling=   True
+         BackColor       =   &h00EFEFEF
+         Bold            =   False
+         Border          =   True
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   295
+         HelpTag         =   ""
+         HideSelection   =   True
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         Italic          =   False
+         Left            =   353
+         LimitText       =   0
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Mask            =   ""
+         Multiline       =   True
+         ReadOnly        =   True
+         Scope           =   0
+         ScrollbarHorizontal=   False
+         ScrollbarVertical=   True
+         Styled          =   True
+         TabIndex        =   0
+         TabPanelIndex   =   1
+         TabStop         =   True
+         Text            =   ""
+         TextColor       =   &h00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   30
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   352
+      End
+      Begin HexViewer HexViewer1
+         AcceptFocus     =   ""
+         AcceptTabs      =   ""
+         AutoDeactivate  =   True
+         Backdrop        =   ""
+         Bold            =   ""
+         ByteBackgroundColor=   "&cFFFFFF00"
+         ByteBackgroundColorAlt=   "&cC0C0C000"
+         ByteColor       =   "&c0000FF00"
+         DoubleBuffer    =   True
+         Enabled         =   True
+         EraseBackground =   False
+         GutterColor     =   "&cFFFFFF00"
+         GutterColorAlt  =   "&cC0C0C000"
+         Height          =   295
+         HelpTag         =   ""
+         Hilight         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         Italic          =   ""
+         Left            =   353
+         LineNumbersColor=   "&c80000000"
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         ShowOffsets     =   True
+         TabIndex        =   0
+         TabPanelIndex   =   2
+         TabStop         =   True
+         TextBackGroundColor=   "&cFFFFFF00"
+         TextBackGroundColorAlt=   "&cC0C0C000"
+         TextSize        =   ""
+         Top             =   30
+         Underline       =   ""
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   336
+      End
+      Begin ScrollBar ScrollBar1
+         AcceptFocus     =   true
+         AutoDeactivate  =   True
+         Enabled         =   True
+         Height          =   295
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         Left            =   689
+         LineStep        =   1
+         LiveScroll      =   ""
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   False
+         LockRight       =   True
+         LockTop         =   True
+         Maximum         =   100
+         Minimum         =   0
+         PageStep        =   20
+         Scope           =   0
+         TabIndex        =   1
+         TabPanelIndex   =   2
+         TabStop         =   True
+         Top             =   30
+         Value           =   0
+         Visible         =   True
+         Width           =   16
+      End
+   End
    Begin SSLSocket Sock
       CertificateFile =   ""
       CertificatePassword=   ""
@@ -38,51 +184,6 @@ Begin Window Generator
       TabPanelIndex   =   0
       Top             =   502
       Width           =   32
-   End
-   Begin TextArea OutputLog
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   True
-      BackColor       =   &h00EFEFEF
-      Bold            =   False
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   328
-      HelpTag         =   ""
-      HideSelection   =   True
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   348
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   True
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &h00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   -1
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   363
    End
    Begin Timer DataReceivedTimer
       Height          =   32
@@ -122,7 +223,7 @@ Begin Window Generator
       InitialValue    =   "Header Name	Header Value	  \r\nConnection	close	\r\nAccept	*/*	"
       Italic          =   False
       Left            =   5
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
@@ -270,11 +371,11 @@ Begin Window Generator
       InitialParent   =   ""
       Italic          =   False
       Left            =   133
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   10
       TabPanelIndex   =   0
@@ -286,94 +387,6 @@ Begin Window Generator
       Underline       =   False
       Visible         =   True
       Width           =   80
-   End
-   Begin BevelButton CookiesButton
-      AcceptFocus     =   False
-      AutoDeactivate  =   True
-      BackColor       =   "&c00000000"
-      Bevel           =   4
-      Bold            =   False
-      ButtonType      =   0
-      Caption         =   ""
-      CaptionAlign    =   3
-      CaptionDelta    =   0
-      CaptionPlacement=   1
-      Enabled         =   True
-      HasBackColor    =   False
-      HasMenu         =   0
-      Height          =   22
-      HelpTag         =   ""
-      Icon            =   29616127
-      IconAlign       =   1
-      IconDX          =   0
-      IconDY          =   0
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   299
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      MenuValue       =   0
-      Scope           =   0
-      TabIndex        =   12
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   "&c00000000"
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   306
-      Underline       =   False
-      Value           =   False
-      Visible         =   False
-      Width           =   22
-   End
-   Begin BevelButton ResponseHeaderView
-      AcceptFocus     =   False
-      AutoDeactivate  =   True
-      BackColor       =   "&c00000000"
-      Bevel           =   4
-      Bold            =   False
-      ButtonType      =   0
-      Caption         =   ""
-      CaptionAlign    =   3
-      CaptionDelta    =   0
-      CaptionPlacement=   1
-      Enabled         =   False
-      HasBackColor    =   False
-      HasMenu         =   0
-      Height          =   22
-      HelpTag         =   "Expanded Header View"
-      Icon            =   1571842047
-      IconAlign       =   1
-      IconDX          =   0
-      IconDY          =   0
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   320
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      MenuValue       =   0
-      Scope           =   0
-      TabIndex        =   13
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   "&c00000000"
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   305
-      Underline       =   False
-      Value           =   False
-      Visible         =   True
-      Width           =   22
    End
    Begin Listbox ResponseHeaders
       AutoDeactivate  =   True
@@ -401,11 +414,11 @@ Begin Window Generator
       InitialValue    =   "Header Name	Header Value"
       Italic          =   False
       Left            =   5
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       RequiresSelection=   False
       Scope           =   0
       ScrollbarHorizontal=   False
@@ -436,11 +449,11 @@ Begin Window Generator
       InitialParent   =   ""
       Italic          =   False
       Left            =   12
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   False
       Scope           =   0
       Selectable      =   False
@@ -456,7 +469,7 @@ Begin Window Generator
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   99
+      Width           =   275
    End
    Begin Label Code
       AutoDeactivate  =   True
@@ -470,11 +483,11 @@ Begin Window Generator
       InitialParent   =   ""
       Italic          =   False
       Left            =   64
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   False
       Scope           =   0
       Selectable      =   False
@@ -504,11 +517,11 @@ Begin Window Generator
       InitialParent   =   ""
       Italic          =   False
       Left            =   6
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Multiline       =   False
       Scope           =   0
       Selectable      =   False
@@ -534,11 +547,11 @@ Begin Window Generator
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   5
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Maximum         =   100
       Scope           =   0
       TabPanelIndex   =   0
@@ -547,137 +560,235 @@ Begin Window Generator
       Visible         =   True
       Width           =   337
    End
-   Begin BevelButton EditCookies
+   Begin PlacardButton EditCookies11
       AcceptFocus     =   False
+      AcceptTabs      =   ""
       AutoDeactivate  =   True
-      BackColor       =   "&c00000000"
-      Bevel           =   4
-      Bold            =   False
-      ButtonType      =   0
-      Caption         =   ""
-      CaptionAlign    =   3
-      CaptionDelta    =   0
-      CaptionPlacement=   1
+      Backdrop        =   ""
+      bold            =   False
+      caption         =   ""
+      captionDX       =   0
+      captionDY       =   0
+      DoubleBuffer    =   False
+      downDX          =   0
+      downDY          =   0
       Enabled         =   True
-      HasBackColor    =   False
-      HasMenu         =   0
-      Height          =   22
+      EraseBackground =   True
+      hasIcon         =   ""
+      Height          =   25
       HelpTag         =   ""
-      Icon            =   29616127
-      IconAlign       =   1
-      IconDX          =   0
-      IconDY          =   0
+      Icon            =   17051647
+      iconDX          =   0
+      iconDY          =   0
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   False
-      Left            =   298
-      LockBottom      =   False
+      invertTextColor =   ""
+      isSticky        =   0
+      italic          =   False
+      Left            =   288
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
-      MenuValue       =   0
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   18
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   "&c00000000"
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   133
-      Underline       =   False
-      Value           =   False
+      textColor       =   "&c00000000"
+      textColorDown   =   "&c000000"
+      textFont        =   "System"
+      textSize        =   0
+      Top             =   131
+      underline       =   False
+      UseFocusRing    =   True
+      value           =   False
       Visible         =   True
-      Width           =   22
+      Width           =   25
    End
-   Begin BevelButton RequestHeaderView
+   Begin PlacardButton RequestHeaderView11
       AcceptFocus     =   False
+      AcceptTabs      =   ""
       AutoDeactivate  =   True
-      BackColor       =   "&c00000000"
-      Bevel           =   4
-      Bold            =   False
-      ButtonType      =   0
-      Caption         =   ""
-      CaptionAlign    =   3
-      CaptionDelta    =   0
-      CaptionPlacement=   1
+      Backdrop        =   ""
+      bold            =   False
+      caption         =   ""
+      captionDX       =   0
+      captionDY       =   0
+      DoubleBuffer    =   False
+      downDX          =   0
+      downDY          =   0
       Enabled         =   True
-      HasBackColor    =   False
-      HasMenu         =   0
-      Height          =   22
+      EraseBackground =   True
+      hasIcon         =   ""
+      Height          =   25
       HelpTag         =   "Expanded Header View"
       Icon            =   1571842047
-      IconAlign       =   1
-      IconDX          =   0
-      IconDY          =   0
+      iconDX          =   0
+      iconDY          =   0
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   False
-      Left            =   319
-      LockBottom      =   False
+      invertTextColor =   ""
+      isSticky        =   0
+      italic          =   False
+      Left            =   314
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
-      MenuValue       =   0
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   19
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   "&c00000000"
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   133
-      Underline       =   False
-      Value           =   False
+      textColor       =   "&c00000000"
+      textColorDown   =   "&c000000"
+      textFont        =   "System"
+      textSize        =   0
+      Top             =   131
+      underline       =   False
+      UseFocusRing    =   True
+      value           =   False
       Visible         =   True
-      Width           =   22
+      Width           =   25
    End
-   Begin BevelButton EditRaw
+   Begin PlacardButton EditRaw11
       AcceptFocus     =   False
+      AcceptTabs      =   ""
       AutoDeactivate  =   True
-      BackColor       =   "&c00000000"
-      Bevel           =   4
-      Bold            =   False
-      ButtonType      =   0
-      Caption         =   ""
-      CaptionAlign    =   3
-      CaptionDelta    =   0
-      CaptionPlacement=   1
+      Backdrop        =   ""
+      bold            =   False
+      caption         =   ""
+      captionDX       =   0
+      captionDY       =   0
+      DoubleBuffer    =   False
+      downDX          =   0
+      downDY          =   0
       Enabled         =   True
-      HasBackColor    =   False
-      HasMenu         =   0
-      Height          =   22
+      EraseBackground =   True
+      hasIcon         =   ""
+      Height          =   25
       HelpTag         =   ""
       Icon            =   978827263
-      IconAlign       =   1
-      IconDX          =   0
-      IconDY          =   0
+      iconDX          =   0
+      iconDY          =   0
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   False
-      Left            =   277
-      LockBottom      =   False
+      invertTextColor =   ""
+      isSticky        =   0
+      italic          =   False
+      Left            =   262
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
-      MenuValue       =   0
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   20
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   "&c00000000"
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   133
-      Underline       =   False
-      Value           =   False
+      textColor       =   "&c00000000"
+      textColorDown   =   "&c000000"
+      textFont        =   "System"
+      textSize        =   0
+      Top             =   131
+      underline       =   False
+      UseFocusRing    =   True
+      value           =   False
       Visible         =   True
-      Width           =   22
+      Width           =   25
+   End
+   Begin PlacardButton ResponseHeaderView
+      AcceptFocus     =   False
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      bold            =   False
+      caption         =   ""
+      captionDX       =   0
+      captionDY       =   0
+      DoubleBuffer    =   False
+      downDX          =   0
+      downDY          =   0
+      Enabled         =   False
+      EraseBackground =   True
+      hasIcon         =   ""
+      Height          =   25
+      HelpTag         =   "Expanded Header View"
+      Icon            =   1571842047
+      iconDX          =   0
+      iconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      invertTextColor =   ""
+      isSticky        =   0
+      italic          =   False
+      Left            =   314
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   False
+      Scope           =   0
+      TabIndex        =   22
+      TabPanelIndex   =   0
+      TabStop         =   True
+      textColor       =   "&c00000000"
+      textColorDown   =   "&c000000"
+      textFont        =   "System"
+      textSize        =   0
+      Top             =   306
+      underline       =   False
+      UseFocusRing    =   True
+      value           =   False
+      Visible         =   True
+      Width           =   25
+   End
+   Begin PlacardButton CookiesButton
+      AcceptFocus     =   False
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      bold            =   False
+      caption         =   ""
+      captionDX       =   0
+      captionDY       =   0
+      DoubleBuffer    =   False
+      downDX          =   0
+      downDY          =   0
+      Enabled         =   True
+      EraseBackground =   True
+      hasIcon         =   ""
+      Height          =   25
+      HelpTag         =   ""
+      Icon            =   17051647
+      iconDX          =   0
+      iconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      invertTextColor =   ""
+      isSticky        =   0
+      italic          =   False
+      Left            =   288
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   False
+      Scope           =   0
+      TabIndex        =   23
+      TabPanelIndex   =   0
+      TabStop         =   True
+      textColor       =   "&c00000000"
+      textColorDown   =   "&c000000"
+      textFont        =   "System"
+      textSize        =   0
+      Top             =   306
+      underline       =   False
+      UseFocusRing    =   True
+      value           =   False
+      Visible         =   False
+      Width           =   25
    End
 End
 #tag EndWindow
@@ -720,6 +831,29 @@ End
 		  If Me.Request.Headers.AcceptableTypes.Ubound <= -1 Then
 		    Me.Request.SetHeader("Accept") = "*/*"
 		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub Perform()
+		  Output = ""
+		  Generate()
+		  Sock.Close
+		  Sock.Address = theURL.FQDN
+		  If Request.Path.Protocol = "https" Then
+		    Sock.Secure = True
+		  Else
+		    Sock.Secure = False
+		  End If
+		  If theURL.Port <> 0 Then
+		    Sock.Port = theURL.Port
+		  ElseIf Sock.Secure Then
+		    sock.Port = 443
+		  Else
+		    Sock.Port = 80
+		  End If
+		  
+		  Sock.Connect()
 		End Sub
 	#tag EndMethod
 
@@ -808,6 +942,43 @@ End
 
 #tag EndWindowCode
 
+#tag Events HexViewer1
+	#tag Event
+		Sub Open()
+		  ' try to pick a fixed-width font
+		  For i As Integer = 1 To FontCount - 1
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
+		  
+		  Dim bs As New BinaryStream("NO DATA TO DISPLAY ")
+		  Me.ShowData(bs)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function Scrolled(LinesDelta As Integer, BytesDelta As Integer) As Boolean
+		  #pragma Unused BytesDelta
+		  ScrollBar1.Value = ScrollBar1.Value + LinesDelta
+		  ScrollBar1.Maximum = Me.LineCount
+		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
+		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events ScrollBar1
+	#tag Event
+		Sub ValueChanged()
+		  HexViewer1.Offset = Me.Value * HexViewer1.LineLength
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events Sock
 	#tag Event
 		Sub Connected()
@@ -828,6 +999,10 @@ End
 		  RawText = Self.Request.ToString
 		  OutputLog.Text = "-----------Request-----------" + CRLF + RawText + CRLF _
 		  + "-----------Response-----------" + CRLF + OutPut + CRLF
+		  Dim bs As New BinaryStream(RawText + CRLF + CRLF + Output)
+		  HexViewer1.ShowData(bs)
+		  ScrollBar1.Value = 0
+		  ScrollBar1.Maximum = HexViewer1.LineCount
 		  
 		  DataReceivedTimer.Mode = Timer.ModeSingle
 		End Sub
@@ -836,21 +1011,17 @@ End
 		Sub Error()
 		  Select Case Me.LastErrorCode
 		  Case 102
-		    'IPAddress1.Text = "Closed by server"
-		    'IPAddress1.TextColor = &c80808000
+		    IPAddress.Text = "Closed by host"
 		    IPAddress.TextColor = &c80808000
 		    
 		  Case 103
-		    IPAddress.Text = TheURL.FQDN
-		    'IPAddress1.Text = "Bad domain"
-		    'IPAddress1.TextColor = &cFF000000
-		    IPAddress.TextColor = &cFF000000
+		    IPAddress.Text = ""
 		    ResponseHeaders.DeleteAllRows
-		    Code.Text = ""
+		    Code.TextColor = &cFF000000
+		    Code.Text = "Unable to connect"
 		    
 		  Else
-		    'IPAddress1.Text = "Socket error: " + Str(Me.LastErrorCode)
-		    'IPAddress1.TextColor = &cFF000000
+		    IPAddress.Text = "Socket error: " + Str(Me.LastErrorCode)
 		    IPAddress.TextColor = &cFF000000
 		  End Select
 		End Sub
@@ -860,6 +1031,14 @@ End
 	#tag Event
 		Sub Action()
 		  Update(Output)
+		  If Response.StatusCode = 301 Or Response.StatusCode = 302 Then
+		    Dim redir As String = Response.GetHeader("Location")
+		    If MsgBox("Response redirects to: " + redir + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
+		      URL.Text = redir
+		      Perform()
+		    End If
+		  End If
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -913,57 +1092,7 @@ End
 #tag Events Sender
 	#tag Event
 		Sub Action()
-		  Output = ""
-		  Generate()
-		  Sock.Close
-		  Sock.Address = theURL.FQDN
-		  If Request.Path.Protocol = "https" Then
-		    Sock.Secure = True
-		  Else
-		    Sock.Secure = False
-		  End If
-		  If theURL.Port <> 0 Then
-		    Sock.Port = theURL.Port
-		  ElseIf Sock.Secure Then
-		    sock.Port = 443
-		  Else
-		    Sock.Port = 80
-		  End If
-		  
-		  Sock.Connect()
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events CookiesButton
-	#tag Event
-		Sub Action()
-		  Dim allcookies() As Cookie
-		  For i As Integer = 0 To Response.Headers.CookieCount - 1
-		    allcookies.Append(Response.Headers.Cookie(i))
-		  Next
-		  CookieViewer.ShowCookies(AllCookies)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseEnter()
-		  If Me.Enabled Then
-		    Me.Icon = cookie_icon
-		  Else
-		    Me.Icon = cookie_icon_grey
-		  End If
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExit()
-		  Me.Icon = cookie_icon_grey
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events ResponseHeaderView
-	#tag Event
-		Sub Action()
-		  HeaderViewer.ShowHeaders(Response.Headers)
+		  Perform()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -981,21 +1110,15 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events EditCookies
+#tag Events EditCookies11
 	#tag Event
-		Sub MouseEnter()
-		  Me.Icon = cookie_icon
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExit()
+		Sub Open()
 		  Me.Icon = cookie_icon_grey
-		  
+		  Me.HelpTag = "Add a cookie to request"
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub Action()
+		Sub ValueChanged()
 		  Dim c As Cookie
 		  Dim editindex As Integer = -1
 		  
@@ -1014,72 +1137,110 @@ End
 		      RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
 		    End If
 		  End If
-		  Me.Invalidate
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub Open()
+		Sub MouseEnter()
+		  Me.Icon = cookie_icon
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
 		  Me.Icon = cookie_icon_grey
-		  Me.HelpTag = "Add a cookie to request"
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events RequestHeaderView
+#tag Events RequestHeaderView11
 	#tag Event
-		Sub Action()
+		Sub ValueChanged()
 		  If Request <> Nil Then HeaderViewer.ShowHeaders(Request.Headers)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events EditRaw
+#tag Events EditRaw11
 	#tag Event
 		Sub Open()
 		  Me.HelpTag = "Edit HTTP request body"
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub Action()
-		  Dim mnu As New MenuItem("EditRawMenu")
-		  mnu.Append(New MenuItem("HTML form output"))
-		  mnu.Append(New MenuItem("Edit raw"))
-		  Dim res As MenuItem = mnu.PopUp
-		  If res <> Nil Then
-		    If Self.Request = Nil Then Generate()
-		    Select Case res.Text
-		    Case "HTML form output"
-		      Dim formgen As New FormGenerator
-		      Dim olddata As Dictionary = DecodeFormData(Self.Request.MessageBody)
-		      Dim data As Dictionary = formgen.SetFormData(olddata)
-		      If Data <> Nil Then
-		        Self.Request.MessageBody = EncodeFormData(data)
-		        
-		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		          If RequestHeaders.Cell(i, 0) = "Content-Type" Then
-		            RequestHeaders.RemoveRow(i)
-		          End If
-		        Next
+		Sub ValueChanged()
+		  If Me.Value Then
+		    Dim mnu As New MenuItem("EditRawMenu")
+		    mnu.Append(New MenuItem("HTML form output"))
+		    mnu.Append(New MenuItem("Edit raw"))
+		    Dim res As MenuItem = mnu.PopUp
+		    If res <> Nil Then
+		      If Self.Request = Nil Then Generate()
+		      Select Case res.Text
+		      Case "HTML form output"
+		        Dim formgen As New FormGenerator
+		        Dim olddata As Dictionary = DecodeFormData(Self.Request.MessageBody)
+		        Dim data As Dictionary = formgen.SetFormData(olddata)
+		        If Data <> Nil Then
+		          Self.Request.MessageBody = EncodeFormData(data)
+		          
+		          For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		            If RequestHeaders.Cell(i, 0) = "Content-Type" Then
+		              RequestHeaders.RemoveRow(i)
+		            End If
+		          Next
+		          For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		            If RequestHeaders.Cell(i, 0) = "Content-Length" Then
+		              RequestHeaders.RemoveRow(i)
+		            End If
+		          Next
+		          
+		          RequestHeaders.AddRow("Content-Type", "application/x-www-form-URLEncoded", "")
+		          RequestHeaders.AddRow("Content-Length", Str(LenB(Self.Request.MessageBody)), "")
+		        End If
+		      Case "Edit raw"
+		        Dim raw As String = RawEditor.EditRaw(Self.Request.MessageBody)
+		        If raw.Trim = "" Then Return
 		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
 		          If RequestHeaders.Cell(i, 0) = "Content-Length" Then
 		            RequestHeaders.RemoveRow(i)
 		          End If
 		        Next
-		        
-		        RequestHeaders.AddRow("Content-Type", "application/x-www-form-URLEncoded", "")
+		        Self.Request.MessageBody = raw
 		        RequestHeaders.AddRow("Content-Length", Str(LenB(Self.Request.MessageBody)), "")
-		      End If
-		    Case "Edit raw"
-		      Dim raw As String = RawEditor.EditRaw(Self.Request.MessageBody)
-		      If raw.Trim = "" Then Return
-		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
-		          RequestHeaders.RemoveRow(i)
-		        End If
-		      Next
-		      Self.Request.MessageBody = raw
-		      RequestHeaders.AddRow("Content-Length", Str(LenB(Self.Request.MessageBody)), "")
-		      
-		    End Select
+		        
+		      End Select
+		    End If
 		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ResponseHeaderView
+	#tag Event
+		Sub ValueChanged()
+		  HeaderViewer.ShowHeaders(Response.Headers)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events CookiesButton
+	#tag Event
+		Sub Open()
+		  Me.Icon = cookie_icon_grey
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseEnter()
+		  Me.Icon = cookie_icon
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  Me.Icon = cookie_icon_grey
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub ValueChanged()
+		  Dim allcookies() As Cookie
+		  For i As Integer = 0 To Response.Headers.CookieCount - 1
+		    allcookies.Append(Response.Headers.Cookie(i))
+		  Next
+		  CookieViewer.ShowCookies(AllCookies)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
