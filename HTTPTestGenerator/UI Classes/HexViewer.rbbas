@@ -70,7 +70,7 @@ Inherits BaseCanvas
 		  Dim gw, rowoffset As Integer
 		  Dim alt As Boolean = True
 		  If ShowOffsets Then
-		    gw = g.StringWidth("0x00000000") + 2
+		    gw = g.StringWidth("0x00000") + 1
 		    'TopGutterGraphics = g.Clip(0, 0, g.Width, g.StringHeight("0x00000000", 99)) 'broken right now
 		    TopGutterGraphics = g.Clip(0, 0, 0, 0)
 		  Else
@@ -134,15 +134,16 @@ Inherits BaseCanvas
 		    BinGraphics.DrawString(data, 0, TextHeight - 1)
 		    TextGraphics.DrawString(txt, 0, TextHeight - 1)
 		    GutterGraphics.ForeColor = LineNumbersColor
-		    Dim linenumber As String = Hex(rowoffset, 8, LineNumbersLittleEndian)
+		    Dim linenumber As String = Hex(rowoffset, 5, LineNumbersLittleEndian)
 		    GutterGraphics.DrawString("0x" + linenumber, 0, TextHeight - 1)
 		    data = ""
 		    txt = ""
 		    row = row + 1
 		  Loop
+		  g.ForeColor = Me.BorderColor
 		  g.DrawLine(BinGraphics.Width + GutterGraphics.Width - 1, 0, BinGraphics.Width + GutterGraphics.Width - 1, BinGraphics.Height)
+		  g.DrawLine(GutterGraphics.Width - 1, 0, GutterGraphics.Width - 1, BinGraphics.Height)
 		  If Me.Border Then
-		    g.ForeColor = Me.BorderColor
 		    g.DrawRect(0, 0, g.Width, g.Height)
 		  End If
 		End Sub
@@ -615,6 +616,13 @@ Inherits BaseCanvas
 			Type="Color"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="BytesLittleEndian"
+			Visible=true
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="DoubleBuffer"
 			Visible=true
 			Group="Behavior"
@@ -705,6 +713,13 @@ Inherits BaseCanvas
 			Group="Behavior"
 			InitialValue="&c80000000"
 			Type="Color"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="LineNumbersLittleEndian"
+			Visible=true
+			Group="Behavior"
+			InitialValue="False"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LockBottom"
