@@ -23,7 +23,7 @@ Begin Window Generator
    Resizeable      =   True
    Title           =   "HTTP Request Generator"
    Visible         =   True
-   Width           =   7.35e+2
+   Width           =   7.47e+2
    Begin TabPanel TabPanel1
       AutoDeactivate  =   True
       Bold            =   ""
@@ -53,7 +53,7 @@ Begin Window Generator
       Underline       =   ""
       Value           =   1
       Visible         =   True
-      Width           =   358
+      Width           =   370
       Begin TextArea OutputLog
          AcceptTabs      =   False
          Alignment       =   0
@@ -98,7 +98,7 @@ Begin Window Generator
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   331
+         Width           =   343
       End
       Begin HexViewer HexViewer1
          AcceptFocus     =   True
@@ -141,7 +141,7 @@ Begin Window Generator
          Underline       =   ""
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   330
+         Width           =   342
       End
       Begin ScrollBar ScrollBar1
          AcceptFocus     =   true
@@ -151,7 +151,7 @@ Begin Window Generator
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
-         Left            =   713
+         Left            =   725
          LineStep        =   1
          LiveScroll      =   ""
          LockBottom      =   True
@@ -217,7 +217,7 @@ Begin Window Generator
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   331
+         Width           =   343
          _ScrollWidth    =   -1
       End
       Begin PlacardButton ResponseHeaderView
@@ -236,7 +236,7 @@ Begin Window Generator
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   False
-         Left            =   694
+         Left            =   706
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   False
@@ -274,7 +274,7 @@ Begin Window Generator
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   False
-         Left            =   668
+         Left            =   680
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   False
@@ -328,7 +328,7 @@ Begin Window Generator
          Transparent     =   True
          Underline       =   ""
          Visible         =   True
-         Width           =   318
+         Width           =   330
       End
       Begin Label Code
          AutoDeactivate  =   True
@@ -437,7 +437,7 @@ Begin Window Generator
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   508
+      Left            =   520
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -627,6 +627,10 @@ End
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h21
+		Private LastSplitterPos As Integer = &hFFFFFF
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mDown As Boolean
@@ -894,11 +898,23 @@ End
 		Sub MouseDrag(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  If Self.MouseX > 367 Then
-		    If Self.Width <= 735 Then Return
+		  If Self.MouseX > 376 Then
+		    If Self.Width <= 747 Then Return
+		    Dim tpL, tpW, rmW As Integer
+		    tpL = Me.Left + Me.Width + 4
+		    tpW = Self.Width - RequestMain1.Width - Canvas1.Width
+		    
+		    'If tpW < 377 Then Return
+		    'If Self.Width - tpL < 377 Then Return
+		    If LastSplitterPos > Self.MouseX Then ' move right
+		      If Self.Width - tpL <= 377 Then Return
+		    Else ' move left
+		      If tpL <= 383 Then Return
+		    End If
 		    Me.Left = Self.MouseX
-		    TabPanel1.Left = Me.Left + Me.Width + 4
-		    TabPanel1.Width = Self.Width - RequestMain1.Width - Canvas1.Width
+		    LastSplitterPos = Me.Left
+		    TabPanel1.Left = tpL
+		    TabPanel1.Width = tpW
 		    RequestMain1.Width = Me.Left
 		    'Me.Refresh(False)
 		  End If

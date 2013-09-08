@@ -79,7 +79,11 @@ Inherits BaseCanvas
 		  End If
 		  TopGutterGraphics.TextSize = 0.75 * Me.TextSize
 		  GutterGraphics = g.Clip(0, TopGutterGraphics.Height, gw, Buffer.Height - TopGutterGraphics.Height)
-		  BinWidth = (0.75 * Me.Width) - GutterGraphics.Width
+		  If ShowOffsets Then
+		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width + g.StringWidth(" 0")
+		  Else
+		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width
+		  End If
 		  BinGraphics = g.Clip(GutterGraphics.Width, TopGutterGraphics.Height, BinWidth, Buffer.Height - TopGutterGraphics.Height)
 		  Dim TextWidth As Integer = Me.Width - BinWidth - GutterGraphics.Width
 		  TextGraphics = g.Clip(BinWidth + GutterGraphics.Width, TopGutterGraphics.Height, TextWidth, Buffer.Height - TopGutterGraphics.Height)
