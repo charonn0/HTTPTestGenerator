@@ -79,7 +79,7 @@ Inherits BaseCanvas
 		  End If
 		  TopGutterGraphics.TextSize = 0.75 * Me.TextSize
 		  GutterGraphics = g.Clip(0, TopGutterGraphics.Height, gw, Buffer.Height - TopGutterGraphics.Height)
-		  BinWidth = (0.80 * Me.Width) - GutterGraphics.Width
+		  BinWidth = (0.75 * Me.Width) - GutterGraphics.Width
 		  BinGraphics = g.Clip(GutterGraphics.Width, TopGutterGraphics.Height, BinWidth, Buffer.Height - TopGutterGraphics.Height)
 		  Dim TextWidth As Integer = Me.Width - BinWidth - GutterGraphics.Width
 		  TextGraphics = g.Clip(BinWidth + GutterGraphics.Width, TopGutterGraphics.Height, TextWidth, Buffer.Height - TopGutterGraphics.Height)
@@ -93,6 +93,10 @@ Inherits BaseCanvas
 		  Do Until TextHeight > BinGraphics.Height Or Stream.EOF
 		    rowoffset = Stream.Position
 		    Do Until BinGraphics.StringWidth(data) >= BinGraphics.Width - bytewidth
+		      If Stream.EOF Then
+		        data = data + " "
+		        Continue
+		      End If
 		      Dim bt As Byte = Stream.ReadByte
 		      hx = Hex(bt, 2, BytesLittleEndian)
 		      data = data + " " + hx' + " "
