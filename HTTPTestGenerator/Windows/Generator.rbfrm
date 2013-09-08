@@ -51,7 +51,7 @@ Begin Window Generator
       TextUnit        =   0
       Top             =   0
       Underline       =   ""
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   364
       Begin TextArea OutputLog
@@ -66,7 +66,7 @@ Begin Window Generator
          DataSource      =   ""
          Enabled         =   True
          Format          =   ""
-         Height          =   77
+         Height          =   118
          HelpTag         =   ""
          HideSelection   =   True
          Index           =   -2147483648
@@ -94,7 +94,7 @@ Begin Window Generator
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   246
+         Top             =   202
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
@@ -187,7 +187,7 @@ Begin Window Generator
          GridLinesVertical=   0
          HasHeading      =   True
          HeadingIndex    =   -1
-         Height          =   163
+         Height          =   119
          HelpTag         =   ""
          Hierarchical    =   False
          Index           =   -2147483648
@@ -249,7 +249,7 @@ Begin Window Generator
          textColorDown   =   "&c000000"
          TextFont        =   "System"
          TextSize        =   0
-         Top             =   217
+         Top             =   173
          Underline       =   False
          UseFocusRing    =   True
          Value           =   False
@@ -287,7 +287,7 @@ Begin Window Generator
          textColorDown   =   "&c000000"
          TextFont        =   "System"
          TextSize        =   0
-         Top             =   217
+         Top             =   173
          Underline       =   False
          UseFocusRing    =   True
          Value           =   False
@@ -356,7 +356,7 @@ Begin Window Generator
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   219
+         Top             =   175
          Transparent     =   True
          Underline       =   False
          Visible         =   True
@@ -390,7 +390,7 @@ Begin Window Generator
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   219
+         Top             =   175
          Transparent     =   True
          Underline       =   False
          Visible         =   True
