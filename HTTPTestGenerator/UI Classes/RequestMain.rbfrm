@@ -69,7 +69,7 @@ Begin ContainerControl RequestMain
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   337
+      Width           =   330
       _ScrollWidth    =   -1
    End
    Begin ComboBox RequestMethod
@@ -128,7 +128,7 @@ Begin ContainerControl RequestMain
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       Mask            =   ""
       Password        =   False
@@ -164,8 +164,8 @@ Begin ContainerControl RequestMain
       ListIndex       =   0
       LockBottom      =   False
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   True
       Scope           =   0
       TabIndex        =   3
@@ -196,8 +196,8 @@ Begin ContainerControl RequestMain
       Left            =   117
       LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   False
       Scope           =   0
       TabIndex        =   4
@@ -206,7 +206,7 @@ Begin ContainerControl RequestMain
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   306
+      Top             =   304
       Underline       =   False
       Visible         =   True
       Width           =   98
@@ -367,15 +367,15 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   117
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
-      LockTop         =   True
+      LockRight       =   True
+      LockTop         =   False
       Maximum         =   0
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   328
+      Top             =   326
       Value           =   0
       Visible         =   False
       Width           =   98
@@ -384,6 +384,13 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Resized()
+		  Sender.Left = (Me.Width \ 2) - (Sender.Width \ 2)
+		End Sub
+	#tag EndEvent
+
+
 	#tag Hook, Flags = &h0
 		Event Generate()
 	#tag EndHook

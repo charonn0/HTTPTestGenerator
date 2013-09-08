@@ -106,6 +106,8 @@ Begin Window Generator
          AutoDeactivate  =   True
          Backdrop        =   ""
          Bold            =   ""
+         Border          =   True
+         BorderColor     =   "&c808080"
          ByteBackgroundColor=   "&cFFFFFF00"
          ByteBackgroundColorAlt=   "&cC0C0C000"
          ByteColor       =   "&c0000FF00"
@@ -699,9 +701,6 @@ End
 		      End If
 		    End If
 		  Next
-		  
-		  Dim bs As New BinaryStream("NO DATA TO DISPLAY ")
-		  Me.ShowData(bs)
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -890,6 +889,11 @@ End
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  #pragma Unused X
 		  #pragma Unused Y
+		  #If TargetWin32 Then
+		    'Dim mb As New MemoryBlock(1)
+		    'mb.BooleanValue(0) = False
+		    'Call SendMessage(RequestMain1.Handle, WM_SETREDRAW, mb, Nil)
+		  #endif
 		  mDown = True
 		  Return True
 		End Function
@@ -900,7 +904,7 @@ End
 		  #pragma Unused Y
 		  If Self.MouseX > 376 Then
 		    If Self.Width <= 747 Then Return
-		    Dim tpL, tpW, rmW As Integer
+		    Dim tpL, tpW As Integer
 		    tpL = Me.Left + Me.Width + 4
 		    tpW = Self.Width - RequestMain1.Width - Canvas1.Width
 		    
@@ -941,7 +945,13 @@ End
 		  #pragma Unused X
 		  #pragma Unused Y
 		  mDown = False
-		  Me.Refresh
+		  #If TargetWin32 Then
+		    'Dim mb As New MemoryBlock(1)
+		    'mb.BooleanValue(0) = True
+		    'Call SendMessage(RequestMain1.Handle, WM_SETREDRAW, mb, Nil)
+		    'RequestMain1.Refresh
+		  #endif
+		  Me.Invalidate
 		End Sub
 	#tag EndEvent
 #tag EndEvents
