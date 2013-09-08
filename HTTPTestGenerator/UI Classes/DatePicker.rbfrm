@@ -24,21 +24,16 @@ Begin Window DatePicker
    Title           =   "Pick Date"
    Visible         =   True
    Width           =   210
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   0
       InitialParent   =   ""
       Italic          =   False
@@ -49,32 +44,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   0
+      TabIndex        =   6
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   49
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   1
       InitialParent   =   ""
       Italic          =   False
@@ -85,32 +75,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   1
+      TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   49
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   2
       InitialParent   =   ""
       Italic          =   False
@@ -121,32 +106,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   2
+      TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   49
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   3
       InitialParent   =   ""
       Italic          =   False
@@ -157,32 +137,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   3
+      TabIndex        =   9
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   49
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   4
       InitialParent   =   ""
       Italic          =   False
@@ -193,32 +168,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   4
+      TabIndex        =   10
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   49
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   5
       InitialParent   =   ""
       Italic          =   False
@@ -229,32 +199,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   5
+      TabIndex        =   11
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   49
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   6
       InitialParent   =   ""
       Italic          =   False
@@ -265,32 +230,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   6
+      TabIndex        =   12
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   49
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   7
       InitialParent   =   ""
       Italic          =   False
@@ -301,32 +261,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   7
+      TabIndex        =   13
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   76
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   8
       InitialParent   =   ""
       Italic          =   False
@@ -337,32 +292,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   8
+      TabIndex        =   14
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   76
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   9
       InitialParent   =   ""
       Italic          =   False
@@ -373,32 +323,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   9
+      TabIndex        =   15
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   76
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   10
       InitialParent   =   ""
       Italic          =   False
@@ -409,32 +354,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   10
+      TabIndex        =   16
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   76
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   11
       InitialParent   =   ""
       Italic          =   False
@@ -445,32 +385,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   11
+      TabIndex        =   17
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   76
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   12
       InitialParent   =   ""
       Italic          =   False
@@ -481,32 +416,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   12
+      TabIndex        =   18
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   76
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   13
       InitialParent   =   ""
       Italic          =   False
@@ -517,32 +447,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   13
+      TabIndex        =   19
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   76
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   14
       InitialParent   =   ""
       Italic          =   False
@@ -553,32 +478,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   14
+      TabIndex        =   20
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   103
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   15
       InitialParent   =   ""
       Italic          =   False
@@ -589,32 +509,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   15
+      TabIndex        =   21
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   103
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   16
       InitialParent   =   ""
       Italic          =   False
@@ -625,32 +540,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   16
+      TabIndex        =   22
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   103
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   17
       InitialParent   =   ""
       Italic          =   False
@@ -661,32 +571,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   17
+      TabIndex        =   23
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   103
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   18
       InitialParent   =   ""
       Italic          =   False
@@ -697,32 +602,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   18
+      TabIndex        =   24
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   103
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   19
       InitialParent   =   ""
       Italic          =   False
@@ -733,32 +633,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   19
+      TabIndex        =   25
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   103
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   20
       InitialParent   =   ""
       Italic          =   False
@@ -769,32 +664,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   20
+      TabIndex        =   26
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   103
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   21
       InitialParent   =   ""
       Italic          =   False
@@ -805,32 +695,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   21
+      TabIndex        =   27
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   130
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   22
       InitialParent   =   ""
       Italic          =   False
@@ -841,32 +726,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   22
+      TabIndex        =   28
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   130
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   23
       InitialParent   =   ""
       Italic          =   False
@@ -877,32 +757,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   23
+      TabIndex        =   29
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   130
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   24
       InitialParent   =   ""
       Italic          =   False
@@ -913,32 +788,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   24
+      TabIndex        =   30
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   130
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   25
       InitialParent   =   ""
       Italic          =   False
@@ -949,32 +819,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   25
+      TabIndex        =   31
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   130
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   26
       InitialParent   =   ""
       Italic          =   False
@@ -985,32 +850,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   26
+      TabIndex        =   32
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   130
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   27
       InitialParent   =   ""
       Italic          =   False
@@ -1021,32 +881,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   27
+      TabIndex        =   33
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   130
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   28
       InitialParent   =   ""
       Italic          =   False
@@ -1057,32 +912,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   28
+      TabIndex        =   34
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   157
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   29
       InitialParent   =   ""
       Italic          =   False
@@ -1093,32 +943,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   29
+      TabIndex        =   35
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   157
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   30
       InitialParent   =   ""
       Italic          =   False
@@ -1129,32 +974,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   30
+      TabIndex        =   36
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   157
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   31
       InitialParent   =   ""
       Italic          =   False
@@ -1165,32 +1005,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   31
+      TabIndex        =   37
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   157
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   32
       InitialParent   =   ""
       Italic          =   False
@@ -1201,32 +1036,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   32
+      TabIndex        =   38
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   157
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   33
       InitialParent   =   ""
       Italic          =   False
@@ -1237,32 +1067,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   33
+      TabIndex        =   39
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   157
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   34
       InitialParent   =   ""
       Italic          =   False
@@ -1273,14 +1098,14 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   34
+      TabIndex        =   40
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   157
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
@@ -1304,7 +1129,7 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   35
+      TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -1335,7 +1160,7 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   36
+      TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -1366,11 +1191,11 @@ Begin Window DatePicker
       Multiline       =   False
       Scope           =   0
       Selectable      =   True
-      TabIndex        =   41
+      TabIndex        =   43
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "DECEMBER"
       TextAlign       =   1
+      TextColor       =   &h000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -1400,11 +1225,11 @@ Begin Window DatePicker
       Multiline       =   False
       Scope           =   0
       Selectable      =   True
-      TabIndex        =   42
+      TabIndex        =   44
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "YEAR"
       TextAlign       =   1
+      TextColor       =   &h000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -1414,21 +1239,16 @@ Begin Window DatePicker
       Visible         =   True
       Width           =   90
    End
-   Begin ButtonCanvas MonthLeft
-      AcceptFocus     =   False
-      AcceptTabs      =   False
+   Begin PushButton MonthLeft
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   "<"
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   15
       HelpTag         =   "Last Month"
-      hilightBorder   =   True
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -1439,32 +1259,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   36
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   5
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   15
    End
-   Begin ButtonCanvas YearLeft
-      AcceptFocus     =   False
-      AcceptTabs      =   False
+   Begin PushButton YearLeft
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   "<<"
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   15
       HelpTag         =   "Last Year"
-      hilightBorder   =   True
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -1475,32 +1290,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   39
+      TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   25
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   15
    End
-   Begin ButtonCanvas MonthRight
-      AcceptFocus     =   False
-      AcceptTabs      =   False
+   Begin PushButton MonthRight
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ">"
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   15
       HelpTag         =   "Next month"
-      hilightBorder   =   True
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -1511,32 +1321,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   38
+      TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   5
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   15
    End
-   Begin ButtonCanvas YearRight
-      AcceptFocus     =   False
-      AcceptTabs      =   False
+   Begin PushButton YearRight
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ">>"
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   15
       HelpTag         =   "Next Year"
-      hilightBorder   =   True
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -1547,32 +1352,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   40
+      TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   25
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   15
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   35
       InitialParent   =   ""
       Italic          =   False
@@ -1583,32 +1383,27 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   43
+      TabIndex        =   41
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   184
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
-   Begin ButtonCanvas Day
-      AcceptFocus     =   True
-      AcceptTabs      =   True
+   Begin PushButton Day
       AutoDeactivate  =   True
-      Backdrop        =   0
       Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   ""
       Caption         =   ""
-      DoubleBuffer    =   False
+      Default         =   ""
       Enabled         =   True
-      EraseBackground =   False
-      Font            =   "System"
-      FontSize        =   12
       Height          =   24
       HelpTag         =   ""
-      hilightBorder   =   True
       Index           =   36
       InitialParent   =   ""
       Italic          =   False
@@ -1619,14 +1414,14 @@ Begin Window DatePicker
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   44
+      TabIndex        =   42
       TabPanelIndex   =   0
       TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
       Top             =   184
-      Transparent     =   True
       Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
       Visible         =   True
       Width           =   24
    End
@@ -1706,13 +1501,16 @@ End
 		    If i > d.DayOfWeek - 2 And i <= maxdays + d.DayOfWeek - 2 Then
 		      Day(i).Caption = Str(i - d.DayOfWeek + 2)
 		      If Not Day(i).Visible Then Day(i).Visible = True
-		      If i - d.DayOfWeek + 2 = SelectedDate.Day Then
-		        Day(i).Value = True
-		      ElseIf Day(i).Value Then
-		        Day(i).Value = False
-		      End If
 		      Dim dd As New Date(d.Year, d.Month, i - d.DayOfWeek + 2)
 		      Day(i).HelpTag = dd.LongDate
+		      If dd.Day = SelectedDate.Day Then
+		        Day(i).Bold = True
+		        Day(i).TextSize = 14
+		      Else
+		        Day(i).Bold = False
+		        Day(i).TextSize = 12
+		      End If
+		      
 		    Else
 		      Try
 		        Day(i).Visible = False
@@ -1734,7 +1532,7 @@ End
 
 #tag Events Day
 	#tag Event
-		Sub Action()
+		Sub Action(index as Integer)
 		  SelectedDate.Day = Val(Day(index).Caption)
 		  UpdateDate()
 		End Sub

@@ -118,6 +118,7 @@ End
 		  If hitItem.Text = "Copy to request headers" Then
 		    Dim c As Cookie = hitItem.Tag
 		    Generator.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		    Generator.RequestHeaders.RowTag(Generator.RequestHeaders.LastIndex) = c
 		    Return True
 		  End If
 		End Function
