@@ -24,7 +24,7 @@ Inherits BaseCanvas
 		  Stream.Position = Offset
 		  Do Until Buffer.Graphics.StringWidth(data) >= Buffer.Graphics.Width - Buffer.Graphics.StringWidth(" 00")
 		    Dim bt As Byte = Stream.ReadByte
-		    data = data + " " + Left(Hex(bt) + "00", 2) + " "
+		    data = data + " " + Hex(bt, 2, LineNumbersLittleEndian) + " "
 		  Loop
 		  
 		  Dim linedelta, bytesdelta As Integer
@@ -87,15 +87,15 @@ Inherits BaseCanvas
 		  If Stream = Nil Then Return
 		  Dim TextHeight, row, column, bytewidth As Integer
 		  Dim data, txt, hx As String
-		  bytewidth = BinGraphics.StringWidth(" 00")
+		  bytewidth = BinGraphics.StringWidth(".00")
 		  Stream.Position = Offset
 		  row = LineFromOffset(Offset)
 		  Do Until TextHeight > BinGraphics.Height Or Stream.EOF
 		    rowoffset = Stream.Position
 		    Do Until BinGraphics.StringWidth(data) >= BinGraphics.Width - bytewidth
 		      Dim bt As Byte = Stream.ReadByte
-		      hx = Hex(bt, 2)
-		      data = data + " " + hx + " "
+		      hx = Hex(bt, 2, BytesLittleEndian)
+		      data = data + " " + hx' + " "
 		      If bt < 33 Or bt > 127 Then
 		        txt = txt + "."
 		      Else
@@ -106,7 +106,7 @@ Inherits BaseCanvas
 		        End If
 		      End If
 		      If row = 0 Then
-		        Dim header As String = Hex(column, 2)
+		        Dim header As String = Hex(column, 2, LineNumbersLittleEndian)
 		        Dim headerstart As Integer = GutterGraphics.Width + (bytewidth * column) + BinGraphics.StringWidth(" 00 ")
 		        TopGutterGraphics.DrawString(" " + header, headerstart, TopGutterGraphics.Height)
 		      End If
@@ -134,7 +134,7 @@ Inherits BaseCanvas
 		    BinGraphics.DrawString(data, 0, TextHeight - 1)
 		    TextGraphics.DrawString(txt, 0, TextHeight - 1)
 		    GutterGraphics.ForeColor = LineNumbersColor
-		    Dim linenumber As String = Hex(rowoffset, 8)
+		    Dim linenumber As String = Hex(rowoffset, 8, LineNumbersLittleEndian)
 		    GutterGraphics.DrawString("0x" + linenumber, 0, TextHeight - 1)
 		    data = ""
 		    txt = ""
@@ -150,9 +150,13 @@ Inherits BaseCanvas
 
 
 	#tag Method, Flags = &h1
-		Protected Shared Function Hex(Data As Integer, Width As Integer = 2) As String
+		Protected Shared Function Hex(Data As Integer, Width As Integer = 2, LittleEndian As Boolean) As String
 		  Dim number As String = Left(REALbasic.Hex(Data) + "00000000", Width)
-		  If TargetLittleEndian Then number = StrReverse(number)
+		  If TargetLittleEndian Then
+		    If Not LittleEndian Then number = StrReverse(number)
+		  Else
+		    If LittleEndian Then number = StrReverse(number)
+		  End If
 		  Return number
 		End Function
 	#tag EndMethod
@@ -188,7 +192,7 @@ Inherits BaseCanvas
 		Function LineLength() As Integer
 		  ' the number of bytes each line represents
 		  Dim data As String
-		  Dim g As Graphics = Buffer.Graphics
+		  Dim g As Graphics = BinGraphics
 		  Dim count As Integer
 		  Do Until g.StringWidth(data) >= BinGraphics.Width - g.StringWidth(" 00")
 		    data = data + " 00"
@@ -207,7 +211,7 @@ Inherits BaseCanvas
 	#tag Method, Flags = &h0
 		Function OffsetFromXY(X As Integer, Y As Integer) As Int64
 		  Dim row As Integer = Y \ LineHeight
-		  Dim column As Integer = X \ LineLength
+		  Dim column As Integer = X \ BinGraphics.Width
 		  Dim oldoffset As UInt64 = Me.Offset
 		  Stream.Position = Me.Offset
 		  For a As Integer = 0 To row
@@ -216,6 +220,8 @@ Inherits BaseCanvas
 		        Dim ret As Int64 = Stream.Position + 1
 		        Stream.Position = oldoffset
 		        Return ret
+		      Else
+		        Call Stream.ReadByte
 		      End If
 		    Next
 		  Next
@@ -235,28 +241,12 @@ Inherits BaseCanvas
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Shared Function StrReverse(s As String) As String
-		  'from WFS
-		  // Return s with the characters in reverse order.
-		  
-		  If Len(s) < 2 Then Return s
-		  
-		  Dim m As New MemoryBlock(s.LenB)
-		  
-		  Dim c As String
-		  Dim pos, mpos, csize As Integer
-		  pos = 1
-		  mpos = m.Size
-		  While mpos > 0
-		    c = Mid(s, pos, 1)
-		    csize = c.LenB
-		    mpos = mpos - csize
-		    m.StringValue(mpos, csize) = c
-		    pos = pos + 1
-		  Wend
-		  
-		  Return DefineEncoding(m.StringValue(0, m.Size), s.Encoding)
-		  
+		Protected Shared Function StrReverse(InputData As String) As String
+		  Dim output As String = DefineEncoding("", InputData.Encoding)
+		  For i As Integer = InputData.Len DownTo 1
+		    output = output + Mid(InputData, i, 1)
+		  Next
+		  Return output
 		End Function
 	#tag EndMethod
 
@@ -329,6 +319,21 @@ Inherits BaseCanvas
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
+			  return mBytesLittleEndian
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mBytesLittleEndian = value
+			  Update
+			End Set
+		#tag EndSetter
+		BytesLittleEndian As Boolean
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
 			  return mEncoding
 			End Get
 		#tag EndGetter
@@ -390,6 +395,21 @@ Inherits BaseCanvas
 		LineNumbersColor As Color
 	#tag EndComputedProperty
 
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mLineNumbersLittleEndian
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mLineNumbersLittleEndian = value
+			  Update()
+			End Set
+		#tag EndSetter
+		LineNumbersLittleEndian As Boolean
+	#tag EndComputedProperty
+
 	#tag Property, Flags = &h21
 		Private mByteBackgroundColor As Color = &cFFFFFF00
 	#tag EndProperty
@@ -400,6 +420,10 @@ Inherits BaseCanvas
 
 	#tag Property, Flags = &h21
 		Private mByteColor As Color
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mBytesLittleEndian As Boolean = True
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -416,6 +440,10 @@ Inherits BaseCanvas
 
 	#tag Property, Flags = &h21
 		Private mLineNumbersColor As Color = &c0000FF00
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mLineNumbersLittleEndian As Boolean = False
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
