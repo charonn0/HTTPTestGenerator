@@ -4,7 +4,7 @@ Begin Window RawEditor
    Backdrop        =   0
    CloseButton     =   False
    Composite       =   False
-   Frame           =   3
+   Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
    Height          =   400

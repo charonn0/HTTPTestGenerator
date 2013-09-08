@@ -1237,8 +1237,10 @@ End
 		  If c <> Nil Then
 		    If editindex > -1 Then
 		      RequestHeaders.Cell(editindex, 1) = c.Name + "=" + c.Value
+		      RequestHeaders.RowTag(editindex) = c
 		    Else
 		      RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
 		    End If
 		  End If
 		End Sub
@@ -1257,7 +1259,8 @@ End
 #tag Events RequestHeaderView11
 	#tag Event
 		Sub ValueChanged()
-		  If Request <> Nil Then HeaderViewer.ShowHeaders(Request.Headers)
+		  GenerateHeaders()
+		  HeaderViewer.ShowHeaders(Request.Headers)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1293,12 +1296,13 @@ End
 		            RequestHeaders.RemoveRow(i)
 		          End If
 		        Next
-		        
 		        RequestHeaders.AddRow("Content-Type", "application/x-www-form-URLEncoded", "")
+		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Type":"application/x-www-form-URLEncoded"
 		        RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
+		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(MessageBodyRaw))
 		      End If
 		    Case "Edit raw"
-		      Dim raw As String = RawEditor.EditRaw(Self.Request.MessageBody)
+		      Dim raw As String = RawEditor.EditRaw(MessageBodyRaw)
 		      If raw.Trim = "" Then Return
 		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
 		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
@@ -1307,6 +1311,7 @@ End
 		      Next
 		      MessageBodyRaw = raw
 		      RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
+		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(MessageBodyRaw))
 		      
 		    End Select
 		  End If

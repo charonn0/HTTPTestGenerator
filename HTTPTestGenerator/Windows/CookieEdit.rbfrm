@@ -4,7 +4,7 @@ Begin Window CookieEdit
    Backdrop        =   0
    CloseButton     =   True
    Composite       =   False
-   Frame           =   0
+   Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
    Height          =   157

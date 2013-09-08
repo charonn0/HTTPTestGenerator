@@ -4,7 +4,7 @@ Begin Window HeaderEdit
    Backdrop        =   0
    CloseButton     =   True
    Composite       =   False
-   Frame           =   0
+   Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
    Height          =   114
