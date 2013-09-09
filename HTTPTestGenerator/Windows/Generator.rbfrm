@@ -106,8 +106,6 @@ Begin Window Generator
          AutoDeactivate  =   True
          Backdrop        =   ""
          Bold            =   ""
-         Border          =   True
-         BorderColor     =   "&c808080"
          ByteBackgroundColor=   "&cFFFFFF00"
          ByteBackgroundColorAlt=   "&cC0C0C000"
          ByteColor       =   "&c0000FF00"
@@ -866,6 +864,14 @@ End
 	#tag Event
 		Sub SetMessageData(Data As String)
 		  MessageBodyRaw = Data
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  #If TargetWin32 Then
+		    Me.DoubleBuffer = True
+		    Me.EraseBackground = False
+		  #endif
 		End Sub
 	#tag EndEvent
 #tag EndEvents
