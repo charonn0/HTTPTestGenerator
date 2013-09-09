@@ -23,7 +23,7 @@ Begin Window Generator
    Resizeable      =   True
    Title           =   "HTTP Request Generator"
    Visible         =   True
-   Width           =   7.11e+2
+   Width           =   7.47e+2
    Begin TabPanel TabPanel1
       AutoDeactivate  =   True
       Bold            =   ""
@@ -33,7 +33,7 @@ Begin Window Generator
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   ""
-      Left            =   347
+      Left            =   377
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -53,7 +53,7 @@ Begin Window Generator
       Underline       =   ""
       Value           =   1
       Visible         =   True
-      Width           =   364
+      Width           =   370
       Begin TextArea OutputLog
          AcceptTabs      =   False
          Alignment       =   0
@@ -72,7 +72,7 @@ Begin Window Generator
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   False
-         Left            =   358
+         Left            =   388
          LimitText       =   0
          LockBottom      =   True
          LockedInPosition=   False
@@ -98,17 +98,20 @@ Begin Window Generator
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   337
+         Width           =   343
       End
       Begin HexViewer HexViewer1
-         AcceptFocus     =   ""
-         AcceptTabs      =   ""
+         AcceptFocus     =   True
+         AcceptTabs      =   True
          AutoDeactivate  =   True
          Backdrop        =   ""
          Bold            =   ""
+         Border          =   True
+         BorderColor     =   "&c808080"
          ByteBackgroundColor=   "&cFFFFFF00"
          ByteBackgroundColorAlt=   "&cC0C0C000"
          ByteColor       =   "&c0000FF00"
+         BytesLittleEndian=   True
          DoubleBuffer    =   True
          Enabled         =   True
          EraseBackground =   False
@@ -120,8 +123,9 @@ Begin Window Generator
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   ""
-         Left            =   353
+         Left            =   383
          LineNumbersColor=   "&c80000000"
+         LineNumbersLittleEndian=   False
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -139,7 +143,7 @@ Begin Window Generator
          Underline       =   ""
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   336
+         Width           =   342
       End
       Begin ScrollBar ScrollBar1
          AcceptFocus     =   true
@@ -149,7 +153,7 @@ Begin Window Generator
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
-         Left            =   689
+         Left            =   725
          LineStep        =   1
          LiveScroll      =   ""
          LockBottom      =   True
@@ -194,7 +198,7 @@ Begin Window Generator
          InitialParent   =   "TabPanel1"
          InitialValue    =   "Header Name	Header Value"
          Italic          =   False
-         Left            =   358
+         Left            =   388
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -215,7 +219,7 @@ Begin Window Generator
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   337
+         Width           =   343
          _ScrollWidth    =   -1
       End
       Begin PlacardButton ResponseHeaderView
@@ -234,7 +238,7 @@ Begin Window Generator
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   False
-         Left            =   670
+         Left            =   706
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   False
@@ -272,7 +276,7 @@ Begin Window Generator
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   False
-         Left            =   644
+         Left            =   680
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   False
@@ -305,7 +309,7 @@ Begin Window Generator
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   ""
-         Left            =   361
+         Left            =   391
          LockBottom      =   ""
          LockedInPosition=   False
          LockLeft        =   True
@@ -326,7 +330,7 @@ Begin Window Generator
          Transparent     =   True
          Underline       =   ""
          Visible         =   True
-         Width           =   324
+         Width           =   330
       End
       Begin Label Code
          AutoDeactivate  =   True
@@ -339,7 +343,7 @@ Begin Window Generator
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   False
-         Left            =   419
+         Left            =   449
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -373,7 +377,7 @@ Begin Window Generator
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   False
-         Left            =   361
+         Left            =   391
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -424,345 +428,6 @@ Begin Window Generator
       Top             =   14
       Width           =   32
    End
-   Begin HeaderList RequestHeaders
-      AutoDeactivate  =   True
-      AutoHideScrollbars=   True
-      Bold            =   False
-      Border          =   True
-      ColumnCount     =   3
-      ColumnsResizable=   True
-      ColumnWidths    =   "47%, 48%, *"
-      DataField       =   ""
-      DataSource      =   ""
-      DefaultRowHeight=   -1
-      Enabled         =   True
-      EnableDrag      =   False
-      EnableDragReorder=   False
-      GridLinesHorizontal=   0
-      GridLinesVertical=   0
-      HasHeading      =   True
-      HeadingIndex    =   -1
-      Height          =   245
-      HelpTag         =   ""
-      Hierarchical    =   False
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   "Header Name	Header Value	  "
-      Italic          =   False
-      Left            =   5
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      RequiresSelection=   False
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollBarVertical=   True
-      SelectionType   =   1
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   52
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   337
-      _ScrollWidth    =   -1
-   End
-   Begin ComboBox RequestMethod
-      AutoComplete    =   True
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   "GET\r\nHEAD\r\nPOST\r\nTRACE\r\nDELETE\r\nPUT\r\nOPTIONS"
-      Italic          =   False
-      Left            =   5
-      ListIndex       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   4
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   65
-   End
-   Begin HintTextField URL
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   False
-      BackColor       =   "&cFFFFFF00"
-      Bold            =   False
-      Border          =   True
-      CueText         =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      HasText         =   False
-      Height          =   22
-      HelpTag         =   ""
-      HintText        =   "Request URL"
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   72
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Password        =   False
-      ReadOnly        =   False
-      Scope           =   0
-      TabIndex        =   5
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   "&c00000000"
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   5
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   188
-   End
-   Begin ComboBox ProtocolVer
-      AutoComplete    =   False
-      AutoDeactivate  =   True
-      Bold            =   False
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   "HTTP/1.1\r\nHTTP/1.0"
-      Italic          =   False
-      Left            =   262
-      ListIndex       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   6
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   4
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   79
-   End
-   Begin PushButton Sender
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   0
-      Cancel          =   False
-      Caption         =   "Send Request"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   117
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      TabIndex        =   10
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   303
-      Underline       =   False
-      Visible         =   True
-      Width           =   98
-   End
-   Begin PlacardButton EditCookies11
-      AcceptFocus     =   False
-      AcceptTabs      =   ""
-      AutoDeactivate  =   True
-      Backdrop        =   ""
-      Bold            =   False
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   25
-      HelpTag         =   ""
-      Hilight         =   ""
-      Icon            =   17051647
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   284
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      Sticky          =   ""
-      TabIndex        =   18
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   "&c00000000"
-      textColorDown   =   "&c000000"
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   298
-      Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
-      Visible         =   True
-      Width           =   25
-   End
-   Begin PlacardButton RequestHeaderView11
-      AcceptFocus     =   False
-      AcceptTabs      =   ""
-      AutoDeactivate  =   True
-      Backdrop        =   ""
-      Bold            =   False
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   25
-      HelpTag         =   "Expanded Header View"
-      Hilight         =   ""
-      Icon            =   1571842047
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   310
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      Sticky          =   ""
-      TabIndex        =   19
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   "&c00000000"
-      textColorDown   =   "&c000000"
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   298
-      Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
-      Visible         =   True
-      Width           =   25
-   End
-   Begin PlacardButton EditRaw11
-      AcceptFocus     =   False
-      AcceptTabs      =   ""
-      AutoDeactivate  =   True
-      Backdrop        =   ""
-      Bold            =   False
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   25
-      HelpTag         =   ""
-      Hilight         =   ""
-      Icon            =   978827263
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   258
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      Sticky          =   ""
-      TabIndex        =   20
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   "&c00000000"
-      textColorDown   =   "&c000000"
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   298
-      Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
-      Visible         =   True
-      Width           =   25
-   End
-   Begin Label Label1
-      AutoDeactivate  =   True
-      Bold            =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   11
-      LockBottom      =   ""
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
-      LockTop         =   True
-      Multiline       =   ""
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   22
-      TabPanelIndex   =   0
-      Text            =   "Request Headers"
-      TextAlign       =   1
-      TextColor       =   &h000000
-      TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   0
-      Top             =   33
-      Transparent     =   True
-      Underline       =   ""
-      Visible         =   True
-      Width           =   324
-   End
    Begin Label IPAddress
       AutoDeactivate  =   True
       Bold            =   True
@@ -774,7 +439,7 @@ Begin Window Generator
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   484
+      Left            =   520
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -797,26 +462,59 @@ Begin Window Generator
       Visible         =   True
       Width           =   221
    End
-   Begin ProgressBar ProgressBar1
+   Begin RequestMain RequestMain1
+      AcceptFocus     =   ""
+      AcceptTabs      =   True
       AutoDeactivate  =   True
+      BackColor       =   &hFFFFFF
+      Backdrop        =   ""
       Enabled         =   True
-      Height          =   7
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   335
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   -1
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   26
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   0
+      UseFocusRing    =   ""
+      Visible         =   True
+      Width           =   366
+   End
+   Begin Canvas Canvas1
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   332
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   117
-      LockBottom      =   ""
+      Left            =   367
+      LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   True
+      LockLeft        =   False
       LockRight       =   ""
       LockTop         =   True
-      Maximum         =   0
       Scope           =   0
+      TabIndex        =   27
       TabPanelIndex   =   0
-      Top             =   325
-      Value           =   0
-      Visible         =   False
-      Width           =   98
+      TabStop         =   True
+      Top             =   0
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   8
    End
 End
 #tag EndWindow
@@ -826,11 +524,11 @@ End
 		Private Sub Generate()
 		  mTheURL = Nil
 		  Me.Request = New HTTP.Request()
-		  Me.Request.Method = HTTP.Method(Me.RequestMethod.Text)
-		  If Me.Request.Method = HTTP.RequestMethod.InvalidMethod Then Me.Request.MethodName = Me.RequestMethod.Text
+		  Me.Request.Method = HTTP.Method(RequestMain1.RequestMethod.Text)
+		  If Me.Request.Method = HTTP.RequestMethod.InvalidMethod Then Me.Request.MethodName = RequestMain1.RequestMethod.Text
 		  Me.Request.Path = theURL
 		  If Me.Request.path.ServerPath = "" Then Me.Request.path.ServerPath = "/"
-		  Me.Request.ProtocolVersion = CDbl(NthField(ProtocolVer.Text, "/", 2))
+		  Me.Request.ProtocolVersion = CDbl(NthField(RequestMain1.ProtocolVer.Text, "/", 2))
 		  GenerateHeaders()
 		  Me.Request.MessageBody = MessageBodyRaw
 		  
@@ -844,8 +542,8 @@ End
 	#tag Method, Flags = &h21
 		Private Sub GenerateHeaders()
 		  If Request = Nil Then Generate()
-		  For i As Integer = 0 To RequestHeaders.ListCount - 1
-		    Me.Request.SetHeader(RequestHeaders.Cell(i, 0)) = RequestHeaders.Cell(i, 1)
+		  For i As Integer = 0 To RequestMain1.RequestHeaders.ListCount - 1
+		    Me.Request.SetHeader(RequestMain1.RequestHeaders.Cell(i, 0)) = RequestMain1.RequestHeaders.Cell(i, 1)
 		  Next
 		  
 		  If Not Me.Request.HasHeader("Host") And Me.Request.ProtocolVersion >= 1.1 Then
@@ -933,6 +631,14 @@ End
 
 
 	#tag Property, Flags = &h21
+		Private LastSplitterPos As Integer = &hFFFFFF
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mDown As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private MessageBodyRaw As String
 	#tag EndProperty
 
@@ -960,11 +666,15 @@ End
 		Response As HTTP.Response
 	#tag EndProperty
 
+	#tag Property, Flags = &h21
+		Private SplitterThumb As Picture
+	#tag EndProperty
+
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
 			  If mTheURL = Nil Then
-			    mTheURL = New HTTP.URI(URL.Text)
+			    mTheURL = New HTTP.URI(RequestMain1.URL.Text)
 			  End If
 			  return mTheURL
 			End Get
@@ -979,10 +689,10 @@ End
 	#tag Event
 		Sub Open()
 		  ' try to pick a fixed-width font
-		  For i As Integer = 1 To FontCount - 1
+		  For i As Integer = FontCount - 1 DownTo 0
 		    Dim fontname As String = Font(i)
 		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Consolas" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
 		        Me.TextFont = fontname
 		        Exit For
 		      End If
@@ -991,9 +701,6 @@ End
 		      End If
 		    End If
 		  Next
-		  
-		  Dim bs As New BinaryStream("NO DATA TO DISPLAY ")
-		  Me.ShowData(bs)
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -1004,16 +711,11 @@ End
 		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
 		End Function
 	#tag EndEvent
-	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  Dim i As Integer = Me.OffsetFromXY(X, Y)
-		End Function
-	#tag EndEvent
 #tag EndEvents
 #tag Events ScrollBar1
 	#tag Event
 		Sub ValueChanged()
-		  HexViewer1.Offset = Me.Value * HexViewer1.LineLength
+		  HexViewer1.Offset = Me.Value * HexViewer1.BytesPerLine
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1066,7 +768,7 @@ End
 		  'IPAddress1.Text = "Connected"
 		  IPAddress.TextColor = &c00804000
 		  Me.Write(Request.ToString)
-		  URL.AddItem(URL.Text)
+		  RequestMain1.URL.AddItem(RequestMain1.URL.Text)
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -1106,9 +808,9 @@ End
 		    Code.TextColor = &cFF000000
 		    Code.Text = SocketErrorMessage(Me.LastErrorCode)
 		  End Select
-		  Sender.Enabled = True
-		  Sender.Caption = "Send Request"
-		  ProgressBar1.Visible = False
+		  RequestMain1.Sender.Enabled = True
+		  RequestMain1.Sender.Caption = "Send Request"
+		  RequestMain1.ProgressBar1.Visible = False
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1124,203 +826,11 @@ End
 		      u.ServerPath = redir
 		    End If
 		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
-		      URL.Text = u.ToString
+		      RequestMain1.URL.Text = u.ToString
 		      Perform()
 		    End If
 		  End If
 		  Self.Refresh
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events RequestHeaders
-	#tag Event
-		Sub AddNew()
-		  Dim p As Pair = HeaderEdit.GetHeader()
-		  If p <> Nil Then
-		    If p.Right IsA Date Then
-		      RequestHeaders.AddRow(p.Left, HTTPDate(p.Right.DateValue), "")
-		      'RequestHeaders.CellType(RequestHeaders.LastIndex, 0) = Listbox.TypeEditable
-		      'RequestHeaders.EditCell(RequestHeaders.LastIndex, 0)
-		    Else
-		      RequestHeaders.AddRow(p.Left, p.Right, "")
-		      'RequestHeaders.CellType(RequestHeaders.LastIndex, 0) = Listbox.TypeEditable
-		      'RequestHeaders.EditCell(RequestHeaders.LastIndex, 0)
-		    End If
-		    RequestHeaders.RowTag(RequestHeaders.LastIndex) = p
-		  End If
-		  GenerateHeaders()
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Remove(Row As Integer)
-		  If MsgBox("Remove this header?", 52, "Confirm removal") = 6 Then
-		    Me.RemoveRow(row)
-		    GenerateHeaders()
-		  End If
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub DoubleClick()
-		  If Me.ListIndex > -1 Then
-		    Dim data As Object = Me.RowTag(Me.ListIndex)
-		    If data = Nil Then Return
-		    If data IsA HTTPParse.Cookie Then
-		      Dim p As HTTPParse.Cookie = HTTPParse.Cookie(data)
-		      p = CookieEdit.GetCookie(p)
-		      If p <> Nil Then
-		        Me.Cell(Me.ListIndex, 0) = "Cookie"
-		        Me.Cell(Me.ListIndex, 1) = p.Name + "=" + p.Value
-		        Me.RowTag(Me.ListIndex) = p
-		      End If
-		    ElseIf data IsA Pair Then
-		      Dim p As Pair = Pair(data)
-		      p = HeaderEdit.GetHeader(p)
-		      If p <> Nil Then
-		        Me.Cell(Me.ListIndex, 0) = p.Left
-		        If p.Right IsA Date Then
-		          Me.Cell(Me.ListIndex, 1) = HTTPDate(p.Right.DateValue)
-		        Else
-		          Me.Cell(Me.ListIndex, 1) = p.Right
-		        End If
-		        Me.RowTag(Me.ListIndex) = p
-		      End If
-		    End If
-		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  Me.AddRow("Connection", "close")
-		  Me.RowTag(Me.LastIndex) = "Connection":"close"
-		  Me.AddRow("Accept", "text/html,*/*;q=0.8")
-		  Me.RowTag(Me.LastIndex) = "Accept":"text/html,*/*;q=0.8"
-		  Me.HeaderType(2) = Listbox.HeaderTypes.NotSortable
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events URL
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If Asc(key) = &h0D Or Asc(key) = &h03 Then
-		    Perform()
-		  End If
-		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events Sender
-	#tag Event
-		Sub Action()
-		  Sender.Enabled = False
-		  Sender.Caption = "Sending..."
-		  ProgressBar1.Visible = True
-		  Self.Refresh
-		  Perform()
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events EditCookies11
-	#tag Event
-		Sub Open()
-		  Me.Icon = cookie_icon_grey
-		  Me.HelpTag = "Add a cookie to request"
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub ValueChanged()
-		  Dim c As Cookie
-		  Dim editindex As Integer = -1
-		  
-		  If RequestHeaders.ListIndex > -1 And RequestHeaders.Cell(RequestHeaders.ListIndex, 0) = "Cookie" Then
-		    Dim n, v As String
-		    n = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 1)
-		    v = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 2)
-		    c = New Cookie(n, v)
-		    editindex = RequestHeaders.ListIndex
-		  End If
-		  c = CookieEdit.GetCookie(c)
-		  If c <> Nil Then
-		    If editindex > -1 Then
-		      RequestHeaders.Cell(editindex, 1) = c.Name + "=" + c.Value
-		      RequestHeaders.RowTag(editindex) = c
-		    Else
-		      RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
-		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
-		    End If
-		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseEnter()
-		  Me.Icon = cookie_icon
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExit()
-		  Me.Icon = cookie_icon_grey
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events RequestHeaderView11
-	#tag Event
-		Sub ValueChanged()
-		  GenerateHeaders()
-		  HeaderViewer.ShowHeaders(Request.Headers)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events EditRaw11
-	#tag Event
-		Sub Open()
-		  Me.HelpTag = "Edit HTTP request body"
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub ValueChanged()
-		  Dim mnu As New MenuItem("EditRawMenu")
-		  mnu.Append(New MenuItem("HTML form output"))
-		  mnu.Append(New MenuItem("Edit raw"))
-		  Dim res As MenuItem = mnu.PopUp
-		  If res <> Nil Then
-		    If Self.Request = Nil Then Generate()
-		    Select Case res.Text
-		    Case "HTML form output"
-		      Dim formgen As New FormGenerator
-		      Dim olddata As Dictionary = DecodeFormData(MessageBodyRaw)
-		      Dim data As Dictionary = formgen.SetFormData(olddata)
-		      If Data <> Nil Then
-		        MessageBodyRaw = EncodeFormData(data)
-		        
-		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		          If RequestHeaders.Cell(i, 0) = "Content-Type" Then
-		            RequestHeaders.RemoveRow(i)
-		          End If
-		        Next
-		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		          If RequestHeaders.Cell(i, 0) = "Content-Length" Then
-		            RequestHeaders.RemoveRow(i)
-		          End If
-		        Next
-		        RequestHeaders.AddRow("Content-Type", "application/x-www-form-URLEncoded", "")
-		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Type":"application/x-www-form-URLEncoded"
-		        RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
-		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(MessageBodyRaw))
-		      End If
-		    Case "Edit raw"
-		      Dim raw As String = RawEditor.EditRaw(MessageBodyRaw)
-		      If raw.Trim = "" Then Return
-		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
-		          RequestHeaders.RemoveRow(i)
-		        End If
-		      Next
-		      MessageBodyRaw = raw
-		      RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
-		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(MessageBodyRaw))
-		      
-		    End Select
-		  End If
-		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1329,6 +839,114 @@ End
 		Sub Open()
 		  Me.Text = "No response pending."
 		  Me.TextColor = &c80808000
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events RequestMain1
+	#tag Event
+		Function GetMessageData() As String
+		  Return MessageBodyRaw
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function GetRequest() As HTTP.Request
+		  Return Request
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function GetResponse() As HTTP.Response
+		  Return Response
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Perform()
+		  Self.Perform()
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SetMessageData(Data As String)
+		  MessageBodyRaw = Data
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Canvas1
+	#tag Event
+		Sub MouseEnter()
+		  Me.MouseCursor = System.Cursors.SplitterEastWest
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  Me.MouseCursor = System.Cursors.StandardPointer
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  #If TargetWin32 Then
+		    'Dim mb As New MemoryBlock(1)
+		    'mb.BooleanValue(0) = False
+		    'Call SendMessage(RequestMain1.Handle, WM_SETREDRAW, mb, Nil)
+		  #endif
+		  mDown = True
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub MouseDrag(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
+		  If Self.MouseX > 376 Then
+		    If Self.Width <= 747 Then Return
+		    Dim tpL, tpW As Integer
+		    tpL = Me.Left + Me.Width + 4
+		    tpW = Self.Width - RequestMain1.Width - Canvas1.Width
+		    
+		    'If tpW < 377 Then Return
+		    'If Self.Width - tpL < 377 Then Return
+		    If LastSplitterPos > Self.MouseX Then ' move right
+		      If Self.Width - tpL <= 377 Then Return
+		    Else ' move left
+		      If tpL <= 383 Then Return
+		    End If
+		    Me.Left = Self.MouseX
+		    LastSplitterPos = Me.Left
+		    TabPanel1.Left = tpL
+		    TabPanel1.Width = tpW
+		    RequestMain1.Width = Me.Left
+		    'Me.Refresh(False)
+		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Paint(g As Graphics)
+		  If SplitterThumb = Nil Then SplitterThumb = New Picture(g.Width, g.Height, 24)
+		  If SplitterThumb.Width <> g.Width Or SplitterThumb.Height <> g.Height Then SplitterThumb = New Picture(g.Width, g.Height, 24)
+		  If Not mDown Then
+		    SplitterThumb.Graphics.ForeColor = &cFFFFFF00
+		  Else
+		    SplitterThumb.Graphics.ForeColor =&cC0C0C000
+		  End If
+		  SplitterThumb.Graphics.FillRect(0, 0, g.Width, g.Height)
+		  SplitterThumb.Graphics.ForeColor = &c80808000
+		  SplitterThumb.Graphics.DrawLine(g.Width * 0.25, 0.25 * g.Height, g.Width * 0.25, 0.75 * g.Height)
+		  SplitterThumb.Graphics.DrawLine(g.Width * 0.75, 0.25 * g.Height, g.Width * 0.75, 0.75 * g.Height)
+		  g.DrawPicture(SplitterThumb, 0, 0)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
+		  mDown = False
+		  #If TargetWin32 Then
+		    'Dim mb As New MemoryBlock(1)
+		    'mb.BooleanValue(0) = True
+		    'Call SendMessage(RequestMain1.Handle, WM_SETREDRAW, mb, Nil)
+		    'RequestMain1.Refresh
+		  #endif
+		  Me.Invalidate
 		End Sub
 	#tag EndEvent
 #tag EndEvents

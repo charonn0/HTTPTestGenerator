@@ -117,8 +117,8 @@ End
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
 		  If hitItem.Text = "Copy to request headers" Then
 		    Dim c As Cookie = hitItem.Tag
-		    Generator.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
-		    Generator.RequestHeaders.RowTag(Generator.RequestHeaders.LastIndex) = c
+		    Generator.RequestMain1.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = c
 		    Return True
 		  End If
 		End Function
