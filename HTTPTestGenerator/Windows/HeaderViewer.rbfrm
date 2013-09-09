@@ -110,7 +110,7 @@ End
 		    Dim nm, vl As String
 		    nm = c.Left
 		    vl = c.Right
-		    Generator.RequestHeaders.AddRow(nm, vl, "")
+		    Generator.RequestMain1.RequestHeaders.AddRow(nm, vl, "")
 		    Return True
 		  End If
 		End Function
