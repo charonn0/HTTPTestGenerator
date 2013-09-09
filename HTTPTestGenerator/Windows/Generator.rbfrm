@@ -711,16 +711,11 @@ End
 		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
 		End Function
 	#tag EndEvent
-	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  Dim i As Integer = Me.OffsetFromXY(X, Y)
-		End Function
-	#tag EndEvent
 #tag EndEvents
 #tag Events ScrollBar1
 	#tag Event
 		Sub ValueChanged()
-		  HexViewer1.Offset = Me.Value * HexViewer1.LineLength
+		  HexViewer1.Offset = Me.Value * HexViewer1.BytesPerLine
 		End Sub
 	#tag EndEvent
 #tag EndEvents

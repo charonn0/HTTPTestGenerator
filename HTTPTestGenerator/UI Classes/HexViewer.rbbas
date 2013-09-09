@@ -4,15 +4,28 @@ Inherits BaseCanvas
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  If Asc(key) = &h1F Then ' up arrow
-		    If Not RaiseEvent Scrolled(1, LineLength) Then
-		      Me.Offset = Me.Offset + LineLength
+		    If Not RaiseEvent Scrolled(1, BytesPerLine) Then
+		      Me.Offset = Me.Offset + BytesPerLine
 		    End If
 		  ElseIf Asc(key) = &h1E Then ' down arrow
-		    If Not RaiseEvent Scrolled(-1, LineLength * -1) Then
-		      Me.Offset = Me.Offset - LineLength
+		    If Not RaiseEvent Scrolled(-1, BytesPerLine * -1) Then
+		      Me.Offset = Me.Offset - BytesPerLine
 		    End If
 		  End If
 		End Function
+	#tag EndEvent
+
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  Me.SelectionStart = OffsetFromXY(X, Y)
+		  Return Me.SelectionStart > 0
+		End Function
+	#tag EndEvent
+
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  Me.SelectionEnd = OffsetFromXY(X, Y)
+		End Sub
 	#tag EndEvent
 
 	#tag Event
@@ -31,14 +44,14 @@ Inherits BaseCanvas
 		  Dim linedelta, bytesdelta As Integer
 		  If Sign(deltaY) = 1 Then ' scroll down
 		    For i As Integer = 1 To deltaY
-		      bytesdelta = bytesdelta + LineLength
+		      bytesdelta = bytesdelta + BytesPerLine
 		      linedelta = linedelta + 1
 		    Next
 		    
 		  ElseIf Sign(deltaY) = -1 Then ' scroll up
 		    
 		    For i As Integer = deltaY To 0
-		      bytesdelta = bytesdelta + LineLength
+		      bytesdelta = bytesdelta + BytesPerLine
 		      linedelta = linedelta + 1
 		    Next
 		    
@@ -74,7 +87,7 @@ Inherits BaseCanvas
 		  
 		  If ShowOffsets Then
 		    Dim tmp As String
-		    For i As Integer = 1 To 4
+		    For i As Integer = 1 To 3
 		      tmp = tmp + "0"
 		    Next
 		    gw = g.StringWidth(tmp) + 1
@@ -89,7 +102,7 @@ Inherits BaseCanvas
 		  TopGutterGraphics.TextSize = 0.75 * Me.TextSize
 		  GutterGraphics = g.Clip(0, TopGutterGraphics.Height, gw, Buffer.Height - TopGutterGraphics.Height)
 		  If ShowOffsets Then
-		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width + g.StringWidth(" 0")
+		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width + g.StringWidth(" ")
 		  Else
 		    BinWidth = (0.75 * Me.Width) - GutterGraphics.Width
 		  End If
@@ -152,16 +165,30 @@ Inherits BaseCanvas
 		      
 		      TextGraphics.ForeColor = TextColor
 		      BinGraphics.ForeColor = ByteColor
-		      BinGraphics.DrawString(data, 0, TextHeight - 1)
-		      TextGraphics.DrawString(txt, 0, TextHeight - 1)
+		      BinGraphics.DrawString(data, 0, TextHeight - 2)
+		      TextGraphics.DrawString(txt, 0, TextHeight - 2)
 		      GutterGraphics.ForeColor = LineNumbersColor
 		      Dim linenumber As String = Hex(rowoffset, 4, LineNumbersLittleEndian)
-		      GutterGraphics.DrawString(linenumber, 0, TextHeight - 1)
+		      GutterGraphics.DrawString(linenumber, 0, TextHeight - 2)
 		      
 		      data = ""
 		      txt = ""
 		      row = row + 1
 		    Loop
+		    If SelectionStart >= 0 And SelectionEnd > SelectionStart And SelectionEnd > Me.Offset Then
+		      Dim x As Int64 = Max(SelectionStart, Me.Offset)
+		      Dim l As Integer = LineFromOffset(x)
+		      Dim h As Integer = l * LineHeight
+		      Dim df As Integer = x - SelectionEnd
+		      If df > BytesPerLine Then
+		        BinGraphics.ForeColor = &c0080FF00
+		        BinGraphics.FillRect(0, h - LineHeight, BinGraphics.Width, h)
+		      Else
+		        df = df * BytesPerLine
+		        BinGraphics.ForeColor = &c0080FF00
+		        BinGraphics.FillRect(0, h - LineHeight, x + df, h)
+		      End If
+		    End If
 		  Else ' No stream
 		    Do Until TextHeight > BinGraphics.Height
 		      If row = 0 Then
@@ -203,6 +230,20 @@ Inherits BaseCanvas
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h0
+		Function BytesPerLine() As Integer
+		  ' the number of bytes each line represents
+		  Dim data As String
+		  Dim g As Graphics = BinGraphics
+		  Dim count As Integer
+		  Do Until g.StringWidth(data) >= BinGraphics.Width - g.StringWidth(" 00")
+		    data = data + " 00"
+		    count = count + 1
+		  Loop
+		  Return count
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Shared Function Hex(Data As Integer, Width As Integer = 2, LittleEndian As Boolean) As String
 		  Dim tmp As String
@@ -222,20 +263,20 @@ Inherits BaseCanvas
 	#tag Method, Flags = &h0
 		Function LineCount() As Integer
 		  If Stream = Nil Then Return 0
-		  If Stream.Length Mod LineLength = 0 Then
-		    Return Stream.Length \ LineLength
+		  If Stream.Length Mod BytesPerLine = 0 Then
+		    Return Stream.Length \ BytesPerLine
 		  Else
-		    Return (Stream.Length \ LineLength) + 1
+		    Return (Stream.Length \ BytesPerLine) + 1
 		  End If
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
 		Protected Function LineFromOffset(BytesOffset As UInt64) As Integer
-		  If BytesOffset Mod LineLength = 0 Then
-		    Return BytesOffset \ LineLength
+		  If BytesOffset Mod BytesPerLine = 0 Then
+		    Return BytesOffset \ BytesPerLine
 		  Else
-		    Return (BytesOffset \ LineLength) + 1
+		    Return (BytesOffset \ BytesPerLine) + 1
 		  End If
 		End Function
 	#tag EndMethod
@@ -246,47 +287,68 @@ Inherits BaseCanvas
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Function LineLength() As Integer
-		  ' the number of bytes each line represents
-		  Dim data As String
-		  Dim g As Graphics = BinGraphics
-		  Dim count As Integer
-		  Do Until g.StringWidth(data) >= BinGraphics.Width - g.StringWidth(" 00")
-		    data = data + " 00"
-		    count = count + 1
-		  Loop
-		  Return count
-		End Function
-	#tag EndMethod
-
 	#tag Method, Flags = &h1
 		Protected Function OffsetFromLine(Line As Integer) As UInt64
-		  Return LineLength * Line
+		  Return BytesPerLine * Line
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function OffsetFromXY(X As Integer, Y As Integer) As UInt64
 		  If Stream = Nil Then Return -1
-		  Dim row As Integer = Y \ LineHeight
-		  Dim column As Integer = X \ BinGraphics.Width
-		  Dim oldoffset As UInt64 = Me.Offset
-		  Stream.Position = Me.Offset
-		  For a As Integer = 0 To row
-		    For b As Integer = 0 To column
-		      If a = row And b = column Then
-		        Dim ret As Int64 = Stream.Position + 1
-		        Stream.Position = oldoffset
-		        Return ret
-		      Else
-		        Call Stream.ReadByte
-		      End If
-		    Next
-		  Next
+		  'Dim row As Integer = Y \ LineHeight
+		  'Dim column As Integer = X \ BinGraphics.Width
+		  'Dim oldoffset As UInt64 = Me.Offset
+		  'Stream.Position = Me.Offset
+		  'For a As Integer = 0 To row
+		  'For b As Integer = 0 To column
+		  'If a = row And b = column Then
+		  'Dim ret As Int64 = Stream.Position + 1
+		  'Stream.Position = oldoffset
+		  'Return ret
+		  'Else
+		  'Call Stream.ReadByte
+		  'End If
+		  'Next
+		  'Next
+		  '
+		  'Stream.Position = oldoffset
+		  'Return -1
 		  
-		  Stream.Position = oldoffset
-		  Return -1
+		  Dim line As Integer = Y \ LineHeight
+		  Dim o As Integer = OffsetFromLine(line)
+		  Stream.Position = o
+		  Dim w, bytewidth As Integer
+		  Dim pos As Int64 = -1
+		  bytewidth = BinGraphics.StringWidth(".00")
+		  'w = bytewidth
+		  For i As Integer = 1 To BytesPerLine
+		    If Stream.EOF Then
+		      Stream.Position = Offset
+		      Exit For
+		    End If
+		    Call Stream.ReadByte
+		    If X > w And X < w + bytewidth Then
+		      pos = Stream.Position
+		      Stream.Position = Offset
+		      Exit For
+		    End If
+		    w = w + bytewidth
+		  Next
+		  Return pos
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		End Function
 	#tag EndMethod
 
@@ -510,6 +572,14 @@ Inherits BaseCanvas
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private mSelectionEnd As Int64 = -1
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mSelectionStart As Int64 = -1
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private mShowOffsets As Boolean
 	#tag EndProperty
 
@@ -540,6 +610,36 @@ Inherits BaseCanvas
 			End Set
 		#tag EndSetter
 		Offset As UInt64
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mSelectionEnd
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mSelectionEnd = value
+			  Update()
+			End Set
+		#tag EndSetter
+		SelectionEnd As Int64
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mSelectionStart
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mSelectionStart = value
+			  Update()
+			End Set
+		#tag EndSetter
+		SelectionStart As Int64
 	#tag EndComputedProperty
 
 	#tag ComputedProperty, Flags = &h0
