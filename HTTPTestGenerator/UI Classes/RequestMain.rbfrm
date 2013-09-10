@@ -340,7 +340,7 @@ Begin ContainerControl RequestMain
       LockBottom      =   ""
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   True
       LockTop         =   True
       Multiline       =   ""
       Scope           =   0
@@ -353,7 +353,7 @@ Begin ContainerControl RequestMain
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
-      Top             =   36
+      Top             =   29
       Transparent     =   True
       Underline       =   ""
       Visible         =   True
@@ -534,10 +534,6 @@ End
 #tag Events Sender
 	#tag Event
 		Sub Action()
-		  Sender.Enabled = False
-		  Sender.Caption = "Sending..."
-		  ProgressBar1.Visible = True
-		  Self.Refresh
 		  Perform()
 		End Sub
 	#tag EndEvent

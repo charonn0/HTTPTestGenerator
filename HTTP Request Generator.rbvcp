@@ -39,6 +39,7 @@ Picture=cookie_icon;HTTPTestGenerator/Icons/cookie_icon.png;&h1042FFF;&h12F36FFF
 Picture=cookie_icon_grey;HTTPTestGenerator/Icons/cookie_icon_grey.png;&h1C3E7FF;&h12F36FFF;false;1;&h0
 Picture=expand_icon;HTTPTestGenerator/Icons/expand_icon.png;&h5DB067FF;&h12F36FFF;false;1;&h0
 Picture=edit;HTTPTestGenerator/Icons/edit.png;&h3A57B7FF;&h12F36FFF;false;1;&h0
+Window=ResponseMain;HTTPTestGenerator/UI Classes/ResponseMain.rbfrm;&h4D4EFFFF;&h4FD2FFFF;false
 DefaultWindow=Generator
 MajorVersion=1
 MinorVersion=0
