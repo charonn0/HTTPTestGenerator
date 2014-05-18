@@ -490,6 +490,26 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub ShowCookie(c As HTTP.Cookie)
+		  CookieDomain.Text = c.Domain
+		  CookieDomain.ReadOnly = True
+		  If c.Expires <> Nil Then CookieExpiry.Text = HTTPDate(c.Expires)
+		  CookieExpiry.ReadOnly = True
+		  CookiePath.Text = Str(c.Port)
+		  CookiePath.ReadOnly = True
+		  CookieName.Text = c.Name
+		  CookieName.ReadOnly = True
+		  CookieValue.Text = c.Value
+		  CookieValue.ReadOnly = True
+		  PushButton1.Caption = "OK"
+		  PushButton2.Enabled = False
+		  Self.Title = "View cookie"
+		  Me.ShowModal
+		  Self.Close
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h21
 		Private Cook As Cookie
@@ -516,11 +536,13 @@ End
 #tag Events PushButton1
 	#tag Event
 		Sub Action()
-		  Self.Cook = New Cookie(CookieName.Text, CookieValue.Text)
-		  Self.Cook.Domain = CookieDomain.Text
-		  Self.Cook.Expires = HTTPDate(CookieExpiry.Text)
-		  Self.Cook.Path = CookiePath.Text
-		  Self.Cook.Port = 80
+		  If Me.Caption = "Set Cookie" Then
+		    Self.Cook = New Cookie(CookieName.Text, CookieValue.Text)
+		    Self.Cook.Domain = CookieDomain.Text
+		    Self.Cook.Expires = HTTPDate(CookieExpiry.Text)
+		    Self.Cook.Path = CookiePath.Text
+		    Self.Cook.Port = 80
+		  End If
 		  
 		  Self.Close
 		End Sub

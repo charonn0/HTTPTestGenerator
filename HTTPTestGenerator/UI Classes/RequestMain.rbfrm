@@ -8,10 +8,10 @@ Begin ContainerControl RequestMain
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   335
+   Height          =   428
    HelpTag         =   ""
    InitialParent   =   ""
-   Left            =   ""
+   Left            =   3.2e+1
    LockBottom      =   True
    LockLeft        =   True
    LockRight       =   True
@@ -19,10 +19,10 @@ Begin ContainerControl RequestMain
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True
-   Top             =   ""
+   Top             =   3.2e+1
    UseFocusRing    =   ""
    Visible         =   True
-   Width           =   342
+   Width           =   366
    Begin HeaderList RequestHeaders
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
@@ -41,7 +41,7 @@ Begin ContainerControl RequestMain
       GridLinesVertical=   0
       HasHeading      =   True
       HeadingIndex    =   -1
-      Height          =   245
+      Height          =   239
       HelpTag         =   ""
       Hierarchical    =   False
       Index           =   -2147483648
@@ -49,7 +49,7 @@ Begin ContainerControl RequestMain
       InitialValue    =   "Header Name	Header Value	  "
       Italic          =   False
       Left            =   5
-      LockBottom      =   True
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
@@ -59,7 +59,7 @@ Begin ContainerControl RequestMain
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   1
-      TabIndex        =   0
+      TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -69,7 +69,7 @@ Begin ContainerControl RequestMain
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   330
+      Width           =   354
       _ScrollWidth    =   -1
    End
    Begin ComboBox RequestMethod
@@ -102,7 +102,7 @@ Begin ContainerControl RequestMain
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   65
+      Width           =   72
    End
    Begin HintTextField URL
       AcceptTabs      =   False
@@ -123,7 +123,7 @@ Begin ContainerControl RequestMain
       HintText        =   "Request URL"
       Index           =   -2147483648
       Italic          =   False
-      Left            =   72
+      Left            =   82
       LimitText       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -134,7 +134,7 @@ Begin ContainerControl RequestMain
       Password        =   False
       ReadOnly        =   False
       Scope           =   0
-      TabIndex        =   2
+      TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
@@ -160,7 +160,7 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialValue    =   "HTTP/1.1\r\nHTTP/1.0"
       Italic          =   False
-      Left            =   262
+      Left            =   273
       ListIndex       =   0
       LockBottom      =   False
       LockedInPosition=   False
@@ -168,7 +168,7 @@ Begin ContainerControl RequestMain
       LockRight       =   True
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   3
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -178,7 +178,7 @@ Begin ContainerControl RequestMain
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   79
+      Width           =   92
    End
    Begin PushButton Sender
       AutoDeactivate  =   True
@@ -193,12 +193,12 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   117
-      LockBottom      =   True
+      Left            =   129
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
-      LockTop         =   False
+      LockTop         =   True
       Scope           =   0
       TabIndex        =   4
       TabPanelIndex   =   0
@@ -206,14 +206,14 @@ Begin ContainerControl RequestMain
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   304
+      Top             =   305
       Underline       =   False
       Visible         =   True
       Width           =   98
    End
    Begin PlacardButton EditCookies11
-      AcceptFocus     =   False
-      AcceptTabs      =   ""
+      AcceptFocus     =   True
+      AcceptTabs      =   True
       AutoDeactivate  =   True
       Backdrop        =   ""
       Bold            =   False
@@ -227,22 +227,22 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   284
-      LockBottom      =   True
+      Left            =   308
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
-      LockTop         =   False
+      LockTop         =   True
       Scope           =   0
       Sticky          =   ""
-      TabIndex        =   5
+      TabIndex        =   6
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   "&c00000000"
       textColorDown   =   "&c000000"
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   301
+      Top             =   302
       Underline       =   False
       UseFocusRing    =   True
       Value           =   False
@@ -250,8 +250,8 @@ Begin ContainerControl RequestMain
       Width           =   25
    End
    Begin PlacardButton RequestHeaderView11
-      AcceptFocus     =   False
-      AcceptTabs      =   ""
+      AcceptFocus     =   True
+      AcceptTabs      =   True
       AutoDeactivate  =   True
       Backdrop        =   ""
       Bold            =   False
@@ -265,22 +265,22 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   310
-      LockBottom      =   True
+      Left            =   334
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
-      LockTop         =   False
+      LockTop         =   True
       Scope           =   0
       Sticky          =   ""
-      TabIndex        =   6
+      TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   "&c00000000"
       textColorDown   =   "&c000000"
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   301
+      Top             =   302
       Underline       =   False
       UseFocusRing    =   True
       Value           =   False
@@ -288,8 +288,8 @@ Begin ContainerControl RequestMain
       Width           =   25
    End
    Begin PlacardButton EditRaw11
-      AcceptFocus     =   False
-      AcceptTabs      =   ""
+      AcceptFocus     =   True
+      AcceptTabs      =   True
       AutoDeactivate  =   True
       Backdrop        =   ""
       Bold            =   False
@@ -303,22 +303,22 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   258
-      LockBottom      =   True
+      Left            =   282
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
-      LockTop         =   False
+      LockTop         =   True
       Scope           =   0
       Sticky          =   ""
-      TabIndex        =   7
+      TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   "&c00000000"
       textColorDown   =   "&c000000"
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   301
+      Top             =   302
       Underline       =   False
       UseFocusRing    =   True
       Value           =   False
@@ -345,7 +345,7 @@ Begin ContainerControl RequestMain
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   8
+      TabIndex        =   10
       TabPanelIndex   =   0
       Text            =   "Request Headers"
       TextAlign       =   1
@@ -357,7 +357,7 @@ Begin ContainerControl RequestMain
       Transparent     =   True
       Underline       =   ""
       Visible         =   True
-      Width           =   324
+      Width           =   348
    End
    Begin ProgressBar ProgressBar1
       AutoDeactivate  =   True
@@ -366,19 +366,19 @@ Begin ContainerControl RequestMain
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   117
-      LockBottom      =   True
+      Left            =   121
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
-      LockTop         =   False
+      LockTop         =   True
       Maximum         =   0
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   326
+      Top             =   329
       Value           =   0
       Visible         =   False
-      Width           =   98
+      Width           =   124
    End
    Begin PlacardButton StopButton
       AcceptFocus     =   False
@@ -396,12 +396,12 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   216
-      LockBottom      =   True
+      Left            =   227
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
-      LockTop         =   False
+      LockTop         =   True
       Scope           =   0
       Sticky          =   ""
       TabIndex        =   9
@@ -411,12 +411,57 @@ Begin ContainerControl RequestMain
       textColorDown   =   "&c000000"
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   305
+      Top             =   306
       Underline       =   False
       UseFocusRing    =   True
       Value           =   False
       Visible         =   False
       Width           =   20
+   End
+   Begin TextArea LogOutput
+      AcceptTabs      =   ""
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   True
+      BackColor       =   "&cEFEFEF00"
+      Bold            =   ""
+      Border          =   True
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   83
+      HelpTag         =   ""
+      HideSelection   =   True
+      Index           =   -2147483648
+      Italic          =   ""
+      Left            =   5
+      LimitText       =   0
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Mask            =   ""
+      Multiline       =   True
+      ReadOnly        =   True
+      Scope           =   0
+      ScrollbarHorizontal=   ""
+      ScrollbarVertical=   True
+      Styled          =   True
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &h00000000
+      TextFont        =   "System"
+      TextSize        =   11
+      TextUnit        =   0
+      Top             =   339
+      Underline       =   ""
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   354
    End
 End
 #tag EndWindow
@@ -557,6 +602,38 @@ End
 		  Me.AddRow("Accept", "text/html,*/*;q=0.8")
 		  Me.RowTag(Me.LastIndex) = "Accept":"text/html,*/*;q=0.8"
 		  Me.HeaderType(2) = Listbox.HeaderTypes.NotSortable
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events RequestMethod
+	#tag Event
+		Sub Open()
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -567,6 +644,42 @@ End
 		    Perform(False)
 		  End If
 		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ProtocolVer
+	#tag Event
+		Sub Open()
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
+		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events Sender
@@ -694,6 +807,40 @@ End
 	#tag Event
 		Sub ValueChanged()
 		  Perform(True)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LogOutput
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  base.Append(New MenuItem("Clear log"))
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Select Case hitItem.Text
+		  Case "Clear log"
+		    Me.Text = ""
+		    Return True
+		  End Select
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
 		End Sub
 	#tag EndEvent
 #tag EndEvents

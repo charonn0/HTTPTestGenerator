@@ -197,6 +197,95 @@ Begin Window FormGenerator
       Width           =   560
       _ScrollWidth    =   -1
    End
+   Begin RadioButton FormType
+      AutoDeactivate  =   True
+      Bold            =   ""
+      Caption         =   "Multipart"
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   463
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   252
+      Underline       =   ""
+      Value           =   ""
+      Visible         =   True
+      Width           =   100
+   End
+   Begin RadioButton FormType1
+      AutoDeactivate  =   True
+      Bold            =   ""
+      Caption         =   "URL-Encoded"
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   463
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   7
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   233
+      Underline       =   ""
+      Value           =   True
+      Visible         =   True
+      Width           =   100
+   End
+   Begin PushButton FileAdd
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   False
+      Caption         =   "File"
+      Default         =   False
+      Enabled         =   False
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   49
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   242
+      Underline       =   False
+      Visible         =   True
+      Width           =   36
+   End
 End
 #tag EndWindow
 
@@ -247,10 +336,21 @@ End
 #tag Events PushButton3
 	#tag Event
 		Sub Action()
-		  FormData = New Dictionary
-		  For i As Integer = 0 To HTTPForm.ListCount - 1
-		    FormData.Value(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
-		  Next
+		  If FormType1.Value Then
+		    FormData = New Dictionary
+		    For i As Integer = 0 To HTTPForm.ListCount - 1
+		      FormData.Value(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
+		    Next
+		  Else
+		    Dim m As New HTTPParse.MultipartForm
+		    For i As Integer = 0 To HTTPForm.ListCount - 1
+		      If HTTPForm.RowTag(i) <> Nil And HTTPForm.RowTag(i) IsA FolderItem Then
+		        
+		      Else
+		        m.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
+		      End If
+		    Next
+		  End If
 		  
 		  Self.Close
 		End Sub
@@ -271,5 +371,30 @@ End
 		  #pragma Unused y
 		  Me.EditCell(row, column)
 		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events FormType
+	#tag Event
+		Sub Action()
+		  FileAdd.Enabled = Me.Value
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events FormType1
+	#tag Event
+		Sub Action()
+		  FileAdd.Enabled = Not Me.Value
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events FileAdd
+	#tag Event
+		Sub Action()
+		  Dim f As FolderItem = GetOpenFolderItem("")
+		  If f <> Nil Then
+		    HTTPForm.AddRow(f.Name, f.AbsolutePath, "")
+		    HTTPForm.RowTag(HTTPForm.LastIndex) = f
+		  End If
+		End Sub
 	#tag EndEvent
 #tag EndEvents

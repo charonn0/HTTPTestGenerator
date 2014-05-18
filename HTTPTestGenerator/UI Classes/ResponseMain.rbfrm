@@ -8,7 +8,7 @@ Begin ContainerControl ResponseMain
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   332
+   Height          =   470
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   0
@@ -22,12 +22,12 @@ Begin ContainerControl ResponseMain
    Top             =   0
    UseFocusRing    =   ""
    Visible         =   True
-   Width           =   370
+   Width           =   561
    Begin TabPanel TabPanel1
       AutoDeactivate  =   True
       Bold            =   ""
       Enabled         =   True
-      Height          =   332
+      Height          =   470
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -52,7 +52,7 @@ Begin ContainerControl ResponseMain
       Underline       =   ""
       Value           =   0
       Visible         =   True
-      Width           =   370
+      Width           =   561
       Begin Listbox ResponseHeaders
          AutoDeactivate  =   True
          AutoHideScrollbars=   True
@@ -71,7 +71,7 @@ Begin ContainerControl ResponseMain
          GridLinesVertical=   0
          HasHeading      =   True
          HeadingIndex    =   -1
-         Height          =   119
+         Height          =   124
          HelpTag         =   ""
          Hierarchical    =   False
          Index           =   -2147483648
@@ -79,7 +79,7 @@ Begin ContainerControl ResponseMain
          InitialValue    =   "Header Name	Header Value"
          Italic          =   False
          Left            =   11
-         LockBottom      =   True
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   True
@@ -99,7 +99,7 @@ Begin ContainerControl ResponseMain
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   343
+         Width           =   534
          _ScrollWidth    =   -1
       End
       Begin TextArea OutputLog
@@ -126,7 +126,7 @@ Begin ContainerControl ResponseMain
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   True
-         LockTop         =   False
+         LockTop         =   True
          Mask            =   ""
          Multiline       =   True
          ReadOnly        =   True
@@ -142,11 +142,11 @@ Begin ContainerControl ResponseMain
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   202
+         Top             =   340
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   343
+         Width           =   534
       End
       Begin HexViewer HexViewer1
          AcceptFocus     =   True
@@ -163,7 +163,7 @@ Begin ContainerControl ResponseMain
          EraseBackground =   False
          GutterColor     =   "&cFFFFFF00"
          GutterColorAlt  =   "&cC0C0C000"
-         Height          =   295
+         Height          =   433
          HelpTag         =   ""
          Hilight         =   ""
          Index           =   -2147483648
@@ -190,17 +190,17 @@ Begin ContainerControl ResponseMain
          Underline       =   ""
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   342
+         Width           =   533
       End
       Begin ScrollBar ScrollBar1
          AcceptFocus     =   true
          AutoDeactivate  =   True
          Enabled         =   True
-         Height          =   295
+         Height          =   433
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
-         Left            =   348
+         Left            =   539
          LineStep        =   1
          LiveScroll      =   ""
          LockBottom      =   True
@@ -252,7 +252,7 @@ Begin ContainerControl ResponseMain
          Transparent     =   True
          Underline       =   ""
          Visible         =   True
-         Width           =   330
+         Width           =   521
       End
       Begin Label Label2
          AutoDeactivate  =   True
@@ -266,11 +266,11 @@ Begin ContainerControl ResponseMain
          InitialParent   =   "TabPanel1"
          Italic          =   False
          Left            =   11
-         LockBottom      =   True
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   False
-         LockTop         =   False
+         LockTop         =   True
          Multiline       =   False
          Scope           =   0
          Selectable      =   False
@@ -282,7 +282,7 @@ Begin ContainerControl ResponseMain
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   177
+         Top             =   315
          Transparent     =   True
          Underline       =   False
          Visible         =   True
@@ -300,11 +300,11 @@ Begin ContainerControl ResponseMain
          InitialParent   =   "TabPanel1"
          Italic          =   False
          Left            =   72
-         LockBottom      =   True
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   False
-         LockTop         =   False
+         LockTop         =   True
          Multiline       =   False
          Scope           =   0
          Selectable      =   False
@@ -316,7 +316,7 @@ Begin ContainerControl ResponseMain
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   177
+         Top             =   315
          Transparent     =   True
          Underline       =   False
          Visible         =   True
@@ -338,12 +338,12 @@ Begin ContainerControl ResponseMain
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
          Italic          =   False
-         Left            =   329
-         LockBottom      =   True
+         Left            =   520
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   False
          LockRight       =   True
-         LockTop         =   False
+         LockTop         =   True
          Scope           =   0
          Sticky          =   ""
          TabIndex        =   9
@@ -353,50 +353,61 @@ Begin ContainerControl ResponseMain
          textColorDown   =   "&c000000"
          TextFont        =   "System"
          TextSize        =   0
-         Top             =   173
+         Top             =   311
          Underline       =   False
          UseFocusRing    =   True
          Value           =   False
          Visible         =   True
          Width           =   25
       End
-      Begin PlacardButton CookiesButton
-         AcceptFocus     =   False
-         AcceptTabs      =   ""
+      Begin Listbox CookieList
          AutoDeactivate  =   True
-         Backdrop        =   ""
+         AutoHideScrollbars=   True
          Bold            =   False
-         DoubleBuffer    =   False
+         Border          =   True
+         ColumnCount     =   6
+         ColumnsResizable=   True
+         ColumnWidths    =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         DefaultRowHeight=   -1
          Enabled         =   True
-         EraseBackground =   True
-         Height          =   25
+         EnableDrag      =   False
+         EnableDragReorder=   False
+         GridLinesHorizontal=   0
+         GridLinesVertical=   0
+         HasHeading      =   True
+         HeadingIndex    =   -1
+         Height          =   117
          HelpTag         =   ""
-         Hilight         =   ""
-         Icon            =   17051647
+         Hierarchical    =   False
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
+         InitialValue    =   "Cookie	Value	Expires	Domain	Path	Restrictions"
          Italic          =   False
-         Left            =   303
-         LockBottom      =   True
+         Left            =   11
+         LockBottom      =   False
          LockedInPosition=   False
-         LockLeft        =   False
+         LockLeft        =   True
          LockRight       =   True
-         LockTop         =   False
+         LockTop         =   True
+         RequiresSelection=   False
          Scope           =   0
-         Sticky          =   ""
-         TabIndex        =   10
+         ScrollbarHorizontal=   False
+         ScrollBarVertical=   True
+         SelectionType   =   0
+         TabIndex        =   11
          TabPanelIndex   =   1
          TabStop         =   True
-         TextColor       =   "&c00000000"
-         textColorDown   =   "&c000000"
          TextFont        =   "System"
-         TextSize        =   0
-         Top             =   173
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   182
          Underline       =   False
          UseFocusRing    =   True
-         Value           =   False
-         Visible         =   False
-         Width           =   25
+         Visible         =   True
+         Width           =   534
+         _ScrollWidth    =   -1
       End
    End
 End
@@ -454,6 +465,44 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag Events ResponseHeaders
+	#tag Event
+		Sub Change()
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events OutputLog
+	#tag Event
+		Sub Open()
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events HexViewer1
 	#tag Event
 		Sub Open()
@@ -502,29 +551,45 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events CookiesButton
+#tag Events CookieList
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  Dim m As New MenuItem("Copy to request headers")
+		  m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
+		  Base.Append(m)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  If hitItem.Text = "Copy to request headers" Then
+		    Dim c As Cookie = hitItem.Tag
+		    Generator.RequestMain1.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = c
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  Dim c As Cookie = Me.RowTag(Me.ListIndex)
+		  CookieEdit.ShowCookie(c)
+		End Sub
+	#tag EndEvent
 	#tag Event
 		Sub Open()
-		  Me.Icon = cookie_icon_grey
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseEnter()
-		  Me.Icon = cookie_icon
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExit()
-		  Me.Icon = cookie_icon_grey
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub ValueChanged()
-		  Dim allcookies() As Cookie
-		  For i As Integer = 0 To Response.Headers.CookieCount - 1
-		    allcookies.Append(Response.Headers.Cookie(i))
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
 		  Next
-		  CookieViewer.ShowCookies(AllCookies)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

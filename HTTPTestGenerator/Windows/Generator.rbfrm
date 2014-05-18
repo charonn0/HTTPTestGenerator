@@ -7,7 +7,7 @@ Begin Window Generator
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   4.06e+2
+   Height          =   5.74e+2
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -23,7 +23,7 @@ Begin Window Generator
    Resizeable      =   True
    Title           =   "HTTP Request Generator"
    Visible         =   True
-   Width           =   7.47e+2
+   Width           =   9.38e+2
    Begin SSLSocket Sock
       CertificateFile =   ""
       CertificatePassword=   ""
@@ -31,7 +31,7 @@ Begin Window Generator
       ConnectionType  =   2
       Height          =   32
       Index           =   -2147483648
-      Left            =   799
+      Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
@@ -42,13 +42,13 @@ Begin Window Generator
    Begin Timer DataReceivedTimer
       Height          =   32
       Index           =   -2147483648
-      Left            =   753
+      Left            =   1000
       LockedInPosition=   False
       Mode            =   0
       Period          =   200
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   14
+      Top             =   79
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -60,7 +60,7 @@ Begin Window Generator
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   305
+      Height          =   574
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   -1
@@ -70,7 +70,7 @@ Begin Window Generator
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   26
+      TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
@@ -86,7 +86,7 @@ Begin Window Generator
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   302
+      Height          =   470
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -97,7 +97,7 @@ Begin Window Generator
       LockRight       =   ""
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   27
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
@@ -114,7 +114,7 @@ Begin Window Generator
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   302
+      Height          =   574
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   377
@@ -124,58 +124,13 @@ Begin Window Generator
       LockRight       =   True
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   28
+      TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
       UseFocusRing    =   ""
       Visible         =   True
-      Width           =   370
-   End
-   Begin TextArea LogOutput
-      AcceptTabs      =   ""
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   True
-      BackColor       =   "&cEFEFEF00"
-      Bold            =   ""
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   98
-      HelpTag         =   ""
-      HideSelection   =   True
-      Index           =   -2147483648
-      Italic          =   ""
-      Left            =   -1
-      LimitText       =   0
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   False
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   True
-      Scope           =   0
-      ScrollbarHorizontal=   ""
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   29
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &h00000000
-      TextFont        =   "System"
-      TextSize        =   11
-      TextUnit        =   0
-      Top             =   308
-      Underline       =   ""
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   748
+      Width           =   561
    End
 End
 #tag EndWindow
@@ -252,7 +207,8 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Sub PrintLog(Line As String)
-		  LogOutput.AppendText(Line + EndOfLine)
+		  RequestMain1.LogOutput.AppendText(Line + EndOfLine)
+		  RequestMain1.LogOutput.ScrollPosition = RequestMain1.LogOutput.Text.Len
 		End Sub
 	#tag EndMethod
 
@@ -278,10 +234,29 @@ End
 		    
 		    ResponseMain1.ResponseHeaders.AddRow(n, v)
 		  Next
-		  ResponseMain1.CookiesButton.Visible = Response.Headers.CookieCount > 0
-		  ResponseMain1.CookiesButton.Icon = cookie_icon_grey
-		  ResponseMain1.CookiesButton.Invalidate(True)
-		  ResponseMain1.CookiesButton.HelpTag = Str(Response.Headers.CookieCount) + " cookies"
+		  'ResponseMain1.CookiesButton.Visible = Response.Headers.CookieCount > 0
+		  ResponseMain1.CookieList.DeleteAllRows
+		  For i As Integer = 0 To Response.Headers.CookieCount - 1
+		    Dim c As HTTPParse.Cookie = Response.Headers.Cookie(i)
+		    ResponseMain1.CookieList.AddRow("")
+		    Dim d As New Date
+		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 0) = c.Name
+		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 1) = c.Value
+		    If c.Expires <> Nil And c.Expires.TotalSeconds - d.TotalSeconds >= 3600 Then
+		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 2) = c.Expires.ShortDate + " " + c.Expires.ShortTime + " UTC " + Format(c.Expires.GMTOffset, "+-#0.0#")
+		    Else
+		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 2) = "End of session"
+		    End If
+		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 3) = c.Domain
+		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 4) = c.Path
+		    If c.Secure Then
+		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 5) = "HTTPS Only"
+		    Else
+		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 5) = "HTTP Only"
+		    End If
+		    ResponseMain1.CookieList.RowTag(ResponseMain1.CookieList.LastIndex) = c
+		  Next
+		  
 		  ResponseMain1.ResponseHeaderView.Enabled = True
 		  ResponseMain1.ResponseHeaderView.Icon = expand_icon
 		  Self.Title = "HTTP Request Generator - Viewing '" + TheURL.ToString + "'"
@@ -375,6 +350,7 @@ End
 		  Else
 		    PrintLog("Connection established.")
 		  End If
+		  PrintLog("Remote host is at " + Me.RemoteAddress)
 		  Output = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
 		  Dim s As String = Request.ToString
@@ -455,8 +431,22 @@ End
 		      u = New HTTP.URI(TheURL)
 		      u.ServerPath = redir
 		    End If
+		    PrintLog("Redirect (" + Str(Response.StatusCode) + "): " + u.ToString)
 		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
+		      PrintLog("Following...")
 		      RequestMain1.URL.Text = u.ToString
+		      Perform()
+		    Else
+		      PrintLog("Not following.")
+		    End If
+		  ElseIf Response.StatusCode = 401 Then
+		    PrintLog("Not authenticated.")
+		    Dim r As String = NthField(Response.Headers.Value("WWW-Authenticate"), "=", 2)
+		    Dim p As Pair = Authenicator.Authenticate(r, Response.Path.Protocol = "https")
+		    If p <> Nil Then
+		      PrintLog("Authenticating...")
+		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
+		      RequestMain1.RequestHeaders.AddRow("Authorization", s)
 		      Perform()
 		    End If
 		  End If
@@ -500,6 +490,7 @@ End
 		    RequestMain1.Sender.Caption = "Sending..."
 		    RequestMain1.ProgressBar1.Visible = True
 		    RequestMain1.StopButton.Visible = True
+		    RequestMain1.Refresh
 		    Perform()
 		  Else
 		    RequestMain1.Sender.Enabled = True
@@ -622,39 +613,5 @@ End
 		Function GetResponse() As HTTP.Response
 		  Return Response
 		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events LogOutput
-	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  base.Append(New MenuItem("Clear log"))
-		  Return True
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  Select Case hitItem.Text
-		  Case "Clear log"
-		    Me.Text = ""
-		    Return True
-		  End Select
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
-		End Sub
 	#tag EndEvent
 #tag EndEvents
