@@ -46,6 +46,23 @@ Inherits ListBox
 		End Function
 	#tag EndEvent
 
+	#tag Event
+		Sub MouseMove(X As Integer, Y As Integer)
+		  Dim row, column As Integer
+		  row = Me.RowFromXY(X, Y)
+		  If row = -1 Then
+		    row = Me.RowFromXY(X - Me.RowHeight + 1, Y)
+		  End If
+		  column = Me.ColumnFromXY(X, Y)
+		  If row > -1 And column = Me.ColumnCount - 1 Then
+		    Me.MouseCursor = System.Cursors.FingerPointer
+		  Else
+		    Me.MouseCursor = System.Cursors.StandardPointer
+		  End If
+		  
+		End Sub
+	#tag EndEvent
+
 
 	#tag Hook, Flags = &h0
 		Event AddNew()
