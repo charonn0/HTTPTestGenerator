@@ -7,7 +7,7 @@ Begin Window Generator
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   3.35e+2
+   Height          =   4.06e+2
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -60,7 +60,7 @@ Begin Window Generator
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   335
+      Height          =   305
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   -1
@@ -86,7 +86,7 @@ Begin Window Generator
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   332
+      Height          =   302
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -114,7 +114,7 @@ Begin Window Generator
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   332
+      Height          =   302
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   377
@@ -131,6 +131,51 @@ Begin Window Generator
       UseFocusRing    =   ""
       Visible         =   True
       Width           =   370
+   End
+   Begin TextArea LogOutput
+      AcceptTabs      =   ""
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   True
+      BackColor       =   "&cEFEFEF00"
+      Bold            =   ""
+      Border          =   True
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   98
+      HelpTag         =   ""
+      HideSelection   =   True
+      Index           =   -2147483648
+      Italic          =   ""
+      Left            =   -1
+      LimitText       =   0
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   False
+      Mask            =   ""
+      Multiline       =   True
+      ReadOnly        =   True
+      Scope           =   0
+      ScrollbarHorizontal=   ""
+      ScrollbarVertical=   True
+      Styled          =   True
+      TabIndex        =   29
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &h00000000
+      TextFont        =   "System"
+      TextSize        =   11
+      TextUnit        =   0
+      Top             =   308
+      Underline       =   ""
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   748
    End
 End
 #tag EndWindow
@@ -195,7 +240,19 @@ End
 		    Sock.Port = 80
 		  End If
 		  
+		  If Sock.Secure Then
+		    PrintLog("Attempting a secure connection to '" + TheURL.FQDN + "' on port " + Str(Sock.Port) + "...")
+		  Else
+		    PrintLog("Attempting a connection to '" + TheURL.FQDN + "' on port " + Str(Sock.Port) + "...")
+		  End If
+		  
 		  Sock.Connect()
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub PrintLog(Line As String)
+		  LogOutput.AppendText(Line + EndOfLine)
 		End Sub
 	#tag EndMethod
 
@@ -304,14 +361,33 @@ End
 #tag Events Sock
 	#tag Event
 		Sub Connected()
+		  If Me.Secure Then
+		    Select Case Me.ConnectionType
+		    Case Me.SSLv2
+		      PrintLog("Secure connection established using SSLv2 only!.")
+		    Case Me.SSLv23
+		      PrintLog("Secure connection established using SSLv2 or SSLv3.")
+		    Case Me.SSLv3
+		      PrintLog("Secure connection established using SSLv3.")
+		    Case Me.TLSv1
+		      PrintLog("Secure connection established using TLSv1.")
+		    End Select
+		  Else
+		    PrintLog("Connection established.")
+		  End If
 		  Output = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
-		  Me.Write(Request.ToString)
+		  Dim s As String = Request.ToString
+		  PrintLog("Sending request... (" + FormatBytes(s.LenB) + ")")
+		  Me.Write(s)
 		  RequestMain1.URL.AddItem(RequestMain1.URL.Text)
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub DataAvailable()
+		  If DataReceivedTimer.Mode = Timer.ModeOff Then
+		    PrintLog("Receiving data...")
+		  End If
 		  Output = Output + Me.ReadAll
 		  RawText = Self.Request.ToString
 		  ResponseMain1.OutputLog.Text = "-----------Request-----------" + CRLF + RawText + CRLF _
@@ -326,6 +402,11 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Error()
+		  If Me.LastErrorCode = 102 Then
+		    PrintLog("Disconnected.")
+		  Else
+		    PrintLog(SocketErrorMessage(Me.LastErrorCode))
+		  End If
 		  Select Case Me.LastErrorCode
 		  Case 102
 		    'ResponseMain1.IPAddress.Text = "Closed by host"
@@ -336,7 +417,6 @@ End
 		    ResponseMain1.ResponseHeaders.DeleteAllRows
 		    Self.Title = "HTTP Request Generator - Unable to connect!"
 		    ResponseMain1.OutputLog.Text = ""
-		    
 		  Else
 		    Self.Title = "HTTP Request Generator - Unable to connect!"
 		    ResponseMain1.OutputLog.Text = ""
@@ -346,7 +426,22 @@ End
 		  RequestMain1.Sender.Enabled = True
 		  RequestMain1.Sender.Caption = "Send Request"
 		  RequestMain1.ProgressBar1.Visible = False
+		  RequestMain1.StopButton.Visible = False
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SendComplete(UserAborted As Boolean)
+		  If Not UserAborted Then
+		    PrintLog("Send operation completed.")
+		  Else
+		    PrintLog("Send operation aborted!")
+		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function SendProgress(BytesSent As Integer, BytesLeft As Integer) As Boolean
+		  PrintLog("Send Progress: " + FormatBytes(BytesSent) + "/" + FormatBytes(BytesLeft))
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events DataReceivedTimer
@@ -399,11 +494,25 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub Perform()
-		  RequestMain1.Sender.Enabled = False
-		  RequestMain1.Sender.Caption = "Sending..."
-		  RequestMain1.ProgressBar1.Visible = True
-		  Perform()
+		Sub Perform(Cancel As Boolean)
+		  If Not Cancel Then
+		    RequestMain1.Sender.Enabled = False
+		    RequestMain1.Sender.Caption = "Sending..."
+		    RequestMain1.ProgressBar1.Visible = True
+		    RequestMain1.StopButton.Visible = True
+		    Perform()
+		  Else
+		    RequestMain1.Sender.Enabled = True
+		    RequestMain1.Sender.Caption = "Send Request"
+		    RequestMain1.ProgressBar1.Visible = False
+		    RequestMain1.StopButton.Visible = False
+		    Sock.Close
+		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub GenerateHeaders()
+		  Self.GenerateHeaders
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -513,5 +622,39 @@ End
 		Function GetResponse() As HTTP.Response
 		  Return Response
 		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events LogOutput
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  base.Append(New MenuItem("Clear log"))
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Select Case hitItem.Text
+		  Case "Clear log"
+		    Me.Text = ""
+		    Return True
+		  End Select
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
+		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -380,6 +380,44 @@ Begin ContainerControl RequestMain
       Visible         =   False
       Width           =   98
    End
+   Begin PlacardButton StopButton
+      AcceptFocus     =   False
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      Bold            =   False
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   20
+      HelpTag         =   ""
+      Hilight         =   ""
+      Icon            =   1638756351
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   216
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   False
+      Scope           =   0
+      Sticky          =   ""
+      TabIndex        =   9
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      textColorDown   =   "&c000000"
+      TextFont        =   "System"
+      TextSize        =   0
+      Top             =   305
+      Underline       =   False
+      UseFocusRing    =   True
+      Value           =   False
+      Visible         =   False
+      Width           =   20
+   End
 End
 #tag EndWindow
 
@@ -412,7 +450,7 @@ End
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event Perform()
+		Event Perform(Cancel As Boolean)
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -526,7 +564,7 @@ End
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  If Asc(key) = &h0D Or Asc(key) = &h03 Then
-		    Perform()
+		    Perform(False)
 		  End If
 		End Function
 	#tag EndEvent
@@ -534,7 +572,7 @@ End
 #tag Events Sender
 	#tag Event
 		Sub Action()
-		  Perform()
+		  Perform(False)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -585,6 +623,10 @@ End
 		Sub ValueChanged()
 		  GenerateHeaders()
 		  HeaderViewer.ShowHeaders(Request.Headers)
+		  
+		Exception
+		  MsgBox("Unable to generate headers!")
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -640,6 +682,18 @@ End
 		    End Select
 		  End If
 		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events StopButton
+	#tag Event
+		Sub Open()
+		  Me.HelpTag = "Cancel request"
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub ValueChanged()
+		  Perform(True)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -7,13 +7,19 @@ Inherits ListBox
 		    'g.ForeColor = &c0000FF00
 		    'g.TextSize = 15
 		    'g.DrawString("+", 0, g.Height)
-		    g.DrawPicture(plus, 0, 0)', g.Width, g.Height, 0, 0, plus.Width, plus.Height)
+		    Dim x, y As Integer
+		    x = (0.5 * g.Width) - (0.5 * plus.Width)
+		    y = (0.5 * g.Height) - (0.5 * plus.Height)
+		    g.DrawPicture(plus, x, y)', g.Width, g.Height, 0, 0, plus.Width, plus.Height)
 		    Return True
 		  ElseIf row < Me.ListCount And column = Me.ColumnCount - 1 Then
 		    'g.ForeColor = &c80808000
 		    'g.TextSize = 15
 		    'g.DrawString("-", 0, g.Height)
-		    g.DrawPicture(minus, 0, 0)', g.Width, g.Height, 0, 0, minus.Width, minus.Height)
+		    Dim x, y As Integer
+		    x = (0.5 * g.Width) - (0.5 * plus.Width)
+		    y = (0.5 * g.Height) - (0.5 * plus.Height)
+		    g.DrawPicture(minus, x, y)', g.Width, g.Height, 0, 0, minus.Width, minus.Height)
 		    Return True
 		  End If
 		  
