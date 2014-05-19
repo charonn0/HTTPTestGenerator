@@ -562,6 +562,26 @@ End
 		  End If
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = 0
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
 #tag EndEvents
 #tag Events RequestMethod
 	#tag Event
@@ -569,12 +589,48 @@ End
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = 0
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
 #tag EndEvents
 #tag Events URL
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  If Asc(key) = &h0D Or Asc(key) = &h03 Then
 		    Perform(False)
+		    Return True
+		  ElseIf key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = 0
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
 		  End If
 		End Function
 	#tag EndEvent
@@ -589,6 +645,26 @@ End
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = 0
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
+		  End If
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events Sender
@@ -760,5 +836,25 @@ End
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = 0
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
+		  End If
+		End Function
 	#tag EndEvent
 #tag EndEvents

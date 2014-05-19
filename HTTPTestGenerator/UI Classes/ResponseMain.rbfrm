@@ -473,6 +473,26 @@ End
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
+		        Generator.ResponseMain1.Tabpanel1.Value = 0
+		      Else
+		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
 #tag EndEvents
 #tag Events ScrollBar1
 	#tag Event
