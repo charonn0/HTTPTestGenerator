@@ -520,16 +520,15 @@ End
 
 #tag Events CookieExpiry
 	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
-		  #pragma Unused X
-		  #pragma Unused Y
-		  Dim d As Date = DatePicker.GetDate(HTTPDate(Me.Text))
-		  Me.Text = HTTPDate(d)
+		Sub Open()
+		  Me.Text = HTTPDate(New Date)
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub Open()
-		  Me.Text = HTTPDate(New Date)
+		Sub GotFocus()
+		  PushButton1.SetFocus
+		  Dim d As Date = DatePicker.GetDate(HTTPDate(Me.Text))
+		  Me.Text = HTTPDate(d)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
