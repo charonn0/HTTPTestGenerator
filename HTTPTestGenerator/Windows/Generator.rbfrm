@@ -29,17 +29,22 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
+      TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   14
+      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -47,8 +52,11 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
+      TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   79
+      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -62,6 +70,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -116,6 +125,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -209,6 +219,16 @@ End
 		Protected Sub PrintLog(Line As String)
 		  RequestMain1.LogOutput.AppendText(Line + EndOfLine)
 		  RequestMain1.LogOutput.ScrollPosition = RequestMain1.LogOutput.Text.Len
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub PrintOutput(Req As String, Resp As String)
+		  Dim st As StyledText = ResponseMain1.OutputLog.StyledText
+		  st.Text = req + CRLF + resp + CRLF
+		  st.TextColor(0, req.Len - 4) = &c00800000
+		  st.TextColor(req.Len - 4, resp.Len) = &c0000FF00
+		  st.Font(0, st.Text.Len) = ResponseMain1.OutputLog.TextFont
 		End Sub
 	#tag EndMethod
 
@@ -366,8 +386,7 @@ End
 		  End If
 		  Output = Output + Me.ReadAll
 		  RawText = Self.Request.ToString
-		  ResponseMain1.OutputLog.Text = "-----------Request-----------" + CRLF + RawText + CRLF _
-		  + "-----------Response-----------" + CRLF + OutPut + CRLF
+		  PrintOutput(RawText, Output)
 		  Dim bs As New BinaryStream(RawText + CRLF + CRLF + Output)
 		  ResponseMain1.HexViewer1.ShowData(bs)
 		  ResponseMain1.ScrollBar1.Value = 0
