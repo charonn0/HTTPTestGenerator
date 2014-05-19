@@ -289,6 +289,16 @@ Inherits Canvas
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function DumpStream() As String
+		  Dim p As Integer = Stream.Position
+		  Stream.Position = 0
+		  Dim data As MemoryBlock = Stream.Read(Stream.Length)
+		  Stream.Position = p
+		  Return data
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Shared Function Hex(Data As Integer, Width As Integer = 2, LittleEndian As Boolean) As String
 		  Dim tmp As String

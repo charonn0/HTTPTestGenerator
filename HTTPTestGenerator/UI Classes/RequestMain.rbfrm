@@ -280,7 +280,7 @@ Begin ContainerControl RequestMain
       textColorDown   =   "&c000000"
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   32
+      Top             =   33
       Underline       =   False
       UseFocusRing    =   True
       Value           =   False
@@ -534,38 +534,14 @@ End
 		  Me.AddRow("Accept", "text/html,*/*;q=0.8")
 		  Me.RowTag(Me.LastIndex) = "Accept":"text/html,*/*;q=0.8"
 		  Me.HeaderType(2) = Listbox.HeaderTypes.NotSortable
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events RequestMethod
 	#tag Event
 		Sub Open()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -579,38 +555,14 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Open()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events ProtocolVer
 	#tag Event
 		Sub Open()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -618,6 +570,11 @@ End
 	#tag Event
 		Sub Action()
 		  Perform(False)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -763,19 +720,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Open()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
 #tag EndEvents

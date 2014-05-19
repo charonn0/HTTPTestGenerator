@@ -9,6 +9,28 @@ Inherits Application
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h0
+		Function FixedWidthFont() As String
+		  ' try to pick a fixed-width font
+		  Dim nm As String
+		  If nm = "" Then
+		    For i As Integer = FontCount - 1 DownTo 0
+		      Dim fontname As String = Font(i)
+		      If Left(fontname, 1) <> "@" Then
+		        If fontname = "Consolas" Then
+		          nm = fontname
+		        End If
+		        If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		          nm = fontname
+		        End If
+		      End If
+		    Next
+		  End If
+		  Return nm
+		End Function
+	#tag EndMethod
+
+
 	#tag Constant, Name = kEditClear, Type = String, Dynamic = False, Default = \"&Delete", Scope = Public
 		#Tag Instance, Platform = Windows, Language = Default, Definition  = \"&Delete"
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"&Delete"

@@ -118,7 +118,7 @@ Begin ContainerControl ResponseMain
       TextUnit        =   0
       Top             =   21
       Underline       =   ""
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   561
       Begin TextArea OutputLog
@@ -171,7 +171,7 @@ Begin ContainerControl ResponseMain
          AcceptFocus     =   true
          AutoDeactivate  =   True
          Enabled         =   True
-         Height          =   163
+         Height          =   157
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
@@ -210,7 +210,7 @@ Begin ContainerControl ResponseMain
          EraseBackground =   False
          GutterColor     =   "&cFFFFFF00"
          GutterColorAlt  =   "&cC0C0C000"
-         Height          =   163
+         Height          =   157
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
@@ -365,6 +365,37 @@ Begin ContainerControl ResponseMain
          Visible         =   True
          Width           =   30
       End
+      Begin PushButton PushButton2
+         AutoDeactivate  =   True
+         Bold            =   ""
+         ButtonStyle     =   0
+         Cancel          =   ""
+         Caption         =   "--"
+         Default         =   ""
+         Enabled         =   True
+         Height          =   14
+         HelpTag         =   "Save to file..."
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         Italic          =   ""
+         Left            =   6
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   False
+         LockRight       =   True
+         LockTop         =   False
+         Scope           =   0
+         TabIndex        =   4
+         TabPanelIndex   =   2
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   455
+         Underline       =   ""
+         Visible         =   True
+         Width           =   30
+      End
    End
 End
 #tag EndWindow
@@ -413,29 +444,32 @@ End
 
 #tag EndWindowCode
 
+#tag Events Label2
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events Code
 	#tag Event
 		Sub Open()
 		  Me.Text = ""
+		  Me.TextFont = App.FixedWidthFont
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events TabPanel1
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events OutputLog
 	#tag Event
 		Sub Open()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -448,23 +482,6 @@ End
 #tag EndEvents
 #tag Events HexViewer1
 	#tag Event
-		Sub Open()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
-		End Sub
-	#tag EndEvent
-	#tag Event
 		Function Scrolled(LinesDelta As Integer, BytesDelta As Integer) As Boolean
 		  #pragma Unused BytesDelta
 		  ScrollBar1.Value = ScrollBar1.Value + LinesDelta
@@ -472,25 +489,13 @@ End
 		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
 		End Function
 	#tag EndEvent
-#tag EndEvents
-#tag Events ResponseHeaders
 	#tag Event
-		Sub Change()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
+#tag EndEvents
+#tag Events ResponseHeaders
 	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
 		  Dim m As New MenuItem("Copy to request headers")
@@ -509,6 +514,11 @@ End
 		    Return True
 		  End If
 		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events CookieList
@@ -541,19 +551,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Open()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
+		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -561,6 +559,18 @@ End
 	#tag Event
 		Sub Action()
 		  OutputLog.Text = ""
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton2
+	#tag Event
+		Sub Action()
+		  Dim f As FolderItem = GetSaveFolderItem("","")
+		  If f <> Nil Then
+		    Dim bs As BinaryStream = BinaryStream.Create(f, True)
+		    bs.Write(HexViewer1.DumpStream)
+		    bs.Close
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

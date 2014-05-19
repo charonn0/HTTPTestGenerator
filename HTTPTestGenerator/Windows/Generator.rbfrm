@@ -86,7 +86,7 @@ Begin Window Generator
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   470
+      Height          =   574
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -208,8 +208,16 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Sub PrintLog(Line As String)
-		  RequestMain1.LogOutput.AppendText(Line + EndOfLine)
-		  RequestMain1.LogOutput.ScrollPosition = RequestMain1.LogOutput.Text.Len
+		  Dim sr As New StyleRun
+		  sr.Text = Line + EndOfLine
+		  Select Case Sequence Mod 2
+		  Case 0
+		    sr.TextColor = &c00000000
+		  Case 1
+		    sr.TextColor = &c80808000
+		  End Select
+		  RequestMain1.LogOutput.StyledText.AppendStyleRun(sr)
+		  RequestMain1.LogOutput.ScrollPosition = RequestMain1.LogOutput.ScrollPosition + 1
 		End Sub
 	#tag EndMethod
 
@@ -421,10 +429,8 @@ End
 		    ResponseMain1.Code.Text = SocketErrorMessage(Me.LastErrorCode)
 		    ResponseMain1.ResponseHeaders.DeleteAllRows
 		    Self.Title = "HTTP Request Generator - Unable to connect!"
-		    ResponseMain1.OutputLog.Text = ""
 		  Else
 		    Self.Title = "HTTP Request Generator - Unable to connect!"
-		    ResponseMain1.OutputLog.Text = ""
 		    ResponseMain1.Code.TextColor = &cFF000000
 		    ResponseMain1.Code.Text = SocketErrorMessage(Me.LastErrorCode)
 		  End Select
@@ -459,6 +465,7 @@ End
 		  PrintOutput(RawText, resp)
 		  Dim bs As New BinaryStream(Out)
 		  ResponseMain1.HexViewer1.ShowData(bs)
+		  ResponseMain1.HexViewer1.Invalidate
 		  ResponseMain1.ScrollBar1.Value = 0
 		  ResponseMain1.ScrollBar1.Maximum = ResponseMain1.HexViewer1.LineCount
 		  
@@ -488,7 +495,7 @@ End
 		      Perform()
 		    End If
 		  End If
-		  Self.Refresh
+		  'Self.Refresh
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -528,7 +535,7 @@ End
 		    RequestMain1.Sender.Caption = "Sending..."
 		    RequestMain1.ProgressBar1.Visible = True
 		    RequestMain1.StopButton.Visible = True
-		    RequestMain1.Refresh
+		    'RequestMain1.Refresh
 		    Perform()
 		  Else
 		    RequestMain1.Sender.Enabled = True
