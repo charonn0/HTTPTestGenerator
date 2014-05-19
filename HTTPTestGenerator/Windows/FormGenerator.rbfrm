@@ -291,22 +291,37 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Function SetFormData(ExistingData As Dictionary) As Dictionary
+		Function SetFormData(ExistingData As Variant) As Variant
 		  Me.FormData = Nil
+		  Me.Form = Nil
 		  HTTPForm.DeleteAllRows
 		  If ExistingData <> Nil Then
-		    For Each key As String In ExistingData.Keys
-		      HTTPForm.AddRow(key, ExistingData.Value(key))
-		      HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
-		      HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
-		    Next
+		    If ExistingData IsA Dictionary Then ' URLEncoded
+		      For Each key As String In Dictionary(ExistingData).Keys
+		        FormData = ExistingData
+		        HTTPForm.AddRow(key, Dictionary(ExistingData).Value(key))
+		        HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
+		        HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
+		      Next
+		    Else ' MultipartForm
+		      Form = ExistingData
+		    End If
 		  End If
 		  
 		  Self.ShowModal()
-		  Return FormData
+		  
+		  If FormData <> Nil Then
+		    Return FormData
+		  ElseIf Form <> Nil Then
+		    Return Form
+		  End If
 		End Function
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h1
+		Protected Form As HTTPParse.MultipartForm
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private FormData As Dictionary
@@ -342,12 +357,13 @@ End
 		      FormData.Value(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
 		    Next
 		  Else
-		    Dim m As New HTTPParse.MultipartForm
+		    Form = New HTTPParse.MultipartForm
 		    For i As Integer = 0 To HTTPForm.ListCount - 1
 		      If HTTPForm.RowTag(i) <> Nil And HTTPForm.RowTag(i) IsA FolderItem Then
-		        
+		        Dim f As FolderItem = HTTPForm.RowTag(i)
+		        Form.Element(HTTPForm.Cell(i, 0)) = f
 		      Else
-		        m.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
+		        Form.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
 		      End If
 		    Next
 		  End If
@@ -377,6 +393,8 @@ End
 	#tag Event
 		Sub Action()
 		  FileAdd.Enabled = Me.Value
+		  Form = New HTTPParse.MultipartForm
+		  FormData = Nil
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -384,6 +402,8 @@ End
 	#tag Event
 		Sub Action()
 		  FileAdd.Enabled = Not Me.Value
+		  Form = Nil
+		  FormData = New Dictionary
 		End Sub
 	#tag EndEvent
 #tag EndEvents

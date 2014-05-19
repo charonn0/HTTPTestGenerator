@@ -23,55 +23,6 @@ Begin ContainerControl ResponseMain
    UseFocusRing    =   ""
    Visible         =   True
    Width           =   561
-   Begin Listbox ResponseHeaders
-      AutoDeactivate  =   True
-      AutoHideScrollbars=   True
-      Bold            =   False
-      Border          =   True
-      ColumnCount     =   2
-      ColumnsResizable=   True
-      ColumnWidths    =   "25%"
-      DataField       =   ""
-      DataSource      =   ""
-      DefaultRowHeight=   -1
-      Enabled         =   True
-      EnableDrag      =   False
-      EnableDragReorder=   False
-      GridLinesHorizontal=   0
-      GridLinesVertical=   0
-      HasHeading      =   True
-      HeadingIndex    =   -1
-      Height          =   124
-      HelpTag         =   ""
-      Hierarchical    =   False
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   "Header Name	Header Value"
-      Italic          =   False
-      Left            =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      RequiresSelection=   False
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollBarVertical=   True
-      SelectionType   =   0
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   27
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   561
-      _ScrollWidth    =   -1
-   End
    Begin Label Label2
       AutoDeactivate  =   True
       Bold            =   False
@@ -140,60 +91,11 @@ Begin ContainerControl ResponseMain
       Visible         =   True
       Width           =   221
    End
-   Begin Listbox CookieList
-      AutoDeactivate  =   True
-      AutoHideScrollbars=   True
-      Bold            =   False
-      Border          =   True
-      ColumnCount     =   6
-      ColumnsResizable=   True
-      ColumnWidths    =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      DefaultRowHeight=   -1
-      Enabled         =   True
-      EnableDrag      =   False
-      EnableDragReorder=   False
-      GridLinesHorizontal=   0
-      GridLinesVertical=   0
-      HasHeading      =   True
-      HeadingIndex    =   -1
-      Height          =   117
-      HelpTag         =   ""
-      Hierarchical    =   False
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   "Cookie	Value	Expires	Domain	Path	Restrictions"
-      Italic          =   False
-      Left            =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      RequiresSelection=   False
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollBarVertical=   True
-      SelectionType   =   0
-      TabIndex        =   9
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   153
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   561
-      _ScrollWidth    =   -1
-   End
    Begin TabPanel TabPanel1
       AutoDeactivate  =   True
       Bold            =   ""
       Enabled         =   True
-      Height          =   199
+      Height          =   449
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -214,9 +116,9 @@ Begin ContainerControl ResponseMain
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
-      Top             =   271
+      Top             =   21
       Underline       =   ""
-      Value           =   1
+      Value           =   0
       Visible         =   True
       Width           =   561
       Begin TextArea OutputLog
@@ -231,7 +133,7 @@ Begin ContainerControl ResponseMain
          DataSource      =   ""
          Enabled         =   True
          Format          =   ""
-         Height          =   162
+         Height          =   407
          HelpTag         =   ""
          HideSelection   =   True
          Index           =   -2147483648
@@ -259,7 +161,7 @@ Begin ContainerControl ResponseMain
          TextFont        =   "System"
          TextSize        =   0.0
          TextUnit        =   0
-         Top             =   299
+         Top             =   49
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
@@ -269,7 +171,7 @@ Begin ContainerControl ResponseMain
          AcceptFocus     =   true
          AutoDeactivate  =   True
          Enabled         =   True
-         Height          =   164
+         Height          =   163
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
@@ -288,7 +190,7 @@ Begin ContainerControl ResponseMain
          TabIndex        =   0
          TabPanelIndex   =   2
          TabStop         =   True
-         Top             =   298
+         Top             =   299
          Value           =   0
          Visible         =   True
          Width           =   16
@@ -308,7 +210,7 @@ Begin ContainerControl ResponseMain
          EraseBackground =   False
          GutterColor     =   "&cFFFFFF00"
          GutterColorAlt  =   "&cC0C0C000"
-         Height          =   164
+         Height          =   163
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
@@ -329,10 +231,139 @@ Begin ContainerControl ResponseMain
          TextBackGroundColor=   "&cFFFFFF00"
          TextBackGroundColorAlt=   "&cC0C0C000"
          TextFont        =   "System"
-         Top             =   298
+         Top             =   299
          UseFocusRing    =   True
          Visible         =   True
          Width           =   535
+      End
+      Begin Listbox ResponseHeaders
+         AutoDeactivate  =   True
+         AutoHideScrollbars=   True
+         Bold            =   False
+         Border          =   True
+         ColumnCount     =   2
+         ColumnsResizable=   True
+         ColumnWidths    =   "25%"
+         DataField       =   ""
+         DataSource      =   ""
+         DefaultRowHeight=   -1
+         Enabled         =   True
+         EnableDrag      =   False
+         EnableDragReorder=   False
+         GridLinesHorizontal=   0
+         GridLinesVertical=   0
+         HasHeading      =   True
+         HeadingIndex    =   -1
+         Height          =   124
+         HelpTag         =   ""
+         Hierarchical    =   False
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         InitialValue    =   "Header Name	Header Value"
+         Italic          =   False
+         Left            =   6
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         RequiresSelection=   False
+         Scope           =   0
+         ScrollbarHorizontal=   False
+         ScrollBarVertical=   True
+         SelectionType   =   0
+         TabIndex        =   2
+         TabPanelIndex   =   2
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   51
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   549
+         _ScrollWidth    =   -1
+      End
+      Begin Listbox CookieList
+         AutoDeactivate  =   True
+         AutoHideScrollbars=   True
+         Bold            =   False
+         Border          =   True
+         ColumnCount     =   6
+         ColumnsResizable=   True
+         ColumnWidths    =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         DefaultRowHeight=   -1
+         Enabled         =   True
+         EnableDrag      =   False
+         EnableDragReorder=   False
+         GridLinesHorizontal=   0
+         GridLinesVertical=   0
+         HasHeading      =   True
+         HeadingIndex    =   -1
+         Height          =   117
+         HelpTag         =   ""
+         Hierarchical    =   False
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         InitialValue    =   "Cookie	Value	Expires	Domain	Path	Restrictions"
+         Italic          =   False
+         Left            =   6
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         RequiresSelection=   False
+         Scope           =   0
+         ScrollbarHorizontal=   False
+         ScrollBarVertical=   True
+         SelectionType   =   0
+         TabIndex        =   3
+         TabPanelIndex   =   2
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   177
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   549
+         _ScrollWidth    =   -1
+      End
+      Begin PushButton PushButton1
+         AutoDeactivate  =   True
+         Bold            =   ""
+         ButtonStyle     =   0
+         Cancel          =   ""
+         Caption         =   "--"
+         Default         =   ""
+         Enabled         =   True
+         Height          =   14
+         HelpTag         =   "Clear HTTP Log"
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         Italic          =   ""
+         Left            =   511
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   False
+         LockRight       =   True
+         LockTop         =   False
+         Scope           =   0
+         TabIndex        =   1
+         TabPanelIndex   =   1
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   455
+         Underline       =   ""
+         Visible         =   True
+         Width           =   30
       End
    End
 End
@@ -382,94 +413,10 @@ End
 
 #tag EndWindowCode
 
-#tag Events ResponseHeaders
-	#tag Event
-		Sub Change()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  Dim m As New MenuItem("Copy to request headers")
-		  m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
-		  Base.Append(m)
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  If hitItem.Text = "Copy to request headers" Then
-		    Dim c As Pair = hitItem.Tag
-		    Dim nm, vl As String
-		    nm = c.Left
-		    vl = c.Right
-		    Generator.RequestMain1.RequestHeaders.AddRow(nm, vl, "")
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-#tag EndEvents
 #tag Events Code
 	#tag Event
 		Sub Open()
 		  Me.Text = ""
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events CookieList
-	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  Dim r As Integer = Me.RowFromXY(X, Y)
-		  If r > -1 Then
-		    Dim m As New MenuItem("Copy to request headers")
-		    m.Tag = Me.RowTag(r)
-		    Base.Append(m)
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  If hitItem.Text = "Copy to request headers" Then
-		    Dim c As Cookie = hitItem.Tag
-		    Generator.RequestMain1.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
-		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = c
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub DoubleClick()
-		  Dim c As Cookie = Me.RowTag(Me.ListIndex)
-		  CookieEdit.ShowCookie(c)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  ' try to pick a fixed-width font
-		  For i As Integer = FontCount - 1 DownTo 0
-		    Dim fontname As String = Font(i)
-		    If Left(fontname, 1) <> "@" Then
-		      If fontname = "Courier" Or fontname = "Consolas" Then
-		        Me.TextFont = fontname
-		        Exit For
-		      End If
-		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		        Me.TextFont = fontname
-		      End If
-		    End If
-		  Next
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -524,5 +471,96 @@ End
 		  ScrollBar1.Maximum = Me.LineCount
 		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
 		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events ResponseHeaders
+	#tag Event
+		Sub Change()
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  Dim m As New MenuItem("Copy to request headers")
+		  m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
+		  Base.Append(m)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  If hitItem.Text = "Copy to request headers" Then
+		    Dim c As Pair = hitItem.Tag
+		    Dim nm, vl As String
+		    nm = c.Left
+		    vl = c.Right
+		    Generator.RequestMain1.RequestHeaders.AddRow(nm, vl, "")
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events CookieList
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  Dim r As Integer = Me.RowFromXY(X, Y)
+		  If r > -1 Then
+		    Dim m As New MenuItem("Copy to request headers")
+		    m.Tag = Me.RowTag(r)
+		    Base.Append(m)
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  If hitItem.Text = "Copy to request headers" Then
+		    Dim c As Cookie = hitItem.Tag
+		    Generator.RequestMain1.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = c
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  Dim c As Cookie = Me.RowTag(Me.ListIndex)
+		  CookieEdit.ShowCookie(c)
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  ' try to pick a fixed-width font
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) <> "@" Then
+		      If fontname = "Courier" Or fontname = "Consolas" Then
+		        Me.TextFont = fontname
+		        Exit For
+		      End If
+		      If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
+		        Me.TextFont = fontname
+		      End If
+		    End If
+		  Next
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton1
+	#tag Event
+		Sub Action()
+		  OutputLog.Text = ""
+		End Sub
 	#tag EndEvent
 #tag EndEvents

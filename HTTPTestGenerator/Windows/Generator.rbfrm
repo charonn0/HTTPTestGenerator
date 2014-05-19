@@ -29,22 +29,17 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
-      TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   14
-      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -52,11 +47,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   79
-      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -70,7 +62,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -125,7 +116,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -188,6 +178,7 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub Perform()
+		  Sequence = Sequence + 1
 		  Output = ""
 		  Generate()
 		  Sock.Close
@@ -224,13 +215,19 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Sub PrintOutput(Req As String, Resp As String)
-		  Dim st As StyledText = ResponseMain1.OutputLog.StyledText
-		  req = req.Trim + CRLF + CRLF
-		  resp = resp.Trim + CRLF + CRLF
-		  st.Text = req + resp
-		  st.TextColor(0, req.Trim.Len) = &c00800000
-		  st.TextColor(req.Trim.Len - 4, resp.Trim.Len) = &c0000FF00
-		  st.Font(0, st.Text.LenB) = ResponseMain1.OutputLog.TextFont
+		  Dim l As Integer = CountFields(req, CRLF) + CountFields(resp, CRLF) + 2
+		  Dim sr As New StyleRun
+		  sr.Text = "-----" + Format(Sequence, "000000000") + "-----" + CRLF
+		  sr.TextColor = &c80808000
+		  ResponseMain1.OutputLog.StyledText.AppendStyleRun(sr)
+		  sr.Text = req
+		  sr.TextColor = &c00800000
+		  sr.Font = ResponseMain1.OutputLog.TextFont
+		  ResponseMain1.OutputLog.StyledText.AppendStyleRun(sr)
+		  sr.Text = resp
+		  sr.TextColor = &c0000FF00
+		  ResponseMain1.OutputLog.StyledText.AppendStyleRun(sr)
+		  ResponseMain1.OutputLog.ScrollPosition = ResponseMain1.OutputLog.ScrollPosition + l 
 		End Sub
 	#tag EndMethod
 
@@ -311,6 +308,10 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private mSequence As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private mTheURL As HTTP.URI
 	#tag EndProperty
 
@@ -333,6 +334,21 @@ End
 	#tag Property, Flags = &h0
 		Response As HTTP.Response
 	#tag EndProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mSequence
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mSequence = value
+			  PrintLog("Sequence: #" + Format(value, "000000000"))
+			End Set
+		#tag EndSetter
+		Sequence As Integer
+	#tag EndComputedProperty
 
 	#tag Property, Flags = &h21
 		Private SplitterThumb As Picture
@@ -386,15 +402,6 @@ End
 		  End If
 		  Output = Output + Me.ReadAll
 		  RawText = Self.Request.ToString
-		  Dim resp, out As String
-		  resp = NthField(Output, CRLF + CRLF, 1) + CRLF + CRLF
-		  Out = Replace(Output, resp, "")
-		  PrintOutput(RawText, resp)
-		  Dim bs As New BinaryStream(Out)
-		  ResponseMain1.HexViewer1.ShowData(bs)
-		  ResponseMain1.ScrollBar1.Value = 0
-		  ResponseMain1.ScrollBar1.Maximum = ResponseMain1.HexViewer1.LineCount
-		  
 		  DataReceivedTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndEvent
@@ -446,6 +453,15 @@ End
 	#tag Event
 		Sub Action()
 		  Update(Output)
+		  Dim resp, out As String
+		  resp = NthField(Output, CRLF + CRLF, 1) + CRLF + CRLF
+		  Out = Replace(Output, resp, "")
+		  PrintOutput(RawText, resp)
+		  Dim bs As New BinaryStream(Out)
+		  ResponseMain1.HexViewer1.ShowData(bs)
+		  ResponseMain1.ScrollBar1.Value = 0
+		  ResponseMain1.ScrollBar1.Maximum = ResponseMain1.HexViewer1.LineCount
+		  
 		  If Response.StatusCode = 301 Or Response.StatusCode = 302 Then
 		    Dim redir As String = Response.GetHeader("Location")
 		    Dim u As New HTTP.URI(redir)
