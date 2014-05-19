@@ -644,6 +644,7 @@ End
 		  Dim mnu As New MenuItem("EditRawMenu")
 		  mnu.Append(New MenuItem("HTML form output"))
 		  mnu.Append(New MenuItem("Edit raw"))
+		  mnu.Append(New MenuItem("Clear all"))
 		  Dim res As MenuItem = mnu.PopUp
 		  If res <> Nil Then
 		    If Self.Request = Nil Then Generate()
@@ -697,6 +698,18 @@ End
 		      RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
 		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(MessageBodyRaw))
 		      
+		    Case "Clear all"
+		      MessageBodyRaw = ""
+		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
+		          RequestHeaders.RemoveRow(i)
+		        End If
+		      Next
+		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		        If RequestHeaders.Cell(i, 0) = "Content-Type" Then
+		          RequestHeaders.RemoveRow(i)
+		        End If
+		      Next
 		    End Select
 		  End If
 		  
