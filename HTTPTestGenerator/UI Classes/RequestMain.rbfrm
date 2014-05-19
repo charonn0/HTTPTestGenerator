@@ -535,6 +535,19 @@ End
 		  Me.RowTag(Me.LastIndex) = "Accept":"text/html,*/*;q=0.8"
 		  Me.HeaderType(2) = Listbox.HeaderTypes.NotSortable
 		  Me.TextFont = App.FixedWidthFont
+		  Me.AcceptTextDrop
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub DropObject(obj As DragItem, action As Integer)
+		  If Obj.TextAvailable Then
+		    Dim s() As String = Split(obj.Text, CRLF)
+		    For Each cs As String In s
+		      If cs.Trim = "" Then Continue
+		      Dim c As New HTTPParse.Cookie(cs)
+		      Me.AddRow("Cookie", c.Name + "=" + c.Value)
+		    Next
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

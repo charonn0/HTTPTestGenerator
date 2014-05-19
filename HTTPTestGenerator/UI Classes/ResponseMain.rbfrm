@@ -171,7 +171,7 @@ Begin ContainerControl ResponseMain
          AcceptFocus     =   true
          AutoDeactivate  =   True
          Enabled         =   True
-         Height          =   157
+         Height          =   151
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
@@ -200,7 +200,8 @@ Begin ContainerControl ResponseMain
          AcceptTabs      =   True
          AutoDeactivate  =   True
          Backdrop        =   ""
-         Border          =   ""
+         Border          =   True
+         BorderColor     =   &h00808080
          ByteBackgroundColor=   "&cFFFFFF00"
          ByteBackgroundColorAlt=   "&cC0C0C000"
          ByteColor       =   "&c0000FF00"
@@ -210,7 +211,7 @@ Begin ContainerControl ResponseMain
          EraseBackground =   False
          GutterColor     =   "&cFFFFFF00"
          GutterColorAlt  =   "&cC0C0C000"
-         Height          =   157
+         Height          =   151
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "TabPanel1"
@@ -224,7 +225,7 @@ Begin ContainerControl ResponseMain
          LockTop         =   True
          Scope           =   0
          ScrollBackground=   ""
-         ShowOffsets     =   True
+         ShowOffsets     =   False
          TabIndex        =   1
          TabPanelIndex   =   2
          TabStop         =   True
@@ -297,7 +298,7 @@ Begin ContainerControl ResponseMain
          DataSource      =   ""
          DefaultRowHeight=   -1
          Enabled         =   True
-         EnableDrag      =   False
+         EnableDrag      =   True
          EnableDragReorder=   False
          GridLinesHorizontal=   0
          GridLinesVertical=   0
@@ -320,7 +321,7 @@ Begin ContainerControl ResponseMain
          Scope           =   0
          ScrollbarHorizontal=   False
          ScrollBarVertical=   True
-         SelectionType   =   0
+         SelectionType   =   1
          TabIndex        =   3
          TabPanelIndex   =   2
          TabStop         =   True
@@ -553,6 +554,24 @@ End
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function DragRow(drag As DragItem, row As Integer) As Boolean
+		  Dim data As String
+		  For i As Integer = 0 To Me.ListCount - 1
+		    If Me.Selected(i) Then
+		      Dim c As HTTPParse.Cookie = Me.RowTag(i)
+		      If c <> Nil Then
+		        data = data + c.ToString + CRLF
+		      End If
+		    End If
+		  Next
+		  If data <> "" Then
+		    drag.Text = data
+		    'Break
+		    Return True
+		  End If
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events PushButton1
