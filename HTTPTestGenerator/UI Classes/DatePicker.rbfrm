@@ -4,7 +4,7 @@ Begin Window DatePicker
    Backdrop        =   0
    CloseButton     =   False
    Composite       =   False
-   Frame           =   0
+   Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
    Height          =   242
