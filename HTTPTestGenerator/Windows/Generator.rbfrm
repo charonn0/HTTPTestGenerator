@@ -225,10 +225,12 @@ End
 	#tag Method, Flags = &h1
 		Protected Sub PrintOutput(Req As String, Resp As String)
 		  Dim st As StyledText = ResponseMain1.OutputLog.StyledText
-		  st.Text = req + CRLF + resp + CRLF
-		  st.TextColor(0, req.Len - 4) = &c00800000
-		  st.TextColor(req.Len - 4, resp.Len) = &c0000FF00
-		  st.Font(0, st.Text.Len) = ResponseMain1.OutputLog.TextFont
+		  req = req.Trim + CRLF + CRLF
+		  resp = resp.Trim + CRLF + CRLF
+		  st.Text = req + resp
+		  st.TextColor(0, req.Trim.Len) = &c00800000
+		  st.TextColor(req.Trim.Len - 4, resp.Trim.Len) = &c0000FF00
+		  st.Font(0, st.Text.LenB) = ResponseMain1.OutputLog.TextFont
 		End Sub
 	#tag EndMethod
 
@@ -277,8 +279,6 @@ End
 		    ResponseMain1.CookieList.RowTag(ResponseMain1.CookieList.LastIndex) = c
 		  Next
 		  
-		  ResponseMain1.ResponseHeaderView.Enabled = True
-		  ResponseMain1.ResponseHeaderView.Icon = expand_icon
 		  Self.Title = "HTTP Request Generator - Viewing '" + TheURL.ToString + "'"
 		  If Sock.IsConnected Then
 		    'ResponseMain1.IPAddress1.Text = "Open"
@@ -386,8 +386,11 @@ End
 		  End If
 		  Output = Output + Me.ReadAll
 		  RawText = Self.Request.ToString
-		  PrintOutput(RawText, Output)
-		  Dim bs As New BinaryStream(RawText + CRLF + CRLF + Output)
+		  Dim resp, out As String
+		  resp = NthField(Output, CRLF + CRLF, 1) + CRLF + CRLF
+		  Out = Replace(Output, resp, "")
+		  PrintOutput(RawText, resp)
+		  Dim bs As New BinaryStream(Out)
 		  ResponseMain1.HexViewer1.ShowData(bs)
 		  ResponseMain1.ScrollBar1.Value = 0
 		  ResponseMain1.ScrollBar1.Maximum = ResponseMain1.HexViewer1.LineCount

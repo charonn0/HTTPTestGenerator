@@ -11,7 +11,7 @@ Begin ContainerControl RequestMain
    Height          =   428
    HelpTag         =   ""
    InitialParent   =   ""
-   Left            =   3.2e+1
+   Left            =   32
    LockBottom      =   True
    LockLeft        =   True
    LockRight       =   True
@@ -19,7 +19,7 @@ Begin ContainerControl RequestMain
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True
-   Top             =   3.2e+1
+   Top             =   32
    UseFocusRing    =   ""
    Visible         =   True
    Width           =   366
@@ -41,7 +41,7 @@ Begin ContainerControl RequestMain
       GridLinesVertical=   0
       HasHeading      =   True
       HeadingIndex    =   -1
-      Height          =   239
+      Height          =   261
       HelpTag         =   ""
       Hierarchical    =   False
       Index           =   -2147483648
@@ -65,7 +65,7 @@ Begin ContainerControl RequestMain
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   55
+      Top             =   66
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -193,7 +193,7 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   129
+      Left            =   127
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -206,7 +206,7 @@ Begin ContainerControl RequestMain
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   305
+      Top             =   33
       Underline       =   False
       Visible         =   True
       Width           =   98
@@ -227,7 +227,7 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   308
+      Left            =   334
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -242,45 +242,7 @@ Begin ContainerControl RequestMain
       textColorDown   =   "&c000000"
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   302
-      Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
-      Visible         =   True
-      Width           =   25
-   End
-   Begin PlacardButton RequestHeaderView11
-      AcceptFocus     =   True
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      Backdrop        =   ""
-      Bold            =   False
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   25
-      HelpTag         =   "Expanded Header View"
-      Hilight         =   ""
-      Icon            =   1571842047
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   334
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      Sticky          =   ""
-      TabIndex        =   7
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   "&c00000000"
-      textColorDown   =   "&c000000"
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   302
+      Top             =   33
       Underline       =   False
       UseFocusRing    =   True
       Value           =   False
@@ -303,7 +265,7 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   282
+      Left            =   308
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -318,46 +280,12 @@ Begin ContainerControl RequestMain
       textColorDown   =   "&c000000"
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   302
+      Top             =   33
       Underline       =   False
       UseFocusRing    =   True
       Value           =   False
       Visible         =   True
       Width           =   25
-   End
-   Begin Label Label1
-      AutoDeactivate  =   True
-      Bold            =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   11
-      LockBottom      =   ""
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Multiline       =   ""
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   10
-      TabPanelIndex   =   0
-      Text            =   "Request Headers"
-      TextAlign       =   1
-      TextColor       =   &h000000
-      TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   0
-      Top             =   29
-      Transparent     =   True
-      Underline       =   ""
-      Visible         =   True
-      Width           =   348
    End
    Begin ProgressBar ProgressBar1
       AutoDeactivate  =   True
@@ -366,7 +294,7 @@ Begin ContainerControl RequestMain
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   121
+      Left            =   119
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -375,7 +303,7 @@ Begin ContainerControl RequestMain
       Maximum         =   0
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   329
+      Top             =   57
       Value           =   0
       Visible         =   False
       Width           =   124
@@ -396,7 +324,7 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   227
+      Left            =   225
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
@@ -411,7 +339,7 @@ Begin ContainerControl RequestMain
       textColorDown   =   "&c000000"
       TextFont        =   "System"
       TextSize        =   0
-      Top             =   306
+      Top             =   34
       Underline       =   False
       UseFocusRing    =   True
       Value           =   False
@@ -728,18 +656,6 @@ End
 	#tag Event
 		Sub MouseExit()
 		  Me.Icon = cookie_icon_grey
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events RequestHeaderView11
-	#tag Event
-		Sub ValueChanged()
-		  GenerateHeaders()
-		  HeaderViewer.ShowHeaders(Request.Headers)
-		  
-		Exception
-		  MsgBox("Unable to generate headers!")
-		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
