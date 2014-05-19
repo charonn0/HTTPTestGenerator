@@ -136,6 +136,28 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If ResponseMain1.Tabpanel1.Value = 0 Then
+		        ResponseMain1.Tabpanel1.Value = ResponseMain1.Tabpanel1.PanelCount - 1
+		      Else
+		        ResponseMain1.Tabpanel1.Value = ResponseMain1.Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If ResponseMain1.Tabpanel1.Value = ResponseMain1.Tabpanel1.PanelCount - 1 Then
+		        ResponseMain1.Tabpanel1.Value = 0
+		      Else
+		        ResponseMain1.Tabpanel1.Value = ResponseMain1.Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h21
 		Private Sub Generate()
 		  mTheURL = Nil
@@ -157,6 +179,12 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub GenerateHeaders()
+		  If TheURL.Username <> "" Or TheURL.Password <> "" Then
+		    If MsgBox("Auto-set HTTP Authorization header?", 4 + 32, "User credentials detected in URL") = 6 Then
+		      Request.SetHeader("Authorization") = "Basic " + EncodeBase64(TheURL.Username + ":" + TheURL.Password)
+		    End If
+		  End If
+		  
 		  If Request = Nil Then Generate()
 		  For i As Integer = 0 To RequestMain1.RequestHeaders.ListCount - 1
 		    Me.Request.SetHeader(RequestMain1.RequestHeaders.Cell(i, 0)) = RequestMain1.RequestHeaders.Cell(i, 1)
