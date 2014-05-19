@@ -366,6 +366,18 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function GetCredentials(ByRef Username As String, Byref Password As String) As Boolean
+		  IsSecure.Visible = False
+		  Me.ShowModal
+		  If Me.Username <> "" Or Me.Password <> "" Then
+		    Password = Me.Password
+		    Username = Me.UserName
+		    Return True
+		  End If
+		End Function
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		Password As String

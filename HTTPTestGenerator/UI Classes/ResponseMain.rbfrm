@@ -72,7 +72,7 @@ Begin ContainerControl ResponseMain
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       Multiline       =   False
       Scope           =   0
@@ -89,7 +89,7 @@ Begin ContainerControl ResponseMain
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   221
+      Width           =   500
    End
    Begin TabPanel TabPanel1
       AutoDeactivate  =   True

@@ -375,6 +375,7 @@ End
 		  Me.AddRow("If-Modified-Since")
 		  Me.AddRow("If-Unmodified-Since")
 		  Me.AddRow("Range")
+		  Me.AddRow("Authorization")
 		  
 		End Sub
 	#tag EndEvent
@@ -409,6 +410,11 @@ End
 		    IsADate = True
 		  Case "Range"
 		    HeaderValue.Text = "bytes=0-512"
+		  Case "Authorization"
+		    Dim u, p As String
+		    If Authenicator.GetCredentials(u, p) Then
+		      HeaderValue.Text = "Basic " + EncodeBase64(u + ":" + p)
+		    End If
 		  End Select
 		End Sub
 	#tag EndEvent

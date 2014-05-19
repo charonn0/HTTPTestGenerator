@@ -216,6 +216,7 @@ End
 		  Case 1
 		    sr.TextColor = &c80808000
 		  End Select
+		  sr.Font = App.FixedWidthFont
 		  RequestMain1.LogOutput.StyledText.AppendStyleRun(sr)
 		  RequestMain1.LogOutput.ScrollPosition = RequestMain1.LogOutput.ScrollPosition + 1
 		End Sub
@@ -235,7 +236,7 @@ End
 		  sr.Text = resp
 		  sr.TextColor = &c0000FF00
 		  ResponseMain1.OutputLog.StyledText.AppendStyleRun(sr)
-		  ResponseMain1.OutputLog.ScrollPosition = ResponseMain1.OutputLog.ScrollPosition + l 
+		  ResponseMain1.OutputLog.ScrollPosition = ResponseMain1.OutputLog.ScrollPosition + l
 		End Sub
 	#tag EndMethod
 
@@ -492,6 +493,7 @@ End
 		      PrintLog("Authenticating...")
 		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
 		      RequestMain1.RequestHeaders.AddRow("Authorization", s)
+		      RequestMain1.RequestHeaders.RowTag(RequestMain1.RequestHeaders.LastIndex) = "Authorization":s
 		      Perform()
 		    End If
 		  End If
