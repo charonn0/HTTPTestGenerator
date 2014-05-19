@@ -4,7 +4,7 @@ Inherits Application
 	#tag Event
 		Function UnhandledException(error As RuntimeException) As Boolean
 		  Dim w As New ErrorHandler
-		  Return w.ShowException(error)
+		  Return w.ShowException(error, DebugBuild)
 		End Function
 	#tag EndEvent
 
