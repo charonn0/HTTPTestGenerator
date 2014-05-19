@@ -402,6 +402,18 @@ End
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h0
+		Sub SetProgress(Percent As Integer)
+		  ProgressBar1.Maximum = 100
+		  If Percent >= 0 Then
+		    ProgressBar1.Value = Percent
+		  Else
+		    ProgressBar1.Value = 100 + Percent
+		  End If
+		End Sub
+	#tag EndMethod
+
+
 	#tag Hook, Flags = &h0
 		Event Generate()
 	#tag EndHook

@@ -344,6 +344,10 @@ End
 		Response As HTTP.Response
 	#tag EndProperty
 
+	#tag Property, Flags = &h21
+		Private SendSz As Integer
+	#tag EndProperty
+
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
@@ -401,6 +405,7 @@ End
 		  Dim s As String = Request.ToString
 		  PrintLog("Sending request... (" + FormatBytes(s.LenB) + ")")
 		  Me.Write(s)
+		  SendSz = 0
 		  RequestMain1.URL.AddItem(RequestMain1.URL.Text)
 		End Sub
 	#tag EndEvent
@@ -452,7 +457,9 @@ End
 	#tag EndEvent
 	#tag Event
 		Function SendProgress(BytesSent As Integer, BytesLeft As Integer) As Boolean
-		  PrintLog("Send Progress: " + FormatBytes(BytesSent) + "/" + FormatBytes(BytesLeft))
+		  Dim sz As Integer = MessageBodyRaw.LenB
+		  SendSz = SendSz + BytesSent
+		  RequestMain1.SetProgress(SendSz * 100 / sz)
 		End Function
 	#tag EndEvent
 #tag EndEvents
