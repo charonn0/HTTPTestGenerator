@@ -42,6 +42,7 @@ Class=HexViewer;HTTPTestGenerator/UI Classes/HexViewer.rbbas;&h5A6957FF;&h4FD2FF
 Class=BoolCanvas;HTTPTestGenerator/UI Classes/BoolCanvas.rbbas;&h42DABFFF;&h4FD2FFFF;false
 Class=BaseCanvas;HTTPTestGenerator/UI Classes/BaseCanvas.rbbas;&h7971AFFF;&h4FD2FFFF;false
 Class=MultipartForm;HTTPParse/MultipartForm.rbbas;&h38621FFF;&h4252AFFF;false
+Class=Splitter;HTTPTestGenerator/UI Classes/Splitter.rbbas;&h41857FFF;&h4FD2FFFF;false
 DefaultWindow=Generator
 MajorVersion=1
 MinorVersion=0

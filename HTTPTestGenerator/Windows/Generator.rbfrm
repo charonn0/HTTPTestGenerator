@@ -78,7 +78,7 @@ Begin Window Generator
       Visible         =   True
       Width           =   366
    End
-   Begin Canvas Canvas1
+   Begin Splitter Canvas1
       AcceptFocus     =   ""
       AcceptTabs      =   ""
       AutoDeactivate  =   True
@@ -598,66 +598,9 @@ End
 #tag EndEvents
 #tag Events Canvas1
 	#tag Event
-		Sub MouseEnter()
-		  Me.MouseCursor = System.Cursors.SplitterEastWest
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExit()
-		  Me.MouseCursor = System.Cursors.StandardPointer
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  #pragma Unused X
-		  #pragma Unused Y
-		  #If TargetWin32 Then
-		    'Dim mb As New MemoryBlock(1)
-		    'mb.BooleanValue(0) = False
-		    'Call SendMessage(RequestMain1.Handle, WM_SETREDRAW, mb, Nil)
-		  #endif
-		  mDown = True
-		  Return True
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub MouseDrag(X As Integer, Y As Integer)
-		  #pragma Unused X
-		  #pragma Unused Y
-		  If Self.MouseX > 367 Then
-		    Me.Left = Self.MouseX
-		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Paint(g As Graphics)
-		  If SplitterThumb = Nil Then SplitterThumb = New Picture(g.Width, g.Height, 24)
-		  If SplitterThumb.Width <> g.Width Or SplitterThumb.Height <> g.Height Then SplitterThumb = New Picture(g.Width, g.Height, 24)
-		  If Not mDown Then
-		    SplitterThumb.Graphics.ForeColor = &cF0F0F000
-		  Else
-		    SplitterThumb.Graphics.ForeColor = &cC0C0C000
-		  End If
-		  SplitterThumb.Graphics.FillRect(0, 0, g.Width, g.Height)
-		  If Not mDown Then
-		    SplitterThumb.Graphics.ForeColor = &cC0C0C000
-		  Else
-		    SplitterThumb.Graphics.ForeColor = &cF0F0F000
-		  End If
-		  SplitterThumb.Graphics.DrawRect(0, 0, g.Width, g.Height)
-		  
-		  SplitterThumb.Graphics.ForeColor = &c80808000
-		  SplitterThumb.Graphics.DrawLine(g.Width * 0.25, 0.25 * g.Height, g.Width * 0.25, 0.75 * g.Height)
-		  SplitterThumb.Graphics.DrawLine(g.Width * 0.75, 0.25 * g.Height, g.Width * 0.75, 0.75 * g.Height)
-		  g.DrawPicture(SplitterThumb, 0, 0)
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
-		  #pragma Unused X
-		  #pragma Unused Y
-		  mDown = False
-		  ResponseMain1.Left = Me.Left + Me.Width + 4
+		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  'If Sign(DeltaX) = -1 Then Break
+		  ResponseMain1.Left = Me.Left + Me.Width + 1
 		  RequestMain1.Width = Me.Left
 		  Me.Invalidate
 		End Sub

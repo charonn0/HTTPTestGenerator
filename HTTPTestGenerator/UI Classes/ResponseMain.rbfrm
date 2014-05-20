@@ -118,7 +118,7 @@ Begin ContainerControl ResponseMain
       TextUnit        =   0
       Top             =   21
       Underline       =   ""
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   561
       Begin TextArea OutputLog
@@ -185,7 +185,7 @@ Begin ContainerControl ResponseMain
          GridLinesVertical=   0
          HasHeading      =   True
          HeadingIndex    =   -1
-         Height          =   124
+         Height          =   114
          HelpTag         =   ""
          Hierarchical    =   False
          Index           =   -2147483648
@@ -305,7 +305,7 @@ Begin ContainerControl ResponseMain
          Enabled         =   True
          EraseBackground =   True
          HasBackColor    =   False
-         Height          =   160
+         Height          =   154
          HelpTag         =   ""
          InitialParent   =   "TabPanel1"
          Left            =   8
@@ -318,10 +318,64 @@ Begin ContainerControl ResponseMain
          TabIndex        =   4
          TabPanelIndex   =   2
          TabStop         =   True
-         Top             =   300
+         Top             =   306
          UseFocusRing    =   ""
          Visible         =   True
          Width           =   542
+      End
+      Begin Splitter Splitter1
+         AcceptFocus     =   ""
+         AcceptTabs      =   ""
+         AutoDeactivate  =   True
+         Backdrop        =   ""
+         DoubleBuffer    =   False
+         Enabled         =   True
+         EraseBackground =   True
+         Height          =   8
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         Left            =   6
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   5
+         TabPanelIndex   =   2
+         TabStop         =   True
+         Top             =   167
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   544
+      End
+      Begin Splitter Splitter2
+         AcceptFocus     =   ""
+         AcceptTabs      =   ""
+         AutoDeactivate  =   True
+         Backdrop        =   ""
+         DoubleBuffer    =   False
+         Enabled         =   True
+         EraseBackground =   True
+         Height          =   8
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         Left            =   6
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   6
+         TabPanelIndex   =   2
+         TabStop         =   True
+         Top             =   297
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   544
       End
    End
 End
@@ -502,6 +556,33 @@ End
 	#tag Event
 		Sub Action()
 		  OutputLog.Text = ""
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Splitter1
+	#tag Event
+		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  If Me.Top < Splitter2.Top Then
+		    ResponseHeaders.Height = Me.Top - ResponseHeaders.Top - 1
+		    CookieList.Top = Me.Top + Me.Height + 1
+		    CookieList.Height = Splitter2.Top - CookieList.Top - 1
+		  Else
+		    Me.Top = CookieList.Top - Me.Height - 1
+		  End If
+		  'Me.Window.Height - OutputViewer1.Top - 5 - CookieList.Top
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Splitter2
+	#tag Event
+		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  If Me.Top > Splitter1.Top + Splitter1.Height Then
+		    CookieList.Height = Me.Top - CookieList.Top - 1
+		    OutputViewer1.Top = Me.Top + Me.Height + 1
+		    OutputViewer1.Height = Me.Window.Height - OutputViewer1.Top - 5
+		  Else
+		    Me.Top = OutputViewer1.Top - me.Height - 5
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents

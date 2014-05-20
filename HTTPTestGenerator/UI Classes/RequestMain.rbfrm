@@ -351,7 +351,7 @@ Begin ContainerControl RequestMain
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   "&cEFEFEF00"
+      BackColor       =   &h00FFFFFF
       Bold            =   ""
       Border          =   True
       DataField       =   ""
@@ -390,6 +390,33 @@ Begin ContainerControl RequestMain
       UseFocusRing    =   True
       Visible         =   True
       Width           =   354
+   End
+   Begin Splitter Canvas1
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   8
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   6
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   328
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   353
    End
 End
 #tag EndWindow
@@ -856,5 +883,14 @@ End
 		    Return True
 		  End If
 		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events Canvas1
+	#tag Event
+		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  RequestHeaders.Height = Me.Top - RequestHeaders.Top - 1
+		  LogOutput.Top = Me.Top + Me.Height + 1
+		  LogOutput.Height = Me.Window.Height - LogOutput.Top - 5
+		End Sub
 	#tag EndEvent
 #tag EndEvents
