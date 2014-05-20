@@ -559,6 +559,28 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag Events OutputViewer1
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If Me.Tabpanel1.Value = 0 Then
+		        Me.Tabpanel1.Value = Me.Tabpanel1.PanelCount - 1
+		      Else
+		        Me.Tabpanel1.Value = Me.Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If Me.Tabpanel1.Value = Me.Tabpanel1.PanelCount - 1 Then
+		        Me.Tabpanel1.Value = 0
+		      Else
+		        Me.Tabpanel1.Value = Me.Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
+#tag EndEvents
 #tag Events Splitter1
 	#tag Event
 		Sub Moved(DeltaX As Integer, DeltaY As Integer)

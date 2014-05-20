@@ -5,7 +5,6 @@ Inherits Canvas
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  #pragma Unused X
 		  #pragma Unused Y
-		  mDown = True
 		  mLastX = Me.Window.MouseX
 		  mLastY = Me.Window.MouseY
 		  Return True
@@ -49,17 +48,14 @@ Inherits Canvas
 
 	#tag Event
 		Sub Paint(g As Graphics)
-		  'g.ForeColor = &cC0C0C000
-		  'g.FillRect(0, 0, g.Width, g.Height)
+		  g.ForeColor = &c80808000
 		  If g.Width > g.Height Then 'horizontal
-		    g.ForeColor = &c80808000
 		    g.DrawLine(0.25 * g.Width, 0.25 * g.Height, 0.75 * g.Width, 0.25 * g.Height)
 		    g.DrawLine(0.25 * g.Width, 0.75 * g.Height, 0.75 * g.Width, 0.75 * g.Height)
 		  Else
 		    g.DrawLine(g.Width * 0.25, 0.25 * g.Height, g.Width * 0.25, 0.75 * g.Height)
 		    g.DrawLine(g.Width * 0.75, 0.25 * g.Height, g.Width * 0.75, 0.75 * g.Height)
 		  End If
-		  
 		End Sub
 	#tag EndEvent
 
@@ -68,10 +64,6 @@ Inherits Canvas
 		Event Moved(DeltaX As Integer, DeltaY As Integer)
 	#tag EndHook
 
-
-	#tag Property, Flags = &h21
-		Private mDown As Boolean
-	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mLastX As Integer

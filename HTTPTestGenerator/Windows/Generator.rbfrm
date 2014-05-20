@@ -601,6 +601,7 @@ End
 		Sub Moved(DeltaX As Integer, DeltaY As Integer)
 		  'If Sign(DeltaX) = -1 Then Break
 		  ResponseMain1.Left = Me.Left + Me.Width + 1
+		  ResponseMain1.Width = Self.Width - ResponseMain1.Left
 		  RequestMain1.Width = Me.Left
 		  Me.Invalidate
 		End Sub

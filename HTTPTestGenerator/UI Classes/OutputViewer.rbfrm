@@ -1,6 +1,6 @@
 #tag Window
 Begin ContainerControl OutputViewer
-   AcceptFocus     =   ""
+   AcceptFocus     =   True
    AcceptTabs      =   True
    AutoDeactivate  =   True
    BackColor       =   &hFFFFFF
@@ -50,7 +50,7 @@ Begin ContainerControl OutputViewer
       TextUnit        =   0
       Top             =   3
       Underline       =   ""
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   582
       Begin HexViewer HexViewer1
@@ -150,7 +150,7 @@ Begin ContainerControl OutputViewer
          LockTop         =   True
          Mask            =   ""
          Multiline       =   True
-         ReadOnly        =   ""
+         ReadOnly        =   True
          Scope           =   0
          ScrollbarHorizontal=   ""
          ScrollbarVertical=   True
@@ -176,6 +176,13 @@ End
 #tag WindowCode
 #tag EndWindowCode
 
+#tag Events TabPanel1
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events HexViewer1
 	#tag Event
 		Function Scrolled(LinesDelta As Integer, BytesDelta As Integer) As Boolean
@@ -196,5 +203,33 @@ End
 		Sub ValueChanged()
 		  HexViewer1.Offset = Me.Value * HexViewer1.BytesPerLine
 		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events TextArea1
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If Tabpanel1.Value = 0 Then
+		        Tabpanel1.Value = Tabpanel1.PanelCount - 1
+		      Else
+		        Tabpanel1.Value = Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If Tabpanel1.Value = Tabpanel1.PanelCount - 1 Then
+		        Tabpanel1.Value = 0
+		      Else
+		        Tabpanel1.Value = Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
+		  End If
+		End Function
 	#tag EndEvent
 #tag EndEvents

@@ -7,10 +7,12 @@ Inherits Canvas
 		    If Not RaiseEvent Scrolled(1, BytesPerLine) Then
 		      Me.Offset = Me.Offset + BytesPerLine
 		    End If
+		    Return True
 		  ElseIf Asc(key) = &h1E Then ' down arrow
 		    If Not RaiseEvent Scrolled(-1, BytesPerLine * -1) Then
 		      Me.Offset = Me.Offset - BytesPerLine
 		    End If
+		    Return True
 		  End If
 		End Function
 	#tag EndEvent
@@ -70,9 +72,6 @@ Inherits Canvas
 	#tag Event
 		Sub Paint(g As Graphics)
 		  If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Or LastPaintedOffset <> mOffset Then 'redraw needed
-		    #If TargetWin32 Then
-		      App.UseGDIPlus = False ' UseGDIPlus makes the text blurry
-		    #endif
 		    Buffer = New Picture(g.Width, g.Height, 32)
 		    Dim gg As Graphics = Buffer.Graphics
 		    gg.AntiAlias = True
