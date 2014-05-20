@@ -58,7 +58,7 @@ Begin Window Generator
       BackColor       =   &hFFFFFF
       Backdrop        =   ""
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   False
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
@@ -112,7 +112,7 @@ Begin Window Generator
       BackColor       =   16777215
       Backdrop        =   ""
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   False
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
@@ -131,6 +131,18 @@ Begin Window Generator
       UseFocusRing    =   ""
       Visible         =   True
       Width           =   561
+   End
+   Begin Timer TimeOut
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   1000
+      LockedInPosition=   False
+      Mode            =   0
+      Period          =   10000
+      Scope           =   0
+      TabPanelIndex   =   0
+      Top             =   123
+      Width           =   32
    End
 End
 #tag EndWindow
@@ -206,6 +218,7 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub Perform()
+		  TimeOut.Mode = Timer.ModeSingle
 		  Sequence = Sequence + 1
 		  Output = ""
 		  Generate()
@@ -333,10 +346,6 @@ End
 
 
 	#tag Property, Flags = &h21
-		Private LastSplitterPos As Integer = &hFFFFFF
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
 		Private mDown As Boolean
 	#tag EndProperty
 
@@ -413,6 +422,7 @@ End
 #tag Events Sock
 	#tag Event
 		Sub Connected()
+		  TimeOut.Reset
 		  If Me.Secure Then
 		    Select Case Me.ConnectionType
 		    Case Me.SSLv2
@@ -439,6 +449,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub DataAvailable()
+		  TimeOut.Reset
 		  If DataReceivedTimer.Mode = Timer.ModeOff Then
 		    PrintLog("Receiving data...")
 		  End If
@@ -449,11 +460,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Error()
-		  If Me.LastErrorCode = 102 Then
-		    PrintLog("Disconnected.")
-		  Else
-		    PrintLog(SocketErrorMessage(Me.LastErrorCode))
-		  End If
+		  TimeOut.Mode = Timer.ModeOff
+		  PrintLog(SocketErrorMessage(Me.LastErrorCode))
 		  Select Case Me.LastErrorCode
 		  Case 102
 		    'ResponseMain1.IPAddress.Text = "Closed by host"
@@ -462,9 +470,7 @@ End
 		  Case 103
 		    ResponseMain1.Code.Text = SocketErrorMessage(Me.LastErrorCode)
 		    ResponseMain1.ResponseHeaders.DeleteAllRows
-		    Self.Title = "HTTP Request Generator - Unable to connect!"
 		  Else
-		    Self.Title = "HTTP Request Generator - Unable to connect!"
 		    ResponseMain1.Code.TextColor = &cFF000000
 		    ResponseMain1.Code.Text = SocketErrorMessage(Me.LastErrorCode)
 		  End Select
@@ -499,11 +505,12 @@ End
 		  resp = NthField(Output, CRLF + CRLF, 1) + CRLF + CRLF
 		  Out = Replace(Output, resp, "")
 		  PrintOutput(RawText, resp)
+		  ResponseMain1.OutputViewer1.TextArea1.Text = out
 		  Dim bs As New BinaryStream(Out)
-		  ResponseMain1.HexViewer1.ShowData(bs)
-		  ResponseMain1.HexViewer1.Invalidate
-		  ResponseMain1.ScrollBar1.Value = 0
-		  ResponseMain1.ScrollBar1.Maximum = ResponseMain1.HexViewer1.LineCount
+		  ResponseMain1.OutputViewer1.HexViewer1.ShowData(bs)
+		  ResponseMain1.OutputViewer1.HexViewer1.Invalidate
+		  ResponseMain1.OutputViewer1.ScrollBar1.Value = 0
+		  ResponseMain1.OutputViewer1.ScrollBar1.Maximum = ResponseMain1.OutputViewer1.HexViewer1.LineCount
 		  
 		  If Response.StatusCode = 301 Or Response.StatusCode = 302 Then
 		    Dim redir As String = Response.GetHeader("Location")
@@ -617,25 +624,8 @@ End
 		Sub MouseDrag(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  If Self.MouseX > 376 Then
-		    If Self.Width <= 747 Then Return
-		    Dim tpL, tpW As Integer
-		    tpL = Me.Left + Me.Width + 4
-		    tpW = Self.Width - RequestMain1.Width - Me.Width
-		    
-		    'If tpW < 377 Then Return
-		    'If Self.Width - tpL < 377 Then Return
-		    If LastSplitterPos > Self.MouseX Then ' move right
-		      If Self.Width - tpL <= 377 Then Return
-		    Else ' move left
-		      If tpL <= 383 Then Return
-		    End If
+		  If Self.MouseX > 367 Then
 		    Me.Left = Self.MouseX
-		    LastSplitterPos = Me.Left
-		    ResponseMain1.Left = tpL
-		    ResponseMain1.Width = tpW
-		    RequestMain1.Width = Me.Left
-		    'Me.Refresh(False)
 		  End If
 		End Sub
 	#tag EndEvent
@@ -667,12 +657,8 @@ End
 		  #pragma Unused X
 		  #pragma Unused Y
 		  mDown = False
-		  #If TargetWin32 Then
-		    'Dim mb As New MemoryBlock(1)
-		    'mb.BooleanValue(0) = True
-		    'Call SendMessage(RequestMain1.Handle, WM_SETREDRAW, mb, Nil)
-		    'RequestMain1.Refresh
-		  #endif
+		  ResponseMain1.Left = Me.Left + Me.Width + 4
+		  RequestMain1.Width = Me.Left
 		  Me.Invalidate
 		End Sub
 	#tag EndEvent
@@ -695,5 +681,23 @@ End
 		Function GetResponse() As HTTP.Response
 		  Return Response
 		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events TimeOut
+	#tag Event
+		Sub Action()
+		  If MsgBox("Request timed out. Keep waiting?", 4 + 48, "No response") = 6 Then
+		    Me.Reset
+		  Else
+		    Sock.Close
+		    PrintLog("Canceled.")
+		    ResponseMain1.Code.TextColor = &c80808000
+		    ResponseMain1.Code.Text = "Timed out."
+		    RequestMain1.Sender.Enabled = True
+		    RequestMain1.Sender.Caption = "Send Request"
+		    RequestMain1.ProgressBar1.Visible = False
+		    RequestMain1.StopButton.Visible = False
+		  End If
+		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -8,6 +8,7 @@ Folder=Windows;HTTPTestGenerator/Windows;&hEA397FF;&h1A6627FF;false
 Window=ErrorHandler;HTTPTestGenerator/Windows/ErrorHandler.rbfrm;&h13A1B7FF;&hEA397FF;false
 Window=Authenicator;HTTPTestGenerator/Windows/Authenicator.rbfrm;&h6296F7FF;&hEA397FF;false
 Folder=UI Classes;HTTPTestGenerator/UI Classes;&h4FD2FFFF;&h1A6627FF;false
+Window=OutputViewer;HTTPTestGenerator/UI Classes/OutputViewer.rbfrm;&h2D9E9FFF;&h4FD2FFFF;false
 Window=DatePicker;HTTPTestGenerator/UI Classes/DatePicker.rbfrm;&h1E2AFFF;&h4FD2FFFF;false
 Window=RequestMain;HTTPTestGenerator/UI Classes/RequestMain.rbfrm;&h4BA80FFF;&h4FD2FFFF;false
 Class=PlacardButton;HTTPTestGenerator/UI Classes/PlacardButton.rbbas;&h73CFF7FF;&h4FD2FFFF;false

@@ -119,22 +119,8 @@ Protected Class MultipartForm
 		Boundary As String = "bOrEdOmSoFtBoUnDaRy"
 	#tag EndProperty
 
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mmFormElements
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mmFormElements = value
-			End Set
-		#tag EndSetter
-		mFormElements As Dictionary
-	#tag EndComputedProperty
-
 	#tag Property, Flags = &h21
-		Private mmFormElements As Dictionary
+		Private mFormElements As Dictionary
 	#tag EndProperty
 
 
