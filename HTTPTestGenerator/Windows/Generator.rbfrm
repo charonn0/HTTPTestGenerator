@@ -319,10 +319,12 @@ End
 		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 3) = c.Domain
 		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 4) = c.Path
 		    If c.Secure Then
-		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 5) = "HTTPS Only"
-		    Else
+		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 5) = "Secure"
+		    End If
+		    If c.httpOnly Then
 		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 5) = "HTTP Only"
 		    End If
+		    
 		    ResponseMain1.CookieList.RowTag(ResponseMain1.CookieList.LastIndex) = c
 		  Next
 		  

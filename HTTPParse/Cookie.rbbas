@@ -28,13 +28,13 @@ Inherits Pair
 		      Case "Path"
 		        Me.Path = v
 		      Case "Expires"
-		        Me.Expires = HTTPDate(v)
+		        Me.Expires = HTTPParse.HTTPDate(v)
 		      Case "Port"
 		        Me.Port = Val(v)
 		      Case "Secure"
 		        Me.Secure = True
 		      Case "httpOnly"
-		        Me.Secure = False
+		        Me.httpOnly = True
 		      Else
 		        ExtraParams.Value(k) = v
 		        
@@ -71,7 +71,7 @@ Inherits Pair
 		  If Me.Expires <> Nil Then
 		    Dim now As New Date
 		    If Me.Expires.TotalSeconds > now.TotalSeconds Then
-		      data = data + "; expires=" + HTTPDate(Me.Expires)
+		      data = data + "; expires=" + HTTPParse.HTTPDate(Me.Expires)
 		    End If
 		  End If
 		  
@@ -122,6 +122,10 @@ Inherits Pair
 		ExtraParams As Dictionary
 	#tag EndComputedProperty
 
+	#tag Property, Flags = &h0
+		httpOnly As Boolean
+	#tag EndProperty
+
 	#tag Property, Flags = &h21
 		Private mExtraParams As Dictionary
 	#tag EndProperty
@@ -145,6 +149,11 @@ Inherits Pair
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="httpOnly"
+			Group="Behavior"
+			Type="Boolean"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
