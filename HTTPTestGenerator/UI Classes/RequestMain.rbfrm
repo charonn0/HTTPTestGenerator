@@ -346,51 +346,6 @@ Begin ContainerControl RequestMain
       Visible         =   False
       Width           =   20
    End
-   Begin TextArea LogOutput
-      AcceptTabs      =   ""
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   True
-      BackColor       =   &h00FFFFFF
-      Bold            =   ""
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   83
-      HelpTag         =   ""
-      HideSelection   =   True
-      Index           =   -2147483648
-      Italic          =   ""
-      Left            =   5
-      LimitText       =   0
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   True
-      Scope           =   0
-      ScrollbarHorizontal=   ""
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   8
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &h00000000
-      TextFont        =   "System"
-      TextSize        =   11
-      TextUnit        =   0
-      Top             =   339
-      Underline       =   ""
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   354
-   End
    Begin Splitter Canvas1
       AcceptFocus     =   ""
       AcceptTabs      =   ""
@@ -417,6 +372,55 @@ Begin ContainerControl RequestMain
       UseFocusRing    =   True
       Visible         =   True
       Width           =   353
+   End
+   Begin Listbox LogOutput
+      AutoDeactivate  =   True
+      AutoHideScrollbars=   True
+      Bold            =   ""
+      Border          =   True
+      ColumnCount     =   1
+      ColumnsResizable=   ""
+      ColumnWidths    =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      DefaultRowHeight=   -1
+      Enabled         =   True
+      EnableDrag      =   ""
+      EnableDragReorder=   ""
+      GridLinesHorizontal=   0
+      GridLinesVertical=   0
+      HasHeading      =   ""
+      HeadingIndex    =   -1
+      Height          =   83
+      HelpTag         =   ""
+      Hierarchical    =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      InitialValue    =   ""
+      Italic          =   ""
+      Left            =   4
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      RequiresSelection=   ""
+      Scope           =   0
+      ScrollbarHorizontal=   ""
+      ScrollBarVertical=   True
+      SelectionType   =   0
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   339
+      Underline       =   ""
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   354
+      _ScrollWidth    =   -1
    End
 End
 #tag EndWindow
@@ -589,26 +593,6 @@ End
 		  End If
 		End Sub
 	#tag EndEvent
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
-		    If Keyboard.AsyncShiftKey Then
-		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
-		      End If
-		    Else
-		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = 0
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
-		      End If
-		    End If
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
 #tag EndEvents
 #tag Events RequestMethod
 	#tag Event
@@ -616,47 +600,12 @@ End
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
-		    If Keyboard.AsyncShiftKey Then
-		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
-		      End If
-		    Else
-		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = 0
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
-		      End If
-		    End If
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
 #tag EndEvents
 #tag Events URL
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  If Asc(key) = &h0D Or Asc(key) = &h03 Then
 		    Perform(False)
-		    Return True
-		  ElseIf key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
-		    If Keyboard.AsyncShiftKey Then
-		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
-		      End If
-		    Else
-		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = 0
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
-		      End If
-		    End If
 		    Return True
 		  End If
 		End Function
@@ -672,26 +621,6 @@ End
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
-	#tag EndEvent
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
-		    If Keyboard.AsyncShiftKey Then
-		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
-		      End If
-		    Else
-		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = 0
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
-		      End If
-		    End If
-		    Return True
-		  End If
-		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events Sender
@@ -843,7 +772,33 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag Events Canvas1
+	#tag Event
+		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  RequestHeaders.Height = Me.Top - RequestHeaders.Top - 1
+		  LogOutput.Top = Me.Top + Me.Height + 1
+		  LogOutput.Height = Me.Window.Height - LogOutput.Top - 5
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events LogOutput
+	#tag Event
+		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
+		  If row > Me.LastIndex Then Return False
+		  If Me.RowTag(row).BooleanValue Then
+		    g.ForeColor = &cC0C0C000
+		    g.FillRect(0, 0, g.Width, g.Height)
+		  Else
+		    g.ForeColor = &cA7A7A700
+		    g.FillRect(0, 0, g.Width, g.Height)
+		  End If
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		End Sub
+	#tag EndEvent
 	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
 		  base.Append(New MenuItem("Clear log"))
@@ -854,43 +809,9 @@ End
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
 		  Select Case hitItem.Text
 		  Case "Clear log"
-		    Me.Text = ""
+		    Me.DeleteAllRows
 		    Return True
 		  End Select
 		End Function
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  Me.TextFont = App.FixedWidthFont
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
-		    If Keyboard.AsyncShiftKey Then
-		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
-		      End If
-		    Else
-		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = 0
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
-		      End If
-		    End If
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events Canvas1
-	#tag Event
-		Sub Moved(DeltaX As Integer, DeltaY As Integer)
-		  RequestHeaders.Height = Me.Top - RequestHeaders.Top - 1
-		  LogOutput.Top = Me.Top + Me.Height + 1
-		  LogOutput.Height = Me.Window.Height - LogOutput.Top - 5
-		End Sub
 	#tag EndEvent
 #tag EndEvents

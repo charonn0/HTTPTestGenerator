@@ -29,17 +29,22 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
+      TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   14
+      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -47,8 +52,11 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
+      TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   79
+      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -62,6 +70,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -116,6 +125,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -133,6 +143,7 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -140,36 +151,17 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
+      TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   123
+      Visible         =   True
       Width           =   32
    End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
-		    If Keyboard.AsyncShiftKey Then
-		      If ResponseMain1.Tabpanel1.Value = 0 Then
-		        ResponseMain1.Tabpanel1.Value = ResponseMain1.Tabpanel1.PanelCount - 1
-		      Else
-		        ResponseMain1.Tabpanel1.Value = ResponseMain1.Tabpanel1.Value - 1
-		      End If
-		    Else
-		      If ResponseMain1.Tabpanel1.Value = ResponseMain1.Tabpanel1.PanelCount - 1 Then
-		        ResponseMain1.Tabpanel1.Value = 0
-		      Else
-		        ResponseMain1.Tabpanel1.Value = ResponseMain1.Tabpanel1.Value + 1
-		      End If
-		    End If
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-
-
 	#tag Method, Flags = &h21
 		Private Sub Generate()
 		  mTheURL = Nil
@@ -216,8 +208,8 @@ End
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h21
-		Private Sub Perform()
+	#tag Method, Flags = &h0
+		Sub Perform()
 		  TimeOut.Mode = Timer.ModeSingle
 		  Sequence = Sequence + 1
 		  Output = ""
@@ -249,17 +241,11 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Sub PrintLog(Line As String)
-		  Dim sr As New StyleRun
-		  sr.Text = Line + EndOfLine
-		  Select Case Sequence Mod 2
-		  Case 0
-		    sr.TextColor = &c00000000
-		  Case 1
-		    sr.TextColor = &c80808000
-		  End Select
-		  sr.Font = App.FixedWidthFont
-		  RequestMain1.LogOutput.StyledText.AppendStyleRun(sr)
-		  RequestMain1.LogOutput.ScrollPosition = RequestMain1.LogOutput.ScrollPosition + 1
+		  RequestMain1.LogOutput.AddRow(Line)
+		  If Sequence Mod 2 = 0 Then
+		    RequestMain1.LogOutput.RowTag(RequestMain1.LogOutput.LastIndex) = True
+		  End If
+		  RequestMain1.LogOutput.ScrollPosition = RequestMain1.LogOutput.LastIndex
 		End Sub
 	#tag EndMethod
 
@@ -269,15 +255,15 @@ End
 		  Dim sr As New StyleRun
 		  sr.Text = "-----" + Format(Sequence, "000000000") + "-----" + CRLF
 		  sr.TextColor = &c80808000
-		  ResponseMain1.OutputLog.StyledText.AppendStyleRun(sr)
+		  ResponseMain1.OutputViewer1.OutputLog.StyledText.AppendStyleRun(sr)
 		  sr.Text = req
 		  sr.TextColor = &c00800000
-		  sr.Font = ResponseMain1.OutputLog.TextFont
-		  ResponseMain1.OutputLog.StyledText.AppendStyleRun(sr)
+		  sr.Font = ResponseMain1.OutputViewer1.OutputLog.TextFont
+		  ResponseMain1.OutputViewer1.OutputLog.StyledText.AppendStyleRun(sr)
 		  sr.Text = resp
 		  sr.TextColor = &c0000FF00
-		  ResponseMain1.OutputLog.StyledText.AppendStyleRun(sr)
-		  ResponseMain1.OutputLog.ScrollPosition = ResponseMain1.OutputLog.ScrollPosition + l
+		  ResponseMain1.OutputViewer1.OutputLog.StyledText.AppendStyleRun(sr)
+		  ResponseMain1.OutputViewer1.OutputLog.ScrollPosition = ResponseMain1.OutputViewer1.OutputLog.ScrollPosition + l
 		End Sub
 	#tag EndMethod
 
@@ -302,6 +288,7 @@ End
 		    v = Response.Headers.Value(n)
 		    
 		    ResponseMain1.ResponseHeaders.AddRow(n, v)
+		    ResponseMain1.ResponseHeaders.RowTag(ResponseMain1.ResponseHeaders.LastIndex) = n:v
 		  Next
 		  'ResponseMain1.CookiesButton.Visible = Response.Headers.CookieCount > 0
 		  ResponseMain1.CookieList.DeleteAllRows
@@ -513,7 +500,8 @@ End
 		  ResponseMain1.OutputViewer1.HexViewer1.Invalidate
 		  ResponseMain1.OutputViewer1.ScrollBar1.Value = 0
 		  ResponseMain1.OutputViewer1.ScrollBar1.Maximum = ResponseMain1.OutputViewer1.HexViewer1.LineCount
-		  
+		  Dim links() As String = ExtractLinks(Out, TheURL)
+		  ResponseMain1.OutputViewer1.ShowLinks(links)
 		  If Response.StatusCode = 301 Or Response.StatusCode = 302 Then
 		    Dim redir As String = Response.GetHeader("Location")
 		    Dim u As New HTTP.URI(redir)

@@ -91,292 +91,184 @@ Begin ContainerControl ResponseMain
       Visible         =   True
       Width           =   500
    End
-   Begin TabPanel TabPanel1
+   Begin Listbox ResponseHeaders
       AutoDeactivate  =   True
-      Bold            =   ""
+      AutoHideScrollbars=   True
+      Bold            =   False
+      Border          =   True
+      ColumnCount     =   2
+      ColumnsResizable=   True
+      ColumnWidths    =   "25%"
+      DataField       =   ""
+      DataSource      =   ""
+      DefaultRowHeight=   -1
       Enabled         =   True
-      Height          =   449
+      EnableDrag      =   False
+      EnableDragReorder=   False
+      GridLinesHorizontal=   0
+      GridLinesVertical=   0
+      HasHeading      =   True
+      HeadingIndex    =   -1
+      Height          =   114
       HelpTag         =   ""
+      Hierarchical    =   False
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      InitialValue    =   "Header Name	Header Value"
+      Italic          =   False
       Left            =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      RequiresSelection=   False
+      Scope           =   0
+      ScrollbarHorizontal=   False
+      ScrollBarVertical=   True
+      SelectionType   =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   20
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   561
+      _ScrollWidth    =   -1
+   End
+   Begin Listbox CookieList
+      AutoDeactivate  =   True
+      AutoHideScrollbars=   True
+      Bold            =   False
+      Border          =   True
+      ColumnCount     =   6
+      ColumnsResizable=   True
+      ColumnWidths    =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      DefaultRowHeight=   -1
+      Enabled         =   True
+      EnableDrag      =   True
+      EnableDragReorder=   False
+      GridLinesHorizontal=   0
+      GridLinesVertical=   0
+      HasHeading      =   True
+      HeadingIndex    =   -1
+      Height          =   117
+      HelpTag         =   ""
+      Hierarchical    =   False
+      Index           =   -2147483648
+      InitialParent   =   ""
+      InitialValue    =   "Cookie	Value	Expires	Domain	Path	Restrictions"
+      Italic          =   False
+      Left            =   0
+      LockBottom      =   False
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      RequiresSelection=   False
+      Scope           =   0
+      ScrollbarHorizontal=   False
+      ScrollBarVertical=   True
+      SelectionType   =   1
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   146
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   561
+      _ScrollWidth    =   -1
+   End
+   Begin OutputViewer OutputViewer1
+      AcceptFocus     =   ""
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &hFFFFFF
+      Backdrop        =   ""
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   195
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   2
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      Panels          =   ""
       Scope           =   0
-      SmallTabs       =   ""
-      TabDefinition   =   "HTTP\rContent"
-      TabIndex        =   10
+      TabIndex        =   15
       TabPanelIndex   =   0
       TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   0
-      Top             =   21
-      Underline       =   ""
-      Value           =   1
+      Top             =   275
+      UseFocusRing    =   ""
       Visible         =   True
-      Width           =   561
-      Begin TextArea OutputLog
-         AcceptTabs      =   False
-         Alignment       =   0
-         AutoDeactivate  =   True
-         AutomaticallyCheckSpelling=   True
-         BackColor       =   &h00EFEFEF
-         Bold            =   False
-         Border          =   True
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Format          =   ""
-         Height          =   407
-         HelpTag         =   ""
-         HideSelection   =   True
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         Italic          =   False
-         Left            =   7
-         LimitText       =   0
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Mask            =   ""
-         Multiline       =   True
-         ReadOnly        =   True
-         Scope           =   0
-         ScrollbarHorizontal=   False
-         ScrollbarVertical=   True
-         Styled          =   True
-         TabIndex        =   0
-         TabPanelIndex   =   1
-         TabStop         =   True
-         Text            =   ""
-         TextColor       =   &h00000000
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   49
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   547
-      End
-      Begin Listbox ResponseHeaders
-         AutoDeactivate  =   True
-         AutoHideScrollbars=   True
-         Bold            =   False
-         Border          =   True
-         ColumnCount     =   2
-         ColumnsResizable=   True
-         ColumnWidths    =   "25%"
-         DataField       =   ""
-         DataSource      =   ""
-         DefaultRowHeight=   -1
-         Enabled         =   True
-         EnableDrag      =   False
-         EnableDragReorder=   False
-         GridLinesHorizontal=   0
-         GridLinesVertical=   0
-         HasHeading      =   True
-         HeadingIndex    =   -1
-         Height          =   114
-         HelpTag         =   ""
-         Hierarchical    =   False
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         InitialValue    =   "Header Name	Header Value"
-         Italic          =   False
-         Left            =   6
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         RequiresSelection=   False
-         Scope           =   0
-         ScrollbarHorizontal=   False
-         ScrollBarVertical=   True
-         SelectionType   =   0
-         TabIndex        =   2
-         TabPanelIndex   =   2
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   51
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   549
-         _ScrollWidth    =   -1
-      End
-      Begin Listbox CookieList
-         AutoDeactivate  =   True
-         AutoHideScrollbars=   True
-         Bold            =   False
-         Border          =   True
-         ColumnCount     =   6
-         ColumnsResizable=   True
-         ColumnWidths    =   ""
-         DataField       =   ""
-         DataSource      =   ""
-         DefaultRowHeight=   -1
-         Enabled         =   True
-         EnableDrag      =   True
-         EnableDragReorder=   False
-         GridLinesHorizontal=   0
-         GridLinesVertical=   0
-         HasHeading      =   True
-         HeadingIndex    =   -1
-         Height          =   117
-         HelpTag         =   ""
-         Hierarchical    =   False
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         InitialValue    =   "Cookie	Value	Expires	Domain	Path	Restrictions"
-         Italic          =   False
-         Left            =   6
-         LockBottom      =   False
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         RequiresSelection=   False
-         Scope           =   0
-         ScrollbarHorizontal=   False
-         ScrollBarVertical=   True
-         SelectionType   =   1
-         TabIndex        =   3
-         TabPanelIndex   =   2
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   177
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   549
-         _ScrollWidth    =   -1
-      End
-      Begin PushButton PushButton1
-         AutoDeactivate  =   True
-         Bold            =   ""
-         ButtonStyle     =   0
-         Cancel          =   ""
-         Caption         =   "--"
-         Default         =   ""
-         Enabled         =   True
-         Height          =   22
-         HelpTag         =   "Clear HTTP Log"
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         Italic          =   ""
-         Left            =   511
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   False
-         LockRight       =   True
-         LockTop         =   False
-         Scope           =   0
-         TabIndex        =   1
-         TabPanelIndex   =   1
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0
-         TextUnit        =   0
-         Top             =   455
-         Underline       =   ""
-         Visible         =   True
-         Width           =   30
-      End
-      Begin OutputViewer OutputViewer1
-         AcceptFocus     =   ""
-         AcceptTabs      =   True
-         AutoDeactivate  =   True
-         BackColor       =   &hFFFFFF
-         Backdrop        =   ""
-         Enabled         =   True
-         EraseBackground =   True
-         HasBackColor    =   False
-         Height          =   154
-         HelpTag         =   ""
-         InitialParent   =   "TabPanel1"
-         Left            =   8
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Scope           =   0
-         TabIndex        =   4
-         TabPanelIndex   =   2
-         TabStop         =   True
-         Top             =   306
-         UseFocusRing    =   ""
-         Visible         =   True
-         Width           =   542
-      End
-      Begin Splitter Splitter1
-         AcceptFocus     =   ""
-         AcceptTabs      =   ""
-         AutoDeactivate  =   True
-         Backdrop        =   ""
-         DoubleBuffer    =   False
-         Enabled         =   True
-         EraseBackground =   True
-         Height          =   8
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         Left            =   6
-         LockBottom      =   ""
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Scope           =   0
-         TabIndex        =   5
-         TabPanelIndex   =   2
-         TabStop         =   True
-         Top             =   167
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   544
-      End
-      Begin Splitter Splitter2
-         AcceptFocus     =   ""
-         AcceptTabs      =   ""
-         AutoDeactivate  =   True
-         Backdrop        =   ""
-         DoubleBuffer    =   False
-         Enabled         =   True
-         EraseBackground =   True
-         Height          =   8
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         Left            =   6
-         LockBottom      =   ""
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Scope           =   0
-         TabIndex        =   6
-         TabPanelIndex   =   2
-         TabStop         =   True
-         Top             =   297
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   544
-      End
+      Width           =   554
+   End
+   Begin Splitter Splitter1
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   8
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   0
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   16
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   136
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   556
+   End
+   Begin Splitter Splitter2
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      DoubleBuffer    =   False
+      Enabled         =   True
+      EraseBackground =   True
+      Height          =   8
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   0
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   17
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   266
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   556
    End
 End
 #tag EndWindow
@@ -440,46 +332,15 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events TabPanel1
-	#tag Event
-		Sub Open()
-		  Me.TextFont = App.FixedWidthFont
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events OutputLog
-	#tag Event
-		Sub Open()
-		  Me.TextFont = App.FixedWidthFont
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
-		    If Keyboard.AsyncShiftKey Then
-		      If Generator.ResponseMain1.Tabpanel1.Value = 0 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value - 1
-		      End If
-		    Else
-		      If Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.PanelCount - 1 Then
-		        Generator.ResponseMain1.Tabpanel1.Value = 0
-		      Else
-		        Generator.ResponseMain1.Tabpanel1.Value = Generator.ResponseMain1.Tabpanel1.Value + 1
-		      End If
-		    End If
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-#tag EndEvents
 #tag Events ResponseHeaders
 	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  Dim m As New MenuItem("Copy to request headers")
-		  m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
-		  Base.Append(m)
+		  If Me.RowFromXY(x, y) > -1 Then
+		    Dim m As New MenuItem("Copy to request headers")
+		    m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
+		    Base.Append(m)
+		    Return True
+		  End If
 		End Function
 	#tag EndEvent
 	#tag Event
@@ -490,6 +351,7 @@ End
 		    nm = c.Left
 		    vl = c.Right
 		    Generator.RequestMain1.RequestHeaders.AddRow(nm, vl, "")
+		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = nm:vl
 		    Return True
 		  End If
 		End Function
@@ -550,13 +412,6 @@ End
 		    Return True
 		  End If
 		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButton1
-	#tag Event
-		Sub Action()
-		  OutputLog.Text = ""
-		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events OutputViewer1
