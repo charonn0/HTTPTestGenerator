@@ -18,7 +18,7 @@ Inherits Application
 	#tag Method, Flags = &h0
 		Function FixedWidthFont() As String
 		  ' try to pick a fixed-width font
-		  Dim nm As String
+		  Static nm As String
 		  If nm = "" Then
 		    For i As Integer = FontCount - 1 DownTo 0
 		      Dim fontname As String = Font(i)
