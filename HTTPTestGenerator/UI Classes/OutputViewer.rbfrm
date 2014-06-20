@@ -376,7 +376,7 @@ End
 #tag Events Listbox1
 	#tag Event
 		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
-		  If row > Me.ListCount - 1 And column = 0 Then
+		  If row < Me.ListCount - 1 And column = 0 Then
 		    g.ForeColor = &c0000FF00
 		    g.Underline = True
 		  End If
