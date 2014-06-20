@@ -251,19 +251,28 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Sub PrintOutput(Req As String, Resp As String)
-		  Dim l As Integer = CountFields(req, CRLF) + CountFields(resp, CRLF) + 2
+		  Dim t As TextArea = ResponseMain1.OutputViewer1.OutputLog
 		  Dim sr As New StyleRun
 		  sr.Text = "-----" + Format(Sequence, "000000000") + "-----" + CRLF
 		  sr.TextColor = &c80808000
-		  ResponseMain1.OutputViewer1.OutputLog.StyledText.AppendStyleRun(sr)
+		  t.StyledText.AppendStyleRun(sr)
 		  sr.Text = req
 		  sr.TextColor = &c00800000
-		  sr.Font = ResponseMain1.OutputViewer1.OutputLog.TextFont
-		  ResponseMain1.OutputViewer1.OutputLog.StyledText.AppendStyleRun(sr)
+		  sr.Font = t.TextFont
+		  t.StyledText.AppendStyleRun(sr)
 		  sr.Text = resp
 		  sr.TextColor = &c0000FF00
-		  ResponseMain1.OutputViewer1.OutputLog.StyledText.AppendStyleRun(sr)
-		  ResponseMain1.OutputViewer1.OutputLog.ScrollPosition = ResponseMain1.OutputViewer1.OutputLog.ScrollPosition + l
+		  t.StyledText.AppendStyleRun(sr)
+		  #If TargetWin32 Then
+		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
+		    Const SB_BOTTOM = 7
+		    Const WM_VSCROLL = &h115
+		    Call SendMessageW(t.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
+		  #Else
+		    t.ScrollPosition = t.LineNumAtCharPos(t.Text.Len)
+		  #endif
+		  
+		  
 		End Sub
 	#tag EndMethod
 
