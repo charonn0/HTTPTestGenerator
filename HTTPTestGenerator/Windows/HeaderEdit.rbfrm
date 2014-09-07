@@ -196,7 +196,7 @@ Begin Window HeaderEdit
       Visible         =   True
       Width           =   80
    End
-   Begin ComboBox ComboBox1
+   Begin ComboBox AutoHeader
       AutoComplete    =   False
       AutoDeactivate  =   True
       Bold            =   False
@@ -303,6 +303,39 @@ Begin Window HeaderEdit
       UseFocusRing    =   True
       Visible         =   True
       Width           =   225
+      Begin ComboBox AutoValue
+         AutoComplete    =   False
+         AutoDeactivate  =   True
+         Bold            =   False
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   22
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "HeaderValue"
+         InitialValue    =   ""
+         Italic          =   False
+         Left            =   77
+         ListIndex       =   0
+         LockBottom      =   False
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   23
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   False
+         Width           =   225
+      End
    End
 End
 #tag EndWindow
@@ -335,6 +368,19 @@ End
 	#tag EndProperty
 
 
+	#tag Constant, Name = BROWSER_CHROME_WIN64, Type = String, Dynamic = False, Default = \"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML\x2C like Gecko) Chrome/36.0.1985.143 Safari/537.36", Scope = Protected
+	#tag EndConstant
+
+	#tag Constant, Name = BROWSER_FIREFOX_WIN64, Type = String, Dynamic = False, Default = \"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0", Scope = Protected
+	#tag EndConstant
+
+	#tag Constant, Name = BROWSER_IE, Type = String, Dynamic = False, Default = \"Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko", Scope = Protected
+	#tag EndConstant
+
+	#tag Constant, Name = BROWSER_SAFARI_OSX, Type = String, Dynamic = False, Default = \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.78.2 (KHTML\x2C like Gecko) Version/7.0.6 Safari/537.78.2", Scope = Protected
+	#tag EndConstant
+
+
 #tag EndWindowCode
 
 #tag Events PushButton1
@@ -357,7 +403,7 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events ComboBox1
+#tag Events AutoHeader
 	#tag Event
 		Sub Open()
 		  Me.AddRow("Host")
@@ -381,12 +427,18 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Change()
+		  AutoValue.Visible = False
+		  'HeaderValue.Visible = True
+		  
 		  HeaderName.Text = Me.Text
 		  Select Case Me.Text
 		  Case "Host"
 		    HeaderValue.Text = "www.example.com"
 		  Case "User-Agent"
-		    HeaderValue.Text = "BSHTTP\1.0"
+		    AutoValue.Visible = True
+		    AutoHeader.ListIndex = 1
+		    'HeaderValue.Visible = False
+		    
 		  Case "Accept"
 		    HeaderValue.Text = "text/html,*/*;q=0.8"
 		  Case "Accept-Encoding"
@@ -416,6 +468,23 @@ End
 		      HeaderValue.Text = "Basic " + EncodeBase64(u + ":" + p)
 		    End If
 		  End Select
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events AutoValue
+	#tag Event
+		Sub Change()
+		  HeaderValue.Text = Me.Text
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  Me.AddRow("BSHTTP\1.0")
+		  Me.AddRow(BROWSER_CHROME_WIN64)
+		  Me.AddRow(BROWSER_FIREFOX_WIN64)
+		  Me.AddRow(BROWSER_IE)
+		  Me.AddRow(BROWSER_SAFARI_OSX)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
