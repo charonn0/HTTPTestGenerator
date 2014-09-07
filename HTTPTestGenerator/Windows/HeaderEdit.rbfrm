@@ -428,6 +428,7 @@ End
 	#tag Event
 		Sub Change()
 		  AutoValue.Visible = False
+		  IsADate = False
 		  'HeaderValue.Visible = True
 		  
 		  HeaderName.Text = Me.Text
