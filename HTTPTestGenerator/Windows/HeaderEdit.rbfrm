@@ -436,12 +436,22 @@ End
 		  Case "Host"
 		    HeaderValue.Text = "www.example.com"
 		  Case "User-Agent"
+		    AutoValue.DeleteAllRows
+		    AutoValue.AddRow("BSHTTP\1.0")
+		    AutoValue.AddRow(BROWSER_CHROME_WIN64)
+		    AutoValue.AddRow(BROWSER_FIREFOX_WIN64)
+		    AutoValue.AddRow(BROWSER_IE)
+		    AutoValue.AddRow(BROWSER_SAFARI_OSX)
 		    AutoValue.Visible = True
 		    AutoHeader.ListIndex = 1
 		    'HeaderValue.Visible = False
 		    
 		  Case "Accept"
-		    HeaderValue.Text = "text/html,*/*;q=0.8"
+		    'Dim s As String = MIMEEdit.GetMIME("text/html")
+		    'If s <> "" Then HeaderValue.Text = s
+		    MIMEEdit.ShowMIME
+		    MIMEEdit.Top = Self.Top + Self.Height + 10
+		    
 		  Case "Accept-Encoding"
 		    HeaderValue.Text = "gzip, deflate"
 		  Case "Accept-Language"
@@ -477,15 +487,6 @@ End
 		Sub Change()
 		  HeaderValue.Text = Me.Text
 		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  Me.AddRow("BSHTTP\1.0")
-		  Me.AddRow(BROWSER_CHROME_WIN64)
-		  Me.AddRow(BROWSER_FIREFOX_WIN64)
-		  Me.AddRow(BROWSER_IE)
-		  Me.AddRow(BROWSER_SAFARI_OSX)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
