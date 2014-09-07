@@ -43,6 +43,7 @@ Class=BaseCanvas;HTTPTestGenerator/UI Classes/BaseCanvas.rbbas;&h7971AFFF;&h4FD2
 Class=MultipartForm;HTTPParse/MultipartForm.rbbas;&h38621FFF;&h4252AFFF;false
 Class=Splitter;HTTPTestGenerator/UI Classes/Splitter.rbbas;&h41857FFF;&h4FD2FFFF;false
 Class=Cookie;HTTPParse/Cookie.rbbas;&h57DAB7FF;&h4252AFFF;false
+Window=MIMEEdit;HTTPTestGenerator/Windows/MIMEEdit.rbfrm;&h6B55A7FF;&hEA397FF;false
 DefaultWindow=Generator
 MajorVersion=1
 MinorVersion=0
