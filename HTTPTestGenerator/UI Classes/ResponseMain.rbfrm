@@ -6,7 +6,7 @@ Begin ContainerControl ResponseMain
    BackColor       =   16777215
    Backdrop        =   ""
    Enabled         =   True
-   EraseBackground =   True
+   EraseBackground =   False
    HasBackColor    =   False
    Height          =   470
    HelpTag         =   ""

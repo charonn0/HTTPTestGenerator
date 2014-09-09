@@ -6,12 +6,12 @@ Begin ContainerControl MiniServer
    BackColor       =   &hFFFFFF
    Backdrop        =   ""
    Enabled         =   True
-   EraseBackground =   True
+   EraseBackground =   False
    HasBackColor    =   False
    Height          =   253
    HelpTag         =   ""
    InitialParent   =   ""
-   Left            =   ""
+   Left            =   3.2e+1
    LockBottom      =   ""
    LockLeft        =   ""
    LockRight       =   ""
@@ -19,10 +19,10 @@ Begin ContainerControl MiniServer
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True
-   Top             =   ""
+   Top             =   3.2e+1
    UseFocusRing    =   ""
    Visible         =   True
-   Width           =   298
+   Width           =   368
    Begin TextField port
       AcceptTabs      =   False
       Alignment       =   0
@@ -160,7 +160,7 @@ Begin ContainerControl MiniServer
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   ""
-      Left            =   212
+      Left            =   282
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   False
@@ -221,7 +221,41 @@ Begin ContainerControl MiniServer
       Underline       =   ""
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   298
+      Width           =   368
+   End
+   Begin Label URLLink
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   207
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   False
+      Multiline       =   ""
+      Scope           =   0
+      Selectable      =   True
+      TabIndex        =   7
+      TabPanelIndex   =   0
+      Text            =   ""
+      TextAlign       =   1
+      TextColor       =   &h000080FF
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   232
+      Transparent     =   True
+      Underline       =   True
+      Visible         =   True
+      Width           =   63
    End
 End
 #tag EndWindow
@@ -291,7 +325,7 @@ End
 	#tag Event
 		Sub PrintRequest(Request As String)
 		  RequestData = Request
-		  While Right(RequestData, 4) <> CRLF + CRLF 
+		  While Right(RequestData, 4) <> CRLF + CRLF
 		    RequestData = RequestData + CRLF
 		  Wend
 		End Sub
@@ -316,12 +350,63 @@ End
 		      Me.Caption = "Stop"
 		      Socket.KeepListening = True
 		      Socket.Listen
+		      URLLink.Text = "http://" + Socket.NetworkInterface.IPAddress + ":" + port.Text
 		    End If
 		  Else
 		    Me.Caption = "Listen"
 		    Socket.KeepListening = False
 		    Socket.Disconnect
+		    URLLink.Text = ""
 		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events TextArea1
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  base.Append(New MenuItem("Clear log"))
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Select Case hitItem.Text
+		  Case "Clear log"
+		    Me.Text = ""
+		    Return True
+		  End Select
+		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events URLLink
+	#tag Event
+		Sub MouseEnter()
+		  Me.MouseCursor = System.Cursors.FingerPointer
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  Me.MouseCursor = System.Cursors.StandardPointer
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  Generator.RequestMain1.URL.Text = Me.Text
+		  Generator.RequestMain1.Sender.Enabled = False
+		  Generator.RequestMain1.Sender.Caption = "Sending..."
+		  Generator.RequestMain1.ProgressBar1.Visible = True
+		  Generator.RequestMain1.StopButton.Visible = True
+		  Generator.Perform()
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -112,7 +112,7 @@ Begin Window Generator
       BackColor       =   16777215
       Backdrop        =   ""
       Enabled         =   True
-      EraseBackground =   False
+      EraseBackground =   True
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
@@ -196,8 +196,15 @@ End
 		    Me.Request.SetHeader("Connection") = "close"
 		  End If
 		  
-		  If Me.Request.Headers.AcceptableTypes.Ubound <= -1 Then
+		  If Me.Request.Headers.AcceptableTypes.Ubound <= -1 And Not Me.Request.HasHeader("Accept") Then
 		    Me.Request.SetHeader("Accept") = "*/*"
+		  ElseIf Not Me.Request.HasHeader("Accept") Then
+		    Dim output() As String
+		    For Each t As ContentType In Me.Request.Headers.AcceptableTypes
+		      output.Append(t.ToString)
+		    Next
+		    ReDim Me.Request.Headers.AcceptableTypes(-1)
+		    Me.Request.SetHeader("Accept") = Join(output, ",")
 		  End If
 		End Sub
 	#tag EndMethod
@@ -250,7 +257,7 @@ End
 		  sr.Text = "-----" + Format(Sequence, "000000000") + "-----" + CRLF
 		  sr.TextColor = &c80808000
 		  t.StyledText.AppendStyleRun(sr)
-		  sr.Text = req
+		  sr.Text = NthField(req, CRLF + CRLF, 1) + CRLF + CRLF
 		  sr.TextColor = &c00800000
 		  sr.Font = t.TextFont
 		  t.StyledText.AppendStyleRun(sr)
@@ -498,12 +505,14 @@ End
 		  resp = NthField(Output, CRLF + CRLF, 1) + CRLF + CRLF
 		  Out = Replace(Output, resp, "")
 		  PrintOutput(RawText, resp)
-		  ResponseMain1.OutputViewer1.TextArea1.Text = out
+		  ResponseMain1.OutputViewer1.ResponseData.Text = out
+		  ResponseMain1.OutputViewer1.RequestData.Text = Request.MessageBody
+		  
 		  Dim bs As New BinaryStream(Out)
-		  ResponseMain1.OutputViewer1.HexViewer1.ShowData(bs)
-		  ResponseMain1.OutputViewer1.HexViewer1.Invalidate
-		  ResponseMain1.OutputViewer1.ScrollBar1.Value = 0
-		  ResponseMain1.OutputViewer1.ScrollBar1.Maximum = ResponseMain1.OutputViewer1.HexViewer1.LineCount
+		  'ResponseMain1.OutputViewer1.HexViewer1.ShowData(bs)
+		  'ResponseMain1.OutputViewer1.HexViewer1.Invalidate
+		  'ResponseMain1.OutputViewer1.ScrollBar1.Value = 0
+		  'ResponseMain1.OutputViewer1.ScrollBar1.Maximum = ResponseMain1.OutputViewer1.HexViewer1.LineCount
 		  Dim links() As String = ExtractLinks(Out, TheURL)
 		  ResponseMain1.OutputViewer1.ShowLinks(links)
 		  If Response.StatusCode = 301 Or Response.StatusCode = 302 Then
