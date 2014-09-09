@@ -95,9 +95,20 @@ End
 
 	#tag Method, Flags = &h0
 		Sub ShowMIME(InitialMIME As String = "")
-		  Dim im() As ContentType 
+		  Dim im() As ContentType
 		  If InitialMIME.Trim <> "" Then im = ContentType.ParseTypes(InitialMIME)
 		  Dim skip() As String
+		  
+		  Listbox1.AddRow("*/*", "", "0.8")
+		  Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeCheckbox
+		  Listbox1.RowTag(Listbox1.LastIndex) = New ContentType("*/*")
+		  
+		  For Each ime As ContentType In im
+		    If ime.Acceptance(New ContentType("*/*")) >= 1.0 Then
+		      Listbox1.CellState(Listbox1.LastIndex, 1) = CheckBox.CheckedStates.Checked
+		    End If
+		  Next
+		  
 		  For Each extension As String In WebServer.MIMETypes.Keys
 		    Dim mime As String = WebServer.MIMETypes.Value(extension)
 		    If skip.IndexOf(mime) > -1 Then Continue
