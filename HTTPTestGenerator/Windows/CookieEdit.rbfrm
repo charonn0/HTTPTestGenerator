@@ -535,7 +535,7 @@ End
 #tag Events PushButton1
 	#tag Event
 		Sub Action()
-		  If Me.Caption = "Set Cookie" Then
+		  If Me.Caption = "Set Cookie" And CookieName.Text.Trim <> "" And CookieValue.Text.Trim <> "" Then
 		    Self.Cook = New Cookie(CookieName.Text, CookieValue.Text)
 		    Self.Cook.Domain = CookieDomain.Text
 		    Self.Cook.Expires = HTTPDate(CookieExpiry.Text)
