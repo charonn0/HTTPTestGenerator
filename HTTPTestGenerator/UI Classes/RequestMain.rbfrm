@@ -590,6 +590,7 @@ End
 		      If cs.Trim = "" Then Continue
 		      Dim c As New HTTPParse.Cookie(cs)
 		      Me.AddRow("Cookie", c.Name + "=" + c.Value)
+		      Me.RowTag(Me.LastIndex) = c
 		    Next
 		  End If
 		End Sub
