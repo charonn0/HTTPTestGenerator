@@ -33,7 +33,7 @@ Inherits HTTPParse.HTTPMessage
 		    Dim type As String = Me.GetHeader("Content-Type")
 		    If InStr(type, "multipart/form-data") > 0 Then
 		      Dim boundary As String = NthField(type, "boundary=", 2).Trim
-		      Me.MultiPart = MultipartForm.FromData(Me.MessageBody, boundary)
+		      Me.MultiPart = MultipartForm.FromString(Me.MessageBody, boundary)
 		    End If
 		  End If
 		  
