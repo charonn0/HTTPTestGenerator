@@ -6,7 +6,7 @@ Begin ContainerControl OutputViewer
    BackColor       =   &hFFFFFF
    Backdrop        =   ""
    Enabled         =   True
-   EraseBackground =   True
+   EraseBackground =   False
    HasBackColor    =   False
    Height          =   203
    HelpTag         =   ""
@@ -41,7 +41,7 @@ Begin ContainerControl OutputViewer
       Panels          =   ""
       Scope           =   0
       SmallTabs       =   True
-      TabDefinition   =   "HTTP\rResponse\rBinary\rHyperlinks\rMini Server"
+      TabDefinition   =   "HTTP\rRequest Body\rResponse Body\rHyperlinks\rMini Server"
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
@@ -50,56 +50,10 @@ Begin ContainerControl OutputViewer
       TextUnit        =   0
       Top             =   3
       Underline       =   ""
-      Value           =   4
+      Value           =   0
       Visible         =   True
       Width           =   582
-      Begin TextArea OutputLog
-         AcceptTabs      =   False
-         Alignment       =   0
-         AutoDeactivate  =   True
-         AutomaticallyCheckSpelling=   True
-         BackColor       =   &h00EFEFEF
-         Bold            =   False
-         Border          =   True
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Format          =   ""
-         Height          =   160
-         HelpTag         =   ""
-         HideSelection   =   True
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         Italic          =   False
-         Left            =   7
-         LimitText       =   0
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Mask            =   ""
-         Multiline       =   True
-         ReadOnly        =   True
-         Scope           =   0
-         ScrollbarHorizontal=   False
-         ScrollbarVertical=   True
-         Styled          =   True
-         TabIndex        =   0
-         TabPanelIndex   =   1
-         TabStop         =   True
-         Text            =   ""
-         TextColor       =   &h00000000
-         TextFont        =   "System"
-         TextSize        =   0.0
-         TextUnit        =   0
-         Top             =   31
-         Underline       =   False
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   570
-      End
-      Begin TextArea TextArea1
+      Begin TextArea ResponseData
          AcceptTabs      =   ""
          Alignment       =   0
          AutoDeactivate  =   True
@@ -132,7 +86,7 @@ Begin ContainerControl OutputViewer
          ScrollbarVertical=   True
          Styled          =   True
          TabIndex        =   0
-         TabPanelIndex   =   2
+         TabPanelIndex   =   3
          TabStop         =   True
          Text            =   ""
          TextColor       =   &h000000
@@ -144,76 +98,6 @@ Begin ContainerControl OutputViewer
          UseFocusRing    =   True
          Visible         =   True
          Width           =   566
-      End
-      Begin ScrollBar ScrollBar1
-         AcceptFocus     =   true
-         AutoDeactivate  =   True
-         Enabled         =   True
-         Height          =   160
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         Left            =   559
-         LineStep        =   1
-         LiveScroll      =   ""
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   False
-         LockRight       =   True
-         LockTop         =   True
-         Maximum         =   100
-         Minimum         =   0
-         PageStep        =   20
-         Scope           =   0
-         TabIndex        =   1
-         TabPanelIndex   =   3
-         TabStop         =   True
-         Top             =   32
-         Value           =   0
-         Visible         =   True
-         Width           =   16
-      End
-      Begin HexViewer HexViewer1
-         AcceptFocus     =   True
-         AcceptTabs      =   True
-         AutoDeactivate  =   True
-         Backdrop        =   ""
-         Border          =   True
-         BorderColor     =   &h00808080
-         ByteBackgroundColor=   "&cFFFFFF00"
-         ByteBackgroundColorAlt=   "&cDADADA00"
-         ByteColor       =   "&c0000FF00"
-         BytesLittleEndian=   True
-         DoubleBuffer    =   True
-         Enabled         =   True
-         EraseBackground =   False
-         GutterColor     =   "&cFFFFFF00"
-         GutterColorAlt  =   "&cDADADA00"
-         Height          =   160
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         Left            =   7
-         LineNumbersColor=   "&c80000000"
-         LineNumbersLittleEndian=   False
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Scope           =   0
-         ScrollBackground=   True
-         ShowOffsets     =   False
-         TabIndex        =   0
-         TabPanelIndex   =   3
-         TabStop         =   True
-         TextBackGroundColor=   "&cFFFFFF00"
-         TextBackGroundColorAlt=   &h00DADADA
-         TextFont        =   "System"
-         Top             =   32
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   549
       End
       Begin Listbox Listbox1
          AutoDeactivate  =   True
@@ -276,7 +160,7 @@ Begin ContainerControl OutputViewer
          Height          =   158
          HelpTag         =   ""
          InitialParent   =   "TabPanel1"
-         Left            =   1.0e+1
+         Left            =   10
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -286,10 +170,102 @@ Begin ContainerControl OutputViewer
          TabIndex        =   0
          TabPanelIndex   =   5
          TabStop         =   True
-         Top             =   3.4e+1
+         Top             =   34
          UseFocusRing    =   ""
          Visible         =   True
          Width           =   566
+      End
+      Begin TextArea RequestData
+         AcceptTabs      =   ""
+         Alignment       =   0
+         AutoDeactivate  =   True
+         AutomaticallyCheckSpelling=   True
+         BackColor       =   &hFFFFFF
+         Bold            =   ""
+         Border          =   True
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   158
+         HelpTag         =   ""
+         HideSelection   =   True
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         Italic          =   ""
+         Left            =   9
+         LimitText       =   0
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Mask            =   ""
+         Multiline       =   True
+         ReadOnly        =   True
+         Scope           =   0
+         ScrollbarHorizontal=   ""
+         ScrollbarVertical=   True
+         Styled          =   True
+         TabIndex        =   0
+         TabPanelIndex   =   2
+         TabStop         =   True
+         Text            =   ""
+         TextColor       =   &h000000
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   33
+         Underline       =   ""
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   566
+      End
+      Begin TextArea OutputLog
+         AcceptTabs      =   False
+         Alignment       =   0
+         AutoDeactivate  =   True
+         AutomaticallyCheckSpelling=   True
+         BackColor       =   &h00EFEFEF
+         Bold            =   False
+         Border          =   True
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   160
+         HelpTag         =   ""
+         HideSelection   =   True
+         Index           =   -2147483648
+         InitialParent   =   "TabPanel1"
+         Italic          =   False
+         Left            =   7
+         LimitText       =   0
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Mask            =   ""
+         Multiline       =   True
+         ReadOnly        =   True
+         Scope           =   0
+         ScrollbarHorizontal=   False
+         ScrollbarVertical=   True
+         Styled          =   True
+         TabIndex        =   0
+         TabPanelIndex   =   1
+         TabStop         =   True
+         Text            =   ""
+         TextColor       =   &h00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   31
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   570
       End
    End
 End
@@ -328,31 +304,7 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events OutputLog
-	#tag Event
-		Sub Open()
-		  Me.TextFont = App.FixedWidthFont
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  #pragma Unused X
-		  #pragma Unused Y
-		  base.Append(New MenuItem("Clear log"))
-		  Return True
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  Select Case hitItem.Text
-		  Case "Clear log"
-		    Me.Text = ""
-		    Return True
-		  End Select
-		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events TextArea1
+#tag Events ResponseData
 	#tag Event
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
@@ -378,28 +330,6 @@ End
 		    Return True
 		  End If
 		End Function
-	#tag EndEvent
-#tag EndEvents
-#tag Events ScrollBar1
-	#tag Event
-		Sub ValueChanged()
-		  HexViewer1.Offset = Me.Value * HexViewer1.BytesPerLine
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events HexViewer1
-	#tag Event
-		Function Scrolled(LinesDelta As Integer, BytesDelta As Integer) As Boolean
-		  #pragma Unused BytesDelta
-		  ScrollBar1.Value = ScrollBar1.Value + LinesDelta
-		  ScrollBar1.Maximum = Me.LineCount
-		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  Me.TextFont = App.FixedWidthFont
-		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events Listbox1
@@ -442,6 +372,58 @@ End
 		    Return True
 		  End If
 		  
+		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events RequestData
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
+		    If Keyboard.AsyncShiftKey Then
+		      If Tabpanel1.Value = 0 Then
+		        Tabpanel1.Value = Tabpanel1.PanelCount - 1
+		      Else
+		        Tabpanel1.Value = Tabpanel1.Value - 1
+		      End If
+		    Else
+		      If Tabpanel1.Value = Tabpanel1.PanelCount - 1 Then
+		        Tabpanel1.Value = 0
+		      Else
+		        Tabpanel1.Value = Tabpanel1.Value + 1
+		      End If
+		    End If
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events OutputLog
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  base.Append(New MenuItem("Clear log"))
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Select Case hitItem.Text
+		  Case "Clear log"
+		    Me.Text = ""
+		    Return True
+		  End Select
 		End Function
 	#tag EndEvent
 #tag EndEvents

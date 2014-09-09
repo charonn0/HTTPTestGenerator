@@ -37,7 +37,6 @@ Picture=cookie_icon_grey;HTTPTestGenerator/Icons/cookie_icon_grey.png;&h1C3E7FF;
 Picture=expand_icon;HTTPTestGenerator/Icons/expand_icon.png;&h5DB067FF;&h12F36FFF;false;1;&h0
 Picture=edit;HTTPTestGenerator/Icons/edit.png;&h3A57B7FF;&h12F36FFF;false;1;&h0
 Window=ResponseMain;HTTPTestGenerator/UI Classes/ResponseMain.rbfrm;&h4D4EFFFF;&h4FD2FFFF;false
-Class=HexViewer;HTTPTestGenerator/UI Classes/HexViewer.rbbas;&h5A6957FF;&h4FD2FFFF;false
 Class=BoolCanvas;HTTPTestGenerator/UI Classes/BoolCanvas.rbbas;&h42DABFFF;&h4FD2FFFF;false
 Class=BaseCanvas;HTTPTestGenerator/UI Classes/BaseCanvas.rbbas;&h7971AFFF;&h4FD2FFFF;false
 Class=Splitter;HTTPTestGenerator/UI Classes/Splitter.rbbas;&h41857FFF;&h4FD2FFFF;false
