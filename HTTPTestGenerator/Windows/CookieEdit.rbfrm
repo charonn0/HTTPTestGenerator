@@ -496,7 +496,7 @@ End
 		  CookieDomain.ReadOnly = True
 		  If c.Expires <> Nil Then CookieExpiry.Text = HTTPDate(c.Expires)
 		  CookieExpiry.ReadOnly = True
-		  CookiePath.Text = Str(c.Port)
+		  CookiePath.Text = c.Path
 		  CookiePath.ReadOnly = True
 		  CookieName.Text = c.Name
 		  CookieName.ReadOnly = True
