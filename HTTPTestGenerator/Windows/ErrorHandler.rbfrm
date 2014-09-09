@@ -46,6 +46,7 @@ Begin Window ErrorHandler
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "An unhandled error has caused the application to stop working. "
       TextAlign       =   0
       TextColor       =   0
@@ -245,6 +246,7 @@ Begin Window ErrorHandler
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Show technical details"
       TextAlign       =   0
       TextColor       =   8421504
@@ -641,11 +643,15 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
 		  DisclosureTriangle1.Value = Not DisclosureTriangle1.Value
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
 		  Return True
 		End Function
 	#tag EndEvent

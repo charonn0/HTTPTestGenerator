@@ -316,7 +316,7 @@ Begin Window Authenicator
    End
    Begin Label IsSecure
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   True
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -338,7 +338,7 @@ Begin Window Authenicator
       TabPanelIndex   =   0
       Text            =   "Secure Connection"
       TextAlign       =   1
-      TextColor       =   &h0000FF00
+      TextColor       =   &h00008000
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0

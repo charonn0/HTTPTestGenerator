@@ -42,6 +42,8 @@ Inherits Canvas
 
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
 		  RaiseEvent Moved(Me.Left - mLastX, Me.Top - mLastY)
 		End Sub
 	#tag EndEvent

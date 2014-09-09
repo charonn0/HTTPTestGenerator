@@ -583,6 +583,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub DropObject(obj As DragItem, action As Integer)
+		  #pragma Unused action
 		  If Obj.TextAvailable Then
 		    Dim s() As String = Split(obj.Text, CRLF)
 		    For Each cs As String In s
@@ -775,6 +776,8 @@ End
 #tag Events Canvas1
 	#tag Event
 		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  #pragma Unused DeltaX
+		  #pragma Unused DeltaY
 		  RequestHeaders.Height = Me.Top - RequestHeaders.Top - 1
 		  LogOutput.Top = Me.Top + Me.Height + 1
 		  LogOutput.Height = Me.Window.Height - LogOutput.Top - 5
@@ -784,6 +787,7 @@ End
 #tag Events LogOutput
 	#tag Event
 		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
+		  #pragma Unused column
 		  If row > Me.LastIndex Then Return False
 		  If Me.RowTag(row).BooleanValue Then
 		    g.ForeColor = &cC0C0C000
@@ -801,6 +805,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
 		  base.Append(New MenuItem("Clear log"))
 		  Return True
 		End Function

@@ -397,6 +397,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Function DragRow(drag As DragItem, row As Integer) As Boolean
+		  #pragma Unused row
 		  Dim data As String
 		  For i As Integer = 0 To Me.ListCount - 1
 		    If Me.Selected(i) Then
@@ -439,6 +440,8 @@ End
 #tag Events Splitter1
 	#tag Event
 		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  #pragma Unused DeltaX
+		  #pragma Unused DeltaY
 		  If Me.Top < Splitter2.Top Then
 		    ResponseHeaders.Height = Me.Top - ResponseHeaders.Top - 1
 		    CookieList.Top = Me.Top + Me.Height + 1
@@ -453,6 +456,8 @@ End
 #tag Events Splitter2
 	#tag Event
 		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  #pragma Unused DeltaX
+		  #pragma Unused DeltaY
 		  If Me.Top > Splitter1.Top + Splitter1.Height Then
 		    CookieList.Height = Me.Top - CookieList.Top - 1
 		    OutputViewer1.Top = Me.Top + Me.Height + 1

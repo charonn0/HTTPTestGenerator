@@ -475,6 +475,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Function SendProgress(BytesSent As Integer, BytesLeft As Integer) As Boolean
+		  #pragma Unused BytesLeft
 		  Dim sz As Integer = MessageBodyRaw.LenB
 		  SendSz = SendSz + BytesSent
 		  RequestMain1.SetProgress(SendSz * 100 / sz)
@@ -580,6 +581,8 @@ End
 #tag Events Canvas1
 	#tag Event
 		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  #pragma Unused DeltaX
+		  #pragma Unused DeltaY
 		  'If Sign(DeltaX) = -1 Then Break
 		  ResponseMain1.Left = Me.Left + Me.Width + 1
 		  ResponseMain1.Width = Self.Width - ResponseMain1.Left

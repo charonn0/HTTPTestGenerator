@@ -41,7 +41,7 @@ Begin ContainerControl OutputViewer
       Panels          =   ""
       Scope           =   0
       SmallTabs       =   True
-      TabDefinition   =   "HTTP\rResponse\rBinary\rHyperlinks"
+      TabDefinition   =   "HTTP\rResponse\rBinary\rHyperlinks\rMini Server"
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
@@ -50,7 +50,7 @@ Begin ContainerControl OutputViewer
       TextUnit        =   0
       Top             =   3
       Underline       =   ""
-      Value           =   3
+      Value           =   4
       Visible         =   True
       Width           =   582
       Begin TextArea OutputLog
@@ -264,6 +264,33 @@ Begin ContainerControl OutputViewer
          Width           =   570
          _ScrollWidth    =   -1
       End
+      Begin MiniServer MiniServer1
+         AcceptFocus     =   ""
+         AcceptTabs      =   True
+         AutoDeactivate  =   True
+         BackColor       =   &hFFFFFF
+         Backdrop        =   ""
+         Enabled         =   True
+         EraseBackground =   True
+         HasBackColor    =   False
+         Height          =   158
+         HelpTag         =   ""
+         InitialParent   =   "TabPanel1"
+         Left            =   1.0e+1
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   5
+         TabStop         =   True
+         Top             =   3.4e+1
+         UseFocusRing    =   ""
+         Visible         =   True
+         Width           =   566
+      End
    End
 End
 #tag EndWindow
@@ -309,6 +336,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
 		  base.Append(New MenuItem("Clear log"))
 		  Return True
 		End Function
@@ -376,6 +405,10 @@ End
 #tag Events Listbox1
 	#tag Event
 		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
+		  #pragma Unused row
+		  #pragma Unused column
+		  #pragma Unused x
+		  #pragma Unused y
 		  If row < Me.ListCount - 1 And column = 0 Then
 		    g.ForeColor = &c0000FF00
 		    g.Underline = True
@@ -384,6 +417,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Function CellClick(row as Integer, column as Integer, x as Integer, y as Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
 		  If row < Me.ListCount  And column = 0 Then
 		    Generator.RequestMain1.Sender.Enabled = False
 		    Generator.RequestMain1.Sender.Caption = "Sending..."
