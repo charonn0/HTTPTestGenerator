@@ -315,12 +315,14 @@ End
 		    End If
 		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 3) = c.Domain
 		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 4) = c.Path
+		    Dim restrictions() As String
 		    If c.Secure Then
-		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 5) = "Secure"
+		      restrictions.Append("Secure")
 		    End If
 		    If c.httpOnly Then
-		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 5) = "HTTP Only"
+		      restrictions.Append("HTTP Only")
 		    End If
+		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 5) = Join(restrictions, ", ")
 		    
 		    ResponseMain1.CookieList.RowTag(ResponseMain1.CookieList.LastIndex) = c
 		  Next
