@@ -701,7 +701,13 @@ End
 		        Dim olddata As Dictionary = DecodeFormData(MessageBodyRaw)
 		        formraw = formgen.SetFormData(olddata)
 		      Else
-		        formraw = formgen.SetFormData(New HTTPParse.MultipartForm)
+		        Dim typ As New HTTPParse.ContentType(NthField(MessageBodyRaw, CRLF + CRLF, 1))
+		        formraw = formgen.SetFormData(HTTPParse.MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
+		      End If
+		      If formraw IsA HTTPParse.MultipartForm Then
+		        Formtype = True
+		      Else
+		        Formtype = False
 		      End If
 		      Dim Type As String
 		      If formraw <> Nil Then

@@ -297,13 +297,27 @@ End
 		  HTTPForm.DeleteAllRows
 		  If ExistingData <> Nil Then
 		    If ExistingData IsA Dictionary Then ' URLEncoded
+		      FormType1.Value = True
+		      FormData = ExistingData
 		      For Each key As String In Dictionary(ExistingData).Keys
-		        FormData = ExistingData
 		        HTTPForm.AddRow(key, Dictionary(ExistingData).Value(key))
 		        HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
 		        HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
 		      Next
 		    Else ' MultipartForm
+		      FormType.Value = True
+		      Dim frm As HTTPParse.MultipartForm = ExistingData
+		      For i As Integer = 0 To frm.Count - 1
+		        If frm.Element(frm.Name(i)) IsA FolderItem Then
+		          Dim f As FolderItem = frm.Element(frm.Name(i))
+		          HTTPForm.AddRow(frm.Name(i), f.AbsolutePath)
+		          HTTPForm.RowTag(HTTPForm.LastIndex) = f
+		        Else
+		          HTTPForm.AddRow(frm.Name(i), frm.Element(frm.Name(i)))
+		        End If
+		        HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
+		        HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
+		      Next
 		      Form = ExistingData
 		    End If
 		  End If
