@@ -148,6 +148,14 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Resized()
+		  RequestMain1.Width = Canvas1.Left ' force the UI to update, otherwise the child windows don't resize properly
+		  
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h21
 		Private Sub Generate()
 		  mTheURL = Nil
