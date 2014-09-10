@@ -595,6 +595,23 @@ End
 		  End If
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  base.Append(New MenuItem("Clear all headers"))
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Select Case hitItem.Text
+		  Case "Clear all headers"
+		    Me.DeleteAllRows
+		    Return True
+		  End Select
+		End Function
+	#tag EndEvent
 #tag EndEvents
 #tag Events RequestMethod
 	#tag Event
@@ -606,7 +623,7 @@ End
 #tag Events URL
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
-		  If Asc(key) = &h0D Or Asc(key) = &h03 Then
+		  If Asc(key) = &h0D Or Asc(key) = &h03 And Not Keyboard.AsyncControlKey Then
 		    Perform(False)
 		    Return True
 		  End If
