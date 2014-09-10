@@ -7,7 +7,7 @@ Begin Window ErrorHandler
    Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   100
+   Height          =   1.0e+2
    ImplicitInstance=   False
    LiveResize      =   True
    MacProcID       =   0
@@ -16,21 +16,21 @@ Begin Window ErrorHandler
    MaxWidth        =   600
    MenuBar         =   0
    MenuBarVisible  =   True
-   MinHeight       =   25
+   MinHeight       =   100
    MinimizeButton  =   False
-   MinWidth        =   425
+   MinWidth        =   469
    Placement       =   1
-   Resizeable      =   True
+   Resizeable      =   False
    Title           =   "Error"
    Visible         =   True
-   Width           =   469
+   Width           =   5.03e+2
    Begin Label StaticText1
       AutoDeactivate  =   True
       Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
-      Height          =   18
+      Height          =   28
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -46,18 +46,17 @@ Begin Window ErrorHandler
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "An unhandled error has caused the application to stop working. "
       TextAlign       =   0
       TextColor       =   0
       TextFont        =   "System"
-      TextSize        =   11.0
+      TextSize        =   0
       TextUnit        =   0
       Top             =   5
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   409
+      Width           =   443
    End
    Begin TextArea errorStack
       AcceptTabs      =   False
@@ -102,7 +101,7 @@ Begin Window ErrorHandler
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   False
-      Width           =   443
+      Width           =   477
    End
    Begin PushButton QuitApp
       AutoDeactivate  =   True
@@ -117,7 +116,7 @@ Begin Window ErrorHandler
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   321
+      Left            =   314
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   False
@@ -133,7 +132,7 @@ Begin Window ErrorHandler
       Top             =   72
       Underline       =   False
       Visible         =   True
-      Width           =   135
+      Width           =   176
    End
    Begin PushButton SendError
       AutoDeactivate  =   True
@@ -246,7 +245,6 @@ Begin Window ErrorHandler
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Show technical details"
       TextAlign       =   0
       TextColor       =   8421504
@@ -663,11 +661,13 @@ End
 		    Self.Height = lastheight
 		    errorStack.Visible = True
 		    ShowHide.Text = "Hide technical details"
+		    Self.Resizeable = True
 		  Else
 		    lastheight = Self.Height
 		    errorStack.Visible = False
 		    Self.Height = 100
 		    ShowHide.Text = "Show technical details"
+		    Self.Resizeable = False
 		  End If
 		End Sub
 	#tag EndEvent

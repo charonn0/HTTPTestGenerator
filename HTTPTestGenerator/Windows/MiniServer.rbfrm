@@ -11,7 +11,7 @@ Begin ContainerControl MiniServer
    Height          =   253
    HelpTag         =   ""
    InitialParent   =   ""
-   Left            =   3.2e+1
+   Left            =   32
    LockBottom      =   ""
    LockLeft        =   ""
    LockRight       =   ""
@@ -19,7 +19,7 @@ Begin ContainerControl MiniServer
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True
-   Top             =   3.2e+1
+   Top             =   32
    UseFocusRing    =   ""
    Visible         =   True
    Width           =   368
@@ -119,6 +119,7 @@ Begin ContainerControl MiniServer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -134,6 +135,7 @@ Begin ContainerControl MiniServer
    Begin HTTP.QnDHTTPd Socket
       AllowDirectoryIndexPages=   True
       Authenticate    =   False
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       KeepListening   =   True
@@ -143,8 +145,11 @@ Begin ContainerControl MiniServer
       LogLevel        =   0
       Port            =   0
       Scope           =   0
+      TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   0
+      Visible         =   True
       Width           =   32
    End
    Begin PushButton PushButton1
@@ -245,6 +250,7 @@ Begin ContainerControl MiniServer
       Selectable      =   True
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   ""
       TextAlign       =   1
       TextColor       =   &h000080FF
@@ -400,6 +406,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
 		  Generator.RequestMain1.URL.Text = Me.Text
 		  Generator.RequestMain1.Sender.Enabled = False
 		  Generator.RequestMain1.Sender.Caption = "Sending..."
