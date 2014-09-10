@@ -18,23 +18,27 @@ Inherits Application
 	#tag Method, Flags = &h0
 		Function FixedWidthFont() As String
 		  ' try to pick a fixed-width font
-		  Static nm As String
-		  If nm = "" Then
-		    For i As Integer = FontCount - 1 DownTo 0
-		      Dim fontname As String = Font(i)
-		      If Left(fontname, 1) <> "@" Then
-		        If fontname = "Consolas" Then
-		          nm = fontname
-		        End If
-		        If InStr(fontname, " mono") > 0 Or InStr(fontname, " fixed") > 0 Then
-		          nm = fontname
-		        End If
+		  
+		  If FixedWidthFont.Trim <> "" Then Return FixedWidthFont
+		  
+		  Dim preferred() As String = Split("Consolas,Courier,Sans Mono", ",")
+		  For i As Integer = FontCount - 1 DownTo 0
+		    Dim fontname As String = Font(i)
+		    If Left(fontname, 1) = "@" Then Continue
+		    For Each pref As String In preferred
+		      If Instr(fontname, pref) > 0 Then
+		        FixedWidthFont = fontname
+		        Return FixedWidthFont
 		      End If
 		    Next
-		  End If
-		  Return nm
+		  Next
 		End Function
 	#tag EndMethod
+
+
+	#tag Property, Flags = &h1
+		Protected FixedWidthFont As String
+	#tag EndProperty
 
 
 	#tag Constant, Name = kEditClear, Type = String, Dynamic = False, Default = \"&Delete", Scope = Public

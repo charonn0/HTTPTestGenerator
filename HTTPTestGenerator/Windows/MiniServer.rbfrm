@@ -119,7 +119,6 @@ Begin ContainerControl MiniServer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -135,21 +134,17 @@ Begin ContainerControl MiniServer
    Begin HTTP.QnDHTTPd Socket
       AllowDirectoryIndexPages=   True
       Authenticate    =   False
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       KeepListening   =   True
       LastHTTPCode    =   ""
-      Left            =   336
+      Left            =   4.15e+2
       LockedInPosition=   False
       LogLevel        =   0
       Port            =   0
       Scope           =   0
-      TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   0
-      Visible         =   True
+      Top             =   0.0e+
       Width           =   32
    End
    Begin PushButton PushButton1
@@ -183,51 +178,6 @@ Begin ContainerControl MiniServer
       Visible         =   True
       Width           =   80
    End
-   Begin TextArea TextArea1
-      AcceptTabs      =   ""
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   True
-      BackColor       =   &h00C0C0C0
-      Bold            =   ""
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   225
-      HelpTag         =   ""
-      HideSelection   =   True
-      Index           =   -2147483648
-      Italic          =   ""
-      Left            =   0
-      LimitText       =   0
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   True
-      Scope           =   0
-      ScrollbarHorizontal=   ""
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   6
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &h000000
-      TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   ""
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   368
-   End
    Begin Label URLLink
       AutoDeactivate  =   True
       Bold            =   ""
@@ -250,7 +200,6 @@ Begin ContainerControl MiniServer
       Selectable      =   True
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   ""
       TextAlign       =   1
       TextColor       =   &h000080FF
@@ -262,6 +211,51 @@ Begin ContainerControl MiniServer
       Underline       =   True
       Visible         =   True
       Width           =   63
+   End
+   Begin TextArea TextArea1
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   True
+      BackColor       =   &h00EFEFEF
+      Bold            =   False
+      Border          =   True
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   225
+      HelpTag         =   ""
+      HideSelection   =   True
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   0
+      LimitText       =   0
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Mask            =   ""
+      Multiline       =   True
+      ReadOnly        =   True
+      Scope           =   0
+      ScrollbarHorizontal=   False
+      ScrollbarVertical=   True
+      Styled          =   True
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &h00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   0
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   368
    End
 End
 #tag EndWindow
@@ -311,6 +305,7 @@ End
 		    s = s + CRLF
 		  Wend
 		  Dim sr As New StyleRun
+		  sr.Font = App.FixedWidthFont
 		  sr.Text = RequestData
 		  sr.TextColor = &c0000FF00
 		  TextArea1.StyledText.AppendStyleRun(sr)
@@ -367,25 +362,6 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events TextArea1
-	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  #pragma Unused X
-		  #pragma Unused Y
-		  base.Append(New MenuItem("Clear log"))
-		  Return True
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  Select Case hitItem.Text
-		  Case "Clear log"
-		    Me.Text = ""
-		    Return True
-		  End Select
-		End Function
-	#tag EndEvent
-#tag EndEvents
 #tag Events URLLink
 	#tag Event
 		Sub MouseEnter()
@@ -416,5 +392,29 @@ End
 		  Generator.Perform()
 		  
 		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events TextArea1
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  base.Append(New MenuItem("Clear log"))
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Select Case hitItem.Text
+		  Case "Clear log"
+		    Me.Text = ""
+		    Return True
+		  End Select
+		End Function
 	#tag EndEvent
 #tag EndEvents
