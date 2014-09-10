@@ -149,6 +149,14 @@ End
 
 #tag WindowCode
 	#tag Event
+		Sub Open()
+		  #If DebugBuild Then
+		    RequestMain1.URL.Text = "https://www.google.com/"
+		  #endif
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub Resized()
 		  RequestMain1.Width = Canvas1.Left ' force the UI to update, otherwise the child windows don't resize properly
 		  
@@ -163,7 +171,7 @@ End
 		  Me.Request.Method = HTTP.Method(RequestMain1.RequestMethod.Text)
 		  If Me.Request.Method = HTTP.RequestMethod.InvalidMethod Then Me.Request.MethodName = RequestMain1.RequestMethod.Text
 		  Me.Request.Path = theURL
-		  If Me.Request.path.ServerPath = "" Then Me.Request.path.ServerPath = "/"
+		  If Me.Request.path.Path = "" Then Me.Request.path.Path = "/"
 		  Me.Request.ProtocolVersion = CDbl(NthField(RequestMain1.ProtocolVer.Text, "/", 2))
 		  GenerateHeaders()
 		  Me.Request.MessageBody = MessageBodyRaw
@@ -189,7 +197,7 @@ End
 		  Next
 		  
 		  If Not Me.Request.HasHeader("Host") And Me.Request.ProtocolVersion >= 1.1 Then
-		    Me.Request.SetHeader("Host") = theURL.FQDN
+		    Me.Request.SetHeader("Host") = theURL.Host
 		  End If
 		  
 		  If Not Me.Request.HasHeader("Connection") And Me.Request.ProtocolVersion >= 1.1 Then
@@ -216,8 +224,8 @@ End
 		  Output = ""
 		  Generate()
 		  Sock.Close
-		  Sock.Address = theURL.FQDN
-		  If Request.Path.Protocol = "https" Then
+		  Sock.Address = theURL.Host
+		  If Request.Path.Scheme = "https" Then
 		    Sock.Secure = True
 		  Else
 		    Sock.Secure = False
@@ -231,9 +239,9 @@ End
 		  End If
 		  
 		  If Sock.Secure Then
-		    PrintLog("Attempting a secure connection to '" + TheURL.FQDN + "' on port " + Str(Sock.Port) + "...")
+		    PrintLog("Attempting a secure connection to '" + TheURL.Host + "' on port " + Str(Sock.Port) + "...")
 		  Else
-		    PrintLog("Attempting a connection to '" + TheURL.FQDN + "' on port " + Str(Sock.Port) + "...")
+		    PrintLog("Attempting a connection to '" + TheURL.Host + "' on port " + Str(Sock.Port) + "...")
 		  End If
 		  
 		  Sock.Connect()
@@ -242,11 +250,26 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Sub PrintLog(Line As String)
-		  RequestMain1.LogOutput.AddRow(Line)
+		  Dim t As TextArea = RequestMain1.LogOutput
+		  Dim sr As New StyleRun
 		  If Sequence Mod 2 = 0 Then
-		    RequestMain1.LogOutput.RowTag(RequestMain1.LogOutput.LastIndex) = True
+		    sr.TextColor = &c00800000
+		  Else
+		    sr.TextColor = &c0000FF00
 		  End If
-		  RequestMain1.LogOutput.ScrollPosition = RequestMain1.LogOutput.LastIndex
+		  sr.Bold = True
+		  'sr.Text = "-----" + Format(Sequence, "000000000") + "-----" + CRLF
+		  't.StyledText.AppendStyleRun(sr)
+		  sr.Text = Line.Trim + CRLF
+		  t.StyledText.AppendStyleRun(sr)
+		  #If TargetWin32 Then
+		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
+		    Const SB_BOTTOM = 7
+		    Const WM_VSCROLL = &h115
+		    Call SendMessageW(t.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
+		  #Else
+		    t.ScrollPosition = t.LineNumAtCharPos(t.Text.Len)
+		  #endif
 		End Sub
 	#tag EndMethod
 
@@ -510,19 +533,14 @@ End
 		  ResponseMain1.OutputViewer1.ResponseData.Text = out
 		  ResponseMain1.OutputViewer1.RequestData.Text = Request.MessageBody
 		  
-		  Dim bs As New BinaryStream(Out)
-		  'ResponseMain1.OutputViewer1.HexViewer1.ShowData(bs)
-		  'ResponseMain1.OutputViewer1.HexViewer1.Invalidate
-		  'ResponseMain1.OutputViewer1.ScrollBar1.Value = 0
-		  'ResponseMain1.OutputViewer1.ScrollBar1.Maximum = ResponseMain1.OutputViewer1.HexViewer1.LineCount
-		  Dim links() As String = ExtractLinks(Out, TheURL)
+		  Dim links() As String = ExtractLinks(Out, TheURL.ToString)
 		  ResponseMain1.OutputViewer1.ShowLinks(links)
 		  If Response.StatusCode = 301 Or Response.StatusCode = 302 Then
 		    Dim redir As String = Response.GetHeader("Location")
 		    Dim u As New HTTP.URI(redir)
-		    If u.FQDN = "" Then
-		      u = New HTTP.URI(TheURL)
-		      u.ServerPath = redir
+		    If u.Host = "" Then
+		      u = New HTTP.URI(TheURL.ToString)
+		      u.Path = redir
 		    End If
 		    PrintLog("Redirect (" + Str(Response.StatusCode) + "): " + u.ToString)
 		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
@@ -535,7 +553,7 @@ End
 		  ElseIf Response.StatusCode = 401 Then
 		    PrintLog("Not authenticated.")
 		    Dim r As String = NthField(Response.Headers.Value("WWW-Authenticate"), "=", 2)
-		    Dim p As Pair = Authenicator.Authenticate(r, Response.Path.Protocol = "https")
+		    Dim p As Pair = Authenicator.Authenticate(r, Response.Path.Scheme = "https")
 		    If p <> Nil Then
 		      PrintLog("Authenticating...")
 		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
