@@ -58,7 +58,7 @@ Begin ContainerControl RequestMain
       Scope           =   0
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
-      SelectionType   =   1
+      SelectionType   =   0
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
@@ -373,54 +373,50 @@ Begin ContainerControl RequestMain
       Visible         =   True
       Width           =   353
    End
-   Begin Listbox LogOutput
+   Begin TextArea LogOutput
+      AcceptTabs      =   False
+      Alignment       =   0
       AutoDeactivate  =   True
-      AutoHideScrollbars=   True
-      Bold            =   ""
+      AutomaticallyCheckSpelling=   True
+      BackColor       =   &h00EFEFEF
+      Bold            =   False
       Border          =   True
-      ColumnCount     =   1
-      ColumnsResizable=   ""
-      ColumnWidths    =   ""
       DataField       =   ""
       DataSource      =   ""
-      DefaultRowHeight=   -1
       Enabled         =   True
-      EnableDrag      =   ""
-      EnableDragReorder=   ""
-      GridLinesHorizontal=   0
-      GridLinesVertical=   0
-      HasHeading      =   ""
-      HeadingIndex    =   -1
+      Format          =   ""
       Height          =   83
       HelpTag         =   ""
-      Hierarchical    =   ""
+      HideSelection   =   True
       Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   ""
-      Italic          =   ""
-      Left            =   4
+      Italic          =   False
+      Left            =   5
+      LimitText       =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      RequiresSelection=   ""
+      Mask            =   ""
+      Multiline       =   True
+      ReadOnly        =   True
       Scope           =   0
-      ScrollbarHorizontal=   ""
-      ScrollBarVertical=   True
-      SelectionType   =   0
-      TabIndex        =   11
+      ScrollbarHorizontal=   False
+      ScrollbarVertical=   True
+      Styled          =   True
+      TabIndex        =   12
       TabPanelIndex   =   0
       TabStop         =   True
+      Text            =   ""
+      TextColor       =   &h00000000
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   339
-      Underline       =   ""
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   354
-      _ScrollWidth    =   -1
    End
 End
 #tag EndWindow
@@ -810,19 +806,6 @@ End
 #tag EndEvents
 #tag Events LogOutput
 	#tag Event
-		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
-		  #pragma Unused column
-		  If row > Me.LastIndex Then Return False
-		  If Me.RowTag(row).BooleanValue Then
-		    g.ForeColor = &cC0C0C000
-		    g.FillRect(0, 0, g.Width, g.Height)
-		  Else
-		    g.ForeColor = &cA7A7A700
-		    g.FillRect(0, 0, g.Width, g.Height)
-		  End If
-		End Function
-	#tag EndEvent
-	#tag Event
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
@@ -839,7 +822,7 @@ End
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
 		  Select Case hitItem.Text
 		  Case "Clear log"
-		    Me.DeleteAllRows
+		    Me.Text = ""
 		    Return True
 		  End Select
 		End Function
