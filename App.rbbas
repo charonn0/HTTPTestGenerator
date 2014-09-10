@@ -21,12 +21,12 @@ Inherits Application
 		  
 		  If FixedWidthFont.Trim <> "" Then Return FixedWidthFont
 		  
-		  Dim preferred() As String = Split("Consolas,Courier,Sans Mono", ",")
+		  Dim preferred() As String = Split("Consolas,Courier,Inconsolata,Lucida Console", ",")
 		  For i As Integer = FontCount - 1 DownTo 0
 		    Dim fontname As String = Font(i)
 		    If Left(fontname, 1) = "@" Then Continue
 		    For Each pref As String In preferred
-		      If Instr(fontname, pref) > 0 Then
+		      If fontname = pref Then
 		        FixedWidthFont = fontname
 		        Return FixedWidthFont
 		      End If
