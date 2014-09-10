@@ -334,6 +334,11 @@ End
 #tag EndEvents
 #tag Events ResponseHeaders
 	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		End Sub
+	#tag EndEvent
+	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
 		  If Me.RowFromXY(x, y) > -1 Then
 		    Dim m As New MenuItem("Copy to request headers")
@@ -357,8 +362,9 @@ End
 		End Function
 	#tag EndEvent
 	#tag Event
-		Sub Open()
-		  Me.TextFont = App.FixedWidthFont
+		Sub DoubleClick()
+		  Dim p As Pair = Me.RowTag(Me.ListIndex)
+		  HeaderEdit.ShowHeader(p)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -358,6 +358,25 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub ShowHeader(OldHeader As Pair)
+		  If OldHeader <> Nil Then
+		    HeaderName.Text = OldHeader.Left
+		    If OldHeader.Right IsA Date Then
+		      HeaderValue.Text = HTTPDate(OldHeader.Right.DateValue)
+		      IsADate = True
+		    Else
+		      HeaderValue.Text = OldHeader.Right
+		    End If
+		    AutoHeader.Enabled = False
+		    Label3.Enabled = False
+		    PushButton1.Enabled = False
+		    Me.Title = "View Header"
+		    Me.ShowModal
+		  End If
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h21
 		Private Head As Pair
