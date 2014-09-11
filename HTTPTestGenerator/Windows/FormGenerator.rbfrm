@@ -347,7 +347,7 @@ End
 #tag Events PushButton2
 	#tag Event
 		Sub Action()
-		  If HTTPForm.ListIndex > -1 Then
+		  If HTTPForm.ListIndex > -1 And MsgBox("Remove this form element?", 4 + 48, "Confirm removal") = 6 Then
 		    HTTPForm.RemoveRow(HTTPForm.ListIndex)
 		  End If
 		End Sub
