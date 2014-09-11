@@ -96,16 +96,22 @@ End
 	#tag Method, Flags = &h0
 		Sub ShowMIME(InitialMIME As String = "")
 		  Dim im() As ContentType
-		  If InitialMIME.Trim <> "" Then im = ContentType.ParseTypes(InitialMIME)
-		  Dim skip() As String
+		  Try
+		    If InitialMIME.Trim <> "" Then im = ContentType.ParseTypes(InitialMIME)
+		  Catch UnsupportedFormatException
+		    MsgBox("Unable to parse initial value.")
+		  End Try
 		  
+		  Dim skip() As String
+		  Dim sort As Boolean
 		  Listbox1.AddRow("*/*", "", "0.8")
 		  Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeCheckbox
 		  Listbox1.RowTag(Listbox1.LastIndex) = New ContentType("*/*")
 		  
 		  For Each ime As ContentType In im
-		    If ime.Acceptance(New ContentType("*/*")) >= 1.0 Then
+		    If ime.Acceptance(New ContentType("*/*")) >= ime.Weight Then
 		      Listbox1.CellState(Listbox1.LastIndex, 1) = CheckBox.CheckedStates.Checked
+		      sort = True
 		    End If
 		  Next
 		  
@@ -119,12 +125,18 @@ End
 		    For Each ime As ContentType In im
 		      If ime.Acceptance(NewType) >= 1.0 Then
 		        Listbox1.CellState(Listbox1.LastIndex, 1) = CheckBox.CheckedStates.Checked
+		        Listbox1.Cell(Listbox1.LastIndex, 2) = Format(ime.Weight, "0.0")
 		      End If
 		    Next
 		    
 		    Listbox1.CellType(Listbox1.LastIndex, 2) = Listbox.TypeEditableTextField
 		    Listbox1.RowTag(Listbox1.LastIndex) = NewType
 		  Next
+		  
+		  If sort Then
+		    Listbox1.SortedColumn = 1
+		    Listbox1.Sort
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -157,9 +169,32 @@ End
 		      MsgBox("Weight must be between 0.0 and 1.0")
 		      Me.EditCell(row, column)
 		    End If
+		    HeaderEdit.HeaderValue.Text = Generate
 		  ElseIf column = 1 Then
 		    HeaderEdit.HeaderValue.Text = Generate
 		  End If
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  For i As Integer = 0 To Encodings.Count - 1
+		    Dim te As TextEncoding = Encodings.Item(i)
+		    Dim mnu As New MenuItem(te.internetName)
+		    mnu.Tag = te:Me.RowFromXY(X, Y)
+		    base.Append(mnu)
+		  Next
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Dim p As Pair = hitItem.Tag
+		  If p = Nil Then Return False
+		  Dim c As ContentType = Listbox1.RowTag(p.Right.Int32Value)
+		  If c = Nil Then Return False
+		  c.CharSet = p.Left
+		  HeaderEdit.HeaderValue.Text = Generate
+		  Return True
+		End Function
 	#tag EndEvent
 #tag EndEvents
