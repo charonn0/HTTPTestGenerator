@@ -46,6 +46,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Name:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -80,6 +81,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Value:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -114,6 +116,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Expires:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -148,6 +151,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Path:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -182,6 +186,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Domain:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -471,15 +476,15 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Function GetCookie(ByVal OldCookie As Cookie = Nil) As Cookie
+		Function GetCookie(ByVal OldCookie As HTTP.Cookie = Nil) As HTTP.Cookie
 		  Me.Cook = Nil
 		  If OldCookie <> Nil Then
-		    Me.Cook = New Cookie(OldCookie.Name, OldCookie.Value)
+		    Me.Cook = New HTTP.Cookie(OldCookie.Name, OldCookie.Value)
 		    CookieName.Text = Me.Cook.Name
 		    CookieValue.Text = Me.Cook.Value
 		    CookieDomain.Text = Self.Cook.Domain
 		    If Self.Cook.Expires <> Nil Then
-		      CookieExpiry.Text = HTTPDate(Self.Cook.Expires)
+		      CookieExpiry.Text = HTTP.DateString(Self.Cook.Expires)
 		    End If
 		    CookiePath.Text = Self.Cook.Path
 		    'Self.Cook.Port = 80
@@ -494,7 +499,7 @@ End
 		Sub ShowCookie(c As HTTP.Cookie)
 		  CookieDomain.Text = c.Domain
 		  CookieDomain.ReadOnly = True
-		  If c.Expires <> Nil Then CookieExpiry.Text = HTTPDate(c.Expires)
+		  If c.Expires <> Nil Then CookieExpiry.Text = HTTP.DateString(c.Expires)
 		  CookieExpiry.ReadOnly = True
 		  CookiePath.Text = c.Path
 		  CookiePath.ReadOnly = True
@@ -512,7 +517,7 @@ End
 
 
 	#tag Property, Flags = &h21
-		Private Cook As Cookie
+		Private Cook As HTTP.Cookie
 	#tag EndProperty
 
 
@@ -521,14 +526,14 @@ End
 #tag Events CookieExpiry
 	#tag Event
 		Sub Open()
-		  Me.Text = HTTPDate(New Date)
+		  Me.Text = HTTP.DateString(New Date)
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub GotFocus()
 		  PushButton1.SetFocus
-		  Dim d As Date = DatePicker.GetDate(HTTPDate(Me.Text))
-		  Me.Text = HTTPDate(d)
+		  Dim d As Date = DatePicker.GetDate(HTTP.DateString(Me.Text))
+		  Me.Text = HTTP.DateString(d)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -536,9 +541,9 @@ End
 	#tag Event
 		Sub Action()
 		  If Me.Caption = "Set Cookie" And CookieName.Text.Trim <> "" And CookieValue.Text.Trim <> "" Then
-		    Self.Cook = New Cookie(CookieName.Text, CookieValue.Text)
+		    Self.Cook = New HTTP.Cookie(CookieName.Text, CookieValue.Text)
 		    Self.Cook.Domain = CookieDomain.Text
-		    Self.Cook.Expires = HTTPDate(CookieExpiry.Text)
+		    Self.Cook.Expires = HTTP.DateString(CookieExpiry.Text)
 		    Self.Cook.Path = CookiePath.Text
 		    Self.Cook.Port = 80
 		  End If

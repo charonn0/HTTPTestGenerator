@@ -46,6 +46,7 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Name:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -80,6 +81,7 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Value:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -250,6 +252,7 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Auto:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -346,7 +349,7 @@ End
 		  If OldHeader <> Nil Then
 		    HeaderName.Text = OldHeader.Left
 		    If OldHeader.Right IsA Date Then
-		      HeaderValue.Text = HTTPDate(OldHeader.Right.DateValue)
+		      HeaderValue.Text = HTTP.DateString(OldHeader.Right.DateValue)
 		      IsADate = True
 		    Else
 		      HeaderValue.Text = OldHeader.Right
@@ -363,7 +366,7 @@ End
 		  If OldHeader <> Nil Then
 		    HeaderName.Text = OldHeader.Left
 		    If OldHeader.Right IsA Date Then
-		      HeaderValue.Text = HTTPDate(OldHeader.Right.DateValue)
+		      HeaderValue.Text = HTTP.DateString(OldHeader.Right.DateValue)
 		      IsADate = True
 		    Else
 		      HeaderValue.Text = OldHeader.Right
@@ -408,7 +411,7 @@ End
 		  If Not IsADate Then
 		    Self.Head = HeaderName.Text:HeaderValue.Text
 		  Else
-		    Self.Head = HeaderName.Text:HTTPDate(HeaderValue.Text)
+		    Self.Head = HeaderName.Text:HTTP.DateString(HeaderValue.Text)
 		  End If
 		  Self.Close
 		End Sub
@@ -492,7 +495,7 @@ End
 		  Case "Expires", "If-Modified-Since", "If-Unmodified-Since"
 		    Dim d As Date = DatePicker.GetDate(New Date)
 		    If d = Nil Then d = New Date
-		    HeaderValue.Text = HTTPDate(d)
+		    HeaderValue.Text = HTTP.DateString(d)
 		    IsADate = True
 		  Case "Range"
 		    HeaderValue.Text = "bytes=0-512"

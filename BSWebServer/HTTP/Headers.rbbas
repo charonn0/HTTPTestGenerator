@@ -1,13 +1,13 @@
 #tag Class
-Class Headers
+Protected Class Headers
 Inherits InternetHeaders
 	#tag Method, Flags = &h1000
 		Sub Constructor(Data As String)
 		  // Calling the overridden superclass constructor.
 		  Super.Constructor
 		  Dim lines() As String = data.Split(CRLF)
-		  
-		  For i As Integer = 0 To UBound(lines)
+		  Dim lcount As Integer = UBound(lines)
+		  For i As Integer = 0 To lcount
 		    Dim line As String = lines(i)
 		    If Instr(line, ": ") <= 1  Or line.Trim = "" Then Continue
 		    Dim n, v As String
@@ -18,7 +18,8 @@ Inherits InternetHeaders
 		      Cookies.Append(New Cookie(v))
 		    Case "Cookie"
 		      Dim s() As String = Split(v, ";")
-		      For x As Integer = 0 To UBound(s)
+		      Dim scount As Integer = UBound(s)
+		      For x As Integer = 0 To scount
 		        If s(x).Trim = "" Then Continue
 		        Dim l, r As String
 		        l = NthField(s(x).Trim, "=", 1)
@@ -27,9 +28,9 @@ Inherits InternetHeaders
 		        Cookies.Append(c)
 		      Next
 		    Case "Accept"
-		      Dim s() As String = Split(v, ",")
-		      For x As Integer = 0 To UBound(s)
-		        AcceptableTypes.Append(New ContentType(s(x)))
+		      Dim t() As ContentType = ContentType.ParseTypes(v)
+		      For x As Integer = 0 To UBound(t)
+		        AcceptableTypes.Append(t(x))
 		      Next
 		    Else
 		      Me.AppendHeader(n, v)
@@ -87,7 +88,8 @@ Inherits InternetHeaders
 		  Dim acc As String
 		  If UBound(AcceptableTypes) > 0 Then
 		    Dim ts() As String
-		    For i As Integer = 0 To UBound(AcceptableTypes)
+		    Dim tcount As Integer = UBound(AcceptableTypes)
+		    For i As Integer = 0 To tcount
 		      ts.Append(AcceptableTypes(i).ToString)
 		    Next
 		    acc = Join(ts, ",")

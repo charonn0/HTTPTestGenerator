@@ -22,6 +22,12 @@ Class ContentType
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		 Shared Sub AddType(FileExtension As String, MIMEName As String)
+		  MIMETypes.Value(FileExtension) = MIMEName
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub Constructor(TargetFile As FolderItem)
 		  ' Pass a folderitem to construct a ContentType object based on the file name extension. The FolderItem need not exist.
 		  
@@ -93,6 +99,80 @@ Class ContentType
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		 Shared Function GetIcon(ext As String) As String
+		  ext = Lowercase(ext)
+		  
+		  Select Case ext
+		  Case "exe", "com", "scr", "pif", "dll", "deb", "rpm"
+		    Return "/" + WebServer.VirtualRoot + "/img/bin.png"
+		    
+		  Case "js", "cs", "c", "h", "vbs", "vbe", "bat", "cmd", "sh", "ini", "reg"
+		    Return "/" + WebServer.VirtualRoot + "/img/script.png"
+		    
+		  Case "rbp", "rbbas", "rbvcp", "rbfrm", "rbres"
+		    Return "/" + WebServer.VirtualRoot + "/img/xojo.png"
+		    
+		  Case "folder"
+		    Return "/" + WebServer.VirtualRoot + "/img/dir.png"
+		    
+		  Case "txt", "md"
+		    Return "/" + WebServer.VirtualRoot + "/img/txt.png"
+		    
+		  Case "htm", "html"
+		    Return "/" + WebServer.VirtualRoot + "/img/html.png"
+		    
+		  Case "css"
+		    Return "/" + WebServer.VirtualRoot + "/img/css.png"
+		    
+		  Case "xml", "xsl"
+		    Return "/" + WebServer.VirtualRoot + "/img/xml.png"
+		    
+		  Case "jpg", "jpeg", "png", "bmp", "gif", "tif"
+		    Return "/" + WebServer.VirtualRoot + "/img/image.png"
+		    
+		  Case "mov", "mp4", "m4v", "avi", "mpg", "mpeg", "wmv", "mkv"
+		    Return "/" + WebServer.VirtualRoot + "/img/mov.png"
+		    
+		  Case "ttf", "otf", "pfb", "pfm"
+		    Return "/" + WebServer.VirtualRoot + "/img/font.png"
+		    
+		  Case "zip", "tar", "rar", "7zip", "bzip", "gzip", "7z", "tgz", "gz", "z"
+		    Return "/" + WebServer.VirtualRoot + "/img/zip.png"
+		    
+		  Case "wav"
+		    Return "/" + WebServer.VirtualRoot + "/img/wav.png"
+		    
+		  Case "mp3", "m4a", "m4b", "m4p", "ogg", "flac"
+		    Return "/" + WebServer.VirtualRoot + "/img/mus.png"
+		    
+		  Case "pdf", "ps"
+		    Return "/" + WebServer.VirtualRoot + "/img/pdf.png"
+		    
+		  Case "xls", "xlsx"
+		    Return "/" + WebServer.VirtualRoot + "/img/xls.png"
+		    
+		  Case "doc", "docx"
+		    Return "/" + WebServer.VirtualRoot + "/img/doc.png"
+		    
+		  Else ' This returns the default icon
+		    Return "/" + WebServer.VirtualRoot + "/img/unknown.png"
+		    
+		  End Select
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		 Shared Function GetType(FileName As String) As ContentType
+		  Dim ext As String = NthField(FileName, ".", CountFields(FileName, "."))
+		  If MIMETypes.HasKey(ext) Then
+		    Return New ContentType(MIMETypes.Value(ext).StringValue)
+		  End If
+		  Return New ContentType("application/octet-stream")
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function Operator_Compare(OtherType As String) As Integer
 		  ' Allows you to compare a ContentType directly to a String.
 		  ' If the String would be Accepted this method returns 0 (equivalence)
@@ -122,6 +202,14 @@ Class ContentType
 		  Next
 		  Return types
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		 Shared Sub RemoveType(FileExtension As String)
+		  If MIMETypes.HasKey(FileExtension) Then
+		    MIMETypes.Remove(FileExtension)
+		  End If
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0

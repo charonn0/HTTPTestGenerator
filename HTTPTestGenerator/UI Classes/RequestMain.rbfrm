@@ -302,7 +302,9 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
+      TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
@@ -515,7 +517,7 @@ End
 		  Dim p As Pair = HeaderEdit.GetHeader()
 		  If p <> Nil Then
 		    If p.Right IsA Date Then
-		      RequestHeaders.AddRow(p.Left, HTTPDate(p.Right.DateValue), "")
+		      RequestHeaders.AddRow(p.Left, HTTP.DateString(p.Right.DateValue), "")
 		      'RequestHeaders.CellType(RequestHeaders.LastIndex, 0) = Listbox.TypeEditable
 		      'RequestHeaders.EditCell(RequestHeaders.LastIndex, 0)
 		    Else
@@ -542,8 +544,8 @@ End
 		  If Me.ListIndex > -1 Then
 		    Dim data As Object = Me.RowTag(Me.ListIndex)
 		    If data = Nil Then Return
-		    If data IsA HTTPParse.Cookie Then
-		      Dim p As HTTPParse.Cookie = HTTPParse.Cookie(data)
+		    If data IsA HTTP.Cookie Then
+		      Dim p As HTTP.Cookie = HTTP.Cookie(data)
 		      p = CookieEdit.GetCookie(p)
 		      If p <> Nil Then
 		        Me.Cell(Me.ListIndex, 0) = "Cookie"
@@ -556,7 +558,7 @@ End
 		      If p <> Nil Then
 		        Me.Cell(Me.ListIndex, 0) = p.Left
 		        If p.Right IsA Date Then
-		          Me.Cell(Me.ListIndex, 1) = HTTPDate(p.Right.DateValue)
+		          Me.Cell(Me.ListIndex, 1) = HTTP.DateString(p.Right.DateValue)
 		        Else
 		          Me.Cell(Me.ListIndex, 1) = p.Right
 		        End If
@@ -584,7 +586,7 @@ End
 		    Dim s() As String = Split(obj.Text, CRLF)
 		    For Each cs As String In s
 		      If cs.Trim = "" Then Continue
-		      Dim c As New HTTPParse.Cookie(cs)
+		      Dim c As New HTTP.Cookie(cs)
 		      Me.AddRow("Cookie", c.Name + "=" + c.Value)
 		      Me.RowTag(Me.LastIndex) = c
 		    Next
@@ -659,14 +661,14 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub ValueChanged()
-		  Dim c As Cookie
+		  Dim c As HTTP.Cookie
 		  Dim editindex As Integer = -1
 		  
 		  If RequestHeaders.ListIndex > -1 And RequestHeaders.Cell(RequestHeaders.ListIndex, 0) = "Cookie" Then
 		    Dim n, v As String
 		    n = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 1)
 		    v = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 2)
-		    c = New Cookie(n, v)
+		    c = New HTTP.Cookie(n, v)
 		    editindex = RequestHeaders.ListIndex
 		  End If
 		  c = CookieEdit.GetCookie(c)
@@ -712,13 +714,13 @@ End
 		      Dim formgen As New FormGenerator
 		      Dim formraw As Variant
 		      If Not Formtype Then
-		        Dim olddata As Dictionary = DecodeFormData(MessageBodyRaw)
+		        Dim olddata As Dictionary = HTTP.Helpers.DecodeFormData(MessageBodyRaw)
 		        formraw = formgen.SetFormData(olddata)
 		      Else
-		        Dim typ As New HTTPParse.ContentType(NthField(MessageBodyRaw, CRLF + CRLF, 1))
-		        formraw = formgen.SetFormData(HTTPParse.MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
+		        Dim typ As New HTTP.ContentType(NthField(MessageBodyRaw, CRLF + CRLF, 1))
+		        formraw = formgen.SetFormData(HTTP.MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
 		      End If
-		      If formraw IsA HTTPParse.MultipartForm Then
+		      If formraw IsA HTTP.MultipartForm Then
 		        Formtype = True
 		      Else
 		        Formtype = False
@@ -727,10 +729,10 @@ End
 		      If formraw <> Nil Then
 		        If formraw IsA Dictionary Then
 		          If Dictionary(formraw).Count = 0 Then Return
-		          MessageBodyRaw = EncodeFormData(formraw)
+		          MessageBodyRaw = HTTP.Helpers.EncodeFormData(formraw)
 		          Type = "application/x-url-encoded"
 		        Else
-		          Dim m As HTTPParse.MultipartForm = formraw
+		          Dim m As HTTP.MultipartForm = formraw
 		          If m.Count = 0 Then Return
 		          MessageBodyRaw = m.ToString
 		          Type = "multipart/form-data; boundary=" + m.Boundary

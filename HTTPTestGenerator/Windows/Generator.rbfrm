@@ -29,17 +29,22 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
+      TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   14
+      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -47,8 +52,11 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
+      TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   79
+      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -62,6 +70,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -116,6 +125,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -133,6 +143,7 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -140,8 +151,11 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
+      TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   123
+      Visible         =   True
       Width           =   32
    End
 End
@@ -328,7 +342,7 @@ End
 		  'ResponseMain1.CookiesButton.Visible = Response.Headers.CookieCount > 0
 		  ResponseMain1.CookieList.DeleteAllRows
 		  For i As Integer = 0 To Response.Headers.CookieCount - 1
-		    Dim c As HTTPParse.Cookie = Response.Headers.Cookie(i)
+		    Dim c As HTTP.Cookie = Response.Headers.Cookie(i)
 		    ResponseMain1.CookieList.AddRow("")
 		    Dim d As New Date
 		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 0) = c.Name
@@ -535,8 +549,8 @@ End
 		  ResponseMain1.OutputViewer1.ResponseData.Text = out
 		  ResponseMain1.OutputViewer1.RequestData.Text = Request.MessageBody
 		  
-		  Dim links() As String = ExtractLinks(Out, TheURL.ToString)
-		  ResponseMain1.OutputViewer1.ShowLinks(links)
+		  'Dim links() As String = ExtractLinks(Out, TheURL.ToString)
+		  'ResponseMain1.OutputViewer1.ShowLinks(links)
 		  If Response.StatusCode = 301 Or Response.StatusCode = 302 Then
 		    Dim redir As String = Response.GetHeader("Location")
 		    Dim u As New HTTP.URI(redir)

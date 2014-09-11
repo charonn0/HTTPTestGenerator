@@ -2,6 +2,7 @@
 Protected Class URI
 	#tag Method, Flags = &h0
 		Sub Constructor(URL As String)
+		  ' Pass a URI string to parse. e.g. http://user:password@www.example.com:8080/?foo=bar&bat=baz#Top
 		  If NthField(URL, ":", 1) <> "mailto" Then
 		    If InStr(URL, "://") > 0 Then
 		      Me.Scheme = NthField(URL, "://", 1)
@@ -72,6 +73,20 @@ Protected Class URI
 		  Next
 		  Me.Fragment = DecodeURLComponent(Me.Fragment)
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function Parent() As HTTP.URI
+		  Dim parent() As String = Split(Me.Path, "/")
+		  If UBound(parent) > -1 Then
+		    While parent.Pop.Trim = ""
+		      App.YieldToNextThread
+		    Wend
+		  End If
+		  Dim s As String = Join(parent, "/").Trim
+		  If s = "" Then s = "/"
+		  Return New URI(s)
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0

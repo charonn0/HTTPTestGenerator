@@ -119,6 +119,7 @@ Begin ContainerControl MiniServer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -131,20 +132,30 @@ Begin ContainerControl MiniServer
       Visible         =   True
       Width           =   8
    End
-   Begin HTTP.QnDHTTPd Socket
-      AllowDirectoryIndexPages=   True
-      Authenticate    =   False
+   Begin WebServer.FileServer Socket
+      AuthenticationRealm=   "Restricted Area"
+      AuthenticationRequired=   ""
+      CertificatePassword=   ""
+      DirectoryBrowsing=   True
+      Enabled         =   True
+      EnforceContentType=   True
       Height          =   32
       Index           =   -2147483648
-      KeepListening   =   True
-      LastHTTPCode    =   ""
-      Left            =   4.15e+2
+      Left            =   415
       LockedInPosition=   False
-      LogLevel        =   0
+      MaximumSocketsConnected=   10
+      MinimumSocketsAvailable=   2
       Port            =   0
       Scope           =   0
+      SessionTimeout  =   600
+      TabIndex        =   3
       TabPanelIndex   =   0
-      Top             =   0.0e+
+      TabStop         =   True
+      Threading       =   True
+      Top             =   0
+      UseCompression  =   ""
+      UseSessions     =   True
+      Visible         =   True
       Width           =   32
    End
    Begin PushButton PushButton1
@@ -200,6 +211,7 @@ Begin ContainerControl MiniServer
       Selectable      =   True
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   ""
       TextAlign       =   1
       TextColor       =   &h000080FF
@@ -294,13 +306,21 @@ End
 #tag EndEvents
 #tag Events Socket
 	#tag Event
-		Sub Error()
+		Sub Error(ErrorCode as Integer)
 		  PushButton1.Caption = "Listen"
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub PrintResponse(Response As String)
-		  Dim s As String = NthField(Response, CRLF + CRLF, 1)
+		Function TamperRequest(ByRef Request As HTTP.Request) As Boolean
+		  RequestData = Request.ToString
+		  While Right(RequestData, 4) <> CRLF + CRLF
+		    RequestData = RequestData + CRLF
+		  Wend
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function TamperResponse(ByRef Response As HTTP.Response) As Boolean
+		  Dim s As String = NthField(Response.ToString, CRLF + CRLF, 1)
 		  While Right(s, 4) <> CRLF + CRLF
 		    s = s + CRLF
 		  Wend
@@ -321,15 +341,7 @@ End
 		    TextArea1.ScrollPosition = TextArea1.LineNumAtCharPos(TextArea1.Text.Len)
 		  #endif
 		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub PrintRequest(Request As String)
-		  RequestData = Request
-		  While Right(RequestData, 4) <> CRLF + CRLF
-		    RequestData = RequestData + CRLF
-		  Wend
-		End Sub
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events PushButton1
@@ -347,16 +359,15 @@ End
 		        Socket.NetworkInterface = System.GetNetworkInterface(0)
 		      End If
 		      Socket.Port = Val(port.Text)
-		      Socket.Page = f
+		      Socket.DocumentRoot = f
+		      Socket.DirectoryBrowsing = True
 		      Me.Caption = "Stop"
-		      Socket.KeepListening = True
 		      Socket.Listen
 		      URLLink.Text = "http://" + Socket.NetworkInterface.IPAddress + ":" + port.Text
 		    End If
 		  Else
 		    Me.Caption = "Listen"
-		    Socket.KeepListening = False
-		    Socket.Disconnect
+		    Socket.StopListening
 		    URLLink.Text = ""
 		  End If
 		End Sub

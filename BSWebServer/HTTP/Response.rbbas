@@ -1,15 +1,6 @@
 #tag Class
 Protected Class Response
-Inherits HTTPParse.HTTPMessage
-	#tag Method, Flags = &h1001
-		Protected Sub Constructor(ResponseCode As Integer, Type As ContentType, Method As HTTP.RequestMethod, Body As String = "")
-		  Me.StatusCode = ResponseCode
-		  Me.MIMEType = Type
-		  Me.Method = Method
-		  Me.MessageBody = body
-		End Sub
-	#tag EndMethod
-
+Inherits HTTP.HTTPMessage
 	#tag Method, Flags = &h1000
 		Sub Constructor(Raw As String)
 		  Dim body As Integer = InStr(raw, CRLF + CRLF)
@@ -39,10 +30,6 @@ Inherits HTTPParse.HTTPMessage
 		Compressible As Boolean = True
 	#tag EndProperty
 
-	#tag Property, Flags = &h21
-		Private mStatusMessage As String
-	#tag EndProperty
-
 	#tag Property, Flags = &h0
 		StatusCode As Integer
 	#tag EndProperty
@@ -63,21 +50,21 @@ Inherits HTTPParse.HTTPMessage
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="HTTPParse.HTTPMessage"
+			InheritedFrom="HTTP.HTTPMessage"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AuthRealm"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="HTTPParse.HTTPMessage"
+			InheritedFrom="HTTP.HTTPMessage"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AuthUsername"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="HTTPParse.HTTPMessage"
+			InheritedFrom="HTTP.HTTPMessage"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Compressible"
@@ -106,7 +93,7 @@ Inherits HTTPParse.HTTPMessage
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="HTTPParse.HTTPMessage"
+			InheritedFrom="HTTP.HTTPMessage"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
@@ -119,14 +106,14 @@ Inherits HTTPParse.HTTPMessage
 			Name="ProtocolVersion"
 			Group="Behavior"
 			Type="Single"
-			InheritedFrom="HTTPParse.HTTPMessage"
+			InheritedFrom="HTTP.HTTPMessage"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="SessionID"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="HTTPParse.HTTPMessage"
+			InheritedFrom="HTTP.HTTPMessage"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="StatusCode"
