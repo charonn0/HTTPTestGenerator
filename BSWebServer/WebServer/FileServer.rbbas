@@ -88,6 +88,16 @@ Inherits HTTP.BaseServer
 		    GlobalRedirects.Value(img) = icon
 		  Next
 		  
+		  For Each error As Integer In Array(301, 302, 400, 403, 401, 404, 405, 406, 410, 416, 418, 451, 500, 501, 505)
+		    Dim errpage As HTTP.Response
+		    errpage = GetErrorResponse(200, "")
+		    errpage.Path = New URI("/" + VirtualRoot + "/err/" + Format(error, "000"))
+		    errpage.MIMEType = New ContentType("text/html")
+		    errpage.MessageBody = ErrorPage(error, "%PARAM%")
+		    errpage.Compressible = False
+		    Me.AddRedirect(errpage)
+		  Next
+		  
 		  Dim redirect As HTTP.Response
 		  redirect = GetRedirectResponse("/bs", "http://www.boredomsoft.org")
 		  redirect.Compressible = False
@@ -100,6 +110,7 @@ Inherits HTTP.BaseServer
 		  doc.MessageBody = "User-Agent: *" + CRLF + "Disallow: /" + CRLF + CRLF
 		  doc.Compressible = False
 		  AddRedirect(doc)
+		  
 		  
 		  Dim tmp As FolderItem = GetTemporaryFolderItem()
 		  Dim bs As BinaryStream = BinaryStream.Create(tmp, True)
