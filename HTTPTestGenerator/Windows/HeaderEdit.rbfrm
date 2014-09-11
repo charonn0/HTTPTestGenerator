@@ -314,7 +314,7 @@ Begin Window HeaderEdit
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "HeaderValue"
-         InitialValue    =   ""
+         InitialValue    =   "BSHTTP\\1.0\r\nGoogle Chrome\r\nMozilla Firefox\r\nInternet Exlorer 11\r\nSafari"
          Italic          =   False
          Left            =   77
          ListIndex       =   0
@@ -455,20 +455,24 @@ End
 		  Case "Host"
 		    HeaderValue.Text = "www.example.com"
 		  Case "User-Agent"
-		    AutoValue.DeleteAllRows
-		    AutoValue.AddRow("BSHTTP\1.0")
-		    AutoValue.AddRow(BROWSER_CHROME_WIN64)
-		    AutoValue.AddRow(BROWSER_FIREFOX_WIN64)
-		    AutoValue.AddRow(BROWSER_IE)
-		    AutoValue.AddRow(BROWSER_SAFARI_OSX)
+		    'AutoValue.DeleteAllRows
+		    'AutoValue.AddRow("BSHTTP\1.0")
+		    'AutoValue.AddRow(BROWSER_CHROME_WIN64)
+		    'AutoValue.AddRow(BROWSER_FIREFOX_WIN64)
+		    'AutoValue.AddRow(BROWSER_IE)
+		    'AutoValue.AddRow(BROWSER_SAFARI_OSX)
 		    AutoValue.Visible = True
-		    AutoHeader.ListIndex = 1
+		    AutoHeader.ListIndex = 0
 		    'HeaderValue.Visible = False
 		    
 		  Case "Accept"
 		    'Dim s As String = MIMEEdit.GetMIME("text/html")
 		    'If s <> "" Then HeaderValue.Text = s
-		    MIMEEdit.ShowMIME
+		    MIMEEdit.ShowMIME(HeaderValue.Text)
+		    MIMEEdit.Top = Self.Top + Self.Height + 10
+		    
+		  Case "Accept-CharSet"
+		    MIMEEdit.ShowMIME(HeaderValue.Text)
 		    MIMEEdit.Top = Self.Top + Self.Height + 10
 		    
 		  Case "Accept-Encoding"
@@ -493,7 +497,15 @@ End
 		  Case "Range"
 		    HeaderValue.Text = "bytes=0-512"
 		  Case "Authorization"
-		    Dim u, p As String
+		    Dim u, p, tmp As String
+		    tmp = NthField(HeaderValue.Text, " ", 2)
+		    If Left(HeaderValue.Text, 6) = "Basic " Then
+		      tmp = DecodeBase64(tmp)
+		      If InStr(DecodeBase64(tmp), ":") > 0 Then
+		        u = NthField(tmp, ":", 1)
+		        p = NthField(tmp, ":", 2)
+		      End If
+		    End If
 		    If Authenicator.GetCredentials(u, p) Then
 		      HeaderValue.Text = "Basic " + EncodeBase64(u + ":" + p)
 		    End If
@@ -504,7 +516,22 @@ End
 #tag Events AutoValue
 	#tag Event
 		Sub Change()
-		  HeaderValue.Text = Me.Text
+		  If HeaderName.Text = "User-Agent" Then
+		    Select Case Me.ListIndex
+		    Case 0
+		      HeaderValue.Text = "BSHTTP\1.0"
+		    Case 1
+		      HeaderValue.Text = BROWSER_CHROME_WIN64
+		    Case 2
+		      HeaderValue.Text = BROWSER_FIREFOX_WIN64
+		    Case 0
+		      HeaderValue.Text = BROWSER_IE
+		    Case 0
+		      HeaderValue.Text = BROWSER_SAFARI_OSX
+		    End Select
+		  Else
+		    HeaderValue.Text = Me.Text
+		  End If
 		  
 		End Sub
 	#tag EndEvent

@@ -88,6 +88,7 @@ Begin Window Authenicator
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Realm:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -164,6 +165,7 @@ Begin Window Authenicator
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Username:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -240,6 +242,7 @@ Begin Window Authenicator
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Password:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -336,6 +339,7 @@ Begin Window Authenicator
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Secure Connection"
       TextAlign       =   1
       TextColor       =   &h00008000
@@ -368,6 +372,8 @@ End
 
 	#tag Method, Flags = &h0
 		Function GetCredentials(ByRef Username As String, Byref Password As String) As Boolean
+		  UserField.Text = Username
+		  PassField.Text = Password
 		  IsSecure.Visible = False
 		  Me.ShowModal
 		  If Me.Username <> "" Or Me.Password <> "" Then
