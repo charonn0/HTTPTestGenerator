@@ -726,10 +726,12 @@ End
 		      Dim Type As String
 		      If formraw <> Nil Then
 		        If formraw IsA Dictionary Then
+		          If Dictionary(formraw).Count = 0 Then Return
 		          MessageBodyRaw = EncodeFormData(formraw)
 		          Type = "application/x-url-encoded"
 		        Else
 		          Dim m As HTTPParse.MultipartForm = formraw
+		          If m.Count = 0 Then Return
 		          MessageBodyRaw = m.ToString
 		          Type = "multipart/form-data; boundary=" + m.Boundary
 		        End If
