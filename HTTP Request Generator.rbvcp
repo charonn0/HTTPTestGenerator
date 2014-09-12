@@ -23,7 +23,6 @@ Window=HeaderEdit;HTTPTestGenerator/Windows/HeaderEdit.rbfrm;&h7376E7FF;&hEA397F
 Window=RawEditor;HTTPTestGenerator/Windows/RawEditor.rbfrm;&h42CBD7FF;&hEA397FF;false
 Class=HintTextField;HTTPTestGenerator/UI Classes/HintTextField.rbbas;&h5D437FFF;&h4FD2FFFF;false
 Class=HeaderList;HTTPTestGenerator/UI Classes/HeaderList.rbbas;&h1BBA57FF;&h4FD2FFFF;false
-Module=Misc;Misc.rbbas;&h7B56D7FF;&h0;false
 Picture=cookie_icon;HTTPTestGenerator/Icons/cookie_icon.png;&h1042FFF;&h12F36FFF;false;1;&h0
 Picture=cookie_icon_grey;HTTPTestGenerator/Icons/cookie_icon_grey.png;&h1C3E7FF;&h12F36FFF;false;1;&h0
 Picture=expand_icon;HTTPTestGenerator/Icons/expand_icon.png;&h5DB067FF;&h12F36FFF;false;1;&h0

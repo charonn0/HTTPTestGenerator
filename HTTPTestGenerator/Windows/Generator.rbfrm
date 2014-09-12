@@ -29,22 +29,17 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
-      Left            =   1000
+      Left            =   975
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
-      TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   14
-      Visible         =   True
+      Top             =   7
       Width           =   32
    End
    Begin Timer DataReceivedTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -52,11 +47,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   79
-      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -70,7 +62,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -125,7 +116,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -143,7 +133,6 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -151,11 +140,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
-      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   123
-      Visible         =   True
       Width           =   32
    End
 End
@@ -488,31 +474,20 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub DataAvailable()
-		  TimeOut.Reset
-		  If DataReceivedTimer.Mode = Timer.ModeOff Then
-		    PrintLog("Receiving data...")
-		  End If
-		  Output = Output + Me.ReadAll
-		  RawText = Self.Request.ToString
-		  DataReceivedTimer.Mode = Timer.ModeSingle
-		End Sub
-	#tag EndEvent
-	#tag Event
 		Sub Error()
 		  TimeOut.Mode = Timer.ModeOff
-		  PrintLog(SocketErrorMessage(Me.LastErrorCode))
+		  PrintLog(FormatSocketError(Me.LastErrorCode))
 		  Select Case Me.LastErrorCode
 		  Case 102
 		    'ResponseMain1.IPAddress.Text = "Closed by host"
 		    'ResponseMain1.IPAddress.TextColor = &c80808000
 		    
 		  Case 103
-		    ResponseMain1.Code.Text = SocketErrorMessage(Me.LastErrorCode)
+		    ResponseMain1.Code.Text = FormatSocketError(Me.LastErrorCode)
 		    ResponseMain1.ResponseHeaders.DeleteAllRows
 		  Else
 		    ResponseMain1.Code.TextColor = &cFF000000
-		    ResponseMain1.Code.Text = SocketErrorMessage(Me.LastErrorCode)
+		    ResponseMain1.Code.Text = FormatSocketError(Me.LastErrorCode)
 		  End Select
 		  RequestMain1.Sender.Enabled = True
 		  RequestMain1.Sender.Caption = "Send Request"
@@ -536,6 +511,17 @@ End
 		  SendSz = SendSz + BytesSent
 		  RequestMain1.SetProgress(SendSz * 100 / sz)
 		End Function
+	#tag EndEvent
+	#tag Event
+		Sub DataAvailable()
+		  TimeOut.Reset
+		  If DataReceivedTimer.Mode = Timer.ModeOff Then
+		    PrintLog("Receiving data...")
+		  End If
+		  Output = Output + Me.ReadAll
+		  RawText = Self.Request.ToString
+		  DataReceivedTimer.Mode = Timer.ModeSingle
+		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events DataReceivedTimer
