@@ -388,26 +388,38 @@ Protected Module HTTP
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Function FormatSocketError(ErrorCode As Integer) As String
-		  Dim err As String = "socket error " + Str(ErrorCode)
+	#tag Method, Flags = &h0
+		Function FormatSocketError(ErrorCode As Integer) As String
+		  Dim err As String = "Socket error " + Str(ErrorCode) + ": "
 		  Select Case ErrorCode
 		  Case 102
-		    err = err + ": Disconnected."
+		    err = err + "Disconnected."
 		  Case 100
-		    err = err + ": Could not create a socket!"
+		    err = err + "Failed to create the socket."
 		  Case 103
-		    err = err + ": Connection timed out."
+		    err = err + "Connection timed out."
 		  Case 105
-		    err = err + ": That port number is already in use."
+		    err = err + "That port number is already in use."
 		  Case 106
-		    err = err + ": Socket is not ready for that command."
+		    err = err + "The socket is not ready for that command."
 		  Case 107
-		    err = err + ": Could not bind to port."
+		    err = err + "The port number is invalid or restricted."
 		  Case 108
-		    err = err + ": Out of memory."
+		    err = err + "Out of memory."
 		  Else
-		    err = err + ": System error code."
+		    #If TargetWin32 Then
+		      Declare Function FormatMessageW Lib "Kernel32" (Flags As Integer, Source As Integer, MessageId As Integer, _
+		      LangId As Integer, Buffer As ptr, Size As Integer, Arguments As Integer) As Integer
+		      Const FORMAT_MESSAGE_FROM_SYSTEM = &H1000
+		      Dim buffer As New MemoryBlock(2048)
+		      If FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM, 0, ErrorCode, 0 , Buffer, Buffer.Size, 0) <> 0 Then
+		        err = err + Buffer.WString(0)
+		      Else
+		        err = err + "Unknown error number " + Str(ErrorCode)
+		      End If
+		    #Else
+		      err = err + "System error code. " + Str(ErrorCode)
+		    #endif
 		  End Select
 		  
 		  Return err

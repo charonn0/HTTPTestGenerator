@@ -119,7 +119,6 @@ Begin ContainerControl MiniServer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -137,7 +136,6 @@ Begin ContainerControl MiniServer
       AuthenticationRequired=   ""
       CertificatePassword=   ""
       DirectoryBrowsing=   True
-      Enabled         =   True
       EnforceContentType=   True
       Height          =   32
       Index           =   -2147483648
@@ -148,14 +146,11 @@ Begin ContainerControl MiniServer
       Port            =   0
       Scope           =   0
       SessionTimeout  =   600
-      TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Threading       =   True
       Top             =   0
       UseCompression  =   ""
       UseSessions     =   True
-      Visible         =   True
       Width           =   32
    End
    Begin PushButton PushButton1
@@ -211,7 +206,6 @@ Begin ContainerControl MiniServer
       Selectable      =   True
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   ""
       TextAlign       =   1
       TextColor       =   &h000080FF
@@ -308,6 +302,22 @@ End
 	#tag Event
 		Sub Error(ErrorCode as Integer)
 		  PushButton1.Caption = "Listen"
+		  Me.StopListening
+		  URLLink.Visible = False
+		  Dim sr As New StyleRun
+		  sr.Font = App.FixedWidthFont
+		  sr.Text = FormatSocketError(ErrorCode) + CRLF
+		  sr.TextColor = &c80000000
+		  TextArea1.StyledText.AppendStyleRun(sr)
+		  #If TargetWin32 Then
+		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
+		    Const SB_BOTTOM = 7
+		    Const WM_VSCROLL = &h115
+		    Call SendMessageW(TextArea1.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
+		  #Else
+		    TextArea1.ScrollPosition = TextArea1.LineNumAtCharPos(TextArea1.Text.Len)
+		  #endif
+		  
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -368,7 +378,7 @@ End
 		  Else
 		    Me.Caption = "Listen"
 		    Socket.StopListening
-		    URLLink.Text = ""
+		    URLLink.Visible = False
 		  End If
 		End Sub
 	#tag EndEvent
