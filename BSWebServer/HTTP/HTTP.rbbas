@@ -39,7 +39,6 @@ Protected Module HTTP
 		  Case 208
 		    Return "Already Reported"
 		    
-		    
 		  Case 226
 		    Return "IM Used"
 		    
@@ -62,10 +61,11 @@ Protected Module HTTP
 		    Return "Use Proxy"
 		    
 		  Case 306
+		    ' This status code is deprecated by http://tools.ietf.org/html/rfc7231#section-6.4.6
 		    Return "Switch Proxy"
 		    
 		  Case 307
-		    Return "Temporary Redirect"
+		    Return "Temporary Redirect" ' http://tools.ietf.org/html/rfc7231#section-6.4.7
 		    
 		  Case 308 ' https://tools.ietf.org/html/draft-reschke-http-status-308-07
 		    Return "Permanent Redirect"
@@ -75,6 +75,9 @@ Protected Module HTTP
 		    
 		  Case 401
 		    Return "Unauthorized"
+		    
+		  Case 402
+		    Return "Payment Required" ' http://tools.ietf.org/html/rfc7231#section-6.5.2
 		    
 		  Case 403
 		    Return "Forbidden"
