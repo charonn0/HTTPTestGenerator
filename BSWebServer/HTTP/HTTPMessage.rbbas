@@ -229,6 +229,9 @@ Protected Class HTTPMessage
 			  Case RequestMethod.OPTIONS
 			    mTrueMethodName = "OPTIONS"
 			    
+			  Case RequestMethod.CONNECT
+			    mTrueMethodName = "CONNECT"
+			    
 			  End Select
 			  
 			  

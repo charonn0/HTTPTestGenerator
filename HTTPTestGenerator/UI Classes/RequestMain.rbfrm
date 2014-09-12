@@ -82,7 +82,7 @@ Begin ContainerControl RequestMain
       Height          =   20
       HelpTag         =   ""
       Index           =   -2147483648
-      InitialValue    =   "GET\r\nHEAD\r\nPOST\r\nTRACE\r\nDELETE\r\nPUT\r\nOPTIONS"
+      InitialValue    =   "GET\r\nHEAD\r\nPOST\r\nTRACE\r\nDELETE\r\nPUT\r\nOPTIONS\r\nCONNECT"
       Italic          =   False
       Left            =   5
       ListIndex       =   0
@@ -302,9 +302,7 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
-      TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
