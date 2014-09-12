@@ -877,7 +877,7 @@ Inherits ServerSocket
 		#tag EndGetter
 		#tag Setter
 			Set
-			  Me.Log(CurrentMethodName + "=" + value, Log_Trace)
+			  Me.Log(CurrentMethodName + "=" + value, Log_Debug)
 			  mAuthenticationRealm = value
 			End Set
 		#tag EndSetter
@@ -893,7 +893,7 @@ Inherits ServerSocket
 		#tag Setter
 			Set
 			  mAuthenticationRequired = value
-			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Trace)
+			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Debug)
 			End Set
 		#tag EndSetter
 		AuthenticationRequired As Boolean
@@ -919,7 +919,7 @@ Inherits ServerSocket
 			    valPath = "Nil"
 			  End If
 			  
-			  Me.Log(CurrentMethodName + "=" + valPath, Log_Trace)
+			  Me.Log(CurrentMethodName + "=" + valPath, Log_Debug)
 			End Set
 		#tag EndSetter
 		CertificateFile As FolderItem
@@ -934,7 +934,7 @@ Inherits ServerSocket
 		#tag Setter
 			Set
 			  mCertificatePassword = value
-			  Me.Log(CurrentMethodName + "=""" + value + """", Log_Trace)
+			  Me.Log(CurrentMethodName + "=""" + value + """", Log_Debug)
 			End Set
 		#tag EndSetter
 		CertificatePassword As String
@@ -950,13 +950,13 @@ Inherits ServerSocket
 			Set
 			  Select Case value
 			  Case ConnectionTypes.Insecure
-			    Me.Log(CurrentMethodName + "=Insecure", Log_Trace)
+			    Me.Log(CurrentMethodName + "=Insecure", Log_Debug)
 			  Case ConnectionTypes.SSLv3
-			    Me.Log(CurrentMethodName + "=SSLv3", Log_Trace)
+			    Me.Log(CurrentMethodName + "=SSLv3", Log_Debug)
 			  Case ConnectionTypes.TLSv1
-			    Me.Log(CurrentMethodName + "=TLSv1", Log_Trace)
+			    Me.Log(CurrentMethodName + "=TLSv1", Log_Debug)
 			  Else
-			    Me.Log(CurrentMethodName + "=Unknown!", Log_Trace)
+			    Me.Log(CurrentMethodName + "=Unknown!", Log_Debug)
 			  End Select
 			  mConnectionType = value
 			End Set
@@ -1153,7 +1153,7 @@ Inherits ServerSocket
 		#tag EndGetter
 		#tag Setter
 			Set
-			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Trace)
+			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Debug)
 			  If Me.IsListening Then
 			    If value Then
 			      While Me.MinimumSocketsAvailable > Me.IdleThreads.Ubound + 1
@@ -1194,7 +1194,7 @@ Inherits ServerSocket
 		#tag EndGetter
 		#tag Setter
 			Set
-			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Trace)
+			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Debug)
 			  mUseCompression = value
 			End Set
 		#tag EndSetter
@@ -1209,7 +1209,7 @@ Inherits ServerSocket
 		#tag EndGetter
 		#tag Setter
 			Set
-			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Trace)
+			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Debug)
 			  mUseSessions = value
 			End Set
 		#tag EndSetter

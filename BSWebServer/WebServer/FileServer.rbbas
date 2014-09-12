@@ -178,7 +178,7 @@ Inherits HTTP.BaseServer
 		#tag Setter
 			Set
 			  mDirectoryBrowsing = value
-			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Trace)
+			  Me.Log(CurrentMethodName + "=" + Str(value), Log_Debug)
 			End Set
 		#tag EndSetter
 		DirectoryBrowsing As Boolean
@@ -199,7 +199,7 @@ Inherits HTTP.BaseServer
 			  #Else
 			    valpath = value.AbsolutePath
 			  #endif
-			  Me.Log(CurrentMethodName + "=" + valPath, Log_Trace)
+			  Me.Log(CurrentMethodName + "=" + valPath, Log_Debug)
 			End Set
 		#tag EndSetter
 		DocumentRoot As FolderItem
