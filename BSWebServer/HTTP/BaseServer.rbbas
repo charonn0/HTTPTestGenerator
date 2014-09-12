@@ -205,7 +205,7 @@ Inherits ServerSocket
 
 	#tag Method, Flags = &h21
 		Private Sub DataAvailable(Sender As SSLSocket)
-		  Me.Log(CurrentMethodName, Log_Trace)
+		  Me.Log(CurrentMethodName + "(Socket 0x" + Left(Hex(Sender.Handle) + "00000000", 8) + ")", Log_Socket)
 		  If Me.Threading Then
 		    ' Grab a thread from the pool and associate it with the requesting socket.
 		    ' The ThreadRun method handles the Thread.Run event of the worker thread,
@@ -237,7 +237,7 @@ Inherits ServerSocket
 		    Dim session As HTTP.Session
 		    Try
 		      clientrequest = New HTTP.Request(data, UseSessions)
-		      'Me.Log("Request is well formed", Log_Debug)
+		      Me.Log("Request is well formed", Log_Debug)
 		      Me.Log(DecodeURLComponent(clientrequest.ToString), Log_Request)
 		      If clientrequest.HasHeader("Content-Length") Then
 		        Dim cl As Integer = Val(clientrequest.GetHeader("Content-Length"))
@@ -642,7 +642,7 @@ Inherits ServerSocket
 	#tag Method, Flags = &h0
 		Sub Listen()
 		  Me.Log(CurrentMethodName, Log_Trace)
-		  Me.Log("Server now listening...", Log_Debug)
+		  Me.Log("Server now listening...", Log_Status)
 		  Sessions = New Dictionary
 		  Sockets = New Dictionary
 		  Super.Listen
@@ -733,7 +733,7 @@ Inherits ServerSocket
 		  #pragma Unused UserAborted
 		  'Me.Log("Send complete", Log_Socket)
 		  Sender.Close
-		  Me.Log("Socket closed", Log_Trace)
+		  Me.Log("Socket closed", Log_Socket)
 		End Sub
 	#tag EndMethod
 
@@ -761,13 +761,12 @@ Inherits ServerSocket
 		    HTTP.Helpers.GZipPage(ResponseDocument)
 		  End If
 		  
-		  Me.Log("Sending response", Log_Socket)
-		  
 		  If ResponseDocument.HasHeader("Content-Length") And Val(ResponseDocument.GetHeader("Content-Length")) <> ResponseDocument.MessageBody.LenB Then
 		    ResponseDocument.Headers.SetHeader("Content-Length", Str(ResponseDocument.MessageBody.LenB))
 		  End If
 		  
 		  Dim s As String = ResponseDocument.ToString
+		  Me.Log("Sending response (" + FormatBytes(s.LenB) + ")", Log_Socket)
 		  Socket.Write(s)
 		  Me.Log(ReplyString(ResponseDocument.StatusCode) + CRLF + ResponseDocument.Headers.Source(True), Log_Response)
 		  If UseSessions And ResponseDocument.Method = RequestMethod.GET And ResponseDocument.StatusCode = 200 Then
@@ -791,7 +790,7 @@ Inherits ServerSocket
 		Sub StopListening()
 		  Me.Log(CurrentMethodName, Log_Trace)
 		  Super.StopListening
-		  Me.Log("Server stopped listening.", Log_Debug)
+		  Me.Log("Server stopped listening.", Log_Status)
 		  
 		  Me.Sessions = New Dictionary
 		  Me.Sockets = New Dictionary
@@ -1232,13 +1231,13 @@ Inherits ServerSocket
 	#tag Constant, Name = Log_Response, Type = Double, Dynamic = False, Default = \"1", Scope = Public
 	#tag EndConstant
 
-	#tag Constant, Name = Log_Socket, Type = Double, Dynamic = False, Default = \"-3.0", Scope = Public
+	#tag Constant, Name = Log_Socket, Type = Double, Dynamic = False, Default = \"-2", Scope = Public
 	#tag EndConstant
 
 	#tag Constant, Name = Log_Status, Type = Double, Dynamic = False, Default = \"2", Scope = Public
 	#tag EndConstant
 
-	#tag Constant, Name = Log_Trace, Type = Double, Dynamic = False, Default = \"-2", Scope = Public
+	#tag Constant, Name = Log_Trace, Type = Double, Dynamic = False, Default = \"-3", Scope = Public
 	#tag EndConstant
 
 

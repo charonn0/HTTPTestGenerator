@@ -167,6 +167,7 @@ Begin ContainerControl OutputViewer
          LockRight       =   True
          LockTop         =   True
          Scope           =   0
+         Squelch         =   1
          TabIndex        =   0
          TabPanelIndex   =   5
          TabStop         =   True

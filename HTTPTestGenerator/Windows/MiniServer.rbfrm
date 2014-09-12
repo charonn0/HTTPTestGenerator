@@ -402,6 +402,16 @@ End
 #tag Events Socket
 	#tag Event
 		Sub Error(ErrorCode as Integer)
+		  Dim msg As New Dictionary
+		  msg.Value("Message") = FormatSocketError(ErrorCode)
+		  msg.Value("Severity") = HTTP.BaseServer.Log_Error
+		  If App.CurrentThread <> Nil Then
+		    msg.Value("ThreadID") = App.CurrentThread.ThreadID
+		  Else
+		    msg.Value("ThreadID") = 0
+		  End If
+		  Messages.Insert(0, msg)
+		  
 		  PushButton1.Caption = "Listen"
 		  Me.StopListening
 		  URLLink.Visible = False
@@ -591,8 +601,8 @@ End
 		  mnu.Append(New MenuItem("Errors Only"))
 		  mnu.Append(New MenuItem("Normal"))
 		  mnu.Append(New MenuItem("Debug"))
-		  mnu.Append(New MenuItem("Trace"))
 		  mnu.Append(New MenuItem("Socket"))
+		  mnu.Append(New MenuItem("Trace"))
 		  base.Append(mnu)
 		  Return True
 		End Function
@@ -613,9 +623,9 @@ End
 		  Case "Debug"
 		    Squelch = -1
 		  Case "Trace"
-		    Squelch = -2
-		  Case "Socket"
 		    Squelch = -3
+		  Case "Socket"
+		    Squelch = -2
 		  End Select
 		End Function
 	#tag EndEvent
