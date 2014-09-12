@@ -31,12 +31,12 @@ Begin Window Generator
       ConnectionType  =   2
       Height          =   32
       Index           =   -2147483648
-      Left            =   1000
+      Left            =   975
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
       TabPanelIndex   =   0
-      Top             =   14
+      Top             =   7
       Width           =   32
    End
    Begin Timer DataReceivedTimer
@@ -328,7 +328,7 @@ End
 		  'ResponseMain1.CookiesButton.Visible = Response.Headers.CookieCount > 0
 		  ResponseMain1.CookieList.DeleteAllRows
 		  For i As Integer = 0 To Response.Headers.CookieCount - 1
-		    Dim c As HTTPParse.Cookie = Response.Headers.Cookie(i)
+		    Dim c As HTTP.Cookie = Response.Headers.Cookie(i)
 		    ResponseMain1.CookieList.AddRow("")
 		    Dim d As New Date
 		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 0) = c.Name
@@ -474,31 +474,20 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub DataAvailable()
-		  TimeOut.Reset
-		  If DataReceivedTimer.Mode = Timer.ModeOff Then
-		    PrintLog("Receiving data...")
-		  End If
-		  Output = Output + Me.ReadAll
-		  RawText = Self.Request.ToString
-		  DataReceivedTimer.Mode = Timer.ModeSingle
-		End Sub
-	#tag EndEvent
-	#tag Event
 		Sub Error()
 		  TimeOut.Mode = Timer.ModeOff
-		  PrintLog(SocketErrorMessage(Me.LastErrorCode))
+		  PrintLog(FormatSocketError(Me.LastErrorCode))
 		  Select Case Me.LastErrorCode
 		  Case 102
 		    'ResponseMain1.IPAddress.Text = "Closed by host"
 		    'ResponseMain1.IPAddress.TextColor = &c80808000
 		    
 		  Case 103
-		    ResponseMain1.Code.Text = SocketErrorMessage(Me.LastErrorCode)
+		    ResponseMain1.Code.Text = FormatSocketError(Me.LastErrorCode)
 		    ResponseMain1.ResponseHeaders.DeleteAllRows
 		  Else
 		    ResponseMain1.Code.TextColor = &cFF000000
-		    ResponseMain1.Code.Text = SocketErrorMessage(Me.LastErrorCode)
+		    ResponseMain1.Code.Text = FormatSocketError(Me.LastErrorCode)
 		  End Select
 		  RequestMain1.Sender.Enabled = True
 		  RequestMain1.Sender.Caption = "Send Request"
@@ -523,6 +512,17 @@ End
 		  RequestMain1.SetProgress(SendSz * 100 / sz)
 		End Function
 	#tag EndEvent
+	#tag Event
+		Sub DataAvailable()
+		  TimeOut.Reset
+		  If DataReceivedTimer.Mode = Timer.ModeOff Then
+		    PrintLog("Receiving data...")
+		  End If
+		  Output = Output + Me.ReadAll
+		  RawText = Self.Request.ToString
+		  DataReceivedTimer.Mode = Timer.ModeSingle
+		End Sub
+	#tag EndEvent
 #tag EndEvents
 #tag Events DataReceivedTimer
 	#tag Event
@@ -535,8 +535,8 @@ End
 		  ResponseMain1.OutputViewer1.ResponseData.Text = out
 		  ResponseMain1.OutputViewer1.RequestData.Text = Request.MessageBody
 		  
-		  Dim links() As String = ExtractLinks(Out, TheURL.ToString)
-		  ResponseMain1.OutputViewer1.ShowLinks(links)
+		  'Dim links() As String = ExtractLinks(Out, TheURL.ToString)
+		  'ResponseMain1.OutputViewer1.ShowLinks(links)
 		  If Response.StatusCode = 301 Or Response.StatusCode = 302 Then
 		    Dim redir As String = Response.GetHeader("Location")
 		    Dim u As New HTTP.URI(redir)

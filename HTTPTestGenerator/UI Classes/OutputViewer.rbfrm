@@ -41,7 +41,7 @@ Begin ContainerControl OutputViewer
       Panels          =   ""
       Scope           =   0
       SmallTabs       =   True
-      TabDefinition   =   "HTTP\rRequest Body\rResponse Body\rHyperlinks\rMini Server"
+      TabDefinition   =   "HTTP Conversation\rRequest Body\rResponse Body\rHyperlinks\rLocal Webserver"
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True

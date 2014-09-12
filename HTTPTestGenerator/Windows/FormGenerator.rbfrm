@@ -306,7 +306,7 @@ End
 		      Next
 		    Else ' MultipartForm
 		      FormType.Value = True
-		      Dim frm As HTTPParse.MultipartForm = ExistingData
+		      Dim frm As HTTP.MultipartForm = ExistingData
 		      For i As Integer = 0 To frm.Count - 1
 		        If frm.Element(frm.Name(i)) IsA FolderItem Then
 		          Dim f As FolderItem = frm.Element(frm.Name(i))
@@ -334,7 +334,7 @@ End
 
 
 	#tag Property, Flags = &h1
-		Protected Form As HTTPParse.MultipartForm
+		Protected Form As HTTP.MultipartForm
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -371,7 +371,7 @@ End
 		      FormData.Value(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
 		    Next
 		  Else
-		    Form = New HTTPParse.MultipartForm
+		    Form = New HTTP.MultipartForm
 		    For i As Integer = 0 To HTTPForm.ListCount - 1
 		      If HTTPForm.RowTag(i) <> Nil And HTTPForm.RowTag(i) IsA FolderItem Then
 		        Dim f As FolderItem = HTTPForm.RowTag(i)
@@ -407,7 +407,7 @@ End
 	#tag Event
 		Sub Action()
 		  FileAdd.Enabled = Me.Value
-		  Form = New HTTPParse.MultipartForm
+		  Form = New HTTP.MultipartForm
 		  FormData = Nil
 		End Sub
 	#tag EndEvent
