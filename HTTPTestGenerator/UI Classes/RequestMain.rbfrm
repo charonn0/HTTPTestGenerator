@@ -715,8 +715,12 @@ End
 		        Dim olddata As Dictionary = HTTP.Helpers.DecodeFormData(MessageBodyRaw)
 		        formraw = formgen.SetFormData(olddata)
 		      Else
-		        Dim typ As New HTTP.ContentType(NthField(MessageBodyRaw, CRLF + CRLF, 1))
-		        formraw = formgen.SetFormData(HTTP.MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
+		        Try
+		          Dim typ As New HTTP.ContentType(NthField(MessageBodyRaw, CRLF + CRLF, 1))
+		          formraw = formgen.SetFormData(HTTP.MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
+		        Catch UnsupportedFormatException
+		          formraw = formgen.SetFormData("")
+		        End Try
 		      End If
 		      If formraw IsA HTTP.MultipartForm Then
 		        Formtype = True
