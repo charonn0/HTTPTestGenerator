@@ -50,7 +50,7 @@ Begin ContainerControl OutputViewer
       TextUnit        =   0
       Top             =   3
       Underline       =   ""
-      Value           =   0
+      Value           =   3
       Visible         =   True
       Width           =   582
       Begin TextArea ResponseData
@@ -340,7 +340,7 @@ End
 		  #pragma Unused column
 		  #pragma Unused x
 		  #pragma Unused y
-		  If row < Me.ListCount - 1 And column = 0 Then
+		  If row < Me.ListCount And column = 0 Then
 		    g.ForeColor = &c0000FF00
 		    g.Underline = True
 		  End If
