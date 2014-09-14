@@ -597,6 +597,12 @@ End
 		  resp = NthField(Output, CRLF + CRLF, 1) + CRLF + CRLF
 		  Out = Replace(Output, resp, "")
 		  PrintOutput(RawText, resp)
+		  If Response.HasHeader("Content-Type") Then
+		    Dim tp As New ContentType(Response.GetHeader("Content-Type"))
+		    If tp.CharSet <> Nil Then 
+		      Out = DefineEncoding(Out, tp.CharSet)
+		    End If
+		  End If
 		  ResponseMain1.OutputViewer1.ResponseData.Text = out
 		  ResponseMain1.OutputViewer1.RequestData.Text = Request.MessageBody
 		  
