@@ -321,6 +321,7 @@ Inherits HTTP.BaseServer
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Threading"
+			Visible=true
 			Group="Behavior"
 			InitialValue="True"
 			Type="Boolean"
@@ -335,7 +336,9 @@ Inherits HTTP.BaseServer
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="UseCompression"
+			Visible=true
 			Group="Behavior"
+			InitialValue="HTTP.GZIPAvailable"
 			Type="Boolean"
 			InheritedFrom="HTTP.BaseServer"
 		#tag EndViewProperty

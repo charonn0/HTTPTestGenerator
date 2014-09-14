@@ -151,9 +151,22 @@ Protected Module Helpers
 		Protected Function GUnzip(Data As String) As String
 		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
 		  #If GZipAvailable And TargetHasGUI Then'
+		    Dim mb As MemoryBlock = Data
+		    If mb.Byte(0) = &h1F And mb.Byte(1) = &h8B And mb.Byte(2) = &h08 Then
+		      
+		    Else
+		      Dim bm As New MemoryBlock(Data.LenB + 8)
+		      bm.Byte(0) = &h1F 'magic
+		      bm.Byte(1) = &h8B 'magic
+		      bm.Byte(2) = &h08 'use deflate
+		      bm.StringValue(8, Data.LenB) = Data
+		      Data = bm
+		    End If
 		    Dim output As String = GZip.Uncompress(data, data.LenB * 5)
 		    If GZip.Error <> 0 Then
-		      Raise New RuntimeException
+		      Dim Err As New RuntimeException
+		      Err.ErrorNumber = GZip.Error
+		      Raise Err
 		    End If
 		    Return output
 		  #Else

@@ -15,6 +15,9 @@ Inherits HTTP.HTTPMessage
 		  If Me.Method = RequestMethod.InvalidMethod Then Me.MethodName = NthField(line, " ", 1).Trim
 		  Me.ProtocolVersion = CDbl(Replace(NthField(line, " ", 1).Trim, "HTTP/", ""))
 		  Me.StatusCode = Val(NthField(line, " ", 2))
+		  'If GZIPAvailable False And Me.HasHeader("Content-Encoding") And InStr(Me.GetHeader("Content-Encoding"), "gzip") > 0 Then
+		  'HTTP.Helpers.GUnzipPage(Me)
+		  'End If
 		End Sub
 	#tag EndMethod
 

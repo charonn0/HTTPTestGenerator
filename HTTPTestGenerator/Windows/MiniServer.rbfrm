@@ -149,7 +149,7 @@ Begin ContainerControl MiniServer
       TabPanelIndex   =   0
       Threading       =   True
       Top             =   0
-      UseCompression  =   ""
+      UseCompression  =   True
       UseSessions     =   True
       Width           =   32
    End

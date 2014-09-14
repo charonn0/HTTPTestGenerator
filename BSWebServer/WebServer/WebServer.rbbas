@@ -830,7 +830,7 @@ Protected Module WebServer
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"BoredomServe/1.0 (GNU/Linux)"
 	#tag EndConstant
 
-	#tag Constant, Name = GZIPAvailable, Type = Boolean, Dynamic = False, Default = \"False", Scope = Public
+	#tag Constant, Name = GZIPAvailable, Type = Boolean, Dynamic = False, Default = \"True", Scope = Public
 	#tag EndConstant
 
 
