@@ -12,7 +12,7 @@ Inherits HTTP.BaseServer
 		    If item.Directory And Not Me.DirectoryBrowsing Then
 		      '403 Forbidden!
 		      'Me.Log("Page is directory and DirectoryBrowsing=False", Log_Error)
-		      doc = GetErrorResponse(403, ClientRequest.Path.Path)
+		      doc = GetErrorResponse(403)
 		      
 		    ElseIf ClientRequest.Path.Path = "/" And Not item.Directory Then
 		      '302 redirect from "/" to "/" + item.name
@@ -88,12 +88,13 @@ Inherits HTTP.BaseServer
 		    GlobalRedirects.Value(img) = icon
 		  Next
 		  
-		  For Each error As Integer In Array(301, 302, 400, 403, 401, 404, 405, 406, 410, 416, 418, 451, 500, 501, 505)
+		  For error As Integer = 100 To 599
+		    'Each error As Integer In Array(301, 302, 400, 403, 401, 404, 405, 406, 410, 416, 418, 451, 500, 501, 505)
 		    Dim errpage As HTTP.Response
-		    errpage = GetErrorResponse(200, "")
+		    errpage = GetErrorResponse(200)
 		    errpage.Path = New URI("/" + VirtualRoot + "/err/" + Format(error, "000"))
 		    errpage.MIMEType = New ContentType("text/html")
-		    errpage.MessageBody = ErrorPage(error, "%PARAM%")
+		    errpage.MessageBody = ErrorPage(error)
 		    errpage.Compressible = False
 		    Me.AddRedirect(errpage)
 		  Next
@@ -104,7 +105,7 @@ Inherits HTTP.BaseServer
 		  Me.AddRedirect(redirect)
 		  
 		  Dim doc As HTTP.Response
-		  doc = GetErrorResponse(200, "")
+		  doc = GetErrorResponse(200)
 		  doc.Path = New URI("/robots.txt")
 		  doc.MIMEType = New ContentType("text/html")
 		  doc.MessageBody = "User-Agent: *" + CRLF + "Disallow: /" + CRLF + CRLF

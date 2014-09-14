@@ -39,7 +39,7 @@ Inherits HTTP.BaseServer
 		    doc = Me.Redirects.Value(Shortpath)
 		    
 		  Else
-		    doc = GetErrorResponse(404, ShortPath)
+		    doc = GetErrorResponse(404)
 		  End If
 		  
 		  Return doc

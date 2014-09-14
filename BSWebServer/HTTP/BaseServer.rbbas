@@ -62,7 +62,7 @@ Inherits ServerSocket
 		    'Me.Log("Authenticating", Log_Trace)
 		    If Not Authenticate(clientrequest) Then
 		      Me.Log("Authentication failed", Log_Error)
-		      doc = GetErrorResponse(401, clientrequest.Path.Path)
+		      doc = GetErrorResponse(401)
 		      doc.SetHeader("WWW-Authenticate") = "Basic realm=""" + AuthenticationRealm + """"
 		    Else
 		      Me.Log("Authentication succeeded", Log_Debug)
@@ -99,10 +99,10 @@ Inherits ServerSocket
 		      Cache.Expires.TotalSeconds = Cache.Expires.TotalSeconds + 60
 		      If clientrequest.IsModifiedSince(Cache.Expires) Then
 		        If clientrequest.Method = RequestMethod.GET Or clientrequest.Method = RequestMethod.HEAD Then
-		          Cache = GetErrorResponse(304, "")
+		          Cache = GetErrorResponse(304)
 		          Cache.MessageBody = ""
 		        Else
-		          Cache = GetErrorResponse(412, "") 'Precondition failed
+		          Cache = GetErrorResponse(412) 'Precondition failed
 		          Cache.MessageBody = ""
 		        End If
 		      End If
@@ -123,7 +123,7 @@ Inherits ServerSocket
 		  Me.Log(CurrentMethodName + "(" + ClientRequest.SessionID + ")", Log_Trace)
 		  Dim doc As HTTP.Response
 		  If clientrequest.ProtocolVersion < 1.0 Or clientrequest.ProtocolVersion >= 1.2 Then
-		    doc = GetErrorResponse(505, Format(ClientRequest.ProtocolVersion, "#.0"))
+		    doc = GetErrorResponse(505)
 		    Me.Log("Unsupported protocol version", Log_Error)
 		  End If
 		  
@@ -186,7 +186,7 @@ Inherits ServerSocket
 		      End If
 		    Next
 		    Dim accepted As ContentType = doc.MIMEType
-		    doc = GetErrorResponse(406, "") 'Not Acceptable
+		    doc = GetErrorResponse(406) 'Not Acceptable
 		    doc.MIMEType = accepted
 		    Me.Log("Response is not Acceptable", Log_Error)
 		  End If
@@ -304,26 +304,26 @@ Inherits ServerSocket
 		        Me.Log("Sending default response for " + clientrequest.MethodName, Log_Debug)
 		        Select Case clientrequest.Method
 		        Case RequestMethod.HEAD, RequestMethod.GET
-		          doc = GetErrorResponse(404, clientrequest.Path.Path)
+		          doc = GetErrorResponse(404)
 		        Case RequestMethod.TRACE
-		          doc = GetErrorResponse(200, "")
+		          doc = GetErrorResponse(200)
 		          doc.SetHeader("Content-Length") = Str(Data.Size)
 		          doc.MIMEType = New ContentType("message/http")
 		          doc.MessageBody = Data
 		        Case RequestMethod.OPTIONS
-		          doc = GetErrorResponse(200, "")
+		          doc = GetErrorResponse(200)
 		          doc.MessageBody = ""
 		          doc.SetHeader("Content-Length") = "0"
 		          doc.SetHeader("Allow") = "GET, HEAD, POST, TRACE, OPTIONS"
 		        Else
 		          If clientrequest.MethodName <> "" And clientrequest.Method = RequestMethod.InvalidMethod Then
-		            doc = GetErrorResponse(501, clientrequest.MethodName) 'Not implemented
+		            doc = GetErrorResponse(501) 'Not implemented
 		            Me.Log("Request is not implemented", Log_Error)
 		          ElseIf clientrequest.MethodName = "" Then
-		            doc = GetErrorResponse(400, "") 'bad request
+		            doc = GetErrorResponse(400) 'bad request
 		            Me.Log("Request is malformed", Log_Error)
 		          ElseIf clientrequest.MethodName <> "" Then
-		            doc = GetErrorResponse(405, clientrequest.MethodName)
+		            doc = GetErrorResponse(405)
 		            Me.Log("Request is a not allowed", Log_Error)
 		          End If
 		        End Select
@@ -336,7 +336,7 @@ Inherits ServerSocket
 		      CheckType(clientrequest, doc)
 		      
 		    Catch err As UnsupportedFormatException
-		      doc = GetErrorResponse(400, "") 'bad request
+		      doc = GetErrorResponse(400) 'bad request
 		      Me.Log("Request is malformed", Log_Error)
 		    End Try
 		    
@@ -350,25 +350,20 @@ Inherits ServerSocket
 		  If Err IsA EndException Or Err IsA ThreadEndException Then Raise Err
 		  'Return an HTTP 500 Internal Server Error page.
 		  Dim errpage As HTTP.Response
-		  Dim htmlstack, logstack, funcName As String
+		  Dim logstack, funcName As String
 		  #If DebugBuild Then
 		    Dim s() As String = HTTP.Helpers.CleanStack(Err)
 		    funcName = Introspection.GetType(Err).FullName
 		    If UBound(s) <= -1 Then
-		      htmlstack = "<br />(empty)<br />"
 		      logstack = "    (empty)" + EndOfLine
 		    Else
-		      htmlstack = Join(s, "<br />    ")
 		      logstack = Join(s, EndOfLine + "    ")
 		    End If
-		    htmlstack = "<b>Exception</b>: " + funcName + "<br /><b>Error Number</b>: " + Str(Err.ErrorNumber) + "<br /><b>Message</b>: " _
-		    + Err.Message + "<br /><b>Stack trace</b>:<blockquote>    " + htmlstack + "</blockquote>" + EndOfLine
-		    
 		    logstack = "Exception: " + funcName + EndOfLine + "Error Number: " + Str(Err.ErrorNumber) + EndOfLine + "Message: " _
 		    + Err.Message + EndOfLine + "Stack trace:" + EndOfLine + "    " + logstack
 		  #endif
 		  Me.Log("Runtime exception!" + EndOfLine + logstack , Log_Error)
-		  errpage = GetErrorResponse(500, htmlstack)
+		  errpage = GetErrorResponse(500)
 		  errpage.Compressible = False
 		  Me.SendResponse(Sender, errpage)
 		  Sender.Purge
@@ -376,52 +371,106 @@ Inherits ServerSocket
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Shared Function ErrorPage(ErrorNumber As Integer, Param As String = "") As String
+		Protected Shared Function ErrorPage(ErrorNumber As Integer, RedirectLink As String = "") As String
 		  Dim page As String = BlankErrorPage
 		  page = ReplaceAll(page, "%HTTPERROR%", HTTP.ReplyString(ErrorNumber))
 		  
 		  Select Case ErrorNumber
-		  Case 301, 302
-		    page = ReplaceAll(page, "%DOCUMENT%", "The requested resource has moved. <a href=""" + param + """>Click here</a> if you are not automatically redirected.")
+		  Case 100
+		    page = ReplaceAll(page, "%DOCUMENT%", "You may now send the next part of your request.")
+		    
+		  Case 101
+		    page = ReplaceAll(page, "%DOCUMENT%", "Your request to change protocols is accepted.")
+		    
+		  Case 200
+		    page = ReplaceAll(page, "%DOCUMENT%", "Your request was processed successfully.")
+		    
+		  Case 201
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource was created successfully.")
+		    
+		  Case 202
+		    page = ReplaceAll(page, "%DOCUMENT%", "Your request was accepted for processing.")
+		    
+		  Case 204
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource contains no additional data.")
+		    
+		  Case 301, 308
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource has permanently moved; please update your links. <a href=""" + RedirectLink  + """>Click here</a> if you are not automatically redirected.")
+		    
+		  Case 302, 307
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource has temporarily moved. <a href=""" + RedirectLink  + """>Click here</a> if you are not automatically redirected.")
+		    
+		  Case 303
+		    page = ReplaceAll(page, "%DOCUMENT%", "Refer to the resource <a href=""" + RedirectLink  + """>here</a> to fulfill your request.")
+		    
+		  Case 304
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource has not been recently modified.")
 		    
 		  Case 400
-		    page = ReplaceAll(page, "%DOCUMENT%", "The server  did not understand your request.")
+		    page = ReplaceAll(page, "%DOCUMENT%", "The server did not understand your request.")
+		    
+		  Case 402
+		    page = ReplaceAll(page, "%DOCUMENT%", "Access to this resource requires payment. <a href=""" + RedirectLink  + """>Click here</a> to purchase access.")
 		    
 		  Case 403, 401
-		    page = ReplaceAll(page, "%DOCUMENT%", "Permission to access '" + Param + "' is denied.")
+		    page = ReplaceAll(page, "%DOCUMENT%", "Permission to access this resource is denied.")
 		    
 		  Case 404
-		    page = ReplaceAll(page, "%DOCUMENT%", "The requested file, '" + Param + "', was not found on this server. ")
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource cannot be found on this server. ")
 		    
 		  Case 405
-		    page = ReplaceAll(page, "%DOCUMENT%", "The specified HTTP request method '" + Param + "', is not allowed for this resource. ")
+		    page = ReplaceAll(page, "%DOCUMENT%", "The specified HTTP request method is not allowed for this resource. ")
 		    
 		  Case 406
-		    page = ReplaceAll(page, "%DOCUMENT%", "Your browser did not specify an acceptable Content-Type that was compatible with the data requested.")
+		    page = ReplaceAll(page, "%DOCUMENT%", "Your browser did not specify an acceptable Content-Type that was compatible with this resource.")
 		    
 		  Case 410
-		    page = ReplaceAll(page, "%DOCUMENT%", "The requested file, '" + Param + "', is no longer available.")
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource has been removed.")
+		    
+		  Case 411
+		    page = ReplaceAll(page, "%DOCUMENT%", "Your browser must specify the length of the request payload.")
+		    
+		  Case 413
+		    page = ReplaceAll(page, "%DOCUMENT%", "The request payload is too large.")
+		    
+		  Case 414
+		    page = ReplaceAll(page, "%DOCUMENT%", "The request URL is too long.")
+		    
+		  Case 415
+		    page = ReplaceAll(page, "%DOCUMENT%", "The request payload is of an unknown or unsupported type.")
 		    
 		  Case 416
-		    page = ReplaceAll(page, "%DOCUMENT%", "The resource does not contain the requested range.")
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource does not contain the requested range.")
 		    
 		  Case 418
 		    page = ReplaceAll(page, "%DOCUMENT%", "I'm a little teapot, short and stout; here is my handle, here is my spout.")
 		    
+		  Case 426
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource is not available over an insecure connection.")
+		    
+		  Case 429
+		    page = ReplaceAll(page, "%DOCUMENT%", "Your browser has made too many requests of this server.")
+		    
 		  Case 451
-		    page = ReplaceAll(page, "%DOCUMENT%", "The requested file, '" + Param + "', is unavailable for legal reasons.")
+		    page = ReplaceAll(page, "%DOCUMENT%", "This resource is unavailable for legal reasons.")
 		    
 		  Case 500
-		    page = ReplaceAll(page, "%DOCUMENT%", "An error ocurred while processing your request. We apologize for any inconvenience. </p><p>" + Param)
+		    page = ReplaceAll(page, "%DOCUMENT%", "An error ocurred while processing your request.")
 		    
 		  Case 501
-		    page = ReplaceAll(page, "%DOCUMENT%", "Your browser has made a request  (verb: '" + Param + "') of this server which, while perhaps valid, is not implemented by this server.")
+		    page = ReplaceAll(page, "%DOCUMENT%", "Your browser made a request that is not implemented by this server.")
+		    
+		  Case 503
+		    page = ReplaceAll(page, "%DOCUMENT%", "This server is currently unavailable to process your requst.")
 		    
 		  Case 505
-		    page = ReplaceAll(page, "%DOCUMENT%", "Your browser specified an HTTP version (" + Param + ") that is not supported by this server. This server supports HTTP 1.0 and HTTP 1.1.")
+		    page = ReplaceAll(page, "%DOCUMENT%", "Your browser specified an HTTP version that is not supported by this server.")
+		    
+		  Case 509
+		    page = ReplaceAll(page, "%DOCUMENT%", "The bandwidth limit for this server has been exceeded.")
 		    
 		  Else
-		    page = ReplaceAll(page, "%DOCUMENT%", "An HTTP error of the type specified above has occurred. No further information is available.")
+		    page = ReplaceAll(page, "%DOCUMENT%", "No further information is available.")
 		  End Select
 		  
 		  page = ReplaceAll(page, "%SIGNATURE%", "<em>Powered By " + HTTP.DaemonVersion + "</em><br />")
@@ -454,12 +503,12 @@ Inherits ServerSocket
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Shared Function GetErrorResponse(ErrorCode As Integer, Param As String) As HTTP.Response
+		Protected Shared Function GetErrorResponse(ErrorCode As Integer, RedirectLink As String = "") As HTTP.Response
 		  'Use this constructor to create an error Document with the specified HTTP ErrorCode
 		  'Param is an error-dependant datum; e.g. doc = New Document(404, "/doesntexist/file.txt")
 		  Dim rply As HTTP.Response = GetNewResponse("")
 		  rply.StatusCode = ErrorCode
-		  Dim data As String = ErrorPage(ErrorCode, Param)
+		  Dim data As String = ErrorPage(ErrorCode, RedirectLink )
 		  rply.SetHeader("Content-Length") = Str(data.LenB)
 		  rply.MIMEType = New ContentType("text/html")
 		  rply.StatusCode = ErrorCode
@@ -478,7 +527,7 @@ Inherits ServerSocket
 		    Dim bs As BinaryStream
 		    If rangeend = -1 Then rangeend = page.Length
 		    If rangestart < 0 Or rangeend > page.Length Or rangeStart > page.Length Or rangeEnd < 0 Then
-		      rply = GetErrorResponse(416, "")
+		      rply = GetErrorResponse(416) ' Requested Range is not Satisfiable
 		      rply.SetHeader("Content-Range") = "bytes */" + Str(Page.Length)
 		      Return rply
 		    End If
