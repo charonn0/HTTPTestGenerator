@@ -19,7 +19,7 @@ Begin Window FormGenerator
    MinHeight       =   64
    MinimizeButton  =   True
    MinWidth        =   64
-   Placement       =   0
+   Placement       =   1
    Resizeable      =   False
    Title           =   "Edit HTTP Form"
    Visible         =   True
@@ -290,6 +290,14 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  Me.Left = Generator.Left + (Generator.Width - Me.Width) / 2
+		  Me.Top = Generator.Top + (Generator.Height - Me.Height) / 2
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Function SetFormData(ExistingData As Variant) As Variant
 		  Me.FormData = Nil

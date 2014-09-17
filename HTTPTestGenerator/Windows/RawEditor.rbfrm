@@ -135,6 +135,14 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  Me.Left = Generator.Left + (Generator.Width - Me.Width) / 2
+		  Me.Top = Generator.Top + (Generator.Height - Me.Height) / 2
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Function EditRaw(Message As String) As String
 		  NewRaw = Message

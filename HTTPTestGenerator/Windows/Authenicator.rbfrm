@@ -88,7 +88,6 @@ Begin Window Authenicator
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Realm:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -165,7 +164,6 @@ Begin Window Authenicator
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Username:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -242,7 +240,6 @@ Begin Window Authenicator
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Password:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -339,7 +336,6 @@ Begin Window Authenicator
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Secure Connection"
       TextAlign       =   1
       TextColor       =   &h00008000
@@ -356,6 +352,14 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  Me.Left = Generator.Left + (Generator.Width - Me.Width) / 2
+		  Me.Top = Generator.Top + (Generator.Height - Me.Height) / 2
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Function Authenticate(realm As String, secure As Boolean) As Pair
 		  RealmField.Text = realm
