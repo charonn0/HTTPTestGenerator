@@ -12,7 +12,7 @@ Inherits HTTP.BaseServer
 		      doc.StatusCode = 200
 		      doc.Path = New URI(ClientRequest.Path.ToString)
 		      doc.MessageBody = ReplaceAll(NEWURLPAGE, "%SIGNATURE%", "<em>Powered By " + WebServer.DaemonVersion + "</em><br />")
-		      doc.MIMEType = New ContentType("text/html")
+		      doc.MIMEType = "text/html"
 		      If ClientRequest.Method = RequestMethod.HEAD Then
 		        doc.MessageBody = ""
 		      End If

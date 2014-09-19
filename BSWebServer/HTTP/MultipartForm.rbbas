@@ -116,7 +116,7 @@ Class MultipartForm
 		      Dim file As FolderItem = mFormElements.Value(key)
 		      out.Write("--" + Me.Boundary + CRLF)
 		      out.Write("Content-Disposition: form-data; name=""" + key + """; filename=""" + File.Name + """" + CRLF)
-		      Dim type As New ContentType(file)
+		      Dim type As ContentType = file
 		      out.Write("Content-Type: " + type.ToString + CRLF + CRLF)
 		      Dim bs As BinaryStream = BinaryStream.Open(File)
 		      out.Write(bs.Read(bs.Length) + CRLF)

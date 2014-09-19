@@ -29,22 +29,17 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   975
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
-      TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   7
-      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -52,11 +47,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   79
-      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -70,7 +62,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -125,7 +116,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -143,7 +133,6 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -151,11 +140,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
-      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   123
-      Visible         =   True
       Width           =   32
    End
 End
@@ -598,11 +584,17 @@ End
 		  Out = Replace(Output, resp, "")
 		  PrintOutput(RawText, resp)
 		  If Response.HasHeader("Content-Type") Then
-		    Dim tp As New ContentType(Response.GetHeader("Content-Type"))
-		    If tp.CharSet <> Nil Then 
+		    Dim tp As ContentType = Response.GetHeader("Content-Type")
+		    If tp.CharSet <> Nil Then
 		      Out = DefineEncoding(Out, tp.CharSet)
 		    End If
 		  End If
+		  
+		  If Response.MIMEType = "message/http" Then
+		    out = DefineEncoding(out, Encodings.UTF8)
+		    out = ReplaceAll(out, CRLF, &u00B6 + EndOfLine.Windows) ' pilcrow
+		  End If
+		  
 		  ResponseMain1.OutputViewer1.ResponseData.Text = out
 		  ResponseMain1.OutputViewer1.RequestData.Text = Request.MessageBody
 		  

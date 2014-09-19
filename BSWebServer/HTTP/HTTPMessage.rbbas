@@ -247,16 +247,21 @@ Protected Class HTTPMessage
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
-			  If mMIMEType = Nil Then
+			  Dim c As ContentType
+			  If Me.HasHeader("Content-Type") Then 
+			    c = Me.GetHeader("Content-Type")
+			  Else
 			    Dim s As String = NthField(Me.Path.Path, "/", CountFields(Me.Path.Path, "/"))
-			    mMIMEType = ContentType.GetType(s)
+			    c = ContentType.GetType(s)
 			  End If
-			  return mMIMEType
+			  
+			  Return c
+			  
 			End Get
 		#tag EndGetter
 		#tag Setter
 			Set
-			  mMIMEType = value
+			  Me.SetHeader("Content-Type") = value.ToString
 			End Set
 		#tag EndSetter
 		MIMEType As ContentType
@@ -264,10 +269,6 @@ Protected Class HTTPMessage
 
 	#tag Property, Flags = &h21
 		Private mMethod As RequestMethod
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mMIMEType As ContentType
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

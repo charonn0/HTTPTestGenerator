@@ -308,7 +308,7 @@ Inherits ServerSocket
 		        Case RequestMethod.TRACE
 		          doc = GetErrorResponse(200)
 		          doc.SetHeader("Content-Length") = Str(Data.Size)
-		          doc.MIMEType = New ContentType("message/http")
+		          doc.MIMEType = "message/http"
 		          doc.MessageBody = Data
 		        Case RequestMethod.OPTIONS
 		          doc = GetErrorResponse(200)
@@ -510,7 +510,7 @@ Inherits ServerSocket
 		  rply.StatusCode = ErrorCode
 		  Dim data As String = ErrorPage(ErrorCode, RedirectLink )
 		  rply.SetHeader("Content-Length") = Str(data.LenB)
-		  rply.MIMEType = New ContentType("text/html")
+		  rply.MIMEType = "text/html"
 		  rply.StatusCode = ErrorCode
 		  rply.MessageBody = data
 		  rply.Expires = New Date(1999, 12, 31, 23, 59, 59)
@@ -539,7 +539,7 @@ Inherits ServerSocket
 		  End If
 		  rply.SetHeader("Content-Length") = Str(rply.MessageBody.LenB)
 		  If rply.MIMEType = Nil Then
-		    rply.MIMEType = New ContentType("text/html")
+		    rply.MIMEType = "text/html"
 		  End If
 		  If RangeStart = 0 And RangeEnd = page.Length Then
 		    rply.StatusCode = 200
@@ -611,9 +611,9 @@ Inherits ServerSocket
 		  rply.SetHeader("Location") = RedirectURL
 		  rply.Expires = New Date(1999, 12, 31, 23, 59, 59)
 		  rply.MessageBody = ErrorPage(302, RedirectURL)
-		  rply.MIMEType = New ContentType("text/html")
+		  rply.MIMEType = "text/html"
 		  If rply.MIMEType = Nil Then
-		    rply.MIMEType = New ContentType("text/html")
+		    rply.MIMEType = "text/html"
 		  End If
 		  Return rply
 		End Function

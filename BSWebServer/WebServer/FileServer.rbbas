@@ -81,7 +81,7 @@ Inherits HTTP.BaseServer
 		    bs.Close
 		    icon = GetFileResponse(tmp, img)
 		    icon.SetHeader("Content-Length") = Str(icon.MessageBody.LenB)
-		    icon.MIMEType = New ContentType("image/png")
+		    icon.MIMEType = "image/png"
 		    icon.StatusCode = 200
 		    icon.Expires = New Date(2033, 12, 31, 23, 59, 59)
 		    icon.Path = New URI(img)
@@ -93,7 +93,7 @@ Inherits HTTP.BaseServer
 		    Dim errpage As HTTP.Response
 		    errpage = GetErrorResponse(200)
 		    errpage.Path = New URI("/" + VirtualRoot + "/err/" + Format(error, "000"))
-		    errpage.MIMEType = New ContentType("text/html")
+		    errpage.MIMEType = "text/html"
 		    errpage.MessageBody = ErrorPage(error)
 		    errpage.Compressible = False
 		    Me.AddRedirect(errpage)
@@ -107,7 +107,7 @@ Inherits HTTP.BaseServer
 		  Dim doc As HTTP.Response
 		  doc = GetErrorResponse(200)
 		  doc.Path = New URI("/robots.txt")
-		  doc.MIMEType = New ContentType("text/html")
+		  doc.MIMEType = "text/html"
 		  doc.MessageBody = "User-Agent: *" + CRLF + "Disallow: /" + CRLF + CRLF
 		  doc.Compressible = False
 		  AddRedirect(doc)
@@ -118,7 +118,7 @@ Inherits HTTP.BaseServer
 		  bs.Write(favicon)
 		  bs.Close
 		  doc = GetFileResponse(tmp, "/favicon.ico")
-		  doc.MIMEType = New ContentType("image/x-icon")
+		  doc.MIMEType = "image/x-icon"
 		  doc.Compressible = False
 		  AddRedirect(doc)
 		End Sub

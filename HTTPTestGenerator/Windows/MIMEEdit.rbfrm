@@ -106,10 +106,11 @@ End
 		  Dim sort As Boolean
 		  Listbox1.AddRow("*/*", "", "0.8")
 		  Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeCheckbox
-		  Listbox1.RowTag(Listbox1.LastIndex) = New ContentType("*/*")
+		  Dim c As ContentType = "*/*"
+		  Listbox1.RowTag(Listbox1.LastIndex) = c
 		  
 		  For Each ime As ContentType In im
-		    If ime.Acceptance(New ContentType("*/*")) >= ime.Weight Then
+		    If ime.Acceptance("*/*") >= ime.Weight Then
 		      Listbox1.CellState(Listbox1.LastIndex, 1) = CheckBox.CheckedStates.Checked
 		      sort = True
 		    End If
@@ -119,7 +120,7 @@ End
 		    Dim mime As String = WebServer.MIMETypes.Value(extension)
 		    If skip.IndexOf(mime) > -1 Then Continue
 		    skip.Append(mime)
-		    Dim NewType As New ContentType(WebServer.MIMETypes.Value(extension).StringValue)
+		    Dim NewType As ContentType = WebServer.MIMETypes.Value(extension).StringValue
 		    Listbox1.AddRow(WebServer.MIMETypes.Value(extension).StringValue, "", "1.0")
 		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeCheckbox
 		    For Each ime As ContentType In im

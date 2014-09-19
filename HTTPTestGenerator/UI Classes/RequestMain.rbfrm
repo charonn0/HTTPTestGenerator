@@ -716,7 +716,7 @@ End
 		        formraw = formgen.SetFormData(olddata)
 		      Else
 		        Try
-		          Dim typ As New HTTP.ContentType(NthField(MessageBodyRaw, CRLF + CRLF, 1))
+		          Dim typ As ContentType = NthField(MessageBodyRaw, CRLF + CRLF, 1)
 		          formraw = formgen.SetFormData(HTTP.MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
 		        Catch UnsupportedFormatException
 		          formraw = formgen.SetFormData("")

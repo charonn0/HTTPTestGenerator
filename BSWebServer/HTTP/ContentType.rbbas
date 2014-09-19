@@ -27,18 +27,8 @@ Class ContentType
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub Constructor(TargetFile As FolderItem)
-		  ' Pass a folderitem to construct a ContentType object based on the file name extension. The FolderItem need not exist.
-		  
-		  Dim t As String = "application/octet-stream"
-		  If TargetFile <> Nil Then t = MIMETypes.Lookup(NthField(TargetFile.Name, ".", CountFields(TargetFile.Name, ".")), t)
-		  Me.Constructor(t)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Constructor(Raw As String)
+	#tag Method, Flags = &h1
+		Protected Sub Constructor(Raw As String)
 		  'Accepts a single raw ContentType string (e.g. "text/html; CharSet=UTF-8")
 		  'For strings that might contain multiple entries, use ContentType.ParseTypes
 		  
@@ -186,6 +176,26 @@ Class ContentType
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub Operator_Convert(FromFile As FolderItem)
+		  ' Pass a folderitem to construct a ContentType object based on the file name extension. The FolderItem need not exist.
+		  
+		  Dim t As String = "application/octet-stream"
+		  If FromFile <> Nil Then t = MIMETypes.Lookup(NthField(FromFile.Name, ".", CountFields(FromFile.Name, ".")), t)
+		  Me.Constructor(t)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Operator_Convert(OtherType As String)
+		  ' Allows you to convert a string into a ContentType
+		  ' e.g.
+		  '     MyContentType = "text/html"
+		  
+		  Me.Constructor(OtherType)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		 Shared Function ParseTypes(Raw As String) As ContentType()
 		  'parses a multi-field content-type string into and array of ContentType objects
 		  'e.g. "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
@@ -220,7 +230,7 @@ Class ContentType
 		  If Me.Weight < 1 Then
 		    data = data + "; q=" + Format(Me.Weight, ".##")
 		  End If
-		  If Me.CharSet <> Nil Then
+		  If Me.CharSet <> Nil And Me.CharSet.internetName <> "" Then
 		    data = data + "; CharSet=" + Me.CharSet.internetName
 		  End If
 		  Return Data

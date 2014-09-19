@@ -7,7 +7,7 @@ Inherits HTTP.Response
 		  Me.RequestPath = New URI(ServerPath)
 		  Super.Constructor("HTTP/1.0 200 OK" + CRLF)
 		  Me.MIMEType = ContentType.GetType("index.html")
-		  '200, New ContentType("text/html"), HTTP.RequestMethod.GET, "")
+		  '200, "text/html", HTTP.RequestMethod.GET, "")
 		  Me.Method = HTTP.RequestMethod.GET
 		  Dim d As New Date
 		  d.TotalSeconds = d.TotalSeconds + 60
@@ -174,7 +174,7 @@ Inherits HTTP.Response
 		  pagedata = Replace(pagedata, "%TIME%", timestamp)
 		  
 		  Me.MessageBody = pagedata
-		  Me.MIMEType = New ContentType("text/html; CharSet=UTF-8")
+		  Me.MIMEType = "text/html; CharSet=UTF-8"
 		  Me.SetHeader("Content-Length") = Str(pagedata.LenB)
 		  
 		  
