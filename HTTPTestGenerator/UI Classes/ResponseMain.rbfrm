@@ -334,6 +334,27 @@ End
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Sub MouseEnter()
+		  Me.MouseCursor = System.Cursors.FingerPointer
+		  Me.HelpTag = "More information..."
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  Me.MouseCursor = System.Cursors.StandardPointer
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  SpecIndex.ShowStatusCode(Response.StatusCode)
+		End Sub
+	#tag EndEvent
 #tag EndEvents
 #tag Events ResponseHeaders
 	#tag Event
@@ -347,13 +368,17 @@ End
 		    Dim m As New MenuItem("Copy to request headers")
 		    m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
 		    Base.Append(m)
+		    m = New MenuItem("More information...")
+		    m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
+		    base.Append(m)
 		    Return True
 		  End If
 		End Function
 	#tag EndEvent
 	#tag Event
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  If hitItem.Text = "Copy to request headers" Then
+		  Select Case hitItem.Text
+		  Case "Copy to request headers"
 		    Dim c As Pair = hitItem.Tag
 		    Dim nm, vl As String
 		    nm = c.Left
@@ -361,7 +386,13 @@ End
 		    Generator.RequestMain1.RequestHeaders.AddRow(nm, vl, "")
 		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = nm:vl
 		    Return True
-		  End If
+		    
+		  Case "More information..."
+		    Dim c As Pair = hitItem.Tag
+		    SpecIndex.ShowHeader(c.Left)
+		    Return True
+		    
+		  End Select
 		End Function
 	#tag EndEvent
 	#tag Event

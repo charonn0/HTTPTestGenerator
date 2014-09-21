@@ -593,9 +593,10 @@ End
 	#tag EndEvent
 	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  #pragma Unused X
-		  #pragma Unused Y
 		  base.Append(New MenuItem("Clear all headers"))
+		  Dim m As New MenuItem("More information...")
+		  m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
+		  base.Append(m)
 		  Return True
 		End Function
 	#tag EndEvent
@@ -604,6 +605,10 @@ End
 		  Select Case hitItem.Text
 		  Case "Clear all headers"
 		    Me.DeleteAllRows
+		    Return True
+		  Case "More information..."
+		    Dim c As Pair = hitItem.Tag
+		    SpecIndex.ShowHeader(c.Left)
 		    Return True
 		  End Select
 		End Function
