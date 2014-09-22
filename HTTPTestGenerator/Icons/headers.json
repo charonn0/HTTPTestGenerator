@@ -48,12 +48,6 @@
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-3.3.1"
     },
     {
-        "header": "Cache-Control",
-        "description": "\"is used to specify directives for caches along the request/response chain.\"",
-        "spec_title": "RFC7234#7.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7234#section-7.2"
-    },
-    {
         "header": "Expect",
         "description": "\"is used to indicate that particular server behaviors are required by the client.\"",
         "spec_title": "RFC7231#5.1.1",
@@ -146,8 +140,8 @@
     {
         "header": "Authorization",
         "description": "\"allows a user agent to authenticate itself with a server -- usually, but not necessarily, after receiving a 401 (Unauthorized) response.\"",
-        "spec_title": "RFC7235#4.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7235#section-4.1"
+        "spec_title": "RFC7235#4.2",
+        "spec_href": "http://tools.ietf.org/html/rfc7235#section-4.2"
     },
     {
         "header": "Proxy-Authorization",
@@ -188,8 +182,8 @@
     {
         "header": "Cache-Control",
         "description": "\"is used to specify directives for caches along the request/response chain.\"",
-        "spec_title": "RFC7234#7.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7234#section-7.2"
+        "spec_title": "RFC7234#5.2",
+        "spec_href": "http://tools.ietf.org/html/rfc7234#section-5.2"
     },
     {
         "header": "Expires",
@@ -337,7 +331,7 @@
     },
     {
         "header": "Content-Disposition",
-        "description": "\"standard\"",
+        "description": "\"a means for the origin server to suggest a default filename if the user requests that the content is saved to a file. This usage is derived from the definition of Content-Disposition in RFC 1806\"",
         "spec_title": "RFC6266",
         "spec_href": "http://tools.ietf.org/html/rfc6266"
     },
@@ -355,7 +349,7 @@
     },
     {
         "header": "Cookie",
-        "description": "\"standard\"",
+        "description": "\"used by HTTP servers to store state called cookies) at HTTP user agents, letting the servers maintain a stateful session over the mostly stateless HTTP protocol. Although cookies have many historical infelicities that degrade their security and privacy, the Cookie and Set-Cookie header fields are widely used on the Internet.\"",
         "spec_title": "RFC6265",
         "spec_href": "http://tools.ietf.org/html/rfc6265"
     },
@@ -391,7 +385,7 @@
     },
     {
         "header": "Set-Cookie",
-        "description": "\"standard\"",
+        "description": "\"used by HTTP servers to store state called cookies) at HTTP user agents, letting the servers maintain a stateful session over the mostly stateless HTTP protocol. Although cookies have many historical infelicities that degrade their security and privacy, the Cookie and Set-Cookie header fields are widely used on the Internet.\"",
         "spec_title": "RFC6265",
         "spec_href": "http://tools.ietf.org/html/rfc6265"
     },
@@ -409,7 +403,7 @@
     },
     {
         "header": "A-IM",
-        "description": "\"\"",
+        "description": "\"similar to Accept, but restricts the instance-manipulations that are acceptable in the response.\"",
         "spec_title": "RFC3229#10.5.3",
         "spec_href": "http://tools.ietf.org/html/rfc3229#section-10.5.3"
     },
@@ -433,7 +427,7 @@
     },
     {
         "header": "Apply-To-Redirect-Ref",
-        "description": "\"\"",
+        "description": "\"an extension to Web Distributed Authoring and Versioning (WebDAV) to allow clients to author HTTP redirect reference resources whose default response is an HTTP/1.1 3xx (Redirection) status code.\"",
         "spec_title": "RFC4437",
         "spec_href": "http://tools.ietf.org/html/rfc4437"
     },
@@ -446,8 +440,8 @@
     {
         "header": "Content-Base",
         "description": "\"obsoleted\"",
-        "spec_title": "RFC2068",
-        "spec_href": "http://tools.ietf.org/html/rfc2068"
+        "spec_title": "RFC2068#14.11",
+        "spec_href": "http://tools.ietf.org/html/rfc2068#section-14.11"
     },
     {
         "header": "Cookie2",
@@ -469,7 +463,7 @@
     },
     {
         "header": "Delta-Base",
-        "description": "\"\"",
+        "description": "\"used in a delta-encoded response to specify the entity tag of the base instance.\"",
         "spec_title": "RFC3229#10.5.1",
         "spec_href": "http://tools.ietf.org/html/rfc3229#section-10.5.1"
     },
@@ -481,9 +475,9 @@
     },
     {
         "header": "Destination",
-        "description": "\"standard\"",
-        "spec_title": "RFC4918",
-        "spec_href": "http://tools.ietf.org/html/rfc4918"
+        "description": "\"specifies the URI that identifies a destination resource for methods such as COPY and MOVE, which take two URIs as parameters.\"",
+        "spec_title": "RFC4918#10.3",
+        "spec_href": "http://tools.ietf.org/html/rfc4918#section-10.3"
     },
     {
         "header": "IM",

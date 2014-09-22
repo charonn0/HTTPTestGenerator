@@ -558,6 +558,17 @@ End
 
 	#tag Method, Flags = &h0
 		 Shared Function StackTrace(Err As RuntimeException) As String
+		  #If TargetWin32 Then
+		    If Err IsA IOException Then
+		      Declare Function FormatMessageW Lib "Kernel32" (Flags As Integer, Source As Integer, MessageId As Integer, _
+		      LangId As Integer, Buffer As Ptr, Size As Integer, Arguments As Integer) As Integer
+		      Dim buffer As New MemoryBlock(2048)
+		      If FormatMessageW(&H1000, 0, Err.ErrorNumber, 0 , Buffer, Buffer.Size, 0) <> 0 Then
+		        Err.Message = Buffer.WString(0)
+		      End If
+		    End If
+		  #endif
+		  
 		  Dim d As New Date
 		  Dim stack() As String = CleanStack(Err)
 		  Dim mesg As String
