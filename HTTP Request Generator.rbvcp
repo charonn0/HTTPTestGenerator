@@ -86,6 +86,7 @@ RawData=MethodDescriptions;HTTPTestGenerator/Icons/methods.json;&h37F73FFF;&h12F
 RawData=RelationDescriptions;HTTPTestGenerator/Icons/relations.json;&h79ECE7FF;&h12F36FFF;false
 RawData=StatuscodeDescriptions;HTTPTestGenerator/Icons/status-codes.json;&h4ACB57FF;&h12F36FFF;false
 Window=SpecViewer;HTTPTestGenerator/UI Classes/SpecViewer.rbfrm;&h3D5837FF;&h4FD2FFFF;false
+Class=AddRemoveList;HTTPTestGenerator/UI Classes/AddRemoveList.rbbas;&h728297FF;&h4FD2FFFF;false
 DefaultWindow=Generator
 MajorVersion=1
 MinorVersion=0
