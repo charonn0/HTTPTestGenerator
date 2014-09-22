@@ -83,9 +83,9 @@ Begin Window Generator
       AcceptTabs      =   ""
       AutoDeactivate  =   True
       Backdrop        =   ""
-      DoubleBuffer    =   False
+      DoubleBuffer    =   True
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   False
       Height          =   574
       HelpTag         =   ""
       Index           =   -2147483648
@@ -327,6 +327,8 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Sub PrintOutput(Req As String, Resp As String)
+		  'Req = Replace(Req, Request.MethodName, "<link=" + Request.MethodName + ">" + Request.MethodName + "</link>")
+		  
 		  Dim t As TextArea = ResponseMain1.OutputViewer1.OutputLog
 		  Dim sr As New StyleRun
 		  sr.Font = App.FixedWidthFont

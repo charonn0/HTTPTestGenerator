@@ -50,6 +50,9 @@ Inherits Canvas
 
 	#tag Event
 		Sub Paint(g As Graphics)
+		  g.ForeColor = &cC0C0C000
+		  g.DrawRect(0, 0, g.Width, g.Height)
+		  
 		  g.ForeColor = &c80808000
 		  If g.Width > g.Height Then 'horizontal
 		    g.DrawLine(0.25 * g.Width, 0.25 * g.Height, 0.75 * g.Width, 0.25 * g.Height)

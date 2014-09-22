@@ -221,9 +221,9 @@ Begin ContainerControl ResponseMain
       AcceptTabs      =   ""
       AutoDeactivate  =   True
       Backdrop        =   ""
-      DoubleBuffer    =   False
+      DoubleBuffer    =   True
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   False
       Height          =   8
       HelpTag         =   ""
       Index           =   -2147483648
@@ -248,9 +248,9 @@ Begin ContainerControl ResponseMain
       AcceptTabs      =   ""
       AutoDeactivate  =   True
       Backdrop        =   ""
-      DoubleBuffer    =   False
+      DoubleBuffer    =   True
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   False
       Height          =   8
       HelpTag         =   ""
       Index           =   -2147483648

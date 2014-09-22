@@ -174,7 +174,7 @@ Inherits ServerSocket
 		  ' If the request uses HTTP 1.1 or newer and EnforceContentType is True
 		  ' the server will check the request for an "Accept" header, and then confirm
 		  ' that the requested document's actual MIMEType is acceptable. If the
-		  ' response is not acceptable, an error (HTTP 406 Nat Acceptable) is returned to
+		  ' response is not acceptable, an error (HTTP 406 Not Acceptable) is returned to
 		  ' client.
 		  If EnforceContentType And ClientRequest.ProtocolVersion > 1.0 And doc.StatusCode < 300 And doc.StatusCode >= 200 Then
 		    'Me.Log("Checking Accepts", Log_Trace)
