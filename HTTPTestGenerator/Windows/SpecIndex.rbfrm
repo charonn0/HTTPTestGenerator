@@ -4,10 +4,10 @@ Begin Window SpecIndex
    Backdrop        =   ""
    CloseButton     =   True
    Composite       =   False
-   Frame           =   0
+   Frame           =   3
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   2.53e+2
+   Height          =   3.56e+2
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -19,11 +19,11 @@ Begin Window SpecIndex
    MinHeight       =   64
    MinimizeButton  =   True
    MinWidth        =   64
-   Placement       =   0
+   Placement       =   1
    Resizeable      =   True
    Title           =   "Specification Index"
    Visible         =   True
-   Width           =   5.46e+2
+   Width           =   6.44e+2
    Begin Listbox HelpIndex
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
@@ -42,7 +42,7 @@ Begin Window SpecIndex
       GridLinesVertical=   0
       HasHeading      =   ""
       HeadingIndex    =   -1
-      Height          =   253
+      Height          =   356
       HelpTag         =   ""
       Hierarchical    =   True
       Index           =   -2147483648
@@ -105,7 +105,7 @@ Begin Window SpecIndex
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   253
+      Height          =   356
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -133,7 +133,7 @@ Begin Window SpecIndex
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   247
+      Height          =   350
       HelpTag         =   ""
       InitialParent   =   ""
       Left            =   172
@@ -149,7 +149,7 @@ Begin Window SpecIndex
       Top             =   5
       UseFocusRing    =   ""
       Visible         =   True
-      Width           =   368
+      Width           =   466
    End
 End
 #tag EndWindow
@@ -191,55 +191,102 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Sub SetItem(Item As JSONItem)
+		  CurrentItem = Item
+		  Select Case True
+		  Case CurrentItem = Nil
+		    SpecViewer1.TypeLabel.Text = "Unknown Item:"
+		    SpecViewer1.ItemName.Text = "No Value"
+		    Return
+		  Case CurrentItem.HasName("method")
+		    SpecViewer1.TypeLabel.Text = "Request Method:"
+		    Dim s As String = CurrentItem.Value("method")
+		    If CurrentItem.Value("safe").BooleanValue Then
+		      s = s + " (safe; "
+		    Else
+		      s = s + " (unsafe; "
+		    End If
+		    
+		    If CurrentItem.Value("idempotent").BooleanValue Then
+		      s = s + "idempotent; "
+		    Else
+		      s = s + "not idempotent; "
+		    End If
+		    
+		    If CurrentItem.Value("cacheable").BooleanValue Then
+		      s = s + "cacheable) "
+		    Else
+		      s = s + "not cacheable)"
+		    End If
+		    
+		    SpecViewer1.ItemName.Text = s
+		  Case CurrentItem.HasName("header")
+		    SpecViewer1.TypeLabel.Text = "Header Name:"
+		    SpecViewer1.ItemName.Text = CurrentItem.Value("header")
+		  Case CurrentItem.HasName("code")
+		    SpecViewer1.TypeLabel.Text = "Status Code:"
+		    SpecViewer1.ItemName.Text = CurrentItem.Value("code") + " " + CurrentItem.Value("phrase")
+		  Case CurrentItem.HasName("relation")
+		    SpecViewer1.TypeLabel.Text = "IRI Relation:"
+		    SpecViewer1.ItemName.Text = CurrentItem.Value("relation")
+		  End Select
+		  SpecViewer1.DescText.Text = ReplaceAll(CurrentItem.Value("description"), """", "")
+		  If SpecViewer1.DescText.Text = "" Then SpecViewer1.DescText.Text = "No description available."
+		  SpecViewer1.SpecLink.Text = CurrentItem.Value("spec_title")
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub ShowHeader(HeaderName As String)
 		  Me.Show
-		  CurrentItem = HeaderDescription(HeaderName)
 		  HelpIndex.DeleteAllRows
 		  HelpIndex.AddFolder("Headers")
 		  HelpIndex.AddFolder("Status Codes")
 		  HelpIndex.AddFolder("Request Methods")
 		  HelpIndex.AddFolder("IRI Relations")
 		  HelpIndex.Expanded(0) = True
+		  SetItem(HeaderDescription(HeaderName))
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ShowMethod(MethodName As String)
 		  Me.Show
-		  CurrentItem = MethodDescription(MethodName)
 		  HelpIndex.DeleteAllRows
 		  HelpIndex.AddFolder("Headers")
 		  HelpIndex.AddFolder("Status Codes")
 		  HelpIndex.AddFolder("Request Methods")
 		  HelpIndex.AddFolder("IRI Relations")
 		  HelpIndex.Expanded(2) = True
+		  SetItem(MethodDescription(MethodName))
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ShowRelation(RelationName As String)
 		  Me.Show
-		  CurrentItem = RelationDescription(RelationName)
 		  HelpIndex.DeleteAllRows
 		  HelpIndex.AddFolder("Headers")
 		  HelpIndex.AddFolder("Status Codes")
 		  HelpIndex.AddFolder("Request Methods")
 		  HelpIndex.AddFolder("IRI Relations")
 		  HelpIndex.Expanded(3) = True
+		  SetItem(RelationDescription(RelationName))
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ShowStatusCode(StatusCode As Integer)
 		  Me.Show
-		  CurrentItem = StatusCodeDescription(StatusCode)
 		  HelpIndex.DeleteAllRows
 		  HelpIndex.AddFolder("Headers")
 		  HelpIndex.AddFolder("Status Codes")
 		  HelpIndex.AddFolder("Request Methods")
 		  HelpIndex.AddFolder("IRI Relations")
 		  HelpIndex.Expanded(1) = True
+		  SetItem(StatusCodeDescription(StatusCode))
 		End Sub
 	#tag EndMethod
 
@@ -331,26 +378,7 @@ End
 		  Case Me.ListIndex < 0
 		    Return
 		  Case Me.RowTag(Me.ListIndex) <> Nil And Me.RowTag(Me.ListIndex) IsA JSONItem
-		    CurrentItem = Me.RowTag(Me.ListIndex)
-		    Select Case True
-		    Case CurrentItem.HasName("method")
-		      SpecViewer1.TypeLabel.Text = "Request Method:"
-		      SpecViewer1.ItemName.Text = CurrentItem.Value("method")
-		    Case CurrentItem.HasName("header")
-		      SpecViewer1.TypeLabel.Text = "Header Name:"
-		      SpecViewer1.ItemName.Text = CurrentItem.Value("header")
-		    Case CurrentItem.HasName("code")
-		      SpecViewer1.TypeLabel.Text = "Status Code:"
-		      SpecViewer1.ItemName.Text = CurrentItem.Value("code") + " " + CurrentItem.Value("phrase")
-		    Case CurrentItem.HasName("relation")
-		      SpecViewer1.TypeLabel.Text = "IRI Relation:"
-		      SpecViewer1.ItemName.Text = CurrentItem.Value("relation")
-		    End Select
-		    SpecViewer1.DescText.Text = ReplaceAll(CurrentItem.Value("description"), """", "")
-		    If SpecViewer1.DescText.Text = "" Then SpecViewer1.DescText.Text = "No description available."
-		    SpecViewer1.SpecLink.Text = CurrentItem.Value("spec_title")
-		    
-		    
+		    SetItem(Me.RowTag(Me.ListIndex))
 		  End Select
 		End Sub
 	#tag EndEvent
@@ -440,7 +468,21 @@ End
 		    For i As Integer = 0 To StatusCodes.Count - 1
 		      Dim j As JSONItem = StatusCodes.Value(i)
 		      h.Append(j)
-		      n.Append(j.Value("code"))
+		      Dim s As String = j.Value("code")
+		      Select Case s
+		      Case "1xx"
+		        n.Append("099")
+		      Case "2xx"
+		        n.Append("199")
+		      Case "3xx"
+		        n.Append("299")
+		      Case "4xx"
+		        n.Append("399")
+		      Case "5xx"
+		        n.Append("499")
+		      Else
+		        n.Append(j.Value("code"))
+		      End Select
 		    Next
 		    n.SortWith(h)
 		    For i As Integer = UBound(h) DownTo 0
