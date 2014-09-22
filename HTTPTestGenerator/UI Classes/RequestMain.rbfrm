@@ -82,7 +82,7 @@ Begin ContainerControl RequestMain
       Height          =   20
       HelpTag         =   ""
       Index           =   -2147483648
-      InitialValue    =   "GET\r\nHEAD\r\nPOST\r\nTRACE\r\nDELETE\r\nPUT\r\nOPTIONS\r\nCONNECT"
+      InitialValue    =   "GET\r\nHEAD\r\nPOST\r\nPUT\r\nTRACE\r\nOPTIONS\r\nDELETE\r\nCONNECT\r\nACL\r\nBASELINE-CONTROL\r\nBIND\r\nCHECKIN\r\nCHECKOUT\r\nCOPY\r\nLABEL\r\nLINK\r\nLOCK\r\nMERGE\r\nMKACTIVITY\r\nMKCALENDAR\r\nMKCOL\r\nMKREDIRECTREF\r\nMKWORKSPACE\r\nMOVE\r\nORDERPATCH\r\nPATCH\r\nPROPFIND\r\nPROPPATCH\r\nREBIND\r\nREPORT\r\nSEARCH\r\nUNBIND\r\nUNCHECKOUT\r\nUNLINK\r\nUNLOCK\r\nUPDATE\r\nUPDATEREDIRECTREF\r\nVERSION-CONTROL"
       Italic          =   False
       Left            =   5
       ListIndex       =   0
@@ -511,59 +511,8 @@ End
 
 #tag Events RequestHeaders
 	#tag Event
-		Sub AddNew()
-		  Dim p As Pair = HeaderEdit.GetHeader()
-		  If p <> Nil Then
-		    If p.Right IsA Date Then
-		      RequestHeaders.AddRow(p.Left, HTTP.DateString(p.Right.DateValue), "")
-		      'RequestHeaders.CellType(RequestHeaders.LastIndex, 0) = Listbox.TypeEditable
-		      'RequestHeaders.EditCell(RequestHeaders.LastIndex, 0)
-		    Else
-		      RequestHeaders.AddRow(p.Left, p.Right, "")
-		      'RequestHeaders.CellType(RequestHeaders.LastIndex, 0) = Listbox.TypeEditable
-		      'RequestHeaders.EditCell(RequestHeaders.LastIndex, 0)
-		    End If
-		    RequestHeaders.RowTag(RequestHeaders.LastIndex) = p
-		  End If
+		Sub AddNew(NewIndex As Integer, Header As Pair)
 		  GenerateHeaders()
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Remove(Row As Integer)
-		  If MsgBox("Remove this header?", 52, "Confirm removal") = 6 Then
-		    Me.RemoveRow(row)
-		    GenerateHeaders()
-		  End If
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub DoubleClick()
-		  If Me.ListIndex > -1 Then
-		    Dim data As Object = Me.RowTag(Me.ListIndex)
-		    If data = Nil Then Return
-		    If data IsA HTTP.Cookie Then
-		      Dim p As HTTP.Cookie = HTTP.Cookie(data)
-		      p = CookieEdit.GetCookie(p)
-		      If p <> Nil Then
-		        Me.Cell(Me.ListIndex, 0) = "Cookie"
-		        Me.Cell(Me.ListIndex, 1) = p.Name + "=" + p.Value
-		        Me.RowTag(Me.ListIndex) = p
-		      End If
-		    ElseIf data IsA Pair Then
-		      Dim p As Pair = Pair(data)
-		      p = HeaderEdit.GetHeader(p)
-		      If p <> Nil Then
-		        Me.Cell(Me.ListIndex, 0) = p.Left
-		        If p.Right IsA Date Then
-		          Me.Cell(Me.ListIndex, 1) = HTTP.DateString(p.Right.DateValue)
-		        Else
-		          Me.Cell(Me.ListIndex, 1) = p.Right
-		        End If
-		        Me.RowTag(Me.ListIndex) = p
-		      End If
-		    End If
-		  End If
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -592,8 +541,7 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  base.Append(New MenuItem("Clear all headers"))
+		Function ConstructContextualMenu(base As MenuItem, x As Integer, y As Integer) As Boolean
 		  Dim m As New MenuItem("More information...")
 		  m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
 		  base.Append(m)
@@ -601,17 +549,23 @@ End
 		End Function
 	#tag EndEvent
 	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		Function ContextualMenuAction(hitItem As MenuItem) As Boolean
 		  Select Case hitItem.Text
-		  Case "Clear all headers"
-		    Me.DeleteAllRows
-		    Return True
 		  Case "More information..."
 		    Dim c As Pair = hitItem.Tag
-		    SpecIndex.ShowHeader(c.Left)
+		    If Not c IsA HTTP.Cookie Then
+		      SpecIndex.ShowHeader(c.Left)
+		    Else
+		      SpecIndex.ShowHeader("Cookie")
+		    End If
 		    Return True
 		  End Select
 		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Removed(Header As Pair)
+		  GenerateHeaders()
+		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events RequestMethod
@@ -619,6 +573,22 @@ End
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  'If IsContextualClick Then
+		  'Dim m As New MenuItem("More information...")
+		  'm.Tag = Me.Text
+		  'Dim base As New MenuItem("METHODMENU")
+		  'base.Append(m)
+		  'm = base.PopUp
+		  'Select Case m.Text
+		  'Case "More information..."
+		  'SpecIndex.ShowMethod(Me.Text)
+		  'Return True
+		  'End Select
+		  'End If
+		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events URL

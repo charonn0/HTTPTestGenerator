@@ -1,77 +1,57 @@
 #tag Class
-Protected Class HeaderList
-Inherits AddRemoveList
+Protected Class AddRemoveList
+Inherits ListBox
 	#tag Event
-		Sub AddNew(NewIndex As Integer)
-		  Dim p As Pair = HeaderEdit.GetHeader()
-		  If p <> Nil Then
-		    If p.Right IsA Date Then
-		      Me.AddRow(p.Left, HTTP.DateString(p.Right.DateValue), "")
-		    Else
-		      Me.AddRow(p.Left, p.Right, "")
-		    End If
-		    Me.RowTag(Me.LastIndex) = p
-		    RaiseEvent AddNew(NewIndex, p)
+		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
+		  If row = Me.ListCount And column = Me.ColumnCount -1 Then
+		    Dim x, y As Integer
+		    x = (0.5 * g.Width) - (0.5 * plus.Width)
+		    y = (0.5 * g.Height) - (0.5 * plus.Height)
+		    g.DrawPicture(plus, x, y)
+		    Return True
+		  ElseIf row < Me.ListCount And column = Me.ColumnCount - 1 Then
+		    Dim x, y As Integer
+		    x = (0.5 * g.Width) - (0.5 * plus.Width)
+		    y = (0.5 * g.Height) - (0.5 * plus.Height)
+		    g.DrawPicture(minus, x, y)
+		    Return True
 		  End If
 		  
-		End Sub
-	#tag EndEvent
-
-	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  base.Append(New MenuItem("Clear all headers"))
-		  Return RaiseEvent ConstructContextualMenu(base, x, y)
 		End Function
 	#tag EndEvent
 
 	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  Select Case hitItem.Text
-		  Case "Clear all headers"
-		    Me.DeleteAllRows
+		Function MouseDown(x As Integer, y As Integer) As Boolean
+		  Dim a, b As Integer
+		  a = Me.RowFromXY(X, Y)
+		  b = Me.ColumnFromXY(X, Y)
+		  
+		  If Y > Me.HeaderHeight And a = -1 And x >= 0.95 * Me.Width Then
+		    RaiseEvent AddNew(a)
+		    Return True
+		  ElseIf a < Me.ListCount And b = Me.ColumnCount - 1 Then
+		    RaiseEvent Remove(a)
 		    Return True
 		  Else
-		    Return RaiseEvent ContextualMenuAction(hitItem)
-		  End Select
+		    Return False
+		  End If
+		  
+		  
 		End Function
 	#tag EndEvent
 
 	#tag Event
-		Sub DoubleClick()
-		  If Me.ListIndex > -1 Then
-		    Dim data As Object = Me.RowTag(Me.ListIndex)
-		    If data = Nil Then Return
-		    If data IsA HTTP.Cookie Then
-		      Dim p As HTTP.Cookie = HTTP.Cookie(data)
-		      p = CookieEdit.GetCookie(p)
-		      If p <> Nil Then
-		        Me.Cell(Me.ListIndex, 0) = "Cookie"
-		        Me.Cell(Me.ListIndex, 1) = p.Name + "=" + p.Value
-		        Me.RowTag(Me.ListIndex) = p
-		      End If
-		    ElseIf data IsA Pair Then
-		      Dim p As Pair = Pair(data)
-		      p = HeaderEdit.GetHeader(p)
-		      If p <> Nil Then
-		        Me.Cell(Me.ListIndex, 0) = p.Left
-		        If p.Right IsA Date Then
-		          Me.Cell(Me.ListIndex, 1) = HTTP.DateString(p.Right.DateValue)
-		        Else
-		          Me.Cell(Me.ListIndex, 1) = p.Right
-		        End If
-		        Me.RowTag(Me.ListIndex) = p
-		      End If
-		    End If
+		Sub MouseMove(X As Integer, Y As Integer)
+		  Dim row, column As Integer
+		  row = Me.RowFromXY(X, Y)
+		  If row = -1 Then
+		    row = Me.RowFromXY(X - Me.RowHeight + 1, Y)
 		  End If
-		End Sub
-	#tag EndEvent
-
-	#tag Event
-		Sub Remove(Row As Integer)
-		  If MsgBox("Remove this header?", 52, "Confirm removal") = 6 Then
-		    Dim p As Pair = Me.RowTag(row)
-		    Me.RemoveRow(row)
-		    RaiseEvent Removed(p)
+		  column = Me.ColumnFromXY(X, Y)
+		  If row > -1 And column = Me.ColumnCount - 1 Then
+		    Me.MouseCursor = System.Cursors.FingerPointer
+		  Else
+		    Me.MouseCursor = System.Cursors.StandardPointer
 		  End If
 		  
 		End Sub
@@ -79,19 +59,11 @@ Inherits AddRemoveList
 
 
 	#tag Hook, Flags = &h0
-		Event AddNew(NewIndex As Integer, Header As Pair)
+		Event AddNew(NewIndex As Integer)
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event ConstructContextualMenu(base As MenuItem, x As Integer, y As Integer) As Boolean
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event ContextualMenuAction(hitItem As MenuItem) As Boolean
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event Removed(Header As Pair)
+		Event Remove(Row As Integer)
 	#tag EndHook
 
 
