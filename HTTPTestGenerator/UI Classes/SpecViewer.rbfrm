@@ -11,7 +11,7 @@ Begin ContainerControl SpecViewer
    Height          =   247
    HelpTag         =   ""
    InitialParent   =   ""
-   Left            =   3.2e+1
+   Left            =   32
    LockBottom      =   True
    LockLeft        =   True
    LockRight       =   True
@@ -19,7 +19,7 @@ Begin ContainerControl SpecViewer
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True
-   Top             =   3.2e+1
+   Top             =   32
    UseFocusRing    =   ""
    Visible         =   True
    Width           =   368
@@ -83,7 +83,7 @@ Begin ContainerControl SpecViewer
       LockTop         =   True
       Mask            =   ""
       Password        =   ""
-      ReadOnly        =   ""
+      ReadOnly        =   True
       Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
@@ -227,7 +227,7 @@ Begin ContainerControl SpecViewer
       LockTop         =   True
       Mask            =   ""
       Multiline       =   True
-      ReadOnly        =   ""
+      ReadOnly        =   True
       Scope           =   0
       ScrollbarHorizontal=   ""
       ScrollbarVertical=   True
@@ -274,7 +274,9 @@ End
 	#tag EndEvent
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  Return True
+		  #pragma Unused X
+		  #pragma Unused Y
+		  Return Me.Text <> ""
 		End Function
 	#tag EndEvent
 	#tag Event
@@ -284,6 +286,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
 		  RaiseEvent ViewSpec()
 		End Sub
 	#tag EndEvent

@@ -45,7 +45,6 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Status:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -80,7 +79,6 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "000 No Error Code"
       TextAlign       =   0
       TextColor       =   "&cFF000000"
@@ -202,7 +200,6 @@ Begin ContainerControl ResponseMain
       HasBackColor    =   False
       Height          =   195
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   2
       LockBottom      =   True
@@ -347,11 +344,15 @@ End
 	#tag EndEvent
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  Return True
+		  #pragma Unused X
+		  #pragma Unused Y
+		  Return Me.Text <> ""
 		End Function
 	#tag EndEvent
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
 		  SpecIndex.ShowStatusCode(Response.StatusCode)
 		End Sub
 	#tag EndEvent
