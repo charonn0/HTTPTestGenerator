@@ -542,10 +542,12 @@ End
 	#tag EndEvent
 	#tag Event
 		Function ConstructContextualMenu(base As MenuItem, x As Integer, y As Integer) As Boolean
-		  Dim m As New MenuItem("More information...")
-		  m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
-		  base.Append(m)
-		  Return True
+		  If Me.RowFromXY(X, Y) > -1 Then
+		    Dim m As New MenuItem("More information...")
+		    m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
+		    base.Append(m)
+		    Return True
+		  End If
 		End Function
 	#tag EndEvent
 	#tag Event
