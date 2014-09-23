@@ -265,6 +265,13 @@
         "spec_title": "RFC7231#6.5.14",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.14"
     },
+	{
+        "code": "418",
+        "phrase": "I'm a teapot",
+        "description": "\"The server is a teapot; the resulting entity body MAY be short and stout.\"",
+        "spec_title": "RFC7168#2.3.3",
+        "spec_href": "https://tools.ietf.org/html/rfc7168#section-2.3.3"
+    },
     {
         "code": "426",
         "phrase": "Upgrade Required",
