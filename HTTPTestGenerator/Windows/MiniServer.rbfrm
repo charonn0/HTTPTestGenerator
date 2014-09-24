@@ -1,28 +1,29 @@
 #tag Window
-Begin ContainerControl MiniServer
-   AcceptFocus     =   ""
-   AcceptTabs      =   True
-   AutoDeactivate  =   True
+Begin Window MiniServer
    BackColor       =   &hFFFFFF
    Backdrop        =   ""
-   Enabled         =   True
-   EraseBackground =   False
+   CloseButton     =   True
+   Composite       =   False
+   Frame           =   0
+   FullScreen      =   False
    HasBackColor    =   False
-   Height          =   253
-   HelpTag         =   ""
-   InitialParent   =   ""
-   Left            =   32
-   LockBottom      =   ""
-   LockLeft        =   ""
-   LockRight       =   ""
-   LockTop         =   ""
-   TabIndex        =   0
-   TabPanelIndex   =   0
-   TabStop         =   True
-   Top             =   32
-   UseFocusRing    =   ""
+   Height          =   3.23e+2
+   ImplicitInstance=   False
+   LiveResize      =   True
+   MacProcID       =   0
+   MaxHeight       =   32000
+   MaximizeButton  =   False
+   MaxWidth        =   32000
+   MenuBar         =   ""
+   MenuBarVisible  =   True
+   MinHeight       =   64
+   MinimizeButton  =   True
+   MinWidth        =   64
+   Placement       =   0
+   Resizeable      =   True
+   Title           =   "HTTP Server"
    Visible         =   True
-   Width           =   368
+   Width           =   5.83e+2
    Begin TextField port
       AcceptTabs      =   False
       Alignment       =   0
@@ -59,7 +60,7 @@ Begin ContainerControl MiniServer
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   231
+      Top             =   301
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -91,7 +92,7 @@ Begin ContainerControl MiniServer
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   230
+      Top             =   300
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -125,33 +126,11 @@ Begin ContainerControl MiniServer
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   231
+      Top             =   301
       Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   8
-   End
-   Begin WebServer.FileServer Socket
-      AuthenticationRealm=   "Restricted Area"
-      AuthenticationRequired=   ""
-      CertificatePassword=   ""
-      DirectoryBrowsing=   True
-      EnforceContentType=   True
-      Height          =   32
-      Index           =   -2147483648
-      Left            =   415
-      LockedInPosition=   False
-      MaximumSocketsConnected=   10
-      MinimumSocketsAvailable=   2
-      Port            =   0
-      Scope           =   0
-      SessionTimeout  =   600
-      TabPanelIndex   =   0
-      Threading       =   True
-      Top             =   0
-      UseCompression  =   True
-      UseSessions     =   True
-      Width           =   32
    End
    Begin PushButton PushButton1
       AutoDeactivate  =   True
@@ -166,7 +145,7 @@ Begin ContainerControl MiniServer
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   ""
-      Left            =   282
+      Left            =   497
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   False
@@ -179,7 +158,7 @@ Begin ContainerControl MiniServer
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
-      Top             =   231
+      Top             =   301
       Underline       =   ""
       Visible         =   True
       Width           =   80
@@ -212,17 +191,17 @@ Begin ContainerControl MiniServer
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
-      Top             =   232
+      Top             =   302
       Transparent     =   True
       Underline       =   True
       Visible         =   True
-      Width           =   63
+      Width           =   278
    End
    Begin TabPanel TabPanel1
       AutoDeactivate  =   True
       Bold            =   ""
       Enabled         =   True
-      Height          =   225
+      Height          =   295
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
@@ -247,7 +226,7 @@ Begin ContainerControl MiniServer
       Underline       =   ""
       Value           =   0
       Visible         =   True
-      Width           =   368
+      Width           =   583
       Begin TextArea HTTPLog
          AcceptTabs      =   False
          Alignment       =   0
@@ -260,7 +239,7 @@ Begin ContainerControl MiniServer
          DataSource      =   ""
          Enabled         =   True
          Format          =   ""
-         Height          =   189
+         Height          =   259
          HelpTag         =   ""
          HideSelection   =   True
          Index           =   -2147483648
@@ -292,7 +271,7 @@ Begin ContainerControl MiniServer
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
-         Width           =   354
+         Width           =   569
       End
       Begin Listbox ServerLog
          AutoDeactivate  =   True
@@ -312,7 +291,7 @@ Begin ContainerControl MiniServer
          GridLinesVertical=   1
          HasHeading      =   True
          HeadingIndex    =   -1
-         Height          =   188
+         Height          =   258
          HelpTag         =   ""
          Hierarchical    =   False
          Index           =   -2147483648
@@ -340,14 +319,38 @@ Begin ContainerControl MiniServer
          Underline       =   False
          UseFocusRing    =   False
          Visible         =   True
-         Width           =   348
+         Width           =   563
          _ScrollWidth    =   -1
       End
+   End
+   Begin WebServer.FileServer Socket
+      AuthenticationRealm=   "Restricted Area"
+      AuthenticationRequired=   ""
+      CertificatePassword=   ""
+      DirectoryBrowsing=   True
+      EnforceContentType=   True
+      Height          =   32
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   619
+      LockedInPosition=   False
+      MaximumSocketsConnected=   10
+      MinimumSocketsAvailable=   2
+      Port            =   0
+      Scope           =   0
+      SessionTimeout  =   600
+      TabPanelIndex   =   0
+      Threading       =   True
+      Top             =   0
+      UseCompression  =   True
+      UseSessions     =   True
+      Width           =   32
    End
    Begin Timer LogTimer
       Height          =   32
       Index           =   -2147483648
-      Left            =   415
+      InitialParent   =   ""
+      Left            =   621
       LockedInPosition=   False
       Mode            =   2
       Period          =   250
@@ -396,86 +399,6 @@ End
 		      Me.ListIndex = i
 		    End If
 		  Next
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events Socket
-	#tag Event
-		Sub Error(ErrorCode as Integer)
-		  Dim msg As New Dictionary
-		  msg.Value("Message") = FormatSocketError(ErrorCode)
-		  msg.Value("Severity") = HTTP.BaseServer.Log_Error
-		  If App.CurrentThread <> Nil Then
-		    msg.Value("ThreadID") = App.CurrentThread.ThreadID
-		  Else
-		    msg.Value("ThreadID") = 0
-		  End If
-		  Messages.Insert(0, msg)
-		  
-		  PushButton1.Caption = "Listen"
-		  Me.StopListening
-		  URLLink.Visible = False
-		  Dim sr As New StyleRun
-		  sr.Font = App.FixedWidthFont
-		  sr.Text = FormatSocketError(ErrorCode) + CRLF
-		  sr.TextColor = &c80000000
-		  HTTPLog.StyledText.AppendStyleRun(sr)
-		  #If TargetWin32 Then
-		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
-		    Const SB_BOTTOM = 7
-		    Const WM_VSCROLL = &h115
-		    Call SendMessageW(HTTPLog.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
-		  #Else
-		    HTTPLog.ScrollPosition = HTTPLog.LineNumAtCharPos(HTTPLog.Text.Len)
-		  #endif
-		  
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function TamperRequest(ByRef Request As HTTP.Request) As Boolean
-		  RequestData = Request.ToString
-		  While Right(RequestData, 4) <> CRLF + CRLF
-		    RequestData = RequestData + CRLF
-		  Wend
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function TamperResponse(ByRef Response As HTTP.Response) As Boolean
-		  Dim s As String = NthField(Response.ToString, CRLF + CRLF, 1)
-		  While Right(s, 4) <> CRLF + CRLF
-		    s = s + CRLF
-		  Wend
-		  Dim sr As New StyleRun
-		  sr.Font = App.FixedWidthFont
-		  sr.Text = RequestData
-		  sr.TextColor = &c0000FF00
-		  HTTPLog.StyledText.AppendStyleRun(sr)
-		  sr.Text = s
-		  sr.TextColor = &c00800000
-		  HTTPLog.StyledText.AppendStyleRun(sr)
-		  #If TargetWin32 Then
-		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
-		    Const SB_BOTTOM = 7
-		    Const WM_VSCROLL = &h115
-		    Call SendMessageW(HTTPLog.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
-		  #Else
-		    HTTPLog.ScrollPosition = HTTPLog.LineNumAtCharPos(HTTPLog.Text.Len)
-		  #endif
-		  
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub Log(Message As String, Severity As Integer)
-		  Dim msg As New Dictionary
-		  msg.Value("Message") = Message
-		  msg.Value("Severity") = Severity
-		  If App.CurrentThread <> Nil Then
-		    msg.Value("ThreadID") = App.CurrentThread.ThreadID
-		  Else
-		    msg.Value("ThreadID") = 0
-		  End If
-		  Messages.Insert(0, msg)
-		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -628,6 +551,86 @@ End
 		    Squelch = -2
 		  End Select
 		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events Socket
+	#tag Event
+		Sub Error(ErrorCode as Integer)
+		  Dim msg As New Dictionary
+		  msg.Value("Message") = FormatSocketError(ErrorCode)
+		  msg.Value("Severity") = HTTP.BaseServer.Log_Error
+		  If App.CurrentThread <> Nil Then
+		    msg.Value("ThreadID") = App.CurrentThread.ThreadID
+		  Else
+		    msg.Value("ThreadID") = 0
+		  End If
+		  Messages.Insert(0, msg)
+		  
+		  PushButton1.Caption = "Listen"
+		  Me.StopListening
+		  URLLink.Visible = False
+		  Dim sr As New StyleRun
+		  sr.Font = App.FixedWidthFont
+		  sr.Text = FormatSocketError(ErrorCode) + CRLF
+		  sr.TextColor = &c80000000
+		  HTTPLog.StyledText.AppendStyleRun(sr)
+		  #If TargetWin32 Then
+		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
+		    Const SB_BOTTOM = 7
+		    Const WM_VSCROLL = &h115
+		    Call SendMessageW(HTTPLog.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
+		  #Else
+		    HTTPLog.ScrollPosition = HTTPLog.LineNumAtCharPos(HTTPLog.Text.Len)
+		  #endif
+		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function TamperRequest(ByRef Request As HTTP.Request) As Boolean
+		  RequestData = Request.ToString
+		  While Right(RequestData, 4) <> CRLF + CRLF
+		    RequestData = RequestData + CRLF
+		  Wend
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function TamperResponse(ByRef Response As HTTP.Response) As Boolean
+		  Dim s As String = NthField(Response.ToString, CRLF + CRLF, 1)
+		  While Right(s, 4) <> CRLF + CRLF
+		    s = s + CRLF
+		  Wend
+		  Dim sr As New StyleRun
+		  sr.Font = App.FixedWidthFont
+		  sr.Text = RequestData
+		  sr.TextColor = &c0000FF00
+		  HTTPLog.StyledText.AppendStyleRun(sr)
+		  sr.Text = s
+		  sr.TextColor = &c00800000
+		  HTTPLog.StyledText.AppendStyleRun(sr)
+		  #If TargetWin32 Then
+		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
+		    Const SB_BOTTOM = 7
+		    Const WM_VSCROLL = &h115
+		    Call SendMessageW(HTTPLog.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
+		  #Else
+		    HTTPLog.ScrollPosition = HTTPLog.LineNumAtCharPos(HTTPLog.Text.Len)
+		  #endif
+		  
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Log(Message As String, Severity As Integer)
+		  Dim msg As New Dictionary
+		  msg.Value("Message") = Message
+		  msg.Value("Severity") = Severity
+		  If App.CurrentThread <> Nil Then
+		    msg.Value("ThreadID") = App.CurrentThread.ThreadID
+		  Else
+		    msg.Value("ThreadID") = 0
+		  End If
+		  Messages.Insert(0, msg)
+		  
+		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events LogTimer
