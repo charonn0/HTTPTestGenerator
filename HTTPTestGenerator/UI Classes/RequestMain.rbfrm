@@ -542,8 +542,9 @@ End
 	#tag EndEvent
 	#tag Event
 		Function ConstructContextualMenu(base As MenuItem, x As Integer, y As Integer) As Boolean
-		  If Me.RowFromXY(X, Y) > -1 Then
-		    Dim m As New MenuItem("More information...")
+		  Dim row As Integer = Me.RowFromXY(X, Y)
+		  If row > -1 Then
+		    Dim m As New MenuItem("View spec...")
 		    m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
 		    base.Append(m)
 		    Return True
@@ -553,7 +554,7 @@ End
 	#tag Event
 		Function ContextualMenuAction(hitItem As MenuItem) As Boolean
 		  Select Case hitItem.Text
-		  Case "More information..."
+		  Case "View spec..."
 		    Dim c As Pair = hitItem.Tag
 		    If Not c IsA HTTP.Cookie Then
 		      SpecIndex.ShowHeader(c.Left)
@@ -579,13 +580,13 @@ End
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  'If IsContextualClick Then
-		  'Dim m As New MenuItem("More information...")
+		  'Dim m As New MenuItem("View spec...")
 		  'm.Tag = Me.Text
 		  'Dim base As New MenuItem("METHODMENU")
 		  'base.Append(m)
 		  'm = base.PopUp
 		  'Select Case m.Text
-		  'Case "More information..."
+		  'Case "View spec..."
 		  'SpecIndex.ShowMethod(Me.Text)
 		  'Return True
 		  'End Select

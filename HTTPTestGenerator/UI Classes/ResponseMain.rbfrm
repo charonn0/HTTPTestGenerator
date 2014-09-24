@@ -334,7 +334,7 @@ End
 	#tag Event
 		Sub MouseEnter()
 		  Me.MouseCursor = System.Cursors.FingerPointer
-		  Me.HelpTag = "More information..."
+		  Me.HelpTag = "View spec..."
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -369,7 +369,7 @@ End
 		    Dim m As New MenuItem("Copy to request headers")
 		    m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
 		    Base.Append(m)
-		    m = New MenuItem("More information...")
+		    m = New MenuItem("View spec...")
 		    m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
 		    base.Append(m)
 		    Return True
@@ -388,7 +388,7 @@ End
 		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = nm:vl
 		    Return True
 		    
-		  Case "More information..."
+		  Case "View spec..."
 		    Dim c As Pair = hitItem.Tag
 		    SpecIndex.ShowHeader(c.Left)
 		    Return True
