@@ -73,30 +73,6 @@ Begin Window SpecIndex
       Width           =   156
       _ScrollWidth    =   -1
    End
-   Begin Thread PopulateThread
-      Height          =   32
-      Index           =   -2147483648
-      Left            =   579
-      LockedInPosition=   False
-      Priority        =   5
-      Scope           =   0
-      StackSize       =   0
-      TabPanelIndex   =   0
-      Top             =   -20
-      Width           =   32
-   End
-   Begin Timer PopulateTimer
-      Height          =   32
-      Index           =   -2147483648
-      Left            =   579
-      LockedInPosition=   False
-      Mode            =   0
-      Period          =   1
-      Scope           =   0
-      TabPanelIndex   =   0
-      Top             =   22
-      Width           =   32
-   End
    Begin Splitter Splitter1
       AcceptFocus     =   ""
       AcceptTabs      =   ""
@@ -116,7 +92,7 @@ Begin Window SpecIndex
       LockRight       =   ""
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   8
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
@@ -125,7 +101,7 @@ Begin Window SpecIndex
       Width           =   8
    End
    Begin SpecViewer SpecViewer1
-      AcceptFocus     =   ""
+      AcceptFocus     =   True
       AcceptTabs      =   True
       AutoDeactivate  =   True
       BackColor       =   &hFFFFFF
@@ -143,7 +119,7 @@ Begin Window SpecIndex
       LockRight       =   True
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   9
+      TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   5
@@ -155,6 +131,16 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Open()
+		  Call HeaderDescription("")
+		  Call MethodDescription("")
+		  Call RelationDescription("")
+		  Call StatusCodeDescription(0)
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h1
 		Protected Shared Function HeaderDescription(HeaderName As String) As JSONItem
 		  If Headers = Nil Then Headers = New JSONItem(HeaderDescriptions)
@@ -191,102 +177,48 @@ End
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Sub SetItem(Item As JSONItem)
-		  CurrentItem = Item
-		  Select Case True
-		  Case CurrentItem = Nil
-		    SpecViewer1.TypeLabel.Text = "Unknown Item:"
-		    SpecViewer1.ItemName.Text = "No Value"
-		    Return
-		  Case CurrentItem.HasName("method")
-		    SpecViewer1.TypeLabel.Text = "Request Method:"
-		    Dim s As String = CurrentItem.Value("method")
-		    If CurrentItem.Value("safe").BooleanValue Then
-		      s = s + " (safe; "
-		    Else
-		      s = s + " (unsafe; "
-		    End If
-		    
-		    If CurrentItem.Value("idempotent").BooleanValue Then
-		      s = s + "idempotent; "
-		    Else
-		      s = s + "not idempotent; "
-		    End If
-		    
-		    If CurrentItem.Value("cacheable").BooleanValue Then
-		      s = s + "cacheable) "
-		    Else
-		      s = s + "not cacheable)"
-		    End If
-		    
-		    SpecViewer1.ItemName.Text = s
-		  Case CurrentItem.HasName("header")
-		    SpecViewer1.TypeLabel.Text = "Header Name:"
-		    SpecViewer1.ItemName.Text = CurrentItem.Value("header")
-		  Case CurrentItem.HasName("code")
-		    SpecViewer1.TypeLabel.Text = "Status Code:"
-		    SpecViewer1.ItemName.Text = CurrentItem.Value("code") + " " + CurrentItem.Value("phrase")
-		  Case CurrentItem.HasName("relation")
-		    SpecViewer1.TypeLabel.Text = "IRI Relation:"
-		    SpecViewer1.ItemName.Text = CurrentItem.Value("relation")
-		  End Select
-		  SpecViewer1.DescText.Text = ReplaceAll(CurrentItem.Value("description"), """", "")
-		  If SpecViewer1.DescText.Text = "" Then SpecViewer1.DescText.Text = "No description available."
-		  SpecViewer1.SpecLink.Text = CurrentItem.Value("spec_title")
+	#tag Method, Flags = &h0
+		Sub ShowHeader(HeaderName As String)
+		  ShowMe()
+		  CurrentItem = HeaderDescription(HeaderName)
+		  HelpIndex.Expanded(0) = True
+		  
+		  
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub ShowHeader(HeaderName As String)
+	#tag Method, Flags = &h1
+		Protected Sub ShowMe()
 		  Me.Show
 		  HelpIndex.DeleteAllRows
 		  HelpIndex.AddFolder("Headers")
 		  HelpIndex.AddFolder("Status Codes")
 		  HelpIndex.AddFolder("Request Methods")
 		  HelpIndex.AddFolder("IRI Relations")
-		  HelpIndex.Expanded(0) = True
-		  SetItem(HeaderDescription(HeaderName))
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ShowMethod(MethodName As String)
-		  Me.Show
-		  HelpIndex.DeleteAllRows
-		  HelpIndex.AddFolder("Headers")
-		  HelpIndex.AddFolder("Status Codes")
-		  HelpIndex.AddFolder("Request Methods")
-		  HelpIndex.AddFolder("IRI Relations")
+		  ShowMe()
+		  CurrentItem = MethodDescription(MethodName)
 		  HelpIndex.Expanded(2) = True
-		  SetItem(MethodDescription(MethodName))
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ShowRelation(RelationName As String)
-		  Me.Show
-		  HelpIndex.DeleteAllRows
-		  HelpIndex.AddFolder("Headers")
-		  HelpIndex.AddFolder("Status Codes")
-		  HelpIndex.AddFolder("Request Methods")
-		  HelpIndex.AddFolder("IRI Relations")
+		  ShowMe()
+		  CurrentItem = RelationDescription(RelationName)
 		  HelpIndex.Expanded(3) = True
-		  SetItem(RelationDescription(RelationName))
-		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ShowStatusCode(StatusCode As Integer)
-		  Me.Show
-		  HelpIndex.DeleteAllRows
-		  HelpIndex.AddFolder("Headers")
-		  HelpIndex.AddFolder("Status Codes")
-		  HelpIndex.AddFolder("Request Methods")
-		  HelpIndex.AddFolder("IRI Relations")
+		  ShowMe()
+		  CurrentItem = StatusCodeDescription(StatusCode)
 		  HelpIndex.Expanded(1) = True
-		  SetItem(StatusCodeDescription(StatusCode))
 		End Sub
 	#tag EndMethod
 
@@ -303,12 +235,27 @@ End
 	#tag EndMethod
 
 
-	#tag Property, Flags = &h21
-		Private CurrentItem As JSONItem
-	#tag EndProperty
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mCurrentItem
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mCurrentItem = value
+			  SpecViewer1.CurrentItem = value
+			End Set
+		#tag EndSetter
+		CurrentItem As JSONItem
+	#tag EndComputedProperty
 
 	#tag Property, Flags = &h21
 		Private Shared Headers As JSONItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mCurrentItem As JSONItem
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -316,7 +263,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private PopulateLock As Semaphore
+		Private PopulateLock1 As Semaphore
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -328,7 +275,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private ThreadToken As Pair
+		Private ThreadToken1 As Pair
 	#tag EndProperty
 
 
@@ -337,80 +284,11 @@ End
 #tag Events HelpIndex
 	#tag Event
 		Sub ExpandRow(row As Integer)
+		  Dim h() As JSONItem
+		  Dim n() As String
+		  
 		  Select Case True
 		  Case Me.Cell(row, 0) = "Headers"
-		    ThreadToken = 1:row
-		    If Headers = Nil Then
-		      PopulateThread.Run
-		    Else
-		      PopulateTimer.Mode = Timer.ModeSingle
-		    End If
-		    
-		  Case Me.Cell(row, 0) = "Status Codes"
-		    ThreadToken = 4:row
-		    If StatusCodes = Nil Then
-		      PopulateThread.Run
-		    Else
-		      PopulateTimer.Mode = Timer.ModeSingle
-		    End If
-		    
-		  Case Me.Cell(row, 0) = "Request Methods"
-		    ThreadToken = 2:row
-		    If Methods = Nil Then
-		      PopulateThread.Run
-		    Else
-		      PopulateTimer.Mode = Timer.ModeSingle
-		    End If
-		    
-		  Case Me.Cell(row, 0) = "IRI Relations"
-		    ThreadToken = 3:row
-		    If Relations = Nil Then
-		      PopulateThread.Run
-		    Else
-		      PopulateTimer.Mode = Timer.ModeSingle
-		    End If
-		  End Select
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Change()
-		  Select Case True
-		  Case Me.ListIndex < 0
-		    Return
-		  Case Me.RowTag(Me.ListIndex) <> Nil And Me.RowTag(Me.ListIndex) IsA JSONItem
-		    SetItem(Me.RowTag(Me.ListIndex))
-		  End Select
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PopulateThread
-	#tag Event
-		Sub Run()
-		  Select Case ThreadToken.Left
-		  Case 1 ' Headers
-		    Call HeaderDescription("")
-		    
-		  Case 2 ' Methods
-		    Call MethodDescription("")
-		    
-		  Case 3 ' Relations
-		    Call RelationDescription("")
-		    
-		  Case 4 ' Codes
-		    Call StatusCodeDescription(0)
-		    
-		  End Select
-		  PopulateTimer.Mode = Timer.ModeSingle
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PopulateTimer
-	#tag Event
-		Sub Action()
-		  Select Case ThreadToken.Left
-		  Case 1 ' Headers
-		    Dim h() As JSONItem
-		    Dim n() As String
 		    For i As Integer = 0 To Headers.Count - 1
 		      Dim j As JSONItem = Headers.Value(i)
 		      h.Append(j)
@@ -419,52 +297,14 @@ End
 		    n.SortWith(h)
 		    For i As Integer = UBound(h) DownTo 0
 		      Dim j As JSONItem = h(i)
-		      HelpIndex.InsertRow(ThreadToken.Right + 1, j.Value("header"), 1)
-		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
+		      Me.InsertRow(row + 1, j.Value("header"), 1)
+		      Me.RowTag(Me.LastIndex) = j
 		      If CurrentItem <> Nil And CurrentItem.Lookup("header", "") = j.Value("header") Then
-		        HelpIndex.ListIndex = HelpIndex.LastIndex
+		        Me.ListIndex = Me.LastIndex
 		      End If
 		    Next
 		    
-		  Case 2 ' Methods
-		    Dim h() As JSONItem
-		    Dim n() As String
-		    For i As Integer = 0 To Methods.Count - 1
-		      Dim j As JSONItem = Methods.Value(i)
-		      h.Append(j)
-		      n.Append(j.Value("method"))
-		    Next
-		    n.SortWith(h)
-		    For i As Integer = UBound(h) DownTo 0
-		      Dim j As JSONItem = h(i)
-		      HelpIndex.InsertRow(ThreadToken.Right + 1, j.Value("method"), 1)
-		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
-		      If CurrentItem <> Nil And CurrentItem.Lookup("method", "") = j.Value("method") Then
-		        HelpIndex.ListIndex = HelpIndex.LastIndex
-		      End If
-		    Next
-		    
-		  Case 3 ' Relations
-		    Dim h() As JSONItem
-		    Dim n() As String
-		    For i As Integer = 0 To Relations.Count - 1
-		      Dim j As JSONItem = Relations.Value(i)
-		      h.Append(j)
-		      n.Append(j.Value("relation"))
-		    Next
-		    n.SortWith(h)
-		    For i As Integer = UBound(h) DownTo 0
-		      Dim j As JSONItem = h(i)
-		      HelpIndex.InsertRow(ThreadToken.Right + 1, j.Value("relation"), 1)
-		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
-		      If CurrentItem <> Nil And CurrentItem.Lookup("relation", "") = j.Value("relation") Then
-		        HelpIndex.ListIndex = HelpIndex.LastIndex
-		      End If
-		    Next
-		    
-		  Case 4 ' Codes
-		    Dim h() As JSONItem
-		    Dim n() As String
+		  Case Me.Cell(row, 0) = "Status Codes"
 		    For i As Integer = 0 To StatusCodes.Count - 1
 		      Dim j As JSONItem = StatusCodes.Value(i)
 		      h.Append(j)
@@ -487,15 +327,57 @@ End
 		    n.SortWith(h)
 		    For i As Integer = UBound(h) DownTo 0
 		      Dim j As JSONItem = h(i)
-		      HelpIndex.InsertRow(ThreadToken.Right + 1, j.Value("code") + " " + j.Value("phrase"), 1)
+		      HelpIndex.InsertRow(row + 1, j.Value("code") + " " + j.Value("phrase"), 1)
 		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
 		      If CurrentItem <> Nil And CurrentItem.Lookup("code", -1) = j.Value("code") Then
 		        HelpIndex.ListIndex = HelpIndex.LastIndex
 		      End If
 		    Next
 		    
+		  Case Me.Cell(row, 0) = "Request Methods"
+		    For i As Integer = 0 To Methods.Count - 1
+		      Dim j As JSONItem = Methods.Value(i)
+		      h.Append(j)
+		      n.Append(j.Value("method"))
+		    Next
+		    n.SortWith(h)
+		    For i As Integer = UBound(h) DownTo 0
+		      Dim j As JSONItem = h(i)
+		      HelpIndex.InsertRow(row + 1, j.Value("method"), 1)
+		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
+		      If CurrentItem <> Nil And CurrentItem.Lookup("method", "") = j.Value("method") Then
+		        HelpIndex.ListIndex = HelpIndex.LastIndex
+		      End If
+		    Next
+		    
+		  Case Me.Cell(row, 0) = "IRI Relations"
+		    For i As Integer = 0 To Relations.Count - 1
+		      Dim j As JSONItem = Relations.Value(i)
+		      h.Append(j)
+		      n.Append(j.Value("relation"))
+		    Next
+		    n.SortWith(h)
+		    For i As Integer = UBound(h) DownTo 0
+		      Dim j As JSONItem = h(i)
+		      HelpIndex.InsertRow(row + 1, j.Value("relation"), 1)
+		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
+		      If CurrentItem <> Nil And CurrentItem.Lookup("relation", "") = j.Value("relation") Then
+		        HelpIndex.ListIndex = HelpIndex.LastIndex
+		      End If
+		    Next
 		  End Select
-		  HelpIndex.ListIndex = HelpIndex.ListIndex
+		  
+		  Me.ListIndex = Me.ListIndex
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Change()
+		  Select Case True
+		  Case Me.ListIndex < 0
+		    Return
+		  Case Me.RowTag(Me.ListIndex) <> Nil And Me.RowTag(Me.ListIndex) IsA JSONItem
+		    CurrentItem = Me.RowTag(Me.ListIndex)
+		  End Select
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -509,21 +391,5 @@ End
 		  HelpIndex.Width = Me.Left
 		  Me.Invalidate
 		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events SpecViewer1
-	#tag Event
-		Sub ViewSpec()
-		  If CurrentItem <> Nil Then
-		    ShowURL(CurrentItem.Value("spec_href"))
-		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function GetSpec() As String
-		  If CurrentItem <> Nil Then
-		    Return CurrentItem.Value("spec_title")
-		  End If
-		End Function
 	#tag EndEvent
 #tag EndEvents

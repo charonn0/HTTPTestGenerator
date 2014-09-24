@@ -43,7 +43,7 @@ Begin ContainerControl SpecViewer
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   0
+      TabIndex        =   3
       TabPanelIndex   =   0
       Text            =   "Header Name:"
       TextAlign       =   2
@@ -85,7 +85,7 @@ Begin ContainerControl SpecViewer
       Password        =   ""
       ReadOnly        =   True
       Scope           =   0
-      TabIndex        =   1
+      TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
@@ -153,7 +153,7 @@ Begin ContainerControl SpecViewer
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   3
+      TabIndex        =   4
       TabPanelIndex   =   0
       Text            =   "Specification:"
       TextAlign       =   2
@@ -187,7 +187,7 @@ Begin ContainerControl SpecViewer
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   4
+      TabIndex        =   5
       TabPanelIndex   =   0
       Text            =   "Description:"
       TextAlign       =   2
@@ -232,7 +232,7 @@ Begin ContainerControl SpecViewer
       ScrollbarHorizontal=   ""
       ScrollbarVertical=   True
       Styled          =   True
-      TabIndex        =   5
+      TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
@@ -250,13 +250,64 @@ End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Hook, Flags = &h0
-		Event GetSpec() As String
-	#tag EndHook
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return mCurrentItem
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mCurrentItem = value
+			  Select Case True
+			  Case mCurrentItem = Nil
+			    TypeLabel.Text = "Unknown Item:"
+			    ItemName.Text = "No Value"
+			    Return
+			  Case mCurrentItem.HasName("method")
+			    TypeLabel.Text = "Request Method:"
+			    Dim s As String = mCurrentItem.Value("method")
+			    If mCurrentItem.Value("safe").BooleanValue Then
+			      s = s + " (safe; "
+			    Else
+			      s = s + " (unsafe; "
+			    End If
+			    
+			    If mCurrentItem.Value("idempotent").BooleanValue Then
+			      s = s + "idempotent; "
+			    Else
+			      s = s + "not idempotent; "
+			    End If
+			    
+			    If mCurrentItem.Value("cacheable").BooleanValue Then
+			      s = s + "cacheable) "
+			    Else
+			      s = s + "not cacheable)"
+			    End If
+			    
+			    ItemName.Text = s
+			  Case mCurrentItem.HasName("header")
+			    TypeLabel.Text = "Header Name:"
+			    ItemName.Text = mCurrentItem.Value("header")
+			  Case mCurrentItem.HasName("code")
+			    TypeLabel.Text = "Status Code:"
+			    ItemName.Text = mCurrentItem.Value("code") + " " + mCurrentItem.Value("phrase")
+			  Case mCurrentItem.HasName("relation")
+			    TypeLabel.Text = "IRI Relation:"
+			    ItemName.Text = mCurrentItem.Value("relation")
+			  End Select
+			  DescText.Text = ReplaceAll(mCurrentItem.Value("description"), """", "")
+			  If DescText.Text = "" Then DescText.Text = "No description available."
+			  SpecLink.Text = mCurrentItem.Value("spec_title")
+			  mCurrentItem = Me.mCurrentItem
+			End Set
+		#tag EndSetter
+		CurrentItem As JSONItem
+	#tag EndComputedProperty
 
-	#tag Hook, Flags = &h0
-		Event ViewSpec()
-	#tag EndHook
+	#tag Property, Flags = &h21
+		Private mCurrentItem As JSONItem
+	#tag EndProperty
 
 
 #tag EndWindowCode
@@ -281,14 +332,20 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Open()
-		  Me.Text = RaiseEvent GetSpec()
+		  If CurrentItem <> Nil Then
+		    Me.Text = CurrentItem.Value("spec_title")
+		  Else
+		    Me.Text = "No Selection"
+		  End If
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  RaiseEvent ViewSpec()
+		  If CurrentItem <> Nil Then 
+		    ShowURL(CurrentItem.Value("spec_href"))
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
