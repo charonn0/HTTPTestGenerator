@@ -361,13 +361,16 @@ End
 		  Response.Path = TheURL
 		  ResponseMain1.Code.Text = Str(Response.StatusCode) + " " + HTTP.CodeToMessage(Response.StatusCode)
 		  Select Case Response.StatusCode
-		  Case 200, 206
+		  Case 100 To 199
+		    ResponseMain1.Code.TextColor = &c4F4F4F00
+		  Case 200 To 299
 		    ResponseMain1.Code.TextColor = &c00808000
-		  Case 301, 302, 304
+		  Case 300 To 399
 		    ResponseMain1.Code.TextColor = &c00800000
-		  Case 204, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 422, 426, 500, 501, 502, 503, 504, 505, 506, 509
+		  Case 400 To 499
 		    ResponseMain1.Code.TextColor = &cFF000000
-		    
+		  Case 500 To 599
+		    ResponseMain1.Code.TextColor = &cFF800000
 		  End Select
 		  ResponseMain1.ResponseHeaders.DeleteAllRows
 		  For i As Integer = 0 To Response.Headers.Count - 1
@@ -602,7 +605,8 @@ End
 		  
 		  Dim links() As String = ExtractLinks(Out, TheURL.ToString)
 		  ResponseMain1.OutputViewer1.ShowLinks(links)
-		  If Response.StatusCode = 301 Or Response.StatusCode = 302 Then
+		  Select Case Response.StatusCode
+		  Case 301, 302, 307, 308
 		    Dim redir As String = Response.GetHeader("Location")
 		    Dim u As New HTTP.URI(redir)
 		    If u.Host = "" Then
@@ -617,7 +621,7 @@ End
 		    Else
 		      PrintLog("Not following.")
 		    End If
-		  ElseIf Response.StatusCode = 401 Then
+		  Case 401
 		    PrintLog("Not authenticated.")
 		    Dim r As String = NthField(Response.Headers.Value("WWW-Authenticate"), "=", 2)
 		    Dim p As Pair = Authenicator.Authenticate(r, Response.Path.Scheme = "https")
@@ -628,7 +632,7 @@ End
 		      RequestMain1.RequestHeaders.RowTag(RequestMain1.RequestHeaders.LastIndex) = "Authorization":s
 		      Perform()
 		    End If
-		  End If
+		  End Select
 		  'Self.Refresh
 		End Sub
 	#tag EndEvent
