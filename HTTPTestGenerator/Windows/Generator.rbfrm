@@ -14,7 +14,7 @@ Begin Window Generator
    MaxHeight       =   32000
    MaximizeButton  =   True
    MaxWidth        =   32000
-   MenuBar         =   0
+   MenuBar         =   1378869247
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   True
@@ -162,6 +162,24 @@ End
 		  
 		End Sub
 	#tag EndEvent
+
+
+	#tag MenuHandler
+		Function SpecIndexMenu() As Boolean Handles SpecIndexMenu.Action
+			SpecIndex.ShowMe
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function WebServerMenu() As Boolean Handles WebServerMenu.Action
+			Dim serv As New MiniServer
+			serv.Show
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
 
 
 	#tag Method, Flags = &h0
