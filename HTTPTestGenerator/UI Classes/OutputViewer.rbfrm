@@ -41,7 +41,7 @@ Begin ContainerControl OutputViewer
       Panels          =   ""
       Scope           =   0
       SmallTabs       =   True
-      TabDefinition   =   "HTTP Conversation\rRequest Body\rResponse Body\rHyperlinks\rLocal Webserver"
+      TabDefinition   =   "HTTP Conversation\rRequest Body\rResponse Body\rHyperlinks"
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
@@ -147,34 +147,6 @@ Begin ContainerControl OutputViewer
          Visible         =   True
          Width           =   570
          _ScrollWidth    =   -1
-      End
-      Begin MiniServer MiniServer1
-         AcceptFocus     =   ""
-         AcceptTabs      =   True
-         AutoDeactivate  =   True
-         BackColor       =   &hFFFFFF
-         Backdrop        =   ""
-         Enabled         =   True
-         EraseBackground =   True
-         HasBackColor    =   False
-         Height          =   158
-         HelpTag         =   ""
-         InitialParent   =   "TabPanel1"
-         Left            =   10
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Scope           =   0
-         Squelch         =   1
-         TabIndex        =   0
-         TabPanelIndex   =   5
-         TabStop         =   True
-         Top             =   34
-         UseFocusRing    =   ""
-         Visible         =   True
-         Width           =   566
       End
       Begin TextArea RequestData
          AcceptTabs      =   ""
