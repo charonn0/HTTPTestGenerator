@@ -127,12 +127,45 @@ Begin Window SpecIndex
       Visible         =   True
       Width           =   466
    End
+   Begin PushButton PushButton1
+      AutoDeactivate  =   True
+      Bold            =   ""
+      ButtonStyle     =   0
+      Cancel          =   True
+      Caption         =   "Untitled"
+      Default         =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   -53
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   3
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   -61
+      Underline       =   ""
+      Visible         =   True
+      Width           =   80
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
 	#tag Event
 		Sub Open()
+		  Me.Left = Generator.Left + (Generator.Width - Me.Width) / 2
+		  Me.Top = Generator.Top + (Generator.Height - Me.Height) / 2
 		  Call HeaderDescription("")
 		  Call MethodDescription("")
 		  Call RelationDescription("")
@@ -181,7 +214,11 @@ End
 		Sub ShowHeader(HeaderName As String)
 		  ShowMe()
 		  CurrentItem = HeaderDescription(HeaderName)
-		  HelpIndex.Expanded(0) = True
+		  If CurrentItem = Nil Then
+		    Call MsgBox("No specification found for: " + HeaderName, 48, "Index entry not found")
+		  Else
+		    HelpIndex.Expanded(0) = True
+		  End If
 		  
 		  
 		End Sub
@@ -202,7 +239,11 @@ End
 		Sub ShowMethod(MethodName As String)
 		  ShowMe()
 		  CurrentItem = MethodDescription(MethodName)
-		  HelpIndex.Expanded(2) = True
+		  If CurrentItem = Nil Then
+		    Call MsgBox("No specification found for: " + MethodName, 48, "Index entry not found")
+		  Else
+		    HelpIndex.Expanded(2) = True
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -210,7 +251,11 @@ End
 		Sub ShowRelation(RelationName As String)
 		  ShowMe()
 		  CurrentItem = RelationDescription(RelationName)
-		  HelpIndex.Expanded(3) = True
+		  If CurrentItem = Nil Then
+		    Call MsgBox("No specification found for: " + RelationName, 48, "Index entry not found")
+		  Else
+		    HelpIndex.Expanded(3) = True
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -218,7 +263,11 @@ End
 		Sub ShowStatusCode(StatusCode As Integer)
 		  ShowMe()
 		  CurrentItem = StatusCodeDescription(StatusCode)
-		  HelpIndex.Expanded(1) = True
+		  If CurrentItem = Nil Then
+		    Call MsgBox("No specification found for: " + Format(StatusCode, "000"), 48, "Index entry not found")
+		  Else
+		    HelpIndex.Expanded(1) = True
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -390,6 +439,13 @@ End
 		  SpecViewer1.Width = Self.Width - SpecViewer1.Left
 		  HelpIndex.Width = Me.Left
 		  Me.Invalidate
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton1
+	#tag Event
+		Sub Action()
+		  Self.Close
 		End Sub
 	#tag EndEvent
 #tag EndEvents
