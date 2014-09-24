@@ -168,7 +168,7 @@ End
 		  Me.Top = Generator.Top + (Generator.Height - Me.Height) / 2
 		  Call HeaderDescription("")
 		  Call MethodDescription("")
-		  Call RelationDescription("")
+		  'Call RelationDescription("")
 		  Call StatusCodeDescription(0)
 		End Sub
 	#tag EndEvent
@@ -224,14 +224,16 @@ End
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Sub ShowMe()
+	#tag Method, Flags = &h0
+		Sub ShowMe()
 		  Me.Show
-		  HelpIndex.DeleteAllRows
-		  HelpIndex.AddFolder("Headers")
-		  HelpIndex.AddFolder("Status Codes")
-		  HelpIndex.AddFolder("Request Methods")
-		  HelpIndex.AddFolder("IRI Relations")
+		  If HelpIndex.ListCount < 1 Then
+		    HelpIndex.DeleteAllRows
+		    HelpIndex.AddFolder("Headers")
+		    HelpIndex.AddFolder("Status Codes")
+		    HelpIndex.AddFolder("Request Methods")
+		    'HelpIndex.AddFolder("IRI Relations")
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -427,6 +429,11 @@ End
 		  Case Me.RowTag(Me.ListIndex) <> Nil And Me.RowTag(Me.ListIndex) IsA JSONItem
 		    CurrentItem = Me.RowTag(Me.ListIndex)
 		  End Select
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub DoubleClick()
+		  If Me.ListIndex > -1 Then Me.Expanded(Me.ListIndex) = Not Me.Expanded(Me.ListIndex)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

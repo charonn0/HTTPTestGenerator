@@ -45,7 +45,7 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
-      Text            =   "Header Name:"
+      Text            =   "No Selection:"
       TextAlign       =   2
       TextColor       =   &h000000
       TextFont        =   "System"
@@ -121,7 +121,7 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
-      Text            =   "RFC 0000"
+      Text            =   "No Selection"
       TextAlign       =   0
       TextColor       =   &h000000FF
       TextFont        =   "System"
@@ -261,8 +261,8 @@ End
 			  mCurrentItem = value
 			  Select Case True
 			  Case mCurrentItem = Nil
-			    TypeLabel.Text = "Unknown Item:"
-			    ItemName.Text = "No Value"
+			    TypeLabel.Text = "No Selection:"
+			    ItemName.Text = ""
 			    Return
 			  Case mCurrentItem.HasName("method")
 			    TypeLabel.Text = "Request Method:"
@@ -331,19 +331,10 @@ End
 		End Function
 	#tag EndEvent
 	#tag Event
-		Sub Open()
-		  If CurrentItem <> Nil Then
-		    Me.Text = CurrentItem.Value("spec_title")
-		  Else
-		    Me.Text = "No Selection"
-		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  If CurrentItem <> Nil Then 
+		  If CurrentItem <> Nil Then
 		    ShowURL(CurrentItem.Value("spec_href"))
 		  End If
 		End Sub
