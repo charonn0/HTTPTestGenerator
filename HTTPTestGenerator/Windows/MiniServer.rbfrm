@@ -210,7 +210,7 @@ Begin Window MiniServer
       Top             =   0
       Width           =   32
    End
-   Begin TextArea HTTPLog
+   Begin HREFArea HTTPLog
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -287,7 +287,7 @@ End
 
 	#tag Method, Flags = &h21
 		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
-		  msgs.Append(ClientRequest.ToString(True):IsARequest)
+		  msgs.Append(ClientRequest)
 		  Select Case ClientRequest.Method
 		  Case RequestMethod.GET, RequestMethod.HEAD
 		    Dim item As FolderItem = HTTP.FindFile(Me.DocumentRoot, ClientRequest.Path.Path)
@@ -342,6 +342,7 @@ End
 		    ResponseDocument.Header("Content-Length") = Str(ResponseDocument.MessageBody.LenB)
 		    Return True
 		  End Select
+		  
 		  LogTimer.Mode = Timer.ModeSingle
 		End Function
 	#tag EndMethod
@@ -360,7 +361,7 @@ End
 	#tag Method, Flags = &h21
 		Private Sub MessageSentHandler(Sender As HTTP.ClientHandler, Message As HTTP.Response)
 		  #pragma Unused Sender
-		  msgs.Append(Message.ToString(True):IsAResponse)
+		  msgs.Append(Message)
 		  LogTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndMethod
@@ -371,7 +372,7 @@ End
 		  sr.Font = App.FixedWidthFont
 		  sr.Text = Text
 		  sr.TextColor = TextColor
-		  HTTPLog.StyledText.AppendStyleRun(sr)
+		  HTTPLog.PrintOther(sr)
 		  #If TargetWin32 Then
 		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
 		    Const SB_BOTTOM = 7
@@ -422,7 +423,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected msgs() As Pair
+		Protected msgs() As HTTP.Message
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -432,13 +433,6 @@ End
 	#tag Property, Flags = &h21
 		Private Socks() As WeakRef
 	#tag EndProperty
-
-
-	#tag Constant, Name = IsARequest, Type = Double, Dynamic = False, Default = \"1", Scope = Private
-	#tag EndConstant
-
-	#tag Constant, Name = IsAResponse, Type = Double, Dynamic = False, Default = \"2", Scope = Private
-	#tag EndConstant
 
 
 #tag EndWindowCode
@@ -586,20 +580,42 @@ End
 		  End Select
 		End Function
 	#tag EndEvent
+	#tag Event
+		Function ConstructContextualLinkMenu(LinkValue As Variant, LinkText As String, Base As MenuItem, X As Integer, Y As Integer) As Boolean
+		  Break
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualLinkMenuAction(Hititem As MenuItem) As Boolean
+		  Break
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub ClickLink(LinkValue As Variant, LinkText As String)
+		  Select Case LinkValue
+		  Case IsA HTTP.Request
+		    RawEditor.ViewRaw(HTTP.Request(LinkValue).MessageBody)
+		  Case IsA HTTP.Response
+		    RawEditor.ViewRaw(HTTP.Response(LinkValue).MessageBody)
+		  Else
+		    Break
+		  End Select
+		End Sub
+	#tag EndEvent
 #tag EndEvents
 #tag Events LogTimer
 	#tag Event
 		Sub Action()
 		  While msgs.Ubound > -1
-		    Dim p As Pair = msgs(0)
+		    Dim p As Variant = msgs(0)
 		    msgs.Remove(0)
-		    Select Case p.Right
-		    Case IsARequest
-		      PrintLog(p.Left, &c0000FF00)
-		    Case IsAResponse
-		      PrintLog(p.Left, &c00800000)
+		    Select Case p
+		    Case IsA HTTP.Request
+		      HTTPLog.PrintRequest(p)
+		    Case IsA HTTP.Response
+		      HTTPLog.PrintResponse(p)
 		    Else
-		      PrintLog(p.Left, &c00000000)
+		      PrintLog(p, &c00000000)
 		    End Select
 		  Wend
 		End Sub

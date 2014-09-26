@@ -36,14 +36,14 @@ Protected Class Message
 	#tag Method, Flags = &h1
 		Protected Function ToString(HeadersOnly As Boolean) As String
 		  Dim data As String
-		  If Not HeadersOnly Then data = Me.MessageBody
 		  If mHeaders.Count > 0 Then
 		    If Me IsA HTTP.Request Then
-		      data = mHeaders.Source + CRLF + CRLF + data
+		      data = mHeaders.Source + CRLF + CRLF
 		    Else
-		      data = mHeaders.Source(True) + CRLF + CRLF + data
+		      data = mHeaders.Source(True) + CRLF + CRLF
 		    End If
 		  End If
+		  If Not HeadersOnly Then data = data + Me.MessageBody
 		  Return data
 		End Function
 	#tag EndMethod

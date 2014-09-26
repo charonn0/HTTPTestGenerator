@@ -24,6 +24,7 @@ Inherits HTTP.Message
 		  
 		  data = Replace(data, line + CRLF, "")
 		  Dim h As String = NthField(data, CRLF + CRLF, 1)
+		  data = Replace(data, h + CRLF + CRLF, "")
 		  // Calling the overridden superclass constructor.
 		  Super.Constructor(New Headers(h))
 		  Me.MessageBody = Replace(data, h, "")

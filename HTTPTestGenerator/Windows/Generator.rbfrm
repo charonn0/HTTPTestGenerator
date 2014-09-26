@@ -357,22 +357,17 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Sub PrintOutput(Req As String, Resp As String)
+		Protected Sub PrintOutput(Req As HTTP.Request, Resp As HTTP.Response)
 		  'Req = Replace(Req, Request.MethodName, "<link=" + Request.MethodName + ">" + Request.MethodName + "</link>")
 		  
-		  Dim t As TextArea = ResponseMain1.OutputViewer1.OutputLog
+		  Dim t As HREFArea = ResponseMain1.OutputViewer1.OutputLog
 		  Dim sr As New StyleRun
 		  sr.Font = App.FixedWidthFont
 		  sr.Text = "-----" + Format(Sequence, "000000000") + "-----" + CRLF
-		  sr.TextColor = &c80808000
-		  t.StyledText.AppendStyleRun(sr)
-		  sr.Text = NthField(req, CRLF + CRLF, 1) + CRLF + CRLF
-		  sr.TextColor = &c00800000
-		  sr.Font = t.TextFont
-		  t.StyledText.AppendStyleRun(sr)
-		  sr.Text = resp
-		  sr.TextColor = &c0000FF00
-		  t.StyledText.AppendStyleRun(sr)
+		  t.PrintOther(sr)
+		  t.PrintRequest(Req)
+		  t.PrintResponse(Resp)
+		  
 		  #If TargetWin32 Then
 		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
 		    Const SB_BOTTOM = 7
@@ -602,7 +597,7 @@ End
 		  Dim resp, out As String
 		  resp = NthField(Output, CRLF + CRLF, 1) + CRLF + CRLF
 		  Out = Replace(Output, resp, "")
-		  PrintOutput(RawText, resp)
+		  PrintOutput(Request, Response)
 		  If Response.HasHeader("Content-Type") Then
 		    Dim tp As ContentType = Response.Header("Content-Type")
 		    If tp.CharSet <> Nil Then

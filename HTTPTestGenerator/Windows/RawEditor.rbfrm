@@ -152,6 +152,14 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub ViewRaw(Message As String)
+		  NewRaw = Message
+		  TextArea1.Text = NewRaw
+		  Me.ShowModal
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h21
 		Private NewRaw As String

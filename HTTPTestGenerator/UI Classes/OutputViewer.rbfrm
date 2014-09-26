@@ -50,7 +50,7 @@ Begin ContainerControl OutputViewer
       TextUnit        =   0
       Top             =   3
       Underline       =   ""
-      Value           =   3
+      Value           =   0
       Visible         =   True
       Width           =   582
       Begin TextArea ResponseData
@@ -194,7 +194,7 @@ Begin ContainerControl OutputViewer
          Visible         =   True
          Width           =   566
       End
-      Begin TextArea OutputLog
+      Begin HREFArea OutputLog
          AcceptTabs      =   False
          Alignment       =   0
          AutoDeactivate  =   True
@@ -378,11 +378,6 @@ End
 #tag EndEvents
 #tag Events OutputLog
 	#tag Event
-		Sub Open()
-		  Me.TextFont = App.FixedWidthFont
-		End Sub
-	#tag EndEvent
-	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
 		  #pragma Unused X
 		  #pragma Unused Y
@@ -398,5 +393,17 @@ End
 		    Return True
 		  End Select
 		End Function
+	#tag EndEvent
+	#tag Event
+		Sub ClickLink(LinkValue As Variant, LinkText As String)
+		  Select Case LinkValue
+		  Case IsA HTTP.Request
+		    RawEditor.ViewRaw(HTTP.Request(LinkValue).MessageBody)
+		  Case IsA HTTP.Response
+		    RawEditor.ViewRaw(HTTP.Response(LinkValue).MessageBody)
+		  Else
+		    Break
+		  End Select
+		End Sub
 	#tag EndEvent
 #tag EndEvents
