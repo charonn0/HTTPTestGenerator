@@ -6,17 +6,22 @@ Inherits HTTP.Response
 		  Me.Target = Target
 		  Me.RequestPath = New URI(ServerPath)
 		  Super.Constructor("HTTP/1.0 200 OK" + CRLF)
-		  Me.MIMEType = ContentType.GetType("index.html")
-		  '200, "text/html", HTTP.RequestMethod.GET, "")
-		  Me.Method = HTTP.RequestMethod.GET
-		  Dim d As New Date
-		  d.TotalSeconds = d.TotalSeconds + 60
-		  Me.Expires = d
+		  Me.ContentType = "text/html"
+		  'Dim d As New Date
+		  'd.TotalSeconds = d.TotalSeconds + 60
+		  'Me.Expires = d
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
 		Private Function DoSorts(SubSort As Integer, Direction As Integer) As FolderItem()
+		  #If Not DebugBuild Then
+		    #pragma BoundsChecking Off
+		    #pragma NilObjectChecking Off
+		    #pragma BackgroundTasks Off
+		    #pragma StackOverflowChecking Off
+		  #endif
+		  
 		  Dim items() As FolderItem
 		  If Target = Nil Then Return items
 		  Dim sorter() As Integer
@@ -32,7 +37,7 @@ Inherits HTTP.Response
 		    If item.Directory Then
 		      dirtypes.Append("0000AAAA")
 		    Else
-		      Dim type As ContentType = ContentType.GetType(item.Name)
+		      Dim type As ContentType = item
 		      dirtypes.Append(type.ToString)
 		    End If
 		    
@@ -76,6 +81,13 @@ Inherits HTTP.Response
 
 	#tag Method, Flags = &h0
 		Sub Populate()
+		  #If Not DebugBuild Then
+		    #pragma BoundsChecking Off
+		    #pragma NilObjectChecking Off
+		    #pragma BackgroundTasks Off
+		    #pragma StackOverflowChecking Off
+		  #endif
+		  
 		  Dim pagedata As String = IndexPage
 		  Dim timestart, timestop As Double
 		  timestart = Microseconds
@@ -123,21 +135,19 @@ Inherits HTTP.Response
 		      Name = Replace(Name, snip, "...")
 		    Wend
 		    Dim c As String
-		    If i Mod 2 = 0 Then
-		      c = "#C0C0C0"
+		    If i Mod 2 <> 0 Then
+		      c = "#FFFFFF"
 		    Else
-		      c = "#A7A7A7"
+		      c = "#C0C0C0"
 		    End If
 		    line = ReplaceAll(line, "%ROWCOLOR%", c)
-		    Dim type As ContentType = ContentType.GetType(item.Name)
+		    Dim type As ContentType = item
 		    line = ReplaceAll(line, "%FILEPATH%", href)
 		    line = ReplaceAll(line, "%FILENAME%", name)
 		    if item.Directory Then
-		      icon = ContentType.GetIcon("folder")
 		      line = ReplaceAll(line, "%FILESIZE%", " - ")
 		      line = ReplaceAll(line, "%FILETYPE%", "Directory")
 		    Else
-		      icon = ContentType.GetIcon(NthField(item.name, ".", CountFields(item.name, ".")))
 		      line = ReplaceAll(line, "%FILESIZE%", HTTP.FormatBytes(item.Length))
 		      line = ReplaceAll(line, "%FILETYPE%", type.ToString)
 		    End if
@@ -147,17 +157,15 @@ Inherits HTTP.Response
 		  Next
 		  If RequestPath.Path <> "/" Then
 		    Dim s As String = RequestPath.Parent.Path
-		    PageData = ReplaceAll(PageData, "%UPLINK%", "<img src=""/" + WebServer.VirtualRoot + "/img/upicon.png"" width=22 height=22 /><a href=""" + s + """>Parent Directory</a>")
+		    PageData = ReplaceAll(PageData, "%UPLINK%", "<a href=""" + s + """>Parent Directory</a>")
 		  Else
 		    PageData = ReplaceAll(PageData, "%UPLINK%", "")
 		  End If
 		  Dim head As String = TableHeader
 		  If dir = 0 Then
-		    head = ReplaceAll(head, "%SORTICON%", "/" + WebServer.VirtualRoot + "/img/sorticon.png")
-		    head = ReplaceAll(head, "%DIRECTION%", "&dir=1")
+		    head = ReplaceAll(head, "%DIRECTION%", "&amp;dir=1")
 		  Else
-		    head = ReplaceAll(head, "%SORTICON%", "/" + WebServer.VirtualRoot + "/img/sortup.png")
-		    head = ReplaceAll(head, "%DIRECTION%", "&dir=0")
+		    head = ReplaceAll(head, "%DIRECTION%", "&amp;dir=0")
 		  End If
 		  pagedata = Replace(pagedata, "%TABLE%", head + Join(lines, EndOfLine))
 		  pagedata = ReplaceAll(pagedata, "%PAGETITLE%", "Index of " + DecodeURLComponent(RequestPath.Path))
@@ -173,9 +181,9 @@ Inherits HTTP.Response
 		  Dim timestamp As String = "This page was generated in " + Format(timestart / 1000, "###,##0.0#") + "ms."
 		  pagedata = Replace(pagedata, "%TIME%", timestamp)
 		  
-		  Me.MessageBody = pagedata
-		  Me.MIMEType = "text/html; CharSet=UTF-8"
-		  Me.SetHeader("Content-Length") = Str(pagedata.LenB)
+		  Me.MessageBody = DefineEncoding(pagedata, Encodings.UTF8)
+		  Me.ContentType = "text/html"
+		  Me.Header("Content-Length") = Str(pagedata.LenB)
 		  
 		  
 		  
@@ -192,7 +200,7 @@ Inherits HTTP.Response
 	#tag EndProperty
 
 
-	#tag Constant, Name = IndexPage, Type = String, Dynamic = False, Default = \"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r<html xmlns\x3D\"http://www.w3.org/1999/xhtml\">\r<head>\r<title>%PAGETITLE%</title>\r</head>\r\r<body link\x3D\"#0000FF\" vlink\x3D\"#004080\" alink\x3D\"#FF0000\">\r<h1>%PAGETITLE%</h1><h2>%ITEMCOUNT%</h2>\r<p>%UPLINK%</p>\r<table width\x3D\"90%\" border\x3D\"0\" cellspacing\x3D\"5\" cellpadding\x3D\"1\">\r%TABLE%\r</table>\r<hr />\r<p style\x3D\"font-size: x-small;\">Powered by: %DAEMONVERSION% <br />\r%TIME% <br /> \r%COMPRESSION% <br />\r%SECURITY%\r</p>\r</body>\r</html>", Scope = Private
+	#tag Constant, Name = IndexPage, Type = String, Dynamic = False, Default = \"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r<html xmlns\x3D\"http://www.w3.org/1999/xhtml\" lang\x3D\"en\">\r<head>\r<title>%PAGETITLE%</title>\r<style type\x3D\"text/css\">\r<!--\ra:link {\r\tcolor: #0000FF;\r\ttext-decoration: none;\r}\ra:visited {\r\ttext-decoration: none;\r\tcolor: #004080;\r}\ra:hover {\r\ttext-decoration: underline;\r\tcolor: #009966;\r}\ra:active {\r\ttext-decoration: none;\r\tcolor: #FF0000;\r}\r-->\r</style>\r</head>\r\r<body>\r<h1>%PAGETITLE%</h1><h2>%ITEMCOUNT%</h2>\r<p>%UPLINK%</p>\r<table width\x3D\"90%\" border\x3D\"0\" cellspacing\x3D\"5\" cellpadding\x3D\"4\">\r%TABLE%\r</table>\r<hr />\r<p><em>Powered by: %DAEMONVERSION% <br />\r%TIME%</em>\r</p>\r</body>\r</html>", Scope = Private
 	#tag EndConstant
 
 	#tag Constant, Name = Sort_Alpha, Type = Double, Dynamic = False, Default = \"1", Scope = Public
@@ -210,42 +218,14 @@ Inherits HTTP.Response
 	#tag Constant, Name = Sort_Type, Type = Double, Dynamic = False, Default = \"2", Scope = Public
 	#tag EndConstant
 
-	#tag Constant, Name = TableHeader, Type = String, Dynamic = False, Default = \"<tr>\r    <th bgcolor\x3D\"#FFFFFF\" scope\x3D\"row\"></th>\r    <td bgcolor\x3D\"#FFFFFF\"><a href\x3D\"\?sort\x3DA%DIRECTION%\"><img src\x3D\"%SORTICON%\" alt\x3D\"Sort alphabetically\" width\x3D16 height\x3D16 border\x3D\"0\" />Name</a></td>\r    <td bgcolor\x3D\"#FFFFFF\"><a href\x3D\"\?sort\x3DD%DIRECTION%\"><img src\x3D\"%SORTICON%\" alt\x3D\"Sort by date\" width\x3D16 height\x3D16 border\x3D\"0\" />Last modified</a> </td>\r    <td bgcolor\x3D\"#FFFFFF\"><a href\x3D\"\?sort\x3DS%DIRECTION%\"><img src\x3D\"%SORTICON%\" alt\x3D\"Sort by size\" width\x3D16 height\x3D16 border\x3D\"0\" />Size</a></td>\r    <td bgcolor\x3D\"#FFFFFF\"><a href\x3D\"\?sort\x3DT%DIRECTION%\"><img src\x3D\"%SORTICON%\" alt\x3D\"Sort by type\" width\x3D16 height\x3D16 border\x3D\"0\" />Description</a></td>\r  </tr>", Scope = Private
+	#tag Constant, Name = TableHeader, Type = String, Dynamic = False, Default = \"<tr>\r    <td bgcolor\x3D\"#FFFFFF\"><a href\x3D\"\?sort\x3DA%DIRECTION%\">Name</a></td>\r    <td bgcolor\x3D\"#FFFFFF\"><a href\x3D\"\?sort\x3DD%DIRECTION%\">Last modified</a> </td>\r    <td bgcolor\x3D\"#FFFFFF\"><a href\x3D\"\?sort\x3DS%DIRECTION%\">Size</a></td>\r    <td bgcolor\x3D\"#FFFFFF\"><a href\x3D\"\?sort\x3DT%DIRECTION%\">Description</a></td>\r  </tr>", Scope = Private
 	#tag EndConstant
 
-	#tag Constant, Name = TableRow, Type = String, Dynamic = False, Default = \"    <tr>\r    <th width\x3D\"4%\" bgcolor\x3D\"%ROWCOLOR%\" scope\x3D\"row\"><img src\x3D\"%FILEICON%\" width\x3D22 height\x3D22 /></th>\r    <td width\x3D\"47%\" bgcolor\x3D\"%ROWCOLOR%\"><a href\x3D\"%FILEPATH%\">%FILENAME%</a></td>\r    <td width\x3D\"18%\" bgcolor\x3D\"%ROWCOLOR%\">%FILEDATE%</td>\r    <td width\x3D\"7%\" bgcolor\x3D\"%ROWCOLOR%\">%FILESIZE%</td>\r    <td width\x3D\"24%\" bgcolor\x3D\"%ROWCOLOR%\">%FILETYPE%</td>\r    </tr>\r    ", Scope = Private
+	#tag Constant, Name = TableRow, Type = String, Dynamic = False, Default = \"    <tr>\r    <td width\x3D\"51%\" bgcolor\x3D\"%ROWCOLOR%\"><a href\x3D\"%FILEPATH%\">%FILENAME%</a></td>\r    <td width\x3D\"18%\" bgcolor\x3D\"%ROWCOLOR%\">%FILEDATE%</td>\r    <td width\x3D\"7%\" bgcolor\x3D\"%ROWCOLOR%\">%FILESIZE%</td>\r    <td width\x3D\"24%\" bgcolor\x3D\"%ROWCOLOR%\">%FILETYPE%</td>\r    </tr>\r    ", Scope = Private
 	#tag EndConstant
 
 
 	#tag ViewBehavior
-		#tag ViewProperty
-			Name="AuthPassword"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-			InheritedFrom="HTTP.HTTPMessage"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="AuthRealm"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-			InheritedFrom="HTTP.HTTPMessage"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="AuthUsername"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-			InheritedFrom="HTTP.HTTPMessage"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Compressible"
-			Group="Behavior"
-			InitialValue="True"
-			Type="Boolean"
-			InheritedFrom="HTTP.Response"
-		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true
@@ -280,13 +260,6 @@ Inherits HTTP.Response
 			Name="ProtocolVersion"
 			Group="Behavior"
 			Type="Single"
-			InheritedFrom="HTTP.HTTPMessage"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="SessionID"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
 			InheritedFrom="HTTP.HTTPMessage"
 		#tag EndViewProperty
 		#tag ViewProperty

@@ -116,12 +116,12 @@ End
 		    End If
 		  Next
 		  
-		  For Each extension As String In WebServer.MIMETypes.Keys
-		    Dim mime As String = WebServer.MIMETypes.Value(extension)
+		  For Each extension As String In HTTP.MIMETypes.Keys
+		    Dim mime As String = HTTP.MIMETypes.Value(extension)
 		    If skip.IndexOf(mime) > -1 Then Continue
 		    skip.Append(mime)
-		    Dim NewType As ContentType = WebServer.MIMETypes.Value(extension).StringValue
-		    Listbox1.AddRow(WebServer.MIMETypes.Value(extension).StringValue, "", "1.0")
+		    Dim NewType As ContentType = HTTP.MIMETypes.Value(extension).StringValue
+		    Listbox1.AddRow(HTTP.MIMETypes.Value(extension).StringValue, "", "1.0")
 		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeCheckbox
 		    For Each ime As ContentType In im
 		      If ime.Acceptance(NewType) >= 1.0 Then

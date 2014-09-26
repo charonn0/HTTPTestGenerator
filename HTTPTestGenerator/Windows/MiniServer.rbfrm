@@ -197,27 +197,17 @@ Begin Window MiniServer
       Visible         =   True
       Width           =   278
    End
-   Begin WebServer.FileServer Socket
-      AuthenticationRealm=   "Restricted Area"
-      AuthenticationRequired=   ""
-      CertificatePassword=   ""
-      DirectoryBrowsing=   True
-      EnforceContentType=   True
+   Begin ServerSocket Socket
       Height          =   32
       Index           =   -2147483648
-      InitialParent   =   ""
       Left            =   619
       LockedInPosition=   False
       MaximumSocketsConnected=   10
       MinimumSocketsAvailable=   2
       Port            =   0
       Scope           =   0
-      SessionTimeout  =   600
       TabPanelIndex   =   0
-      Threading       =   True
       Top             =   0
-      UseCompression  =   True
-      UseSessions     =   True
       Width           =   32
    End
    Begin TextArea HTTPLog
@@ -266,10 +256,91 @@ Begin Window MiniServer
       Visible         =   True
       Width           =   583
    End
+   Begin Timer LogTimer
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   619
+      LockedInPosition=   False
+      Mode            =   0
+      Period          =   1
+      Scope           =   0
+      TabPanelIndex   =   0
+      Top             =   34
+      Width           =   32
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Method, Flags = &h21
+		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
+		  msgs.Append(ClientRequest.ToString(True):IsARequest)
+		  Select Case ClientRequest.Method
+		  Case RequestMethod.GET, RequestMethod.HEAD
+		    Dim item As FolderItem = HTTP.FindFile(Me.DocumentRoot, ClientRequest.Path.Path)
+		    If item <> Nil And Not item.Exists Then item = Nil
+		    
+		    Select Case True
+		    Case item = Nil
+		      ResponseDocument = HTTP.ErrorPage(404) ' Not Found
+		      
+		    Case item.Directory
+		      If Not Me.DirectoryBrowsing Then
+		        ResponseDocument = HTTP.ErrorPage(403) ' Forbidden
+		      Else
+		        ResponseDocument = New HTTP.DirectoryIndex(item, ClientRequest.Path.ToString)
+		        ResponseDocument.StatusCode = 200
+		        HTTP.DirectoryIndex(ResponseDocument).Populate
+		      End If
+		      
+		    Case ClientRequest.Path.Path = "/" And Not item.Directory
+		      Dim location As String
+		      If Sender.Secure Then
+		        location = "http://" + Sender.LocalAddress + ":" + Format(Sender.Port, "######") + "/" + Item.Name
+		      Else
+		        location = "https://" + Sender.LocalAddress + ":" + Format(Sender.Port, "######") + "/" + Item.Name
+		      End If
+		      ResponseDocument = HTTP.ErrorPage(302, Location) ' Found
+		      
+		    Else
+		      Dim bs As BinaryStream = BinaryStream.Open(item)
+		      ResponseDocument.MessageBody = bs.Read(bs.Length)
+		      bs.Close
+		      ResponseDocument.ContentType = item
+		    End Select
+		    
+		    Select Case True
+		    Case ClientRequest.RangeStart > ResponseDocument.MessageBody.LenB, _
+		      ClientRequest.RangeStart < 0, _
+		      ClientRequest.RangeEnd > ResponseDocument.MessageBody.LenB, _
+		      ClientRequest.RangeEnd < 0, _
+		      ClientRequest.RangeEnd - ClientRequest.RangeStart > ResponseDocument.MessageBody.LenB, _
+		      ClientRequest.RangeEnd < ClientRequest.RangeStart
+		      ResponseDocument = HTTP.ErrorPage(416) ' Requested Range is not Satisfiable
+		      ResponseDocument.Header("Content-Range") = "bytes */" + Str(ResponseDocument.MessageBody.LenB)
+		      
+		    Case ClientRequest.RangeEnd - ClientRequest.RangeStart > 0
+		      ResponseDocument.StatusCode = 206 'partial content
+		      ResponseDocument.Header("Content-Range") = "bytes " + _
+		      Str(ClientRequest.RangeStart) + "-" + Str(ClientRequest.RangeEnd) + "/" + Str(ResponseDocument.MessageBody.LenB)
+		      ResponseDocument.MessageBody = Mid(ResponseDocument.MessageBody, ClientRequest.RangeStart, ClientRequest.RangeEnd - ClientRequest.RangeStart + 1)
+		    End Select
+		    
+		    ResponseDocument.Header("Content-Length") = Str(ResponseDocument.MessageBody.LenB)
+		    Return True
+		  End Select
+		  LogTimer.Mode = Timer.ModeSingle
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub MessageSentHandler(Sender As HTTP.ClientHandler, Message As HTTP.Response)
+		  #pragma Unused Sender
+		  msgs.Append(Message.ToString(True):IsAResponse)
+		  LogTimer.Mode = Timer.ModeSingle
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub PrintLog(Text As String, TextColor As Color)
 		  Dim sr As New StyleRun
@@ -290,9 +361,56 @@ End
 	#tag EndMethod
 
 
+	#tag Property, Flags = &h0
+		AuthenticationRealm As String = """""""""""""""Restricted Area"""""""""""""""
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		AuthenticationRequired As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		CertificateFile As FolderItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		CertificatePassword As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ConnectionType As ConnectionTypes = ConnectionTypes.Insecure
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		DirectoryBrowsing As Boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		DocumentRoot As FolderItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		EnforceContentType As Boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		Logging As Boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected msgs() As Pair
+	#tag EndProperty
+
 	#tag Property, Flags = &h1
 		Protected RequestData As String
 	#tag EndProperty
+
+
+	#tag Constant, Name = IsARequest, Type = Double, Dynamic = False, Default = \"1", Scope = Private
+	#tag EndConstant
+
+	#tag Constant, Name = IsAResponse, Type = Double, Dynamic = False, Default = \"2", Scope = Private
+	#tag EndConstant
 
 
 #tag EndWindowCode
@@ -332,8 +450,8 @@ End
 		        Socket.NetworkInterface = System.GetNetworkInterface(0)
 		      End If
 		      Socket.Port = Val(port.Text)
-		      Socket.DocumentRoot = f
-		      Socket.DirectoryBrowsing = True
+		      DocumentRoot = f
+		      DirectoryBrowsing = True
 		      Me.Caption = "Stop"
 		      PrintLog("Starting server..." + CRLF, &c00000000)
 		      Socket.Listen
@@ -390,21 +508,28 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function TamperRequest(ByRef Request As HTTP.Request) As Boolean
-		  RequestData = Request.ToString
-		  While Right(RequestData, 4) <> CRLF + CRLF
-		    RequestData = RequestData + CRLF
-		  Wend
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function TamperResponse(ByRef Response As HTTP.Response) As Boolean
-		  Dim s As String = NthField(Response.ToString, CRLF + CRLF, 1)
-		  While Right(s, 4) <> CRLF + CRLF
-		    s = s + CRLF
-		  Wend
-		  PrintLog(RequestData, &c0000FF00)
-		  PrintLog(s, &c00800000)
+		Function AddSocket() As TCPSocket
+		  Dim sock As New HTTP.ClientHandler
+		  AddHandler sock.MessageSent, WeakAddressOf MessageSentHandler
+		  AddHandler sock.HandleRequest, WeakAddressOf HandleRequestHandler
+		  If ConnectionType <> ConnectionTypes.Insecure Then
+		    sock.CertificatePassword = CertificatePassword
+		    sock.CertificateFile = CertificateFile
+		    sock.Secure = True
+		  End If
+		  sock.AuthenticationRequired = AuthenticationRequired
+		  sock.AuthenticationRealm = AuthenticationRealm
+		  sock.EnforceContentType = EnforceContentType
+		  Select Case ConnectionType
+		  Case ConnectionTypes.SSLv3
+		    Sock.ConnectionType = SSLSocket.SSLv3
+		  Case ConnectionTypes.TLSv1
+		    Sock.ConnectionType = SSLSocket.TLSv1
+		  Case ConnectionTypes.Insecure
+		    sock.Secure = False
+		  End Select
+		  
+		  Return sock
 		End Function
 	#tag EndEvent
 #tag EndEvents
@@ -430,5 +555,23 @@ End
 		    Return True
 		  End Select
 		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events LogTimer
+	#tag Event
+		Sub Action()
+		  While msgs.Ubound > -1
+		    Dim p As Pair = msgs(0)
+		    msgs.Remove(0)
+		    Select Case p.Right
+		    Case IsARequest
+		      PrintLog(p.Left, &c0000FF00)
+		    Case IsAResponse
+		      PrintLog(p.Left, &c00800000)
+		    Else
+		      PrintLog(p.Left, &c00000000)
+		    End Select
+		  Wend
+		End Sub
 	#tag EndEvent
 #tag EndEvents

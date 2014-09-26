@@ -29,17 +29,22 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   975
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
+      TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   7
+      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -47,8 +52,11 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
+      TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   79
+      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -62,6 +70,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -116,6 +125,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -133,6 +143,7 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -140,8 +151,11 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
+      TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   123
+      Visible         =   True
       Width           =   32
    End
 End
@@ -235,11 +249,10 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub Generate()
-		  mTheURL = Nil
-		  Me.Request = New HTTP.Request()
+		  Me.Request = New HTTP.Request("")
 		  Me.Request.Method = HTTP.Method(RequestMain1.RequestMethod.Text)
 		  If Me.Request.Method = HTTP.RequestMethod.InvalidMethod Then Me.Request.MethodName = RequestMain1.RequestMethod.Text
-		  Me.Request.Path = theURL
+		  Me.Request.Path = New HTTP.URI(RequestMain1.URL.Text)
 		  If Me.Request.path.Path = "" Then Me.Request.path.Path = "/"
 		  Me.Request.ProtocolVersion = CDbl(NthField(RequestMain1.ProtocolVer.Text, "/", 2))
 		  GenerateHeaders()
@@ -254,35 +267,35 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub GenerateHeaders()
-		  If TheURL.Username <> "" Or TheURL.Password <> "" Then
+		  If Request.Path.Username <> "" Or Request.Path.Password <> "" Then
 		    If MsgBox("Auto-set HTTP Authorization header?", 4 + 32, "User credentials detected in URL") = 6 Then
-		      Request.SetHeader("Authorization") = "Basic " + EncodeBase64(TheURL.Username + ":" + TheURL.Password)
+		      Request.Header("Authorization") = "Basic " + EncodeBase64(Request.Path.Username + ":" + Request.Path.Password)
 		    End If
 		  End If
 		  
 		  If Request = Nil Then Generate()
 		  For i As Integer = 0 To RequestMain1.RequestHeaders.ListCount - 1
-		    Me.Request.SetHeader(RequestMain1.RequestHeaders.Cell(i, 0)) = RequestMain1.RequestHeaders.Cell(i, 1)
+		    Me.Request.Header(RequestMain1.RequestHeaders.Cell(i, 0)) = RequestMain1.RequestHeaders.Cell(i, 1)
 		  Next
 		  
 		  If Not Me.Request.HasHeader("Host") And Me.Request.ProtocolVersion >= 1.1 Then
-		    Me.Request.SetHeader("Host") = theURL.Host
+		    Me.Request.Header("Host") = Request.Path.Host
 		  End If
 		  
 		  If Not Me.Request.HasHeader("Connection") And Me.Request.ProtocolVersion >= 1.1 Then
-		    Me.Request.SetHeader("Connection") = "close"
+		    Me.Request.Header("Connection") = "close"
 		  End If
 		  
-		  If Me.Request.Headers.AcceptableTypes.Ubound <= -1 And Not Me.Request.HasHeader("Accept") Then
-		    Me.Request.SetHeader("Accept") = "*/*"
-		  ElseIf Not Me.Request.HasHeader("Accept") Then
-		    Dim output() As String
-		    For Each t As ContentType In Me.Request.Headers.AcceptableTypes
-		      output.Append(t.ToString)
-		    Next
-		    ReDim Me.Request.Headers.AcceptableTypes(-1)
-		    Me.Request.SetHeader("Accept") = Join(output, ",")
-		  End If
+		  'If Me.Request.Headers.AcceptableTypes.Ubound <= -1 And Not Me.Request.HasHeader("Accept") Then
+		  'Me.Request.Header("Accept") = "*/*"
+		  'ElseIf Not Me.Request.HasHeader("Accept") Then
+		  'Dim output() As String
+		  'For Each t As ContentType In Me.Request.Headers.AcceptableTypes
+		  'output.Append(t.ToString)
+		  'Next
+		  'ReDim Me.Request.Headers.AcceptableTypes(-1)
+		  'Me.Request.Header("Accept") = Join(output, ",")
+		  'End If
 		End Sub
 	#tag EndMethod
 
@@ -293,14 +306,14 @@ End
 		  Output = ""
 		  Generate()
 		  Sock.Close
-		  Sock.Address = theURL.Host
+		  Sock.Address = Request.Path.Host
 		  If Request.Path.Scheme = "https" Then
 		    Sock.Secure = True
 		  Else
 		    Sock.Secure = False
 		  End If
-		  If theURL.Port > 0 Then
-		    Sock.Port = theURL.Port
+		  If Request.Path.Port > 0 Then
+		    Sock.Port = Request.Path.Port
 		  ElseIf Sock.Secure Then
 		    sock.Port = 443
 		  Else
@@ -308,9 +321,9 @@ End
 		  End If
 		  
 		  If Sock.Secure Then
-		    PrintLog("Attempting a secure connection to '" + TheURL.Host + "' on port " + Str(Sock.Port) + "...")
+		    PrintLog("Attempting a secure connection to '" + Request.Path.Host + "' on port " + Str(Sock.Port) + "...")
 		  Else
-		    PrintLog("Attempting a connection to '" + TheURL.Host + "' on port " + Str(Sock.Port) + "...")
+		    PrintLog("Attempting a connection to '" + Request.Path.Host + "' on port " + Str(Sock.Port) + "...")
 		  End If
 		  
 		  Sock.Connect()
@@ -376,7 +389,7 @@ End
 	#tag Method, Flags = &h1000
 		Sub Update(Raw As String)
 		  Response = New HTTP.Response(Raw)
-		  Response.Path = TheURL
+		  Response.Path = New HTTP.URI(Request.Path)
 		  ResponseMain1.Code.Text = Str(Response.StatusCode) + " " + HTTP.CodeToMessage(Response.StatusCode)
 		  Select Case Response.StatusCode
 		  Case 100 To 199
@@ -402,7 +415,7 @@ End
 		  'ResponseMain1.CookiesButton.Visible = Response.Headers.CookieCount > 0
 		  ResponseMain1.CookieList.DeleteAllRows
 		  For i As Integer = 0 To Response.Headers.CookieCount - 1
-		    Dim c As HTTP.Cookie = Response.Headers.Cookie(i)
+		    Dim c As Cookie = Response.Headers.Cookie(i)
 		    ResponseMain1.CookieList.AddRow("")
 		    Dim d As New Date
 		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 0) = c.Name
@@ -426,7 +439,7 @@ End
 		    ResponseMain1.CookieList.RowTag(ResponseMain1.CookieList.LastIndex) = c
 		  Next
 		  
-		  Self.Title = "HTTP Request Generator - Viewing '" + TheURL.ToString + "'"
+		  Self.Title = "HTTP Request Generator - Viewing '" + Request.Path.ToString + "'"
 		  If Sock.IsConnected Then
 		    'ResponseMain1.IPAddress1.Text = "Open"
 		    'ResponseMain1.IPAddress.TextColor = &c00804000
@@ -455,10 +468,6 @@ End
 
 	#tag Property, Flags = &h21
 		Private mSequence As Integer
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mTheURL As HTTP.URI
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -503,18 +512,6 @@ End
 	#tag Property, Flags = &h21
 		Private SplitterThumb As Picture
 	#tag EndProperty
-
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  If mTheURL = Nil Then
-			    mTheURL = New HTTP.URI(RequestMain1.URL.Text)
-			  End If
-			  return mTheURL
-			End Get
-		#tag EndGetter
-		TheURL As HTTP.URI
-	#tag EndComputedProperty
 
 
 #tag EndWindowCode
@@ -607,13 +604,13 @@ End
 		  Out = Replace(Output, resp, "")
 		  PrintOutput(RawText, resp)
 		  If Response.HasHeader("Content-Type") Then
-		    Dim tp As ContentType = Response.GetHeader("Content-Type")
+		    Dim tp As ContentType = Response.Header("Content-Type")
 		    If tp.CharSet <> Nil Then
 		      Out = DefineEncoding(Out, tp.CharSet)
 		    End If
 		  End If
 		  
-		  If Response.MIMEType = "message/http" Then
+		  If Response.ContentType = "message/http" Then
 		    out = DefineEncoding(out, Encodings.UTF8)
 		    out = ReplaceAll(out, CRLF, &u00B6 + EndOfLine.Windows) ' pilcrow
 		  End If
@@ -621,14 +618,14 @@ End
 		  ResponseMain1.OutputViewer1.ResponseData.Text = out
 		  ResponseMain1.OutputViewer1.RequestData.Text = Request.MessageBody
 		  
-		  Dim links() As String = ExtractLinks(Out, TheURL.ToString)
+		  Dim links() As String = ExtractLinks(Out, RequestMain1.URL.Text)
 		  ResponseMain1.OutputViewer1.ShowLinks(links)
 		  Select Case Response.StatusCode
 		  Case 301, 302, 307, 308
-		    Dim redir As String = Response.GetHeader("Location")
+		    Dim redir As String = Response.Header("Location")
 		    Dim u As New HTTP.URI(redir)
 		    If u.Host = "" Then
-		      u = New HTTP.URI(TheURL.ToString)
+		      u = New HTTP.URI(Request.Path)
 		      u.Path = redir
 		    End If
 		    PrintLog("Redirect (" + Str(Response.StatusCode) + "): " + u.ToString)
@@ -641,7 +638,7 @@ End
 		    End If
 		  Case 401
 		    PrintLog("Not authenticated.")
-		    Dim r As String = NthField(Response.Headers.Value("WWW-Authenticate"), "=", 2)
+		    Dim r As String = NthField(Response.Header("WWW-Authenticate"), "=", 2)
 		    Dim p As Pair = Authenicator.Authenticate(r, Response.Path.Scheme = "https")
 		    If p <> Nil Then
 		      PrintLog("Authenticating...")

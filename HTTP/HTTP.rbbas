@@ -1,5 +1,653 @@
 #tag Module
-Protected Module WebServer
+Protected Module HTTP
+	#tag Method, Flags = &h1
+		Protected Function CodeToMessage(Code As Integer) As String
+		  Select Case Code
+		  Case 100
+		    Return "Continue"
+		    
+		  Case 101
+		    Return "Switching Protocols"
+		    
+		  Case 102
+		    Return "Processing"
+		    
+		  Case 200
+		    Return "OK"
+		    
+		  Case 201
+		    Return "Created"
+		    
+		  Case 202
+		    Return "Accepted"
+		    
+		  Case 203
+		    Return "Non-Authoritative Information"
+		    
+		  Case 204
+		    Return "No Content"
+		    
+		  Case 205
+		    Return "Reset Content"
+		    
+		  Case 206
+		    Return "Partial Content"
+		    
+		  Case 207
+		    Return "Multi-Status"
+		    
+		  Case 208
+		    Return "Already Reported"
+		    
+		  Case 226
+		    Return "IM Used"
+		    
+		  Case 300
+		    Return "Multiple Choices"
+		    
+		  Case 301
+		    Return "Moved Permanently"
+		    
+		  Case 302
+		    Return "Found"
+		    
+		  Case 303
+		    Return "See Other"
+		    
+		  Case 304
+		    Return "Not Modified"
+		    
+		  Case 305
+		    Return "Use Proxy"
+		    
+		  Case 306
+		    ' This status code is deprecated by http://tools.ietf.org/html/rfc7231#section-6.4.6
+		    Return "Switch Proxy"
+		    
+		  Case 307
+		    Return "Temporary Redirect" ' http://tools.ietf.org/html/rfc7231#section-6.4.7
+		    
+		  Case 308 ' https://tools.ietf.org/html/draft-reschke-http-status-308-07
+		    Return "Permanent Redirect"
+		    
+		  Case 400
+		    Return "Bad Request"
+		    
+		  Case 401
+		    Return "Unauthorized"
+		    
+		  Case 402
+		    Return "Payment Required" ' http://tools.ietf.org/html/rfc7231#section-6.5.2
+		    
+		  Case 403
+		    Return "Forbidden"
+		    
+		  Case 404
+		    Return "Not Found"
+		    
+		  Case 405
+		    Return "Method Not Allowed"
+		    
+		  Case 406
+		    Return "Not Acceptable"
+		    
+		  Case 407
+		    Return "Proxy Authentication Required"
+		    
+		  Case 408
+		    Return "Request Timeout"
+		    
+		  Case 409
+		    Return "Conflict"
+		    
+		  Case 410
+		    Return "Gone"
+		    
+		  Case 411
+		    Return "Length Required"
+		    
+		  Case 412
+		    Return "Precondition Failed"
+		    
+		  Case 413
+		    Return "Request Entity Too Large"
+		    
+		  Case 414
+		    Return "Request-URI Too Long"
+		    
+		  Case 415
+		    Return "Unsupported Media Type"
+		    
+		  Case 416
+		    Return "Requested Range Not Satisfiable"
+		    
+		  Case 417
+		    Return "Expectation Failed"
+		    
+		  Case 418
+		    Return "I'm a teapot" ' https://tools.ietf.org/html/rfc2324
+		    
+		  Case 420
+		    Return "Enhance Your Calm" 'Nonstandard, from Twitter API
+		    
+		  Case 422
+		    Return "Unprocessable Entity"
+		    
+		  Case 423
+		    Return "Locked"
+		    
+		  Case 424
+		    Return "Failed Dependency"
+		    
+		  Case 425
+		    Return "Unordered Collection" 'Draft, https://tools.ietf.org/html/rfc3648
+		    
+		  Case 426
+		    Return "Upgrade Required"
+		    
+		  Case 428
+		    Return "Precondition Required"
+		    
+		  Case 429
+		    Return "Too Many Requests"
+		    
+		  Case 431
+		    Return "Request Header Fields Too Large"
+		    
+		  Case 444
+		    Return "No Response" 'Nginx
+		    
+		  Case 449
+		    Return "Retry With" 'Nonstandard, from Microsoft http://msdn.microsoft.com/en-us/library/dd891478.aspx
+		    
+		  Case 450
+		    Return "Blocked By Windows Parental Controls" 'Nonstandard, from Microsoft
+		    
+		  Case 451
+		    Return "Unavailable For Legal Reasons" 'Draft, https://tools.ietf.org/html/draft-tbray-http-legally-restricted-status-00
+		    
+		  Case 494
+		    Return "Request Header Too Large" 'nginx
+		    
+		  Case 495
+		    Return "Cert Error" 'nginx
+		    
+		  Case 496
+		    Return "No Cert" 'nginx
+		    
+		  Case 497
+		    Return "HTTP to HTTPS" 'nginx
+		    
+		  Case 499
+		    Return "Client Closed Request" 'nginx
+		    
+		  Case 500
+		    Return "Internal Server Error"
+		    
+		  Case 501
+		    Return "Not Implemented"
+		    
+		  Case 502
+		    Return "Bad Gateway"
+		    
+		  Case 503
+		    Return "Service Unavailable"
+		    
+		  Case 504
+		    Return "Gateway Timeout"
+		    
+		  Case 505
+		    Return "HTTP Version Not Supported"
+		    
+		  Case 506
+		    Return "Variant Also Negotiates" 'WEBDAV https://tools.ietf.org/html/rfc2295
+		    
+		  Case 507
+		    Return "Insufficient Storage" 'WEBDAV https://tools.ietf.org/html/rfc4918
+		    
+		  Case 508
+		    Return "Loop Detected" 'WEBDAV https://tools.ietf.org/html/rfc5842
+		    
+		  Case 509
+		    Return "Bandwidth Limit Exceeded" 'Apache, others
+		    
+		  Case 510
+		    Return "Not Extended"  'https://tools.ietf.org/html/rfc2774
+		    
+		  Case 511
+		    Return "Network Authentication Required" 'https://tools.ietf.org/html/rfc6585
+		    
+		  Else
+		    Return "Unknown Status Code"
+		  End Select
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function CRLF() As String
+		  Return EndOfLine.Windows
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function DateString(d As Date) As String
+		  Dim dt As String
+		  d.GMTOffset = 0
+		  Select Case d.DayOfWeek
+		  Case 1
+		    dt = dt + "Sun, "
+		  Case 2
+		    dt = dt + "Mon, "
+		  Case 3
+		    dt = dt + "Tue, "
+		  Case 4
+		    dt = dt + "Wed, "
+		  Case 5
+		    dt = dt + "Thu, "
+		  Case 6
+		    dt = dt + "Fri, "
+		  Case 7
+		    dt = dt + "Sat, "
+		  End Select
+		  
+		  dt = dt  + Format(d.Day, "00") + " "
+		  
+		  Select Case d.Month
+		  Case 1
+		    dt = dt + "Jan "
+		  Case 2
+		    dt = dt + "Feb "
+		  Case 3
+		    dt = dt + "Mar "
+		  Case 4
+		    dt = dt + "Apr "
+		  Case 5
+		    dt = dt + "May "
+		  Case 6
+		    dt = dt + "Jun "
+		  Case 7
+		    dt = dt + "Jul "
+		  Case 8
+		    dt = dt + "Aug "
+		  Case 9
+		    dt = dt + "Sep "
+		  Case 10
+		    dt = dt + "Oct "
+		  Case 11
+		    dt = dt + "Nov "
+		  Case 12
+		    dt = dt + "Dec "
+		  End Select
+		  
+		  dt = dt  + Format(d.Year, "0000") + " " + Format(d.Hour, "00") + ":" + Format(d.Minute, "00") + ":" + Format(d.Second, "00") + " GMT"
+		  Return dt
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function DateString(Data As String) As Date
+		  
+		  'Sat, 29 Oct 1994 19:43:31 GMT
+		  Data = ReplaceAll(Data, "-", " ")
+		  Dim d As Date
+		  Dim members() As String = Split(Data, " ")
+		  If UBound(members) = 5 Then
+		    Dim dom, mon, year, h, m, s, tz As Integer
+		    
+		    dom = Val(members(1))
+		    
+		    Select Case members(2)
+		    Case "Jan"
+		      mon = 1
+		    Case "Feb"
+		      mon = 2
+		    Case "Mar"
+		      mon = 3
+		    Case "Apr"
+		      mon = 4
+		    Case "May"
+		      mon = 5
+		    Case "Jun"
+		      mon = 6
+		    Case "Jul"
+		      mon = 7
+		    Case "Aug"
+		      mon = 8
+		    Case "Sep"
+		      mon = 9
+		    Case "Oct"
+		      mon = 10
+		    Case "Nov"
+		      mon = 11
+		    Case "Dec"
+		      mon = 12
+		    End Select
+		    
+		    year = Val(members(3))
+		    
+		    Dim time As String = members(4)
+		    h = Val(NthField(time, ":", 1))
+		    m = Val(NthField(time, ":", 2))
+		    s = Val(NthField(time, ":", 3))
+		    tz = Val(members(5))
+		    
+		    
+		    
+		    d = New Date(year, mon, dom, h, m, s, tz)
+		  End If
+		  Return d
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function ErrorPage(ErrorNumber As Integer, RedirectLink As String = "") As HTTP.Response
+		  Static ErrorPages As Dictionary
+		  If ErrorPages = Nil Then
+		    ErrorPages = New Dictionary
+		    For error As Integer = 100 To 599
+		      Dim page As String = BlankErrorPage
+		      Dim msg As String = CodeToMessage(error)
+		      page = ReplaceAll(page, "%HTTPERROR%", Str(error) + " " + msg)
+		      
+		      Select Case error
+		      Case 100
+		        page = ReplaceAll(page, "%DOCUMENT%", "You may now send the next part of your request.")
+		        
+		      Case 101
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your request to change protocols is accepted.")
+		        
+		      Case 200
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your request was processed successfully.")
+		        
+		      Case 201
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource was created successfully.")
+		        
+		      Case 202
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your request was accepted for processing.")
+		        
+		      Case 204
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource is intentionally blank.")
+		        
+		      Case 301, 308
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource has permanently moved; please update your links. <a href=""%REDIR_LINK%"">Click here</a> if you are not automatically redirected.")
+		        
+		      Case 302, 307
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource has temporarily moved. <a href=""%REDIR_LINK%"">Click here</a> if you are not automatically redirected.")
+		        
+		      Case 303
+		        page = ReplaceAll(page, "%DOCUMENT%", "Refer to the resource <a href=""%REDIR_LINK%"">here</a> to fulfill your request.")
+		        
+		      Case 304
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource has not been recently modified.")
+		        
+		      Case 400
+		        page = ReplaceAll(page, "%DOCUMENT%", "The server did not understand your request.")
+		        
+		      Case 402
+		        page = ReplaceAll(page, "%DOCUMENT%", "Access to this resource requires payment. <a href=""%REDIR_LINK%"">Click here</a> to purchase access.")
+		        
+		      Case 403, 401
+		        page = ReplaceAll(page, "%DOCUMENT%", "Permission to access this resource is denied.")
+		        
+		      Case 404
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource cannot be found on this server. ")
+		        
+		      Case 405
+		        page = ReplaceAll(page, "%DOCUMENT%", "The specified HTTP request method is not allowed for this resource. ")
+		        
+		      Case 406
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser did not specify an acceptable Content-Type that was compatible with this resource.")
+		        
+		      Case 410
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource has been removed.")
+		        
+		      Case 411
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser must specify the length of the request payload.")
+		        
+		      Case 413
+		        page = ReplaceAll(page, "%DOCUMENT%", "The request payload is too large.")
+		        
+		      Case 414
+		        page = ReplaceAll(page, "%DOCUMENT%", "The request URL is too long.")
+		        
+		      Case 415
+		        page = ReplaceAll(page, "%DOCUMENT%", "The request payload is of an unknown or unsupported type.")
+		        
+		      Case 416
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource does not contain the requested range.")
+		        
+		      Case 418
+		        page = ReplaceAll(page, "%DOCUMENT%", "I'm a little teapot, short and stout; here is my handle, here is my spout.")
+		        
+		      Case 426
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource is not available over an insecure connection.")
+		        
+		      Case 429
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser has made too many requests of this server.")
+		        
+		      Case 451
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource is unavailable as a result of a legal demand.")
+		        
+		      Case 500
+		        page = ReplaceAll(page, "%DOCUMENT%", "An error ocurred while processing your request.")
+		        
+		      Case 501
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser made a request that is not implemented by this server.")
+		        
+		      Case 503
+		        page = ReplaceAll(page, "%DOCUMENT%", "This server is currently unavailable to process your requst.")
+		        
+		      Case 505
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser specified an HTTP version that is not supported by this server.")
+		        
+		      Case 509
+		        page = ReplaceAll(page, "%DOCUMENT%", "The bandwidth limit for this server has been exceeded.")
+		        
+		      Else
+		        page = ReplaceAll(page, "%DOCUMENT%", "No further information is available.")
+		      End Select
+		      
+		      page = ReplaceAll(page, "%SIGNATURE%", "<em>Powered By " + DaemonVersion + "</em><br />")
+		      
+		      If page.LenB < 512 Then
+		        page = page + "<!--"
+		        Do
+		          page = page + " padding to make IE happy. "
+		        Loop Until page.LenB >= 512
+		        page = page + "-->"
+		      End If
+		      ErrorPages.Value(error) = page
+		    Next
+		  End If
+		  Dim errpage As New Response("")
+		  errpage.StatusCode = ErrorNumber
+		  errpage.MessageBody = ErrorPages.Value(ErrorNumber).StringValue
+		  If RedirectLink <> "" Then
+		    errpage.MessageBody = ReplaceAll(errpage.MessageBody, "%REDIR_LINK%", RedirectLink)
+		    errpage.Header("Location") = RedirectLink
+		  End If
+		  errpage.Header("Content-Length") = Str(errpage.MessageBody.LenB)
+		  errpage.Header("Content-Type") = "text/html"
+		  Return errpage
+		  
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function FindFile(RootDirectory As FolderItem, FilePath As String) As FolderItem
+		  Dim out As FolderItem = RootDirectory
+		  Dim rootpath As String = RootDirectory.AbsolutePath
+		  
+		  For i As Integer = 1 To CountFields(FilePath, "/")
+		    Dim element As String = DecodeURLComponent(NthField(FilePath, "/", i))
+		    If element = "" Then Continue
+		    Select Case element.Trim
+		    Case ".." ' up one
+		      If out.Parent = Nil Then Return Nil ' cannot go up from the volume root
+		      Dim pp As String = out.Parent.AbsolutePath
+		      If Left(pp, rootpath.Len) <> rootpath Then Return Nil ' not contained within root
+		      out = out.Parent
+		    Case ".", "" ' current
+		      out = out ' No-op
+		    Case Else
+		      out = out.Child(element)
+		      If Not out.Exists Then Return Nil
+		    End Select
+		  Next
+		  Return out
+		  
+		Exception
+		  Return Nil
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function FormatBytes(bytes As UInt64, precision As Integer = 2) As String
+		  'Converts raw byte counts into SI formatted strings. 1KB = 1024 bytes.
+		  'Optionally pass an integer representing the number of decimal places to return. The default is two decimal places. You may specify
+		  'between 0 and 16 decimal places. Specifying more than 16 will append extra zeros to make up the length. Passing 0
+		  'shows no decimal places and no decimal point.
+		  
+		  Const kilo = 1024
+		  Static mega As UInt64 = kilo * kilo
+		  Static giga As UInt64 = kilo * mega
+		  Static tera As UInt64 = kilo * giga
+		  Static peta As UInt64 = kilo * tera
+		  Static exab As UInt64 = kilo * peta
+		  
+		  Dim suffix, precisionZeros As String
+		  Dim strBytes As Double
+		  
+		  
+		  If bytes < kilo Then
+		    strbytes = bytes
+		    suffix = "bytes"
+		  ElseIf bytes >= kilo And bytes < mega Then
+		    strbytes = bytes / kilo
+		    suffix = "KB"
+		  ElseIf bytes >= mega And bytes < giga Then
+		    strbytes = bytes / mega
+		    suffix = "MB"
+		  ElseIf bytes >= giga And bytes < tera Then
+		    strbytes = bytes / giga
+		    suffix = "GB"
+		  ElseIf bytes >= tera And bytes < peta Then
+		    strbytes = bytes / tera
+		    suffix = "TB"
+		  ElseIf bytes >= tera And bytes < exab Then
+		    strbytes = bytes / peta
+		    suffix = "PB"
+		  ElseIf bytes >= exab Then
+		    strbytes = bytes / exab
+		    suffix = "EB"
+		  End If
+		  
+		  
+		  While precisionZeros.Len < precision
+		    precisionZeros = precisionZeros + "0"
+		  Wend
+		  If precisionZeros.Trim <> "" Then precisionZeros = "." + precisionZeros
+		  
+		  Return Format(strBytes, "#,###0" + precisionZeros) + suffix
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function FormatSocketError(ErrorCode As Integer) As String
+		  Dim err As String = "Socket error " + Str(ErrorCode) + ": "
+		  Select Case ErrorCode
+		  Case 102
+		    err = err + "Disconnected."
+		  Case 100
+		    err = err + "Failed to create the socket."
+		  Case 103
+		    err = err + "Connection timed out."
+		  Case 105
+		    err = err + "That port number is already in use."
+		  Case 106
+		    err = err + "The socket is not ready for that command."
+		  Case 107
+		    err = err + "The port number is invalid or restricted."
+		  Case 108
+		    err = err + "Out of memory."
+		  Else
+		    #If TargetWin32 Then
+		      Declare Function FormatMessageW Lib "Kernel32" (Flags As Integer, Source As Integer, MessageId As Integer, _
+		      LangId As Integer, Buffer As ptr, Size As Integer, Arguments As Integer) As Integer
+		      Const FORMAT_MESSAGE_FROM_SYSTEM = &H1000
+		      Dim buffer As New MemoryBlock(2048)
+		      If FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM, 0, ErrorCode, 0 , Buffer, Buffer.Size, 0) <> 0 Then
+		        err = err + Buffer.WString(0)
+		      Else
+		        err = err + "Unknown error number " + Str(ErrorCode)
+		      End If
+		    #Else
+		      err = err + "System error code. " + Str(ErrorCode)
+		    #endif
+		  End Select
+		  
+		  Return err
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function Method(Method As String) As RequestMethod
+		  Select Case Method
+		  Case "GET"
+		    Return RequestMethod.GET
+		  Case "HEAD"
+		    Return RequestMethod.HEAD
+		  Case "DELETE"
+		    Return RequestMethod.DELETE
+		  Case "POST"
+		    Return RequestMethod.POST
+		  Case "PUT"
+		    Return RequestMethod.PUT
+		  Case "TRACE"
+		    Return RequestMethod.TRACE
+		  Case "OPTIONS"
+		    Return RequestMethod.OPTIONS
+		  Case "PATCH"
+		    Return RequestMethod.PATCH
+		  Case "CONNECT"
+		    Return RequestMethod.CONNECT
+		  Else
+		    Return RequestMethod.InvalidMethod
+		  End Select
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function SchemeToPort(Scheme As String) As Integer
+		  Static mPorts As Dictionary
+		  If mPorts = Nil Then
+		    mPorts = New Dictionary( _
+		    "http":80, _
+		    "https":443, _
+		    "ftp":21, _
+		    "ssh":22, _
+		    "telnet":23, _
+		    "smtp":25, _
+		    "smtps":25, _
+		    "pop2":109, _
+		    "pop3":110, _
+		    "ident":113, _
+		    "auth":113, _
+		    "sftp":115, _
+		    "nntp":119, _
+		    "ntp":123, _
+		    "irc":6667)
+		  End If
+		  
+		  Return mPorts.Lookup(Scheme, -1)
+		End Function
+	#tag EndMethod
+
+
 	#tag ComputedProperty, Flags = &h1
 		#tag Getter
 			Get
@@ -802,27 +1450,9 @@ Protected Module WebServer
 		Private mMIMETypes As Dictionary
 	#tag EndProperty
 
-	#tag Property, Flags = &h21
-		Private mVirtualRoot As String
-	#tag EndProperty
 
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  If mVirtualRoot = "" Then
-			    VirtualRoot = EncodeHex(MD5(Str(Microseconds)))
-			  End If
-			  return mVirtualRoot
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mVirtualRoot = value
-			End Set
-		#tag EndSetter
-		VirtualRoot As String
-	#tag EndComputedProperty
-
+	#tag Constant, Name = BlankErrorPage, Type = String, Dynamic = False, Default = \"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r<html xmlns\x3D\"http://www.w3.org/1999/xhtml\">\r<head>\r<meta http-equiv\x3D\"Content-Type\" content\x3D\"text/html; charset\x3Diso-8859-1\" />\r<title>%HTTPERROR%</title>\r<style type\x3D\"text/css\">\r<!--\ra:link {\r\tcolor: #0000FF;\r\ttext-decoration: none;\r}\ra:visited {\r\ttext-decoration: none;\r\tcolor: #990000;\r}\ra:hover {\r\ttext-decoration: underline;\r\tcolor: #009966;\r}\ra:active {\r\ttext-decoration: none;\r\tcolor: #FF0000;\r}\r-->\r</style></head>\r\r<body>\r<h1>%HTTPERROR%</h1>\r<p>%DOCUMENT%</p>\r<hr />\r<p>%SIGNATURE%</p>\r</body>\r</html>", Scope = Protected
+	#tag EndConstant
 
 	#tag Constant, Name = DaemonVersion, Type = String, Dynamic = False, Default = \"BoredomServe/1.0", Scope = Public
 		#Tag Instance, Platform = Mac OS, Language = Default, Definition  = \"BoredomServe/1.0 (Mac OS X)"
@@ -830,14 +1460,24 @@ Protected Module WebServer
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"BoredomServe/1.0 (GNU/Linux)"
 	#tag EndConstant
 
-	#tag Constant, Name = GZIPAvailable, Type = Boolean, Dynamic = False, Default = \"True", Scope = Public
-	#tag EndConstant
-
 
 	#tag Enum, Name = ConnectionTypes, Flags = &h0
 		SSLv3
 		  TLSv1
 		Insecure
+	#tag EndEnum
+
+	#tag Enum, Name = RequestMethod, Flags = &h0
+		GET
+		  HEAD
+		  POST
+		  PUT
+		  DELETE
+		  TRACE
+		  OPTIONS
+		  PATCH
+		  CONNECT
+		InvalidMethod
 	#tag EndEnum
 
 
@@ -879,12 +1519,6 @@ Protected Module WebServer
 			InitialValue="0"
 			Type="Integer"
 			InheritedFrom="Object"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="VirtualRoot"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Module

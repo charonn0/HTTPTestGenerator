@@ -1,6 +1,6 @@
 #tag Class
 Protected Class Response
-Inherits HTTP.HTTPMessage
+Inherits HTTP.Message
 	#tag Method, Flags = &h1000
 		Sub Constructor(Raw As String)
 		  Dim body As Integer = InStr(raw, CRLF + CRLF)
@@ -10,28 +10,30 @@ Inherits HTTP.HTTPMessage
 		  line = NthField(raw, CRLF, 1)
 		  raw = Replace(raw, line + CRLF, "")
 		  raw = Replace(raw, Me.MessageBody, "")
-		  Me.Headers = New Headers(raw)
-		  Me.Method = HTTP.Method(NthField(line, " ", 1).Trim)
-		  If Me.Method = RequestMethod.InvalidMethod Then Me.MethodName = NthField(line, " ", 1).Trim
-		  Me.ProtocolVersion = CDbl(Replace(NthField(line, " ", 1).Trim, "HTTP/", ""))
+		  // Calling the overridden superclass constructor.
+		  Super.Constructor(New HTTP.Headers(raw))
+		  Dim d As Double = CDbl(Replace(NthField(line, " ", 1).Trim, "HTTP/", ""))
+		  If d > 0 Then Me.ProtocolVersion = d
 		  Me.StatusCode = Val(NthField(line, " ", 2))
-		  'If GZIPAvailable False And Me.HasHeader("Content-Encoding") And InStr(Me.GetHeader("Content-Encoding"), "gzip") > 0 Then
-		  'HTTP.Helpers.GUnzipPage(Me)
-		  'End If
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function ToString() As String
-		  Return ReplyString(Me.StatusCode) + CRLF + Super.ToString(False)'
+		Function Headers() As HTTP.Headers
+		  Return mheaders
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ToString(HeadersOnly As Boolean = False) As String
+		  Me.Header("Content-Type") = Me.ContentType.ToString
+		  Dim msg As String = CodeToMessage(Me.StatusCode)
+		  Return "HTTP/" + Format(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF + Super.ToString(HeadersOnly)'
 		  
 		End Function
 	#tag EndMethod
 
-
-	#tag Property, Flags = &h0
-		Compressible As Boolean = True
-	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		StatusCode As Integer
@@ -48,33 +50,6 @@ Inherits HTTP.HTTPMessage
 
 
 	#tag ViewBehavior
-		#tag ViewProperty
-			Name="AuthPassword"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-			InheritedFrom="HTTP.HTTPMessage"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="AuthRealm"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-			InheritedFrom="HTTP.HTTPMessage"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="AuthUsername"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-			InheritedFrom="HTTP.HTTPMessage"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Compressible"
-			Group="Behavior"
-			InitialValue="True"
-			Type="Boolean"
-		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true
@@ -96,7 +71,7 @@ Inherits HTTP.HTTPMessage
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="HTTP.HTTPMessage"
+			InheritedFrom="HTTP.Message"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
@@ -108,15 +83,9 @@ Inherits HTTP.HTTPMessage
 		#tag ViewProperty
 			Name="ProtocolVersion"
 			Group="Behavior"
+			InitialValue="1.1"
 			Type="Single"
-			InheritedFrom="HTTP.HTTPMessage"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="SessionID"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-			InheritedFrom="HTTP.HTTPMessage"
+			InheritedFrom="HTTP.Message"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="StatusCode"

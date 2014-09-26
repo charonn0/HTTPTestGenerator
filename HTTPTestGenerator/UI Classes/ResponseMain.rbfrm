@@ -45,6 +45,7 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Status:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -79,6 +80,7 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "000 No Error Code"
       TextAlign       =   0
       TextColor       =   "&cFF000000"
@@ -200,6 +202,7 @@ Begin ContainerControl ResponseMain
       HasBackColor    =   False
       Height          =   195
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   2
       LockBottom      =   True
@@ -418,7 +421,7 @@ End
 	#tag Event
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
 		  If hitItem.Text = "Copy to request headers" Then
-		    Dim c As HTTP.Cookie = hitItem.Tag
+		    Dim c As Cookie = hitItem.Tag
 		    Generator.RequestMain1.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
 		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = c
 		    Return True
@@ -427,7 +430,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub DoubleClick()
-		  Dim c As HTTP.Cookie = Me.RowTag(Me.ListIndex)
+		  Dim c As Cookie = Me.RowTag(Me.ListIndex)
 		  CookieEdit.ShowCookie(c)
 		End Sub
 	#tag EndEvent
@@ -442,7 +445,7 @@ End
 		  Dim data As String
 		  For i As Integer = 0 To Me.ListCount - 1
 		    If Me.Selected(i) Then
-		      Dim c As HTTP.Cookie = Me.RowTag(i)
+		      Dim c As Cookie = Me.RowTag(i)
 		      If c <> Nil Then
 		        data = data + c.ToString + CRLF
 		      End If
