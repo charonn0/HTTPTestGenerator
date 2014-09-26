@@ -304,11 +304,13 @@ End
 		  Me.Form = Nil
 		  HTTPForm.DeleteAllRows
 		  If ExistingData <> Nil Then
-		    If ExistingData IsA Dictionary Then ' URLEncoded
+		    If ExistingData IsA HTTP.URLEncodedForm Then ' URLEncoded
+		      Dim tmp As HTTP.URLEncodedForm = HTTP.URLEncodedForm(ExistingData)
 		      FormType1.Value = True
 		      FormData = ExistingData
-		      For Each key As String In Dictionary(ExistingData).Keys
-		        HTTPForm.AddRow(key, Dictionary(ExistingData).Value(key))
+		      For x As Integer = 0 To tmp.Count - 1
+		        Dim key As String = tmp.Name(x)
+		        HTTPForm.AddRow(key, tmp.Element(key))
 		        HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
 		        HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
 		      Next
@@ -346,7 +348,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private FormData As Dictionary
+		Private FormData As HTTP.URLEncodedForm
 	#tag EndProperty
 
 
@@ -374,9 +376,9 @@ End
 	#tag Event
 		Sub Action()
 		  If FormType1.Value Then
-		    FormData = New Dictionary
+		    FormData = New HTTP.URLEncodedForm("")
 		    For i As Integer = 0 To HTTPForm.ListCount - 1
-		      FormData.Value(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
+		      FormData.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
 		    Next
 		  Else
 		    Form = New MultipartForm
@@ -425,7 +427,7 @@ End
 		Sub Action()
 		  FileAdd.Enabled = Not Me.Value
 		  Form = Nil
-		  FormData = New Dictionary
+		  FormData = New HTTP.URLEncodedForm("")
 		End Sub
 	#tag EndEvent
 #tag EndEvents
