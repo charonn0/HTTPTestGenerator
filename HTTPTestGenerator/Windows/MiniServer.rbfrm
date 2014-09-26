@@ -272,6 +272,19 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Function CancelClose(appQuitting as Boolean) As Boolean
+		  If Socket.IsListening Then
+		    If MsgBox("Shut down the server?", 32 + 4, "The server is still running") = 6 Then
+		      KillAllClients()
+		    Else
+		      Return True
+		    End If
+		  End If
+		End Function
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h21
 		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
 		  msgs.Append(ClientRequest.ToString(True):IsARequest)
@@ -331,6 +344,17 @@ End
 		  End Select
 		  LogTimer.Mode = Timer.ModeSingle
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub KillAllClients()
+		  For i As Integer = 0 To UBound(Socks)
+		    If Socks(i).Value = Nil Then Continue
+		    HTTP.ClientHandler(Socks(i).Value).Disconnect
+		  Next
+		  ReDim Socks(-1)
+		  
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
@@ -405,6 +429,10 @@ End
 		Protected RequestData As String
 	#tag EndProperty
 
+	#tag Property, Flags = &h21
+		Private Socks() As WeakRef
+	#tag EndProperty
+
 
 	#tag Constant, Name = IsARequest, Type = Double, Dynamic = False, Default = \"1", Scope = Private
 	#tag EndConstant
@@ -453,7 +481,7 @@ End
 		      DocumentRoot = f
 		      DirectoryBrowsing = True
 		      Me.Caption = "Stop"
-		      PrintLog("Starting server..." + CRLF, &c00000000)
+		      PrintLog("Starting server on " + Socket.NetworkInterface.IPAddress + ":" + Format(Socket.Port, "000") + CRLF, &c00000000)
 		      Socket.Listen
 		      URLLink.Text = "http://" + Socket.NetworkInterface.IPAddress + ":" + port.Text
 		    End If
@@ -461,6 +489,7 @@ End
 		    PrintLog("Stopping server..." + CRLF, &c00000000)
 		    Me.Caption = "Listen"
 		    Socket.StopListening
+		    KillAllClients()
 		    URLLink.Visible = False
 		  End If
 		End Sub
@@ -505,6 +534,7 @@ End
 		  Me.StopListening
 		  URLLink.Visible = False
 		  PrintLog(FormatSocketError(ErrorCode) + CRLF, &c80000000)
+		  KillAllClients()
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -528,7 +558,7 @@ End
 		  Case ConnectionTypes.Insecure
 		    sock.Secure = False
 		  End Select
-		  
+		  socks.Append(New WeakRef(sock))
 		  Return sock
 		End Function
 	#tag EndEvent
