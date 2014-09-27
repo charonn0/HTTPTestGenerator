@@ -527,10 +527,10 @@ End
 		Sub ClickLink(LinkValue As Variant, LinkText As String)
 		  Select Case True
 		  Case LinkValue IsA HTTP.Request
-		    RawViewer.ViewRaw(HTTP.Request(LinkValue).MessageBody)
+		    RawViewer.ViewRaw(HTTP.Request(LinkValue).MessageBody, HTTP.Request(LinkValue).ContentType)
 		    
 		  Case LinkValue IsA HTTP.Response
-		    RawViewer.ViewRaw(HTTP.Response(LinkValue).MessageBody)
+		    RawViewer.ViewRaw(HTTP.Response(LinkValue).MessageBody, HTTP.Response(LinkValue).ContentType)
 		    
 		  Else
 		    SpecIndex.ShowMe(LinkText)

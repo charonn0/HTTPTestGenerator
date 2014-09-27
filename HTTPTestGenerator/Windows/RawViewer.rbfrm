@@ -2,7 +2,7 @@
 Begin Window RawViewer
    BackColor       =   16777215
    Backdrop        =   0
-   CloseButton     =   False
+   CloseButton     =   True
    Composite       =   False
    Frame           =   1
    FullScreen      =   False
@@ -20,134 +20,224 @@ Begin Window RawViewer
    MinimizeButton  =   False
    MinWidth        =   64
    Placement       =   1
-   Resizeable      =   False
+   Resizeable      =   True
    Title           =   "Message body"
    Visible         =   True
    Width           =   600
-   Begin TextArea TextArea1
-      AcceptTabs      =   False
-      Alignment       =   0
+   Begin PagePanel PagePanel1
       AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   True
-      BackColor       =   &h00FFFFFF
-      Bold            =   False
-      Border          =   True
-      DataField       =   ""
-      DataSource      =   ""
       Enabled         =   True
-      Format          =   ""
-      Height          =   370
+      Height          =   400
       HelpTag         =   ""
-      HideSelection   =   True
       Index           =   -2147483648
-      Italic          =   False
+      InitialParent   =   ""
       Left            =   0
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Mask            =   ""
-      Multiline       =   True
-      ReadOnly        =   True
-      Scope           =   0
-      ScrollbarHorizontal=   False
-      ScrollbarVertical=   True
-      Styled          =   True
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   &h00000000
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   0
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   600
-   End
-   Begin PushButton PushButton1
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   0
-      Cancel          =   True
-      Caption         =   "OK"
-      Default         =   True
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   260
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   378
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin Listbox Listbox1
-      AutoDeactivate  =   True
-      AutoHideScrollbars=   True
-      Bold            =   ""
-      Border          =   True
-      ColumnCount     =   2
-      ColumnsResizable=   ""
-      ColumnWidths    =   "75%"
-      DataField       =   ""
-      DataSource      =   ""
-      DefaultRowHeight=   -1
-      Enabled         =   True
-      EnableDrag      =   ""
-      EnableDragReorder=   ""
-      GridLinesHorizontal=   0
-      GridLinesVertical=   0
-      HasHeading      =   True
-      HeadingIndex    =   -1
-      Height          =   160
-      HelpTag         =   ""
-      Hierarchical    =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   "URL	Reference Count"
-      Italic          =   ""
-      Left            =   105
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      RequiresSelection=   ""
+      PanelCount      =   4
+      Panels          =   ""
       Scope           =   0
-      ScrollbarHorizontal=   ""
-      ScrollBarVertical=   True
-      SelectionType   =   0
-      TabIndex        =   4
+      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   0
-      Top             =   433
-      Underline       =   ""
-      UseFocusRing    =   True
+      Top             =   0
+      Value           =   1
       Visible         =   True
-      Width           =   570
-      _ScrollWidth    =   -1
+      Width           =   600
+      Begin TextArea PlainText
+         AcceptTabs      =   False
+         Alignment       =   0
+         AutoDeactivate  =   True
+         AutomaticallyCheckSpelling=   True
+         BackColor       =   &h00FFFFFF
+         Bold            =   False
+         Border          =   True
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   385
+         HelpTag         =   ""
+         HideSelection   =   True
+         Index           =   -2147483648
+         InitialParent   =   "PagePanel1"
+         Italic          =   False
+         Left            =   6
+         LimitText       =   0
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Mask            =   ""
+         Multiline       =   True
+         ReadOnly        =   True
+         Scope           =   0
+         ScrollbarHorizontal=   False
+         ScrollbarVertical=   True
+         Styled          =   True
+         TabIndex        =   0
+         TabPanelIndex   =   1
+         TabStop         =   True
+         Text            =   ""
+         TextColor       =   &h00000000
+         TextFont        =   "System"
+         TextSize        =   0.0
+         TextUnit        =   0
+         Top             =   6
+         Underline       =   False
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   588
+      End
+      Begin HexViewer HexViewer1
+         AcceptFocus     =   True
+         AcceptTabs      =   True
+         AutoDeactivate  =   True
+         Backdrop        =   ""
+         Border          =   True
+         BorderColor     =   &h00808080
+         ByteBackgroundColor=   "&cFFFFFF00"
+         ByteBackgroundColorAlt=   "&cC0C0C000"
+         ByteColor       =   "&c0000FF00"
+         BytesLittleEndian=   True
+         DoubleBuffer    =   True
+         Enabled         =   True
+         EraseBackground =   False
+         GutterColor     =   "&cFFFFFF00"
+         GutterColorAlt  =   "&cC0C0C000"
+         Height          =   386
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "PagePanel1"
+         Left            =   8
+         LineNumbersColor=   "&c80000000"
+         LineNumbersLittleEndian=   ""
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         ScrollBackground=   ""
+         ShowOffsets     =   False
+         TabIndex        =   0
+         TabPanelIndex   =   2
+         TabStop         =   True
+         TextBackGroundColor=   "&cFFFFFF00"
+         TextBackGroundColorAlt=   "&cC0C0C000"
+         TextFont        =   "System"
+         Top             =   8
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   565
+      End
+      Begin ScrollBar ScrollBar1
+         AcceptFocus     =   true
+         AutoDeactivate  =   True
+         Enabled         =   True
+         Height          =   386
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "PagePanel1"
+         Left            =   578
+         LineStep        =   1
+         LiveScroll      =   ""
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   False
+         LockRight       =   True
+         LockTop         =   True
+         Maximum         =   100
+         Minimum         =   0
+         PageStep        =   20
+         Scope           =   0
+         TabIndex        =   1
+         TabPanelIndex   =   2
+         TabStop         =   True
+         Top             =   8
+         Value           =   0
+         Visible         =   True
+         Width           =   16
+      End
+      Begin Canvas ImageView
+         AcceptFocus     =   ""
+         AcceptTabs      =   ""
+         AutoDeactivate  =   True
+         Backdrop        =   ""
+         DoubleBuffer    =   False
+         Enabled         =   True
+         EraseBackground =   True
+         Height          =   386
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "PagePanel1"
+         Left            =   8
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Scope           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   3
+         TabStop         =   True
+         Top             =   8
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   584
+      End
+      Begin Listbox Listbox1
+         AutoDeactivate  =   True
+         AutoHideScrollbars=   True
+         Bold            =   ""
+         Border          =   True
+         ColumnCount     =   2
+         ColumnsResizable=   ""
+         ColumnWidths    =   "75%"
+         DataField       =   ""
+         DataSource      =   ""
+         DefaultRowHeight=   -1
+         Enabled         =   True
+         EnableDrag      =   ""
+         EnableDragReorder=   ""
+         GridLinesHorizontal=   0
+         GridLinesVertical=   0
+         HasHeading      =   True
+         HeadingIndex    =   -1
+         Height          =   182
+         HelpTag         =   ""
+         Hierarchical    =   ""
+         Index           =   -2147483648
+         InitialParent   =   "PagePanel1"
+         InitialValue    =   "URL	Reference Count"
+         Italic          =   ""
+         Left            =   15
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         RequiresSelection=   ""
+         Scope           =   0
+         ScrollbarHorizontal=   ""
+         ScrollBarVertical=   True
+         SelectionType   =   0
+         TabIndex        =   0
+         TabPanelIndex   =   4
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   58
+         Underline       =   ""
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   570
+         _ScrollWidth    =   -1
+      End
    End
 End
 #tag EndWindow
@@ -160,6 +250,43 @@ End
 		End Sub
 	#tag EndEvent
 
+	#tag Event
+		Sub Resized()
+		  ScrollBar1.Maximum = HexViewer1.LineCount - (HexViewer1.VisibleLineCount \ 2)
+		End Sub
+	#tag EndEvent
+
+
+	#tag Method, Flags = &h1
+		Protected Sub ShowData()
+		  Self.Title = "Message body - " + MIMEType.ToString
+		  Select Case True
+		  Case MIMEType.Accepts("image/*")
+		    Image = Picture.FromData(RawData)
+		    ImageView.Invalidate
+		    PagePanel1.Value = 2
+		    
+		  Case MIMEType.Accepts("text/html")
+		    PlainText.Text = RawData
+		    PagePanel1.Value = 0
+		    
+		  Case MIMEType.Accepts("text/*"), MIMEType.Accepts("message/http")
+		    PlainText.Text = RawData
+		    PagePanel1.Value = 0
+		    
+		  Case MIMEType.Accepts("application/octet-stream")
+		    Dim bs As New BinaryStream(RawData)
+		    HexViewer1.ShowData(bs)
+		    PagePanel1.Value = 1
+		    
+		  Else
+		    Dim bs As New BinaryStream(RawData)
+		    HexViewer1.ShowData(bs)
+		    PagePanel1.Value = 1
+		    
+		  End Select
+		End Sub
+	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ShowLinks(l() As String)
@@ -184,19 +311,70 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As String)
-		  TextArea1.Text = Message
+		Sub ViewRaw(Message As String, Type As ContentType)
+		  RawData = Message
+		  MIMEType = Type
+		  Me.ShowData
 		  Me.ShowModal
 		End Sub
 	#tag EndMethod
 
 
+	#tag Property, Flags = &h1
+		Protected Image As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected MIMEType As ContentType
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected RawData As MemoryBlock
+	#tag EndProperty
+
+
 #tag EndWindowCode
 
-#tag Events PushButton1
+#tag Events HexViewer1
 	#tag Event
-		Sub Action()
-		  Self.Close
+		Function Scrolled(LinesDelta As Integer, BytesDelta As Integer) As Boolean
+		  #pragma Unused BytesDelta
+		  ScrollBar1.Maximum = HexViewer1.LineCount - (HexViewer1.VisibleLineCount \ 2)
+		  ScrollBar1.Value = ScrollBar1.Value + LinesDelta
+		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ScrollBar1
+	#tag Event
+		Sub ValueChanged()
+		  HexViewer1.Offset = Me.Value * HexViewer1.BytesPerLine
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ImageView
+	#tag Event
+		Sub Paint(g As Graphics)
+		  If Image <> Nil Then
+		    g.DrawPicture(Image, 0, 0)
+		  Else
+		    Dim s As String = "Unknown image format."
+		    g.ForeColor = &cC0C0C000
+		    g.FillRect(0, 0, g.Width, g.Height)
+		    g.ForeColor = &c00000000
+		    g.TextSize = 15
+		    Dim w, h As Integer
+		    w = g.StringWidth(s)
+		    h = g.StringHeight(s, w)
+		    w = (g.Width - w) / 2
+		    h = (g.Height - h) / 2
+		    g.DrawString(s, w, h)
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
