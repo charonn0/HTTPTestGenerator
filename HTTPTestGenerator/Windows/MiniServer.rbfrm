@@ -120,7 +120,6 @@ Begin Window MiniServer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -164,43 +163,7 @@ Begin Window MiniServer
       Visible         =   True
       Width           =   80
    End
-   Begin Label URLLink
-      AutoDeactivate  =   True
-      Bold            =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   ""
-      Left            =   207
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
-      Selectable      =   True
-      TabIndex        =   7
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextAlign       =   1
-      TextColor       =   &h000080FF
-      TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   0
-      Top             =   302
-      Transparent     =   True
-      Underline       =   True
-      Visible         =   True
-      Width           =   278
-   End
    Begin ServerSocket Socket
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -209,11 +172,8 @@ Begin Window MiniServer
       MinimumSocketsAvailable=   2
       Port            =   0
       Scope           =   0
-      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   0
-      Visible         =   True
       Width           =   32
    End
    Begin HREFArea HTTPLog
@@ -263,7 +223,6 @@ Begin Window MiniServer
       Width           =   583
    End
    Begin Timer LogTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -271,11 +230,8 @@ Begin Window MiniServer
       Mode            =   0
       Period          =   1
       Scope           =   0
-      TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   34
-      Visible         =   True
       Width           =   32
    End
 End
@@ -485,49 +441,24 @@ End
 		      DocumentRoot = f
 		      DirectoryBrowsing = True
 		      Me.Caption = "Stop"
-		      PrintLog("Starting server on " + Socket.NetworkInterface.IPAddress + ":" + Format(Socket.Port, "000") + CRLF, &c00000000)
+		      Dim sr As New StyleRun
+		      sr.TextColor = &c00000000
+		      sr.Text = "Starting server on " 
+		      HTTPLog.PrintOther(sr)
+		      sr.Text = Socket.NetworkInterface.IPAddress + ":" + Format(Socket.Port, "000") 
+		      sr.Underline = True
+		      HTTPLog.PrintOther(sr, New HTTP.URI(sr.Text))
+		      sr.Underline = False
+		      sr.Text = CRLF
+		      HTTPLog.PrintOther(sr)
 		      Socket.Listen
-		      URLLink.Text = "http://" + Socket.NetworkInterface.IPAddress + ":" + port.Text
 		    End If
 		  Else
 		    PrintLog("Stopping server..." + CRLF, &c00000000)
 		    Me.Caption = "Listen"
 		    Socket.StopListening
 		    KillAllClients()
-		    URLLink.Visible = False
 		  End If
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events URLLink
-	#tag Event
-		Sub MouseEnter()
-		  Me.MouseCursor = System.Cursors.FingerPointer
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExit()
-		  Me.MouseCursor = System.Cursors.StandardPointer
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  #pragma Unused X
-		  #pragma Unused Y
-		  Return True
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub MouseUp(X As Integer, Y As Integer)
-		  #pragma Unused X
-		  #pragma Unused Y
-		  Generator.RequestMain1.URL.Text = Me.Text
-		  Generator.RequestMain1.Sender.Enabled = False
-		  Generator.RequestMain1.Sender.Caption = "Sending..."
-		  Generator.RequestMain1.ProgressBar1.Visible = True
-		  Generator.RequestMain1.StopButton.Visible = True
-		  Generator.Perform()
-		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -536,7 +467,6 @@ End
 		Sub Error(ErrorCode as Integer)
 		  PushButton1.Caption = "Listen"
 		  Me.StopListening
-		  URLLink.Visible = False
 		  PrintLog(FormatSocketError(ErrorCode) + CRLF, &c80000000)
 		  KillAllClients()
 		End Sub
@@ -585,19 +515,9 @@ End
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
 		  Select Case hitItem.Text
 		  Case "Clear log"
-		    Me.Text = ""
+		    Me.Clear
 		    Return True
 		  End Select
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function ConstructContextualLinkMenu(LinkValue As Variant, LinkText As String, Base As MenuItem, X As Integer, Y As Integer) As Boolean
-		  Break
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function ContextualLinkMenuAction(Hititem As MenuItem) As Boolean
-		  Break
 		End Function
 	#tag EndEvent
 	#tag Event
@@ -608,6 +528,16 @@ End
 		    
 		  Case LinkValue IsA HTTP.Response
 		    RawViewer.ViewRaw(HTTP.Response(LinkValue).MessageBody)
+		    
+		  Case LinkValue IsA HTTP.URI
+		    Dim u As HTTP.URI = HTTP.URI(LinkValue)
+		    If u.Scheme = "" Then u.Scheme = "http"
+		    Generator.RequestMain1.URL.Text = u.ToString
+		    Generator.RequestMain1.Sender.Enabled = False
+		    Generator.RequestMain1.Sender.Caption = "Sending..."
+		    Generator.RequestMain1.ProgressBar1.Visible = True
+		    Generator.RequestMain1.StopButton.Visible = True
+		    Generator.Perform()
 		    
 		  Else
 		    SpecIndex.ShowMe(LinkText)

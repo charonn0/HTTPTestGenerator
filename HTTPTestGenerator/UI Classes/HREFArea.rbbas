@@ -2,32 +2,6 @@
 Protected Class HREFArea
 Inherits TextArea
 	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  Dim v As Variant = FindLink(X, Y)
-		  If v <> Nil Then
-		    LastX = X
-		    LastY = Y
-		    Dim tx As String = FindLinkText(X, Y)
-		    Return ConstructContextualLinkMenu(v, tx, base, X, Y)
-		  Else
-		    Return RaiseEvent ConstructContextualMenu(base, x, y)
-		  End If
-		  
-		End Function
-	#tag EndEvent
-
-	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  Dim v As Variant = FindLink(LastX, LastY)
-		  If v <> Nil Then
-		    Return ContextualLinkMenuAction(hitItem)
-		  Else
-		    Return RaiseEvent ContextualMenuAction(hitItem)
-		  End If
-		End Function
-	#tag EndEvent
-
-	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
 		  If Not IsContextualClick Then
 		    Dim v As Variant = FindLink(X, Y)
@@ -74,6 +48,13 @@ Inherits TextArea
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub Clear()
+		  Me.Text = ""
+		  ReDim Links(-1)
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Function FindLink(X As Integer, Y As Integer) As Variant
 		  Dim tst As Integer
@@ -106,9 +87,9 @@ Inherits TextArea
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub PrintOther(Text As StyleRun)
+		Sub PrintOther(Text As StyleRun, LinkValue As Variant = Nil)
 		  Me.StyledText.AppendStyleRun(Text)
-		  Links.Append(Nil)
+		  Links.Append(LinkValue)
 		End Sub
 	#tag EndMethod
 
@@ -152,9 +133,30 @@ Inherits TextArea
 	#tag Method, Flags = &h0
 		Sub PrintResponse(Message As HTTP.Response)
 		  Dim sr As New StyleRun
-		  'sr.Font = App.FixedWidthFont
-		  sr.Text = Message.ToString(True).Trim
+		  sr.Font = App.FixedWidthFont
 		  sr.TextColor = &c00800000
+		  Dim remain As String = Message.ToString(True)
+		  
+		  If Message.StatusMessage <> "" Then
+		    Dim msg As String = NthField(remain, CRLF, 1)
+		    sr.Text = NthField(msg, " ", 1) + " "
+		    Me.StyledText.AppendStyleRun(sr)
+		    Links.Append(Nil)
+		    
+		    sr.Text = NthField(msg, " ", 2)
+		    sr.Underline = True
+		    Me.StyledText.AppendStyleRun(sr)
+		    Links.Append(sr.Text)
+		    sr.Underline = False
+		    
+		    sr.Text = " " + NthField(msg, " ", 3)
+		    Me.StyledText.AppendStyleRun(sr)
+		    'Links.Append(Nil)
+		    
+		    sr.Text = CRLF + Replace(remain, msg, "").Trim
+		  Else
+		    sr.Text = remain
+		  End If
 		  Me.StyledText.AppendStyleRun(sr)
 		  Links.Append(Nil)
 		  
@@ -176,22 +178,6 @@ Inherits TextArea
 
 	#tag Hook, Flags = &h0
 		Event ClickLink(LinkValue As Variant, LinkText As String)
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event ConstructContextualLinkMenu(LinkValue As Variant, LinkText As String, Base As MenuItem, X As Integer, Y As Integer) As Boolean
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event ConstructContextualMenu(base As MenuItem, x As Integer, y As Integer) As Boolean
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event ContextualLinkMenuAction(Hititem As MenuItem) As Boolean
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event ContextualMenuAction(hitItem As MenuItem) As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0

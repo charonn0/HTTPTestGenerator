@@ -518,7 +518,7 @@ End
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
 		  Select Case hitItem.Text
 		  Case "Clear log"
-		    Me.Text = ""
+		    Me.Clear
 		    Return True
 		  End Select
 		End Function
