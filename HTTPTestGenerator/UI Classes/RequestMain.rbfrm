@@ -302,9 +302,7 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
-      TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
@@ -608,6 +606,15 @@ End
 	#tag Event
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
+		  Me.AcceptTextDrop
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub DropObject(Obj As DragItem, action As Integer)
+		  If Obj.TextAvailable Then
+		    Dim u As New HTTP.URI(Obj.Text)
+		    Me.Text = u.ToString
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
