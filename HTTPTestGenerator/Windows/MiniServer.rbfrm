@@ -436,9 +436,9 @@ End
 		      Me.Caption = "Stop"
 		      Dim sr As New StyleRun
 		      sr.TextColor = &c00000000
-		      sr.Text = "Starting server on " 
+		      sr.Text = "Starting server on "
 		      HTTPLog.PrintOther(sr)
-		      sr.Text = Socket.NetworkInterface.IPAddress + ":" + Format(Socket.Port, "000") 
+		      sr.Text = Socket.NetworkInterface.IPAddress + ":" + Format(Socket.Port, "####0")
 		      sr.Underline = True
 		      HTTPLog.PrintOther(sr, New HTTP.URI(sr.Text))
 		      sr.Underline = False
