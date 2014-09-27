@@ -234,6 +234,18 @@ Begin Window MiniServer
       Top             =   34
       Width           =   32
    End
+   Begin Timer ListenTimer
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   619
+      LockedInPosition=   False
+      Mode            =   0
+      Period          =   1
+      Scope           =   0
+      TabPanelIndex   =   0
+      Top             =   67
+      Width           =   32
+   End
 End
 #tag EndWindow
 
@@ -332,18 +344,6 @@ End
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub PrintLog(Text As String, TextColor As Color)
-		  Dim sr As New StyleRun
-		  sr.Font = App.FixedWidthFont
-		  sr.Text = Text
-		  sr.TextColor = TextColor
-		  HTTPLog.PrintOther(sr)
-		  HTTPLog.ScrollToEnd()
-		  
-		End Sub
-	#tag EndMethod
-
 
 	#tag Property, Flags = &h0
 		AuthenticationRealm As String = """""""""""""""Restricted Area"""""""""""""""
@@ -375,6 +375,10 @@ End
 
 	#tag Property, Flags = &h0
 		EnforceContentType As Boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected IsListening As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -436,22 +440,24 @@ End
 		      Me.Caption = "Stop"
 		      Dim sr As New StyleRun
 		      sr.TextColor = &c00000000
-		      sr.Text = "Starting server on "
+		      sr.Text = "Starting up the server..." + CRLF + "Document root is: "
 		      HTTPLog.PrintOther(sr)
-		      sr.Text = Socket.NetworkInterface.IPAddress + ":" + Format(Socket.Port, "####0")
 		      sr.Underline = True
-		      HTTPLog.PrintOther(sr, New HTTP.URI(sr.Text))
-		      sr.Underline = False
-		      sr.Text = CRLF
-		      HTTPLog.PrintOther(sr)
+		      sr.TextColor = &c0000FF00
+		      sr.Text = DocumentRoot.AbsolutePath + CRLF + CRLF
+		      HTTPLog.PrintOther(sr, DocumentRoot)
 		      Socket.Listen
-		      HTTPLog.ScrollToEnd()
+		      ListenTimer.Mode = Timer.ModeMultiple
 		    End If
 		  Else
-		    PrintLog("Stopping server..." + CRLF, &c00000000)
 		    Me.Caption = "Listen"
 		    Socket.StopListening
 		    KillAllClients()
+		    Dim sr As New StyleRun
+		    sr.TextColor = &c00000000
+		    sr.Bold = True
+		    sr.Text = "Server stopped." + CRLF + CRLF
+		    HTTPLog.PrintOther(sr)
 		  End If
 		End Sub
 	#tag EndEvent
@@ -461,7 +467,18 @@ End
 		Sub Error(ErrorCode as Integer)
 		  PushButton1.Caption = "Listen"
 		  Me.StopListening
-		  PrintLog(FormatSocketError(ErrorCode) + CRLF, &c80000000)
+		  Dim l, r As String
+		  l = FormatSocketError(ErrorCode)
+		  r = NthField(l, ": ", 2)
+		  l = NthField(l, ": ", 1)
+		  Dim sr As New StyleRun
+		  sr.TextColor = &c80000000
+		  sr.Bold = True
+		  sr.Text = l
+		  HTTPLog.PrintOther(sr)
+		  sr.Bold = False
+		  sr.Text = ": " + r + CRLF + CRLF
+		  HTTPLog.PrintOther(sr)
 		  KillAllClients()
 		End Sub
 	#tag EndEvent
@@ -533,6 +550,9 @@ End
 		    Generator.RequestMain1.StopButton.Visible = True
 		    Generator.Perform()
 		    
+		  Case LinkValue IsA FolderItem
+		    FolderItem(LinkValue).Launch
+		    
 		  Else
 		    SpecIndex.ShowMe(LinkText)
 		  End Select
@@ -550,14 +570,40 @@ End
 		    Select Case p
 		    Case IsA HTTP.Request
 		      HTTPLog.PrintRequest(p)
-		      HTTPLog.ScrollToEnd()
 		    Case IsA HTTP.Response
 		      HTTPLog.PrintResponse(p)
-		      HTTPLog.ScrollToEnd()
 		    Else
-		      PrintLog(p, &c00000000)
+		      Dim sr As New StyleRun
+		      sr.Font = App.FixedWidthFont
+		      sr.Text = p
+		      sr.TextColor = &c00000000
+		      HTTPLog.PrintOther(sr)
 		    End Select
 		  Wend
+		  HTTPLog.ScrollToEnd()
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ListenTimer
+	#tag Event
+		Sub Action()
+		  If Socket.IsListening Then
+		    Dim sr As New StyleRun
+		    sr.TextColor = &c00000000
+		    sr.Bold = True
+		    sr.Text = "Now listening on: "
+		    HTTPLog.PrintOther(sr)
+		    sr.Bold = False
+		    sr.Text = Socket.NetworkInterface.IPAddress + ":" + Format(Socket.Port, "####0")
+		    sr.Underline = True
+		    HTTPLog.PrintOther(sr, New HTTP.URI(sr.Text))
+		    sr.Underline = False
+		    sr.Text = CRLF + CRLF
+		    HTTPLog.PrintOther(sr)
+		    Socket.Listen
+		    Me.Mode = Timer.ModeOff
+		    HTTPLog.ScrollToEnd()
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
