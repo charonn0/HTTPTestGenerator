@@ -45,7 +45,6 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Status:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -80,7 +79,6 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "000 No Error Code"
       TextAlign       =   0
       TextColor       =   "&cFF000000"
@@ -191,34 +189,6 @@ Begin ContainerControl ResponseMain
       Width           =   561
       _ScrollWidth    =   -1
    End
-   Begin OutputViewer OutputViewer1
-      AcceptFocus     =   ""
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      BackColor       =   &hFFFFFF
-      Backdrop        =   ""
-      Enabled         =   True
-      EraseBackground =   True
-      HasBackColor    =   False
-      Height          =   195
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   2
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   15
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   275
-      UseFocusRing    =   ""
-      Visible         =   True
-      Width           =   554
-   End
    Begin Splitter Splitter1
       AcceptFocus     =   ""
       AcceptTabs      =   ""
@@ -268,7 +238,52 @@ Begin ContainerControl ResponseMain
       TabIndex        =   17
       TabPanelIndex   =   0
       TabStop         =   True
-      Top             =   266
+      Top             =   264
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   556
+   End
+   Begin HREFArea OutputLog
+      AcceptTabs      =   False
+      Alignment       =   0
+      AutoDeactivate  =   True
+      AutomaticallyCheckSpelling=   True
+      BackColor       =   &h00EFEFEF
+      Bold            =   False
+      Border          =   True
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Format          =   ""
+      Height          =   194
+      HelpTag         =   ""
+      HideSelection   =   True
+      Index           =   -2147483648
+      Italic          =   False
+      Left            =   0
+      LimitText       =   0
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Mask            =   ""
+      Multiline       =   True
+      ReadOnly        =   True
+      Scope           =   0
+      ScrollbarHorizontal=   False
+      ScrollbarVertical=   True
+      Styled          =   True
+      TabIndex        =   18
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Text            =   ""
+      TextColor       =   &h00000000
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   275
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   556
@@ -459,28 +474,6 @@ End
 		End Function
 	#tag EndEvent
 #tag EndEvents
-#tag Events OutputViewer1
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If key = Chr(&h09) And Keyboard.AsyncControlKey Then 'ctrl+tab
-		    If Keyboard.AsyncShiftKey Then
-		      If Me.Tabpanel1.Value = 0 Then
-		        Me.Tabpanel1.Value = Me.Tabpanel1.PanelCount - 1
-		      Else
-		        Me.Tabpanel1.Value = Me.Tabpanel1.Value - 1
-		      End If
-		    Else
-		      If Me.Tabpanel1.Value = Me.Tabpanel1.PanelCount - 1 Then
-		        Me.Tabpanel1.Value = 0
-		      Else
-		        Me.Tabpanel1.Value = Me.Tabpanel1.Value + 1
-		      End If
-		    End If
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-#tag EndEvents
 #tag Events Splitter1
 	#tag Event
 		Sub Moved(DeltaX As Integer, DeltaY As Integer)
@@ -504,11 +497,45 @@ End
 		  #pragma Unused DeltaY
 		  If Me.Top > Splitter1.Top + Splitter1.Height Then
 		    CookieList.Height = Me.Top - CookieList.Top - 1
-		    OutputViewer1.Top = Me.Top + Me.Height + 1
-		    OutputViewer1.Height = Me.Window.Height - OutputViewer1.Top - 5
+		    OutputLog.Top = Me.Top + Me.Height + 1
+		    OutputLog.Height = Me.Window.Height - OutputLog.Top - 5
 		  Else
-		    Me.Top = OutputViewer1.Top - me.Height - 5
+		    Me.Top = OutputLog.Top - me.Height - 5
 		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events OutputLog
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  base.Append(New MenuItem("Clear log"))
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Select Case hitItem.Text
+		  Case "Clear log"
+		    Me.Text = ""
+		    Return True
+		  End Select
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub ClickLink(LinkValue As Variant, LinkText As String)
+		  Select Case True
+		  Case LinkValue IsA HTTP.Request
+		    RawViewer.ViewRaw(HTTP.Request(LinkValue).MessageBody)
+		    
+		  Case LinkValue IsA HTTP.Response
+		    RawViewer.ViewRaw(HTTP.Response(LinkValue).MessageBody)
+		    
+		  Else
+		    SpecIndex.ShowMe(LinkText)
+		  End Select
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

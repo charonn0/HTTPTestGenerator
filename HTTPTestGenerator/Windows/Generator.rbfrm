@@ -360,7 +360,7 @@ End
 		Protected Sub PrintOutput(Req As HTTP.Request, Resp As HTTP.Response)
 		  'Req = Replace(Req, Request.MethodName, "<link=" + Request.MethodName + ">" + Request.MethodName + "</link>")
 		  
-		  Dim t As HREFArea = ResponseMain1.OutputViewer1.OutputLog
+		  Dim t As HREFArea = ResponseMain1.OutputLog
 		  Dim sr As New StyleRun
 		  sr.Font = App.FixedWidthFont
 		  sr.Text = "-----" + Format(Sequence, "000000000") + "-----" + CRLF
@@ -610,11 +610,6 @@ End
 		    out = ReplaceAll(out, CRLF, &u00B6 + EndOfLine.Windows) ' pilcrow
 		  End If
 		  
-		  ResponseMain1.OutputViewer1.ResponseData.Text = out
-		  ResponseMain1.OutputViewer1.RequestData.Text = Request.MessageBody
-		  
-		  Dim links() As String = ExtractLinks(Out, RequestMain1.URL.Text)
-		  ResponseMain1.OutputViewer1.ShowLinks(links)
 		  Select Case Response.StatusCode
 		  Case 301, 302, 307, 308
 		    Dim redir As String = Response.Header("Location")

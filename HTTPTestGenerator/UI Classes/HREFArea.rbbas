@@ -84,7 +84,7 @@ Inherits TextArea
 		    Dim st, op As Integer
 		    st = Me.StyledText.StyleRunRange(i).StartPos
 		    op = Me.StyledText.StyleRunRange(i).EndPos
-		    If tst >= st And tst < op Then
+		    If tst >= st And tst <= op Then
 		      Return Links(i)
 		    End If
 		  Next
