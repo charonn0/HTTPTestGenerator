@@ -165,6 +165,14 @@ End
 
 
 	#tag MenuHandler
+		Function QuitMenu() As Boolean Handles QuitMenu.Action
+			Quit()
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
 		Function SpecIndexMenu() As Boolean Handles SpecIndexMenu.Action
 			SpecIndex.ShowMe
 			Return True
