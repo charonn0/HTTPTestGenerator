@@ -225,7 +225,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ShowMe()
+		Sub ShowMe(SearchFor As String = "")
 		  Me.Show
 		  If HelpIndex.ListCount < 1 Then
 		    HelpIndex.DeleteAllRows
@@ -234,6 +234,18 @@ End
 		    HelpIndex.AddFolder("Request Methods")
 		    'HelpIndex.AddFolder("IRI Relations")
 		  End If
+		  
+		  If SearchFor <> "" Then
+		    Select Case True
+		    Case HeaderDescription(SearchFor) <> Nil
+		      Me.ShowHeader(SearchFor)
+		    Case MethodDescription(SearchFor) <> Nil
+		      Me.ShowMethod(SearchFor)
+		    Case StatusCodeDescription(Val(SearchFor)) <> Nil
+		      Me.ShowStatusCode(Val(SearchFor))
+		    End Select
+		  End If
+		  
 		End Sub
 	#tag EndMethod
 

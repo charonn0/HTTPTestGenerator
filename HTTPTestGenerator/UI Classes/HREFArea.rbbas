@@ -115,9 +115,22 @@ Inherits TextArea
 	#tag Method, Flags = &h0
 		Sub PrintRequest(Message As HTTP.Request)
 		  Dim sr As New StyleRun
-		  'sr.Font = App.FixedWidthFont
-		  sr.Text = Message.ToString(True).Trim
 		  sr.TextColor = &c0000FF00
+		  sr.Font = App.FixedWidthFont
+		  
+		  Dim remain As String = Message.ToString(True).Trim
+		  
+		  If Message.MethodName <> "" Then
+		    remain = Replace(remain, Message.MethodName, "")
+		    sr.Text = Message.MethodName
+		    sr.Underline = True
+		    Links.Append(Message.MethodName)
+		    Me.StyledText.AppendStyleRun(sr)
+		    sr.Text = remain
+		    sr.Underline = False
+		  Else
+		    sr.Text = remain
+		  End If
 		  Me.StyledText.AppendStyleRun(sr)
 		  Links.Append(Nil)
 		  

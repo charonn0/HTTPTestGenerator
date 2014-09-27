@@ -396,14 +396,17 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub ClickLink(LinkValue As Variant, LinkText As String)
-		  Select Case LinkValue
-		  Case IsA HTTP.Request
+		  Select Case True
+		  Case LinkValue IsA HTTP.Request
 		    RawEditor.ViewRaw(HTTP.Request(LinkValue).MessageBody)
-		  Case IsA HTTP.Response
+		    
+		  Case LinkValue IsA HTTP.Response
 		    RawEditor.ViewRaw(HTTP.Response(LinkValue).MessageBody)
+		    
 		  Else
-		    Break
+		    SpecIndex.ShowMe(LinkText)
 		  End Select
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
