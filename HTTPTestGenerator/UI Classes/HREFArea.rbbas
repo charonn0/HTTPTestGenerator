@@ -51,6 +51,7 @@ Inherits TextArea
 	#tag Method, Flags = &h0
 		Sub Clear()
 		  Me.Text = ""
+		  Me.StyledText = Nil
 		  ReDim Links(-1)
 		End Sub
 	#tag EndMethod
@@ -143,14 +144,15 @@ Inherits TextArea
 		    Me.StyledText.AppendStyleRun(sr)
 		    Links.Append(Nil)
 		    
-		    sr.Text = NthField(msg, " ", 2)
+		    sr.Text = Right(msg, msg.Len - sr.Text.Len)
+		    'NthField(msg, " ", 2)
 		    sr.Underline = True
 		    Me.StyledText.AppendStyleRun(sr)
-		    Links.Append(sr.Text)
+		    Links.Append(Message.StatusCode)
 		    sr.Underline = False
 		    
-		    sr.Text = " " + NthField(msg, " ", 3)
-		    Me.StyledText.AppendStyleRun(sr)
+		    'sr.Text = " " + NthField(msg, " ", 3)
+		    'Me.StyledText.AppendStyleRun(sr)
 		    'Links.Append(Nil)
 		    
 		    sr.Text = CRLF + Replace(remain, msg, "").Trim
