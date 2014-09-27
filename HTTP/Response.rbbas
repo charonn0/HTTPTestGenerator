@@ -3,7 +3,7 @@ Protected Class Response
 Inherits HTTP.Message
 	#tag Method, Flags = &h1000
 		Sub Constructor(Raw As String)
-		  Dim body As Integer = InStr(raw, CRLF + CRLF)
+		  Dim body As Integer = InStr(raw, CRLF + CRLF) + 3
 		  Me.MessageBody = Right(raw, raw.Len - body)
 		  raw = Replace(raw, Me.MessageBody, "").Trim
 		  Dim line As String
