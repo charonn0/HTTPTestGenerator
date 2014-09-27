@@ -41,8 +41,8 @@ Inherits AddRemoveList
 		  If Me.ListIndex > -1 Then
 		    Dim data As Object = Me.RowTag(Me.ListIndex)
 		    If data = Nil Then Return
-		    If data IsA HTTP.Cookie Then
-		      Dim p As HTTP.Cookie = HTTP.Cookie(data)
+		    If data IsA Cookie Then
+		      Dim p As Cookie = Cookie(data)
 		      p = CookieEdit.GetCookie(p)
 		      If p <> Nil Then
 		        Me.Cell(Me.ListIndex, 0) = "Cookie"

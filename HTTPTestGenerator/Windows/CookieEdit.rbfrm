@@ -46,6 +46,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Name:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -80,6 +81,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Value:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -114,6 +116,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Expires:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -148,6 +151,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Path:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -182,6 +186,7 @@ Begin Window CookieEdit
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Domain:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -479,10 +484,10 @@ End
 
 
 	#tag Method, Flags = &h0
-		Function GetCookie(ByVal OldCookie As HTTP.Cookie = Nil) As HTTP.Cookie
+		Function GetCookie(ByVal OldCookie As Cookie = Nil) As Cookie
 		  Me.Cook = Nil
 		  If OldCookie <> Nil Then
-		    Me.Cook = New HTTP.Cookie(OldCookie.Name, OldCookie.Value)
+		    Me.Cook = New Cookie(OldCookie.Name, OldCookie.Value)
 		    CookieName.Text = Me.Cook.Name
 		    CookieValue.Text = Me.Cook.Value
 		    CookieDomain.Text = Self.Cook.Domain
@@ -499,7 +504,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ShowCookie(c As HTTP.Cookie)
+		Sub ShowCookie(c As Cookie)
 		  CookieDomain.Text = c.Domain
 		  CookieDomain.ReadOnly = True
 		  If c.Expires <> Nil Then CookieExpiry.Text = HTTP.DateString(c.Expires)
@@ -520,7 +525,7 @@ End
 
 
 	#tag Property, Flags = &h21
-		Private Cook As HTTP.Cookie
+		Private Cook As Cookie
 	#tag EndProperty
 
 
@@ -544,7 +549,7 @@ End
 	#tag Event
 		Sub Action()
 		  If Me.Caption = "Set Cookie" And CookieName.Text.Trim <> "" And CookieValue.Text.Trim <> "" Then
-		    Self.Cook = New HTTP.Cookie(CookieName.Text, CookieValue.Text)
+		    Self.Cook = New Cookie(CookieName.Text, CookieValue.Text)
 		    Self.Cook.Domain = CookieDomain.Text
 		    Self.Cook.Expires = HTTP.DateString(CookieExpiry.Text)
 		    Self.Cook.Path = CookiePath.Text

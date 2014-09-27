@@ -1,8 +1,15 @@
 #tag Class
 Protected Class URI
 	#tag Method, Flags = &h0
+		Sub Constructor(CopyURI As HTTP.URi)
+		  Me.Constructor(CopyURI.ToString)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub Constructor(URL As String)
 		  ' Pass a URI string to parse. e.g. http://user:password@www.example.com:8080/?foo=bar&bat=baz#Top
+		  
 		  If NthField(URL, ":", 1) <> "mailto" Then
 		    If InStr(URL, "://") > 0 Then
 		      Me.Scheme = NthField(URL, "://", 1)
@@ -43,12 +50,25 @@ Protected Class URI
 		    URL = URL.Replace(Me.Host, "")
 		    
 		    If InStr(URL, "?") > 0 Then
-		      Me.Path = NthField(URL, "?", 1)  //    /foo/bar.php
-		      URL = URL.Replace(Me.Path + "?", "")
+		      Dim tmp As String = NthField(URL, "?", 1)
+		      mPath = Split(tmp, "/")  //    /foo/bar.php
+		      For d As Integer = UBound(mPath) DownTo 0
+		        If mPath(d).Trim = "" Then mPath.Remove(d)
+		      Next
+		      URL = URL.Replace(tmp + "?", "")
 		      Me.Arguments = Split(URL, "&")
 		    ElseIf URL.Trim <> "" Then
-		      Me.Path = URL.Trim
+		      mPath = Split(URL.Trim, "/")
+		      URL = Replace(URL, Me.Path, "")
 		    End If
+		    
+		    For i As Integer = UBound(mPath) DownTo 0
+		      If mPath(i).Trim = "" Then
+		        mPath.Remove(i)
+		        Continue
+		      End If
+		      mPath(i) = DecodeURLComponent(mPath(i))
+		    Next
 		    
 		  Else
 		    Me.Scheme = "mailto"
@@ -67,7 +87,6 @@ Protected Class URI
 		  Me.Username = DecodeURLComponent(Me.Username)
 		  Me.Password = DecodeURLComponent(Me.Password)
 		  Me.Host = DecodeURLComponent(Me.Host)
-		  Me.Path = DecodeURLComponent(Me.Path)
 		  For Each arg As String In Me.Arguments
 		    arg = DecodeURLComponent(arg)
 		  Next
@@ -87,6 +106,27 @@ Protected Class URI
 		  If s = "" Then s = "/"
 		  Return New URI(s)
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function Path() As String
+		  Dim s As String
+		  For i As Integer = 0 To UBound(mPath)
+		    s = s + "/" + EncodeURLComponent(mPath(i))
+		  Next
+		  If s = "" Then s = "/"
+		  Return s
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Path(Assigns NewPath As String)
+		  Dim s() As String = Split(NewPath, "/")
+		  ReDim mPath(-1)
+		  For i As Integer = 0 To UBound(s)
+		    If s(i).Trim <> "" Then mPath.Append(DecodeURLComponent(s(i)))
+		  Next
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -111,13 +151,11 @@ Protected Class URI
 		    URL = URL + EncodeURLComponent(Host)
 		  End If
 		  
-		  If Port > -1 And SchemeToPort(Scheme) <> Port Then
+		  If Port > -1 And Scheme <> "" And SchemeToPort(Scheme) <> Port Then
 		    URL = URL + ":" + Format(Port, "####0")
 		  End If
 		  
-		  For i As Integer = 2 To CountFields(Path, "/")
-		    URL = URL + "/" + EncodeURLComponent(NthField(Path, "/", i))
-		  Next
+		  URL = URL + Me.Path
 		  
 		  If Arguments.Ubound > -1 Then
 		    Dim args As String = "?"
@@ -158,12 +196,12 @@ Protected Class URI
 		Host As String
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		Password As String
+	#tag Property, Flags = &h1
+		Protected mPath() As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		Path As String
+		Password As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -223,12 +261,6 @@ Protected Class URI
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Password"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Path"
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"

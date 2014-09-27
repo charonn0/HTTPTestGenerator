@@ -17,20 +17,9 @@ Inherits InternetHeaders
 		    Case "Set-Cookie"
 		      Cookies.Append(New Cookie(v))
 		    Case "Cookie"
-		      Dim s() As String = Split(v, ";")
-		      Dim scount As Integer = UBound(s)
-		      For x As Integer = 0 To scount
-		        If s(x).Trim = "" Then Continue
-		        Dim l, r As String
-		        l = NthField(s(x).Trim, "=", 1)
-		        r = NthField(s(x).Trim, "=", 2)
-		        Dim c As New Cookie(l, r)
-		        Cookies.Append(c)
-		      Next
-		    Case "Accept"
-		      Dim t() As ContentType = ContentType.ParseTypes(v)
-		      For x As Integer = 0 To UBound(t)
-		        AcceptableTypes.Append(t(x))
+		      Dim cc() As Cookie = Cookie.ParseCookies(v)
+		      For Each ci As Cookie In cc
+		        Cookies.Append(ci)
 		      Next
 		    Else
 		      Me.AppendHeader(n, v)
@@ -69,7 +58,6 @@ Inherits InternetHeaders
 		Sub DeleteAllHeaders()
 		  Super.DeleteAllHeaders
 		  ReDim Cookies(-1)
-		  ReDim AcceptableTypes(-1)
 		End Sub
 	#tag EndMethod
 
@@ -85,35 +73,13 @@ Inherits InternetHeaders
 		    End If
 		  Next
 		  
-		  Dim acc As String
-		  If UBound(AcceptableTypes) > 0 Then
-		    Dim ts() As String
-		    Dim tcount As Integer = UBound(AcceptableTypes)
-		    For i As Integer = 0 To tcount
-		      ts.Append(AcceptableTypes(i).ToString)
-		    Next
-		    acc = Join(ts, ",")
-		    If Right(acc, 1) = "," Then acc = Left(acc, acc.Len - 1)
-		  ElseIf UBound(AcceptableTypes) = 0 Then
-		    acc = acc + AcceptableTypes(0).ToString
-		  End If
-		  
-		  
-		  If acc <> "" Then
-		    data = data + CRLF + "Accept: " + acc
-		  End If
-		  
 		  Return data
 		End Function
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h0
-		AcceptableTypes() As ContentType
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected Cookies() As Cookie
+		Cookies() As Cookie
 	#tag EndProperty
 
 

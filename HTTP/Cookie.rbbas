@@ -1,5 +1,5 @@
 #tag Class
-Protected Class Cookie
+Class Cookie
 Inherits Pair
 	#tag Method, Flags = &h1000
 		Sub Constructor(Raw As String)
@@ -28,7 +28,7 @@ Inherits Pair
 		      Case "Path"
 		        Me.Path = v
 		      Case "Expires"
-		        Me.Expires = HTTP.DateString(v)
+		        Me.Expires = DateString(v)
 		      Case "Port"
 		        Me.Port = Val(v)
 		      Case "Secure"
@@ -52,6 +52,14 @@ Inherits Pair
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function Operator_Compare(OtherCookie As Cookie) As Integer
+		  If OtherCookie Is Nil Then Return 1
+		  If OtherCookie.Name = Me.Name And OtherCookie.Value = Me.Value And Me.OriginCompare(OtherCookie) Then Return 0
+		  Return StrComp(Me.Name, OtherCookie.Name, 0)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function OriginCompare(CompareTo As Cookie) As Boolean
 		  'Compares the metadata of the passed cookie to the instant cookie
 		  If CompareTo.Domain <> Me.Domain Then Return False
@@ -64,6 +72,28 @@ Inherits Pair
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		 Shared Function ParseCookies(Cookies As String) As Cookie()
+		  ' Parses a multi-field Cookie: header into and array of Cookie objects.
+		  ' DO NOT USE THIS METHOD TO PARSE Set-Cookie: HEADERS! Use Cookie.Constructor(String) instead.
+		  ' e.g. "Name1=Value1;Name2=Value2;Name3=Value3"
+		  
+		  Dim s() As String = Split(Cookies, ";")
+		  Dim ret() As Cookie
+		  Dim scount As Integer = UBound(s)
+		  For x As Integer = 0 To scount
+		    If s(x).Trim = "" Then Continue
+		    Dim l, r As String
+		    l = NthField(s(x).Trim, "=", 1)
+		    r = NthField(s(x).Trim, "=", 2)
+		    Dim c As New Cookie(l, r)
+		    ret.Append(c)
+		  Next
+		  
+		  Return ret
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ToString() As String
 		  'serialize the object
 		  Dim data As String = Me.Name + "=" + Me.Value
@@ -71,7 +101,7 @@ Inherits Pair
 		  If Me.Expires <> Nil Then
 		    Dim now As New Date
 		    If Me.Expires.TotalSeconds > now.TotalSeconds Then
-		      data = data + "; expires=" + HTTP.DateString(Me.Expires)
+		      data = data + "; expires=" + DateString(Me.Expires)
 		    End If
 		  End If
 		  
@@ -142,6 +172,10 @@ Inherits Pair
 		Secure As Boolean
 	#tag EndProperty
 
+	#tag Property, Flags = &h0
+		Value As String
+	#tag EndProperty
+
 
 	#tag ViewBehavior
 		#tag ViewProperty
@@ -208,6 +242,12 @@ Inherits Pair
 			InitialValue="0"
 			Type="Integer"
 			InheritedFrom="Object"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Value"
+			Group="Behavior"
+			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

@@ -302,7 +302,9 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
+      TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
@@ -533,7 +535,7 @@ End
 		    Dim s() As String = Split(obj.Text, CRLF)
 		    For Each cs As String In s
 		      If cs.Trim = "" Then Continue
-		      Dim c As New HTTP.Cookie(cs)
+		      Dim c As New Cookie(cs)
 		      Me.AddRow("Cookie", c.Name + "=" + c.Value)
 		      Me.RowTag(Me.LastIndex) = c
 		    Next
@@ -556,7 +558,7 @@ End
 		  Select Case hitItem.Text
 		  Case "View spec..."
 		    Dim c As Pair = hitItem.Tag
-		    If Not c IsA HTTP.Cookie Then
+		    If Not c IsA Cookie Then
 		      SpecIndex.ShowHeader(c.Left)
 		    Else
 		      SpecIndex.ShowHeader("Cookie")
@@ -637,14 +639,14 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub ValueChanged()
-		  Dim c As HTTP.Cookie
+		  Dim c As Cookie
 		  Dim editindex As Integer = -1
 		  
 		  If RequestHeaders.ListIndex > -1 And RequestHeaders.Cell(RequestHeaders.ListIndex, 0) = "Cookie" Then
 		    Dim n, v As String
 		    n = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 1)
 		    v = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 2)
-		    c = New HTTP.Cookie(n, v)
+		    c = New Cookie(n, v)
 		    editindex = RequestHeaders.ListIndex
 		  End If
 		  c = CookieEdit.GetCookie(c)
@@ -690,29 +692,29 @@ End
 		      Dim formgen As New FormGenerator
 		      Dim formraw As Variant
 		      If Not Formtype Then
-		        Dim olddata As Dictionary = HTTP.Helpers.DecodeFormData(MessageBodyRaw)
+		        Dim olddata As New HTTP.URLEncodedForm(MessageBodyRaw)
 		        formraw = formgen.SetFormData(olddata)
 		      Else
 		        Try
 		          Dim typ As ContentType = NthField(MessageBodyRaw, CRLF + CRLF, 1)
-		          formraw = formgen.SetFormData(HTTP.MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
+		          formraw = formgen.SetFormData(MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
 		        Catch UnsupportedFormatException
 		          formraw = formgen.SetFormData("")
 		        End Try
 		      End If
-		      If formraw IsA HTTP.MultipartForm Then
+		      If formraw IsA MultipartForm Then
 		        Formtype = True
 		      Else
 		        Formtype = False
 		      End If
 		      Dim Type As String
 		      If formraw <> Nil Then
-		        If formraw IsA Dictionary Then
-		          If Dictionary(formraw).Count = 0 Then Return
-		          MessageBodyRaw = HTTP.Helpers.EncodeFormData(formraw)
+		        If formraw IsA HTTP.URLEncodedForm Then
+		          If HTTP.URLEncodedForm(formraw).Count = 0 Then Return
+		          MessageBodyRaw = HTTP.URLEncodedForm(formraw).ToString
 		          Type = "application/x-url-encoded"
 		        Else
-		          Dim m As HTTP.MultipartForm = formraw
+		          Dim m As MultipartForm = formraw
 		          If m.Count = 0 Then Return
 		          MessageBodyRaw = m.ToString
 		          Type = "multipart/form-data; boundary=" + m.Boundary
