@@ -320,7 +320,7 @@ Begin ContainerControl RequestMain
       Height          =   20
       HelpTag         =   ""
       Hilight         =   ""
-      Icon            =   1638756351
+      Icon            =   1880547327
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
@@ -640,7 +640,6 @@ End
 #tag Events EditCookies11
 	#tag Event
 		Sub Open()
-		  Me.Icon = cookie_icon_grey
 		  Me.HelpTag = "Add a cookie to request"
 		End Sub
 	#tag EndEvent
@@ -666,16 +665,6 @@ End
 		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
 		    End If
 		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseEnter()
-		  Me.Icon = cookie_icon
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExit()
-		  Me.Icon = cookie_icon_grey
 		End Sub
 	#tag EndEvent
 #tag EndEvents
