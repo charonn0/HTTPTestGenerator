@@ -367,16 +367,7 @@ End
 		  t.PrintOther(sr)
 		  t.PrintRequest(Req)
 		  t.PrintResponse(Resp)
-		  
-		  #If TargetWin32 Then
-		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
-		    Const SB_BOTTOM = 7
-		    Const WM_VSCROLL = &h115
-		    Call SendMessageW(t.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
-		  #Else
-		    t.ScrollPosition = t.LineNumAtCharPos(t.Text.Len)
-		  #endif
-		  
+		  t.ScrollToEnd()
 		  
 		End Sub
 	#tag EndMethod

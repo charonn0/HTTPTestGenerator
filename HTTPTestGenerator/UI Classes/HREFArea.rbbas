@@ -175,6 +175,20 @@ Inherits TextArea
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub ScrollToEnd()
+		  If Me.SelLength <= 0 Then Me.SelStart = Me.Text.Len
+		  #If TargetWin32 Then
+		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
+		    Const SB_BOTTOM = 7
+		    Const WM_VSCROLL = &h115
+		    Call SendMessageW(Me.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
+		  #Else
+		    Me.ScrollPosition = Me.LineNumAtCharPos(HTTPLog.Text.Len)
+		  #endif
+		End Sub
+	#tag EndMethod
+
 
 	#tag Hook, Flags = &h0
 		Event ClickLink(LinkValue As Variant, LinkText As String)

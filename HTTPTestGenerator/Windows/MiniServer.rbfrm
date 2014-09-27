@@ -339,14 +339,7 @@ End
 		  sr.Text = Text
 		  sr.TextColor = TextColor
 		  HTTPLog.PrintOther(sr)
-		  #If TargetWin32 Then
-		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
-		    Const SB_BOTTOM = 7
-		    Const WM_VSCROLL = &h115
-		    Call SendMessageW(HTTPLog.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
-		  #Else
-		    HTTPLog.ScrollPosition = HTTPLog.LineNumAtCharPos(HTTPLog.Text.Len)
-		  #endif
+		  HTTPLog.ScrollToEnd()
 		  
 		End Sub
 	#tag EndMethod
@@ -452,6 +445,7 @@ End
 		      sr.Text = CRLF
 		      HTTPLog.PrintOther(sr)
 		      Socket.Listen
+		      HTTPLog.ScrollToEnd()
 		    End If
 		  Else
 		    PrintLog("Stopping server..." + CRLF, &c00000000)
@@ -556,8 +550,10 @@ End
 		    Select Case p
 		    Case IsA HTTP.Request
 		      HTTPLog.PrintRequest(p)
+		      HTTPLog.ScrollToEnd()
 		    Case IsA HTTP.Response
 		      HTTPLog.PrintResponse(p)
+		      HTTPLog.ScrollToEnd()
 		    Else
 		      PrintLog(p, &c00000000)
 		    End Select
