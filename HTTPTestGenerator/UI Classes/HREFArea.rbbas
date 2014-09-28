@@ -145,16 +145,10 @@ Inherits TextArea
 		    Links.Append(Nil)
 		    
 		    sr.Text = Right(msg, msg.Len - sr.Text.Len)
-		    'NthField(msg, " ", 2)
 		    sr.Underline = True
 		    Me.StyledText.AppendStyleRun(sr)
 		    Links.Append(Message.StatusCode)
 		    sr.Underline = False
-		    
-		    'sr.Text = " " + NthField(msg, " ", 3)
-		    'Me.StyledText.AppendStyleRun(sr)
-		    'Links.Append(Nil)
-		    
 		    sr.Text = CRLF + Replace(remain, msg, "").Trim
 		  Else
 		    sr.Text = remain
@@ -186,7 +180,7 @@ Inherits TextArea
 		    Const WM_VSCROLL = &h115
 		    Call SendMessageW(Me.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
 		  #Else
-		    Me.ScrollPosition = Me.LineNumAtCharPos(HTTPLog.Text.Len)
+		    Me.ScrollPosition = Me.LineNumAtCharPos(Me.Text.Len)
 		  #endif
 		End Sub
 	#tag EndMethod
