@@ -62,6 +62,7 @@ Window=PictureView;HTTPTestGenerator/Windows/Viewers/PictureView.rbfrm;&h786B2FF
 Window=TextView;HTTPTestGenerator/Windows/Viewers/TextView.rbfrm;&h48121FFF;&h13ACFFFF;false
 Interface=Viewer;HTTPTestGenerator/Windows/Viewers/Viewer.rbbas;&h7FA147FF;&h13ACFFFF;false
 Interface=FormInterface;HTTP/FormInterface.rbbas;&h508DFFFF;&h196B37FF;false
+MenuBar=ViewMenu;HTTPTestGenerator/Windows/Viewers/ViewMenu.rbmnu;&h560ACFFF;&h13ACFFFF;false
 DefaultWindow=Generator
 MajorVersion=1
 MinorVersion=0
