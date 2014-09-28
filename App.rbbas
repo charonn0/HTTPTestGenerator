@@ -2,22 +2,6 @@
 Protected Class App
 Inherits Application
 	#tag Event
-		Sub Close()
-		  #If TargetWin32 Then
-		    Declare Function RemoveFontResourceExW Lib "GDI32" (FontFile As WString, Flags As Integer, Reserved As Integer) As Boolean
-		    Const FR_PRIVATE = &h10
-		    Dim f As FolderItem
-		    #If DebugBuild Then
-		      f = App.ExecutableFile.Parent.Parent.Child("Installer").Child("SourceCodePro.otf")
-		    #else
-		      f = App.ExecutableFile.Parent.Child("SourceCodePro.otf")
-		    #endif
-		    Call RemoveFontResourceExW(f.AbsolutePath, FR_PRIVATE, 0)
-		  #endif
-		End Sub
-	#tag EndEvent
-
-	#tag Event
 		Sub Open()
 		  App.UseGDIPlus = True
 		End Sub
@@ -160,27 +144,7 @@ Inherits Application
 		  ' try to pick a fixed-width font
 		  
 		  If FixedWidthFont.Trim <> "" Then Return FixedWidthFont
-		  
-		  #If TargetWin32 Then
-		    Declare Function AddFontResourceExW Lib "GDI32" (FontFile As WString, Flags As Integer, Reserved As Integer) As Integer
-		    Declare Function GetLastError Lib "Kernel32" () As Integer
-		    Const FR_PRIVATE = &h10
-		    Dim f As FolderItem
-		    #If DebugBuild Then
-		      f = App.ExecutableFile.Parent.Parent.Child("Installer").Child("SourceCodePro.otf")
-		    #else
-		      f = App.ExecutableFile.Parent.Child("SourceCodePro.otf")
-		    #endif
-		    Dim g As Integer 
-		    If AddFontResourceExW(f.AbsolutePath, FR_PRIVATE, 0) = 0 Then
-		      g = GetLastError()
-		      Break
-		    Else
-		      FixedWidthFont = "Source Code Pro"
-		      Return FixedWidthFont
-		    End If
-		  #endif
-		  Dim preferred() As String = Split("Anonymous,Courier,Inconsolata,Lucida Console", ",")
+		  Dim preferred() As String = Split("Consolas,Anonymous,Courier,Inconsolata,Lucida Console", ",")
 		  For i As Integer = FontCount - 1 DownTo 0
 		    Dim fontname As String = Font(i)
 		    If Left(fontname, 1) = "@" Then Continue
