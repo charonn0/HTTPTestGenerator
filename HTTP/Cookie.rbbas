@@ -172,10 +172,6 @@ Inherits Pair
 		Secure As Boolean
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		Value As String
-	#tag EndProperty
-
 
 	#tag ViewBehavior
 		#tag ViewProperty
