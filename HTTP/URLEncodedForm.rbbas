@@ -1,5 +1,6 @@
 #tag Class
 Class URLEncodedForm
+Implements FormInterface
 	#tag Method, Flags = &h0
 		Sub Constructor(urlencodedform As String)
 		  Dim items() As String = Split(urlencodedform.Trim, "&")
@@ -18,13 +19,13 @@ Class URLEncodedForm
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function Element(Name As String) As String
+		Function Element(Name As String) As Variant
 		  Return Form.Value(Name)
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Element(Name As String, Assigns Value As String)
+		Sub Element(Name As String, Assigns Value As Variant)
 		  If Value = "" Then
 		    Form.Remove(Name)
 		  Else
@@ -53,6 +54,12 @@ Class URLEncodedForm
 		    data.Append(EncodeURLComponent(Key) + "=" + EncodeURLComponent(Form.Value(key)))
 		  Next
 		  Return Join(data, "&")
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function Type() As HTTP.ContentType
+		  Return "application/x-url-encoded"
 		End Function
 	#tag EndMethod
 

@@ -302,7 +302,9 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
+      TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
@@ -512,6 +514,8 @@ End
 #tag Events RequestHeaders
 	#tag Event
 		Sub AddNew(NewIndex As Integer, Header As Pair)
+		  #pragma Unused NewIndex
+		  #pragma Unused Header
 		  GenerateHeaders()
 		End Sub
 	#tag EndEvent
@@ -567,6 +571,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub Removed(Header As Pair)
+		  #pragma Unused Header
 		  GenerateHeaders()
 		End Sub
 	#tag EndEvent
@@ -576,22 +581,6 @@ End
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
 		End Sub
-	#tag EndEvent
-	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  'If IsContextualClick Then
-		  'Dim m As New MenuItem("View spec...")
-		  'm.Tag = Me.Text
-		  'Dim base As New MenuItem("METHODMENU")
-		  'base.Append(m)
-		  'm = base.PopUp
-		  'Select Case m.Text
-		  'Case "View spec..."
-		  'SpecIndex.ShowMethod(Me.Text)
-		  'Return True
-		  'End Select
-		  'End If
-		End Function
 	#tag EndEvent
 #tag EndEvents
 #tag Events URL
@@ -611,6 +600,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub DropObject(Obj As DragItem, action As Integer)
+		  #pragma Unused action
 		  If Obj.TextAvailable Then
 		    Dim u As New HTTP.URI(Obj.Text)
 		    Me.Text = u.ToString

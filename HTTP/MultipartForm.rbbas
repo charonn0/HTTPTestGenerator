@@ -1,5 +1,6 @@
 #tag Class
 Class MultipartForm
+Implements FormInterface
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  mFormElements = New Dictionary
@@ -129,6 +130,12 @@ Class MultipartForm
 		  out.Write("--" + Me.Boundary + "--" + CRLF)
 		  out.Close
 		  Return data
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function Type() As HTTP.ContentType
+		  Return "multipart/form-data; Boundary=" + Boundary
 		End Function
 	#tag EndMethod
 
