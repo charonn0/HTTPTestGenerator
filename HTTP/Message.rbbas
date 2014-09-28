@@ -27,8 +27,8 @@ Protected Class Message
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Header(Name As String, Assigns Value As String)
-		  If Me.HasHeader(Name) Then mHeaders.Delete(Name)
+		Sub Header(Name As String, AllowDuplicate As Boolean = False, Assigns Value As String)
+		  If Not AllowDuplicate And Me.HasHeader(Name) Then mHeaders.Delete(Name)
 		  mHeaders.AppendHeader(Name, Value)
 		End Sub
 	#tag EndMethod
