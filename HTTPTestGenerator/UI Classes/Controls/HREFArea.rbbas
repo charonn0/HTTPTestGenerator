@@ -119,15 +119,17 @@ Inherits TextArea
 		  sr = New StyleRun
 		  If Message.MessageBody.Trim.LenB > 0 Then
 		    sr.Font = App.FixedWidthFont
-		    sr.Text = CRLF + "View request body..." + CRLF + CRLF
+		    sr.Text = CRLF + "View request body..."
 		    sr.TextColor = &c80808000
 		    sr.Underline = True
 		    Links.Append(Message)
-		  Else
-		    sr.Text = CRLF + CRLF
-		    Links.Append(Nil)
+		    Me.StyledText.AppendStyleRun(sr)
 		  End If
+		  sr.Text = CRLF + CRLF
+		  sr.Underline = False
 		  Me.StyledText.AppendStyleRun(sr)
+		  Links.Append(Nil)
+		  
 		End Sub
 	#tag EndMethod
 
@@ -159,15 +161,16 @@ Inherits TextArea
 		  If Message.MessageBody.Trim.LenB > 0 Then
 		    sr = New StyleRun
 		    sr.Font = App.FixedWidthFont
-		    sr.Text = CRLF + "View response body..." + CRLF + CRLF
+		    sr.Text = CRLF + "View response body..."
 		    sr.TextColor = &c80808000
 		    sr.Underline = True
 		    Me.StyledText.AppendStyleRun(sr)
 		    Links.Append(Message)
-		  Else
-		    AppendLine()
-		    AppendLine()
 		  End If
+		  sr.Text = CRLF + CRLF
+		  sr.Underline = False
+		  Me.StyledText.AppendStyleRun(sr)
+		  Links.Append(Nil)
 		End Sub
 	#tag EndMethod
 
