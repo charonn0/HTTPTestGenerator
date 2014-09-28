@@ -29,6 +29,7 @@ Inherits AddRemoveList
 		  Select Case hitItem.Text
 		  Case "Clear all headers"
 		    Me.DeleteAllRows
+		    RaiseEvent Cleared()
 		    Return True
 		  Else
 		    Return RaiseEvent ContextualMenuAction(hitItem)
@@ -80,6 +81,10 @@ Inherits AddRemoveList
 
 	#tag Hook, Flags = &h0
 		Event AddNew(NewIndex As Integer, Header As Pair)
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event Cleared()
 	#tag EndHook
 
 	#tag Hook, Flags = &h0

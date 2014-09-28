@@ -576,6 +576,12 @@ End
 		  GenerateHeaders()
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Sub Cleared()
+		  MessageBodyRaw = ""
+		  RaiseEvent Generate()
+		End Sub
+	#tag EndEvent
 #tag EndEvents
 #tag Events RequestMethod
 	#tag Event
@@ -673,7 +679,7 @@ End
 		  mnu.Append(New MenuItem("Clear all"))
 		  Dim res As MenuItem = mnu.PopUp
 		  If res <> Nil Then
-		    If Self.Request = Nil Then Generate()
+		    RaiseEvent Generate()
 		    Select Case res.Text
 		    Case "HTML form output"
 		      Dim formgen As New FormGenerator
@@ -684,7 +690,7 @@ End
 		        formraw = formgen.SetFormData(olddata)
 		      Else
 		        Try
-		          Dim typ As ContentType = NthField(MessageBodyRaw, CRLF + CRLF, 1)
+		          Dim typ As ContentType = Request.ContentType
 		          formraw = formgen.SetFormData(MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
 		        Catch UnsupportedFormatException
 		          formraw = formgen.SetFormData(Nil)
