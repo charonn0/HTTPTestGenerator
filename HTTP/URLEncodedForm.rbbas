@@ -59,7 +59,7 @@ Implements FormInterface
 
 	#tag Method, Flags = &h0
 		Function Type() As HTTP.ContentType
-		  Return "application/x-url-encoded"
+		  Return "application/x-www-form-urlencoded"
 		End Function
 	#tag EndMethod
 

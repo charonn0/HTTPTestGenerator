@@ -299,56 +299,42 @@ End
 
 
 	#tag Method, Flags = &h0
-		Function SetFormData(ExistingData As Variant) As Variant
-		  Me.FormData = Nil
+		Function SetFormData(OldForm As HTTP.FormInterface) As HTTP.FormInterface
 		  Me.Form = Nil
 		  HTTPForm.DeleteAllRows
-		  If ExistingData <> Nil Then
-		    If ExistingData IsA HTTP.URLEncodedForm Then ' URLEncoded
-		      Dim tmp As HTTP.URLEncodedForm = HTTP.URLEncodedForm(ExistingData)
+		  If OldForm <> Nil Then
+		    Form = OldForm
+		    If OldForm IsA HTTP.URLEncodedForm Then ' URLEncoded
 		      FormType1.Value = True
-		      FormData = ExistingData
-		      For x As Integer = 0 To tmp.Count - 1
-		        Dim key As String = tmp.Name(x)
-		        HTTPForm.AddRow(key, tmp.Element(key))
-		        HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
-		        HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
-		      Next
 		    Else ' MultipartForm
 		      FormType.Value = True
-		      Dim frm As MultipartForm = ExistingData
-		      For i As Integer = 0 To frm.Count - 1
-		        If frm.Element(frm.Name(i)) IsA FolderItem Then
-		          Dim f As FolderItem = frm.Element(frm.Name(i))
-		          HTTPForm.AddRow(frm.Name(i), f.AbsolutePath)
-		          HTTPForm.RowTag(HTTPForm.LastIndex) = f
-		        Else
-		          HTTPForm.AddRow(frm.Name(i), frm.Element(frm.Name(i)))
-		        End If
-		        HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
-		        HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
-		      Next
-		      Form = ExistingData
 		    End If
+		    
+		    For i As Integer = 0 To OldForm.Count - 1
+		      Dim n As String
+		      Dim v As Variant
+		      n = OldForm.Name(i)
+		      v = OldForm.Element(n)
+		      If v IsA FolderItem Then
+		        Dim f As FolderItem = v
+		        HTTPForm.AddRow(n, f.AbsolutePath)
+		        HTTPForm.RowTag(HTTPForm.LastIndex) = f
+		      Else
+		        HTTPForm.AddRow(n, v)
+		      End If
+		      HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
+		      HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
+		    Next
 		  End If
 		  
 		  Self.ShowModal()
-		  
-		  If FormData <> Nil Then
-		    Return FormData
-		  ElseIf Form <> Nil Then
-		    Return Form
-		  End If
+		  Return Form
 		End Function
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h1
-		Protected Form As MultipartForm
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private FormData As HTTP.URLEncodedForm
+		Protected Form As HTTP.FormInterface
 	#tag EndProperty
 
 
@@ -376,21 +362,23 @@ End
 	#tag Event
 		Sub Action()
 		  If FormType1.Value Then
-		    FormData = New HTTP.URLEncodedForm("")
-		    For i As Integer = 0 To HTTPForm.ListCount - 1
-		      FormData.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
-		    Next
+		    Form = New HTTP.URLEncodedForm("")
 		  Else
 		    Form = New MultipartForm
-		    For i As Integer = 0 To HTTPForm.ListCount - 1
-		      If HTTPForm.RowTag(i) <> Nil And HTTPForm.RowTag(i) IsA FolderItem Then
-		        Dim f As FolderItem = HTTPForm.RowTag(i)
+		  End If
+		  For i As Integer = 0 To HTTPForm.ListCount - 1
+		    If HTTPForm.RowTag(i) <> Nil And HTTPForm.RowTag(i) IsA FolderItem Then
+		      Dim f As FolderItem = HTTPForm.RowTag(i)
+		      If Form IsA MultipartForm Then
 		        Form.Element(HTTPForm.Cell(i, 0)) = f
 		      Else
-		        Form.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
+		        Form.Element(HTTPForm.Cell(i, 0)) = f.AbsolutePath
+		        MsgBox("File element '" + f.AbsolutePath + "' has been stripped.")
 		      End If
-		    Next
-		  End If
+		    Else
+		      Form.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
+		    End If
+		  Next
 		  
 		  Self.Close
 		End Sub
@@ -399,7 +387,7 @@ End
 #tag Events PushButton4
 	#tag Event
 		Sub Action()
-		  FormData = Nil
+		  Form = Nil
 		  Self.Close
 		End Sub
 	#tag EndEvent
@@ -418,7 +406,6 @@ End
 		Sub Action()
 		  FileAdd.Enabled = Me.Value
 		  Form = New MultipartForm
-		  FormData = Nil
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -426,8 +413,7 @@ End
 	#tag Event
 		Sub Action()
 		  FileAdd.Enabled = Not Me.Value
-		  Form = Nil
-		  FormData = New HTTP.URLEncodedForm("")
+		  Form = New HTTP.URLEncodedForm("")
 		End Sub
 	#tag EndEvent
 #tag EndEvents

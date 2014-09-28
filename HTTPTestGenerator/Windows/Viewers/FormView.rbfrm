@@ -85,14 +85,14 @@ End
 		  Case Type.Accepts("multipart/form-data")
 		    Form = MultipartForm.FromString(Message, Type.Boundary)
 		    
-		  Case Type.Accepts("application/x-url-encoded")
+		  Case Type.Accepts("application/x-www-form-urlencoded")
 		    Form = New URLEncodedForm(Message)
 		    
 		  Else
 		    Raise New UnsupportedFormatException
 		  End Select
 		  
-		  If Form = Nil Then 
+		  If Form = Nil Then
 		    Self.Close
 		    Return
 		  End If

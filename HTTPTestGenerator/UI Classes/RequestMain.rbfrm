@@ -217,6 +217,7 @@ Begin ContainerControl RequestMain
       AutoDeactivate  =   True
       Backdrop        =   ""
       Bold            =   False
+      Border          =   ""
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -255,6 +256,7 @@ Begin ContainerControl RequestMain
       AutoDeactivate  =   True
       Backdrop        =   ""
       Bold            =   False
+      Border          =   ""
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -302,9 +304,7 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
-      TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
@@ -316,6 +316,7 @@ Begin ContainerControl RequestMain
       AutoDeactivate  =   True
       Backdrop        =   ""
       Bold            =   False
+      Border          =   ""
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
@@ -678,14 +679,15 @@ End
 		      Dim formgen As New FormGenerator
 		      Dim formraw As Variant
 		      If Not Formtype Then
-		        Dim olddata As New HTTP.URLEncodedForm(MessageBodyRaw)
+		        Dim olddata As HTTP.URLEncodedForm
+		        If MessageBodyRaw <> "" Then olddata = New HTTP.URLEncodedForm(MessageBodyRaw)
 		        formraw = formgen.SetFormData(olddata)
 		      Else
 		        Try
 		          Dim typ As ContentType = NthField(MessageBodyRaw, CRLF + CRLF, 1)
 		          formraw = formgen.SetFormData(MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
 		        Catch UnsupportedFormatException
-		          formraw = formgen.SetFormData("")
+		          formraw = formgen.SetFormData(Nil)
 		        End Try
 		      End If
 		      If formraw IsA MultipartForm Then
@@ -698,7 +700,7 @@ End
 		        If formraw IsA HTTP.URLEncodedForm Then
 		          If HTTP.URLEncodedForm(formraw).Count = 0 Then Return
 		          MessageBodyRaw = HTTP.URLEncodedForm(formraw).ToString
-		          Type = "application/x-url-encoded"
+		          Type = "application/x-www-form-urlencoded"
 		        Else
 		          Dim m As MultipartForm = formraw
 		          If m.Count = 0 Then Return
