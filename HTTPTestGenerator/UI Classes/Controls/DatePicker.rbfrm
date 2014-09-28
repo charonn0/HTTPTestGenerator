@@ -1193,6 +1193,7 @@ Begin Window DatePicker
       Selectable      =   True
       TabIndex        =   43
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "DECEMBER"
       TextAlign       =   1
       TextColor       =   &h000000
@@ -1227,6 +1228,7 @@ Begin Window DatePicker
       Selectable      =   True
       TabIndex        =   44
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "YEAR"
       TextAlign       =   1
       TextColor       =   &h000000
@@ -1532,7 +1534,7 @@ End
 
 #tag Events Day
 	#tag Event
-		Sub Action(index as Integer)
+		Sub Action()
 		  SelectedDate.Day = Val(Day(index).Caption)
 		  UpdateDate()
 		End Sub

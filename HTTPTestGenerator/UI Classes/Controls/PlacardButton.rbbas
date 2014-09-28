@@ -189,32 +189,10 @@ Inherits BoolCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="bold"
-			Visible=true
+			Name="Bold"
 			Group="Behavior"
-			InitialValue="0"
-			Type="boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="caption"
-			Visible=true
-			Group="Behavior"
-			Type="string"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="captionDX"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="captionDY"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="integer"
+			Type="Boolean"
+			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="DoubleBuffer"
@@ -223,20 +201,6 @@ Inherits BoolCanvas
 			InitialValue="False"
 			Type="Boolean"
 			InheritedFrom="Canvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="downDX"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="downDY"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Enabled"
@@ -255,12 +219,6 @@ Inherits BoolCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="hasIcon"
-			Visible=true
-			Group="Behavior"
-			Type="boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Height"
 			Visible=true
 			Group="Position"
@@ -277,24 +235,16 @@ Inherits BoolCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="Hilight"
+			Group="Behavior"
+			Type="Boolean"
+			InheritedFrom="BaseCanvas"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Icon"
 			Visible=true
 			Group="Behavior"
 			Type="Picture"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="iconDX"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="integer"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="iconDY"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
@@ -309,23 +259,10 @@ Inherits BoolCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="invertTextColor"
+			Name="Italic"
 			Group="Behavior"
-			Type="boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="isSticky"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="italic"
-			Visible=true
-			Group="Behavior"
-			InitialValue="0"
-			Type="boolean"
+			Type="Boolean"
+			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -370,6 +307,11 @@ Inherits BoolCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="Sticky"
+			Group="Behavior"
+			Type="Boolean"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
@@ -399,11 +341,11 @@ Inherits BoolCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="textColor"
-			Visible=true
+			Name="TextColor"
 			Group="Behavior"
-			InitialValue="&h000000"
-			Type="color"
+			InitialValue="&c000000"
+			Type="Color"
+			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="textColorDown"
@@ -413,18 +355,17 @@ Inherits BoolCanvas
 			Type="color"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="textFont"
-			Visible=true
+			Name="TextFont"
 			Group="Behavior"
-			Type="string"
+			Type="String"
 			EditorType="MultiLineEditor"
+			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="textSize"
-			Visible=true
+			Name="TextSize"
 			Group="Behavior"
-			InitialValue="0"
-			Type="integer"
+			Type="Single"
+			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -434,11 +375,10 @@ Inherits BoolCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="underline"
-			Visible=true
+			Name="Underline"
 			Group="Behavior"
-			InitialValue="0"
-			Type="boolean"
+			Type="Boolean"
+			InheritedFrom="BaseCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="UseFocusRing"
@@ -449,11 +389,10 @@ Inherits BoolCanvas
 			InheritedFrom="Canvas"
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="value"
-			Visible=true
+			Name="Value"
 			Group="Behavior"
-			InitialValue="0"
-			Type="boolean"
+			Type="Boolean"
+			InheritedFrom="BoolCanvas"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Visible"
