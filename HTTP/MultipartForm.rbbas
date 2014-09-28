@@ -107,7 +107,7 @@ Implements FormInterface
 		  
 		  Dim data As New MemoryBlock(0)
 		  Dim out As New BinaryStream(data)
-		  out.Write("Content-Type: multipart/form-data; boundary=" + Me.Boundary + CRLF + CRLF)
+		  'out.Write("Content-Type: multipart/form-data; boundary=" + Me.Boundary + CRLF + CRLF)
 		  For Each key As String In mFormElements.Keys
 		    If VarType(mFormElements.Value(Key)) = Variant.TypeString Then
 		      out.Write("--" + Me.Boundary + CRLF)
