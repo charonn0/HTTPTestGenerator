@@ -111,6 +111,7 @@ Begin Window SpecIndex
       HasBackColor    =   False
       Height          =   350
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   172
       LockBottom      =   True
