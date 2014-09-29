@@ -29,22 +29,17 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
-      TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   35
-      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -52,11 +47,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   79
-      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -70,7 +62,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -125,7 +116,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -143,7 +133,6 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -151,11 +140,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
-      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   123
-      Visible         =   True
       Width           =   32
    End
 End
@@ -203,57 +189,6 @@ End
 		End Function
 	#tag EndMenuHandler
 
-
-	#tag Method, Flags = &h0
-		Function ExtractLinks(HTML As String, BaseURL As String) As String()
-		  'Given the HTML source code and base URL of a webpage, returns an array of all
-		  'hyperlink addresses.
-		  Dim proto As String
-		  If InStr(BaseURL, "://") > 0 Then
-		    proto = NthField(BaseURL, "://", 1)
-		  Else
-		    proto = "http"
-		  End If
-		  Dim burl As New HTTP.URI(BaseURL)
-		  BaseURL = Replace(BaseURL, proto + "://", "")
-		  'If Right(BaseURL, 1) = "/" Then BaseURL = Left(BaseURL, BaseURL.Len - 1)
-		  Dim ret() As String
-		  Dim hrefReg As RegEx
-		  hrefReg = New RegEx
-		  hrefReg.Options.CaseSensitive = False
-		  hrefReg.SearchPattern = "<a[^"">]*href=""([^"">]*)""[^>]*>"
-		  Dim hrefMatch as RegExMatch
-		  
-		  // find the match
-		  hrefMatch = hrefReg.Search(HTML)
-		  while hrefMatch <> Nil
-		    Dim s As String = hrefMatch.SubExpressionString(1)
-		    If InStr(s, "mailto:") <= 0 Then
-		      'Dim prto As String
-		      'If InStr(s, "://") > 0 Then
-		      'prto = NthField(s, "://", 1)
-		      's = NthField(s, "://", 2)
-		      'Else
-		      'prto = proto
-		      'End If
-		      Dim u As New HTTP.URI(s)
-		      If u.Host = "" Then u.Host = burl.Host
-		      's = u.ToString
-		      'While InStr(s, "//") > 0
-		      's = Replace(s, "//", "/")
-		      'Wend
-		      's = prto + "://" + s
-		      ''If Left(s, prto.Len) <> prto Then s = prto + s
-		      If u.Scheme = "" Then u.Scheme = "http"
-		      ret.Append(u.ToString)
-		    Else
-		      ret.Append(s)
-		    End If
-		    hrefMatch = hrefReg.Search()
-		  wend
-		  Return ret
-		End Function
-	#tag EndMethod
 
 	#tag Method, Flags = &h21
 		Private Sub Generate()
