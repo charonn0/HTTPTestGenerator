@@ -111,7 +111,6 @@ Begin Window SpecIndex
       HasBackColor    =   False
       Height          =   350
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   172
       LockBottom      =   True
@@ -175,6 +174,21 @@ End
 	#tag EndEvent
 
 
+	#tag Method, Flags = &h0
+		Function HasEntry(EntryName As Variant) As Boolean
+		  Select Case True
+		  Case EntryName = ""
+		    Return False
+		  Case HeaderDescription(EntryName) <> Nil
+		    Return True
+		  Case MethodDescription(EntryName) <> Nil
+		    Return True
+		  Case StatusCodeDescription(Val(EntryName)) <> Nil
+		    Return True
+		  End Select
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Shared Function HeaderDescription(HeaderName As String) As JSONItem
 		  If Headers = Nil Then Headers = New JSONItem(HeaderDescriptions)
@@ -212,77 +226,34 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ShowHeader(HeaderName As String)
-		  ShowMe()
-		  CurrentItem = HeaderDescription(HeaderName)
-		  If CurrentItem = Nil Then
-		    Call MsgBox("No specification found for: " + HeaderName, 48, "Index entry not found")
-		  Else
-		    HelpIndex.Expanded(0) = True
-		  End If
-		  
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub ShowMe(SearchFor As String = "")
+		Sub ShowItem(SearchFor As String = "")
 		  Me.Show
-		  If HelpIndex.ListCount < 1 Then
-		    HelpIndex.DeleteAllRows
-		    HelpIndex.AddFolder("Headers")
-		    HelpIndex.AddFolder("Status Codes")
-		    HelpIndex.AddFolder("Request Methods")
-		    'HelpIndex.AddFolder("IRI Relations")
-		  End If
-		  
-		  If SearchFor <> "" Then
+		  Dim exp As Integer = -1
+		  If Me.HasEntry(SearchFor) Then
 		    Select Case True
 		    Case HeaderDescription(SearchFor) <> Nil
-		      Me.ShowHeader(SearchFor)
+		      Me.CurrentItem = HeaderDescription(SearchFor)
+		      exp = 0
 		    Case MethodDescription(SearchFor) <> Nil
-		      Me.ShowMethod(SearchFor)
+		      Me.CurrentItem = MethodDescription(SearchFor)
+		      exp = 2
 		    Case StatusCodeDescription(Val(SearchFor)) <> Nil
-		      Me.ShowStatusCode(Val(SearchFor))
+		      Me.CurrentItem = StatusCodeDescription(Val(SearchFor))
+		      exp = 1
 		    End Select
 		  End If
 		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub ShowMethod(MethodName As String)
-		  ShowMe()
-		  CurrentItem = MethodDescription(MethodName)
-		  If CurrentItem = Nil Then
-		    Call MsgBox("No specification found for: " + MethodName, 48, "Index entry not found")
-		  Else
-		    HelpIndex.Expanded(2) = True
+		  HelpIndex.DeleteAllRows
+		  HelpIndex.AddFolder("Headers")
+		  HelpIndex.AddFolder("Status Codes")
+		  HelpIndex.AddFolder("Request Methods")
+		  
+		  If CurrentItem = Nil And SearchFor <> "" Then
+		    Call MsgBox("No specification found for: " + SearchFor, 48, "Index entry not found")
+		  ElseIf exp > -1 Then
+		    HelpIndex.Expanded(exp) = True
 		  End If
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub ShowRelation(RelationName As String)
-		  ShowMe()
-		  CurrentItem = RelationDescription(RelationName)
-		  If CurrentItem = Nil Then
-		    Call MsgBox("No specification found for: " + RelationName, 48, "Index entry not found")
-		  Else
-		    HelpIndex.Expanded(3) = True
-		  End If
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub ShowStatusCode(StatusCode As Integer)
-		  ShowMe()
-		  CurrentItem = StatusCodeDescription(StatusCode)
-		  If CurrentItem = Nil Then
-		    Call MsgBox("No specification found for: " + Format(StatusCode, "000"), 48, "Index entry not found")
-		  Else
-		    HelpIndex.Expanded(1) = True
-		  End If
+		  
 		End Sub
 	#tag EndMethod
 

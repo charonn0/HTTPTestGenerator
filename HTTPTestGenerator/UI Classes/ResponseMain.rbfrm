@@ -45,6 +45,7 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Status:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -79,6 +80,7 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "000 No Error Code"
       TextAlign       =   0
       TextColor       =   "&cFF000000"
@@ -371,7 +373,7 @@ End
 		Sub MouseUp(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  SpecIndex.ShowStatusCode(Response.StatusCode)
+		  SpecIndex.ShowItem(Format(Response.StatusCode, "#"))
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -408,7 +410,7 @@ End
 		    
 		  Case "View spec..."
 		    Dim c As Pair = hitItem.Tag
-		    SpecIndex.ShowHeader(c.Left)
+		    SpecIndex.ShowItem(c.Left)
 		    Return True
 		    
 		  End Select
@@ -533,7 +535,7 @@ End
 		    RawViewer.ViewRaw(HTTP.Response(LinkValue).MessageBody, HTTP.Response(LinkValue).ContentType)
 		    
 		  Else
-		    SpecIndex.ShowMe(LinkText)
+		    SpecIndex.ShowItem(LinkText)
 		  End Select
 		  
 		End Sub

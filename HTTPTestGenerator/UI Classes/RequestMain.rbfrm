@@ -304,7 +304,9 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
+      TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
@@ -562,9 +564,9 @@ End
 		  Case "View spec..."
 		    Dim c As Pair = hitItem.Tag
 		    If Not c IsA Cookie Then
-		      SpecIndex.ShowHeader(c.Left)
+		      SpecIndex.ShowItem(c.Left)
 		    Else
-		      SpecIndex.ShowHeader("Cookie")
+		      SpecIndex.ShowItem("Cookie")
 		    End If
 		    Return True
 		  End Select

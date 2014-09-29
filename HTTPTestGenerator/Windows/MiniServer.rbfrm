@@ -120,6 +120,7 @@ Begin Window MiniServer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -164,6 +165,7 @@ Begin Window MiniServer
       Width           =   80
    End
    Begin ServerSocket Socket
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -172,8 +174,11 @@ Begin Window MiniServer
       MinimumSocketsAvailable=   2
       Port            =   0
       Scope           =   0
+      TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   0
+      Visible         =   True
       Width           =   32
    End
    Begin HREFArea HTTPLog
@@ -223,6 +228,7 @@ Begin Window MiniServer
       Width           =   583
    End
    Begin Timer LogTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -230,11 +236,15 @@ Begin Window MiniServer
       Mode            =   0
       Period          =   1
       Scope           =   0
+      TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   34
+      Visible         =   True
       Width           =   32
    End
    Begin Timer ListenTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -242,8 +252,11 @@ Begin Window MiniServer
       Mode            =   0
       Period          =   1
       Scope           =   0
+      TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   67
+      Visible         =   True
       Width           =   32
    End
 End
@@ -557,7 +570,7 @@ End
 		    FolderItem(LinkValue).Launch
 		    
 		  Else
-		    SpecIndex.ShowMe(LinkText)
+		    SpecIndex.ShowItem(LinkText)
 		  End Select
 		  
 		  
