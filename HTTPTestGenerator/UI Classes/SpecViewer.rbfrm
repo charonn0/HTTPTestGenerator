@@ -284,6 +284,17 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Method, Flags = &h0
+		Function HilightText(SearchString As String, StartPos As Integer = 1) As Integer
+		  Dim i As Integer = InStr(StartPos, CurrentItem.Value("description"), SearchString)
+		  If i > 0 Then
+		    DescText.SelStart = i - 1
+		    DescText.SelLength = SearchString.Len
+		    Return i - 1 + SearchString.Len
+		  End If
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Sub ProcessLinks(Text As String)
 		  Dim lines() As String = Split(Text, "</link>")
@@ -356,7 +367,7 @@ End
 			    TypeLabel.Text = "IRI Relation:"
 			    ItemName.Text = mCurrentItem.Value("relation")
 			  End Select
-			  Dim ds As String = ReplaceAll(mCurrentItem.Value("description"), """", "")
+			  Dim ds As String = mCurrentItem.Value("description")
 			  If ds = "" Then ds = "No description available."
 			  ProcessLinks(ds)
 			  SpecLink.Text = mCurrentItem.Value("spec_title")
