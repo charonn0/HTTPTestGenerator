@@ -87,13 +87,11 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As String, Type As ContentType)
+		Sub ViewRaw(Message As HTTP.Message)
 		  // Part of the Viewer interface.
-		  
-		  RawData = Message
-		  MIMEType = Type
-		  Image = Picture.FromData(RawData)
-		  ImageView.Invalidate
+		  Image = Picture.FromData(Message.MessageBody)
+		  ImageView.Refresh(False)
+		  Self.Window.Title = "Message body - " + Message.ContentType.ToString + " (" + Format(mratio * 100, "##0.0#") + "%)"
 		  
 		End Sub
 	#tag EndMethod
@@ -103,16 +101,12 @@ End
 		Protected Image As Picture
 	#tag EndProperty
 
-	#tag Property, Flags = &h1
-		Protected MIMEType As ContentType
+	#tag Property, Flags = &h21
+		Private mratio As Double
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private Pic As Picture
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected RawData As MemoryBlock
 	#tag EndProperty
 
 
@@ -126,15 +120,14 @@ End
 		  Dim buffer As New Picture(g.Width, g.Height)
 		  If Image <> Nil Then
 		    If Pic = Nil Then
-		      Dim ratio As Double = 1.0
+		      mratio = 1.0
 		      If g.Width < Image.Width Then
-		        ratio = g.Width / Image.Width
+		        mratio = g.Width / Image.Width
 		      End If
 		      If g.Height < Image.Height Then
-		        ratio = Min(g.Height / Image.Height, ratio)
+		        mratio = Min(g.Height / Image.Height, mratio)
 		      End If
-		      Pic = Scale(Image, ratio)
-		      Self.Window.Title = "Message body - " + MIMEType.ToString + " (" + Format(ratio * 100, "##0.0#") + "%)"
+		      Pic = Scale(Image, mratio)
 		    End If
 		    
 		    Dim p As Picture = transparencycheckerboard

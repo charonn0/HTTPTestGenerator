@@ -551,10 +551,10 @@ End
 		Sub ClickLink(LinkValue As Variant, LinkText As String)
 		  Select Case True
 		  Case LinkValue IsA HTTP.Request
-		    RawViewer.ViewRaw(HTTP.Request(LinkValue).MessageBody, HTTP.Request(LinkValue).ContentType)
+		    RawViewer.ViewRaw(HTTP.Request(LinkValue))
 		    
 		  Case LinkValue IsA HTTP.Response
-		    RawViewer.ViewRaw(HTTP.Response(LinkValue).MessageBody, HTTP.Response(LinkValue).ContentType)
+		    RawViewer.ViewRaw(HTTP.Response(LinkValue))
 		    
 		  Case LinkValue IsA HTTP.URI
 		    Dim u As HTTP.URI = HTTP.URI(LinkValue)

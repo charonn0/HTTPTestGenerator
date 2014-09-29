@@ -73,22 +73,10 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As String, Type As ContentType)
-		  
-		  RawData = Message
-		  MIMEType = Type
-		  PlainText.Text = RawData
+		Sub ViewRaw(Message As HTTP.Message)
+		  PlainText.Text = Message.MessageBody
 		End Sub
 	#tag EndMethod
-
-
-	#tag Property, Flags = &h1
-		Protected MIMEType As ContentType
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected RawData As MemoryBlock
-	#tag EndProperty
 
 
 #tag EndWindowCode

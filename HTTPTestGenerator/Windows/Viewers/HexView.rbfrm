@@ -8,10 +8,10 @@ Begin ContainerControl HexView Implements Viewer
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
-   Height          =   4.57e+2
+   Height          =   457
    HelpTag         =   ""
    InitialParent   =   ""
-   Left            =   3.2e+1
+   Left            =   32
    LockBottom      =   True
    LockLeft        =   True
    LockRight       =   True
@@ -19,10 +19,10 @@ Begin ContainerControl HexView Implements Viewer
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True
-   Top             =   3.2e+1
+   Top             =   32
    UseFocusRing    =   ""
    Visible         =   True
-   Width           =   6.14e+2
+   Width           =   614
    Begin ScrollBar ScrollBar1
       AcceptFocus     =   true
       AutoDeactivate  =   True
@@ -109,24 +109,12 @@ End
 
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As String, Type As ContentType)
+		Sub ViewRaw(Message As HTTP.Message)
 		  // Part of the Viewer interface.
-		  
-		  RawData = Message
-		  MIMEType = Type
-		  Dim bs As New BinaryStream(RawData)
+		  Dim bs As New BinaryStream(Message.MessageBody)
 		  HexViewer1.ShowData(bs)
 		End Sub
 	#tag EndMethod
-
-
-	#tag Property, Flags = &h1
-		Protected MIMEType As ContentType
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected RawData As MemoryBlock
-	#tag EndProperty
 
 
 #tag EndWindowCode

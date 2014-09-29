@@ -7,7 +7,7 @@ Protected Interface Viewer
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As String, Type As ContentType)
+		Sub ViewRaw(Message As HTTP.Message)
 		  
 		End Sub
 	#tag EndMethod

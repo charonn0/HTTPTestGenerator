@@ -76,7 +76,7 @@ End
 			Dim type As ContentType = "application/octet-stream"
 			Dim c As Viewer = SetViewer(Type)
 			Self.Title = "Message body - " + Type.ToString
-			c.ViewRaw(RawData, Type)
+			c.ViewRaw(CurrentMessage)
 			Return True
 			
 		End Function
@@ -85,16 +85,16 @@ End
 	#tag MenuHandler
 		Function FormMenu() As Boolean Handles FormMenu.Action
 			Dim c As Viewer
-			If MIMEType.Accepts("multipart/form-data") Then
+			If CurrentMessage.ContentType.Accepts("multipart/form-data") Then
 			c = SetViewer("multipart/form-data")
-			ElseIf MIMEType.Accepts("application/x-www-form-urlencoded") Then
+			ElseIf CurrentMessage.ContentType.Accepts("application/x-www-form-urlencoded") Then
 			c = SetViewer("application/x-www-form-urlencoded")
 			Else
 			MsgBox("Invalid form type.")
 			Return True
 			End If
-			Self.Title = "Message body - " + MIMEType.ToString
-			c.ViewRaw(RawData, MIMEType)
+			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString
+			c.ViewRaw(CurrentMessage)
 			Return True
 			
 		End Function
@@ -105,7 +105,7 @@ End
 			Dim type As ContentType = "text/plain"
 			Dim c As Viewer = SetViewer(Type)
 			Self.Title = "Message body - " + Type.ToString
-			c.ViewRaw(RawData, Type)
+			c.ViewRaw(CurrentMessage)
 			Return True
 			
 		End Function
@@ -116,7 +116,7 @@ End
 			Dim type As ContentType = "image/*"
 			Dim c As Viewer = SetViewer(Type)
 			Self.Title = "Message body - " + Type.ToString
-			c.ViewRaw(RawData, Type)
+			c.ViewRaw(CurrentMessage)
 			Return True
 			
 		End Function
@@ -130,7 +130,10 @@ End
 		  Case Type.Accepts("image/*")
 		    CurrentView = New PictureView
 		    
-		  Case Type.Accepts("text/html"), Type.Accepts("text/*"), Type.Accepts("message/http")
+		  Case Type.Accepts("text/html")
+		    CurrentView = New HTMLView
+		    
+		  Case Type.Accepts("text/*"), Type.Accepts("message/http")
 		    CurrentView = New TextView
 		    
 		  Case Type.Accepts("application/octet-stream")
@@ -149,27 +152,22 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As String, Type As ContentType)
-		  RawData = Message
-		  MIMEType = Type
-		  Self.Title = "Message body - " + Type.ToString
-		  Dim c As Viewer = SetViewer(Type)
-		  c.ViewRaw(Message, Type)
+		Sub ViewRaw(Message As HTTP.Message)
+		  Self.Title = "Message body - " + Message.ContentType.ToString
+		  Dim c As Viewer = SetViewer(Message.ContentType)
+		  CurrentMessage = Message
+		  c.ViewRaw(Message)
 		  Me.ShowModal
 		End Sub
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h21
+		Private CurrentMessage As HTTP.Message
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private CurrentView As Viewer
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected MIMEType As ContentType
-	#tag EndProperty
-
-	#tag Property, Flags = &h1
-		Protected RawData As MemoryBlock
 	#tag EndProperty
 
 

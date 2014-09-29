@@ -45,7 +45,6 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Status:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -80,7 +79,6 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "000 No Error Code"
       TextAlign       =   0
       TextColor       =   "&cFF000000"
@@ -529,10 +527,10 @@ End
 		Sub ClickLink(LinkValue As Variant, LinkText As String)
 		  Select Case True
 		  Case LinkValue IsA HTTP.Request
-		    RawViewer.ViewRaw(HTTP.Request(LinkValue).MessageBody, HTTP.Request(LinkValue).ContentType)
+		    RawViewer.ViewRaw(HTTP.Request(LinkValue))
 		    
 		  Case LinkValue IsA HTTP.Response
-		    RawViewer.ViewRaw(HTTP.Response(LinkValue).MessageBody, HTTP.Response(LinkValue).ContentType)
+		    RawViewer.ViewRaw(HTTP.Response(LinkValue))
 		    
 		  Else
 		    SpecIndex.ShowItem(LinkText)

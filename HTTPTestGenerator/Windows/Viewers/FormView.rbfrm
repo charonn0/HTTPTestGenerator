@@ -77,16 +77,16 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As String, Type As ContentType)
+		Sub ViewRaw(Message As HTTP.Message)
 		  // Part of the Viewer interface.
 		  Me.Form = Nil
 		  HTTPForm.DeleteAllRows
 		  Select Case True
-		  Case Type.Accepts("multipart/form-data")
-		    Form = MultipartForm.FromString(Message, Type.Boundary)
+		  Case Message.ContentType.Accepts("multipart/form-data")
+		    Form = MultipartForm.FromString(Message.MessageBody, Message.ContentType.Boundary)
 		    
-		  Case Type.Accepts("application/x-www-form-urlencoded")
-		    Form = New URLEncodedForm(Message)
+		  Case Message.ContentType.Accepts("application/x-www-form-urlencoded")
+		    Form = New URLEncodedForm(Message.MessageBody)
 		    
 		  Else
 		    Raise New UnsupportedFormatException
