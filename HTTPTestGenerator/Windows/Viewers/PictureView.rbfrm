@@ -137,14 +137,10 @@ End
 		      Self.Window.Title = "Message body - " + MIMEType.ToString + " (" + Format(ratio * 100, "##0.0#") + "%)"
 		    End If
 		    
-		    For i As Integer = 0 To g.Width Step 5
-		      For j As Integer = 0 To g.Height Step 5
-		        If (i Mod 2 = 0) Xor (j Mod 2 = 0) Then
-		          g.ForeColor = &c80808000
-		        Else
-		          g.ForeColor = &cC0C0C000
-		        End If
-		        g.FillRect(i, j, 5, 5)
+		    Dim p As Picture = transparencycheckerboard
+		    For i As Integer = 0 To g.Width Step p.Width
+		      For j As Integer = 0 To g.Height Step p.Height
+		        g.DrawPicture(p, i, j)
 		      Next
 		    Next
 		    Buffer.Graphics.DrawPicture(Pic, (g.Width - Pic.Width) / 2, (g.Height - Pic.Height) / 2)
