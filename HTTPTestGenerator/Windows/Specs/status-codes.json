@@ -191,7 +191,7 @@
     {
         "code": "407",
         "phrase": "Proxy Authentication Required",
-        "description": "This status is similar to <link=401>401 (Unauthorized)</link>, but indicates that the client needs to authenticate itself in order to use a proxy.",
+        "description": "This status is similar to <link=401>401 Unauthorized</link>, but indicates that the client needs to authenticate itself in order to use a proxy.",
         "spec_title": "RFC7231#6.3.2",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.2"
     },
