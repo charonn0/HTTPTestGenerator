@@ -65,6 +65,7 @@ RawData=headerdescriptions;HTTPTestGenerator/Windows/Specs/headers.json;&h703E07
 RawData=methoddescriptions;HTTPTestGenerator/Windows/Specs/methods.json;&h50E79FFF;&h307BCFFF;false
 RawData=statuscodedescriptions;HTTPTestGenerator/Windows/Specs/status-codes.json;&h4D92EFFF;&h307BCFFF;false
 Picture=transparencycheckerboard;HTTPTestGenerator/Windows/Viewers/transparency-checkerboard.png;&h7DB7C7FF;&h13ACFFFF;false;0;&h0
+Window=HTMLView;HTTPTestGenerator/Windows/Viewers/HTMLView.rbfrm;&h14C2FFFF;&h13ACFFFF;false
 DefaultWindow=Generator
 MajorVersion=1
 MinorVersion=0
