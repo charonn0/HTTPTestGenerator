@@ -201,7 +201,7 @@ Begin ContainerControl SpecViewer
       Visible         =   True
       Width           =   100
    End
-   Begin TextArea DescText
+   Begin HREFArea DescText
       AcceptTabs      =   ""
       Alignment       =   0
       AutoDeactivate  =   True
@@ -213,7 +213,7 @@ Begin ContainerControl SpecViewer
       DataSource      =   ""
       Enabled         =   True
       Format          =   ""
-      Height          =   181
+      Height          =   168
       HelpTag         =   ""
       HideSelection   =   True
       Index           =   -2147483648
@@ -246,10 +246,69 @@ Begin ContainerControl SpecViewer
       Visible         =   True
       Width           =   256
    End
+   Begin Label LinkTarget
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   True
+      Left            =   0
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   False
+      Multiline       =   ""
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      Text            =   "HTTP://WWW.GOOGLE.COM"
+      TextAlign       =   2
+      TextColor       =   &h00808080
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   227
+      Transparent     =   True
+      Underline       =   ""
+      Visible         =   True
+      Width           =   361
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Method, Flags = &h1
+		Protected Sub ProcessLinks(Text As String)
+		  Dim lines() As String = Split(Text, "</link>")
+		  Dim sr As New StyleRun
+		  For i As Integer = 0 To UBound(lines)
+		    Dim ln As String = lines(i)
+		    Dim linktext, url As String
+		    linktext = NthField(ln, ">", 2)
+		    ln = Replace(ln, ">" + linktext, "")
+		    url = NthField(ln, "<link=", 2)
+		    Dim href As New StyleRun
+		    sr.Text = NthField(ln, "<link=", 1)
+		    href.Text = linktext
+		    href.TextColor = &c0000FF00
+		    href.Underline = True
+		    DescText.PrintOther(sr)
+		    DescText.PrintOther(href, url)
+		  Next
+		  sr.Text = CRLF
+		  sr.Bold = Not sr.Bold
+		  DescText.PrintOther(sr)
+		End Sub
+	#tag EndMethod
+
+
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
@@ -258,6 +317,7 @@ End
 		#tag EndGetter
 		#tag Setter
 			Set
+			  DescText.Clear
 			  mCurrentItem = value
 			  Select Case True
 			  Case mCurrentItem = Nil
@@ -296,8 +356,9 @@ End
 			    TypeLabel.Text = "IRI Relation:"
 			    ItemName.Text = mCurrentItem.Value("relation")
 			  End Select
-			  DescText.Text = ReplaceAll(mCurrentItem.Value("description"), """", "")
-			  If DescText.Text = "" Then DescText.Text = "No description available."
+			  Dim ds As String = ReplaceAll(mCurrentItem.Value("description"), """", "")
+			  If ds = "" Then ds = "No description available."
+			  ProcessLinks(ds)
 			  SpecLink.Text = mCurrentItem.Value("spec_title")
 			  mCurrentItem = Me.mCurrentItem
 			End Set
@@ -337,6 +398,35 @@ End
 		  If CurrentItem <> Nil Then
 		    ShowURL(CurrentItem.Value("spec_href"))
 		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events DescText
+	#tag Event
+		Sub ClickLink(LinkValue As Variant, LinkText As String)
+		  If Left(LinkValue, 3) = "rfc" Then ' spec URL
+		    Dim u As New HTTP.URI("http://tools.ietf.org/html/" + LinkValue)
+		    ShowURL(u.ToString)
+		  Else
+		    SpecIndex.ShowItem(LinkValue)
+		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseEnterLink(LinkValue As Variant, LinkText As String, X As Integer, Y As Integer)
+		  LinkTarget.Text = LinkValue.StringValue
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExitLink(LinkValue As Variant, LinkText As String, X As Integer, Y As Integer)
+		  LinkTarget.Text = ""
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LinkTarget
+	#tag Event
+		Sub Open()
+		  Me.Text = ""
 		End Sub
 	#tag EndEvent
 #tag EndEvents
