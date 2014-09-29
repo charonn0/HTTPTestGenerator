@@ -280,6 +280,80 @@ Begin ContainerControl SpecViewer
       Visible         =   True
       Width           =   361
    End
+   Begin PushButton PrevItem
+      AutoDeactivate  =   True
+      Bold            =   ""
+      ButtonStyle     =   0
+      Cancel          =   ""
+      Caption         =   "<-"
+      Default         =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   "View previous item"
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   0
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   7
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   225
+      Underline       =   ""
+      Visible         =   False
+      Width           =   21
+   End
+   Begin PushButton NextItem
+      AutoDeactivate  =   True
+      Bold            =   ""
+      ButtonStyle     =   0
+      Cancel          =   ""
+      Caption         =   "->"
+      Default         =   ""
+      Enabled         =   True
+      Height          =   22
+      HelpTag         =   "View next item"
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   20
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   8
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   225
+      Underline       =   ""
+      Visible         =   False
+      Width           =   21
+   End
+   Begin Timer HistoryTimer
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   0
+      LockedInPosition=   False
+      Mode            =   2
+      Period          =   150
+      Scope           =   0
+      TabPanelIndex   =   0
+      Top             =   259
+      Width           =   32
+   End
 End
 #tag EndWindow
 
@@ -319,6 +393,31 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function ShowItem(SearchFor As String) As Integer
+		  Dim exp As Integer = -1
+		  If Specifications.HasEntry(SearchFor) Then
+		    Select Case True
+		    Case Specifications.HeaderDescription(SearchFor) <> Nil
+		      mCurrentItem = Specifications.HeaderDescription(SearchFor)
+		      exp = 0
+		    Case Specifications.MethodDescription(SearchFor) <> Nil
+		      mCurrentItem = Specifications.MethodDescription(SearchFor)
+		      exp = 2
+		    Case Specifications.StatusCodeDescription(Val(SearchFor)) <> Nil
+		      mCurrentItem = Specifications.StatusCodeDescription(Val(SearchFor))
+		      exp = 1
+		    End Select
+		  End If
+		  
+		  If mCurrentItem <> Nil Then
+		    Return exp
+		  Else
+		    Return -1
+		  End If
+		End Function
+	#tag EndMethod
+
 
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
@@ -338,6 +437,7 @@ End
 			  Case mCurrentItem.HasName("method")
 			    TypeLabel.Text = "Request Method:"
 			    Dim s As String = mCurrentItem.Value("method")
+			    History.Append(s)
 			    If mCurrentItem.Value("safe").BooleanValue Then
 			      s = s + " (safe; "
 			    Else
@@ -360,12 +460,15 @@ End
 			  Case mCurrentItem.HasName("header")
 			    TypeLabel.Text = "Header Name:"
 			    ItemName.Text = mCurrentItem.Value("header")
+			    History.Append(mCurrentItem.Value("header"))
 			  Case mCurrentItem.HasName("code")
 			    TypeLabel.Text = "Status Code:"
 			    ItemName.Text = mCurrentItem.Value("code") + " " + mCurrentItem.Value("phrase")
+			    History.Append(mCurrentItem.Value("code"))
 			  Case mCurrentItem.HasName("relation")
 			    TypeLabel.Text = "IRI Relation:"
 			    ItemName.Text = mCurrentItem.Value("relation")
+			    History.Append(mCurrentItem.Value("relation"))
 			  End Select
 			  Dim ds As String = mCurrentItem.Value("description")
 			  If ds = "" Then ds = "No description available."
@@ -376,6 +479,10 @@ End
 		#tag EndSetter
 		CurrentItem As JSONItem
 	#tag EndComputedProperty
+
+	#tag Property, Flags = &h1
+		Protected Shared History() As Variant
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mCurrentItem As JSONItem
@@ -438,6 +545,22 @@ End
 	#tag Event
 		Sub Open()
 		  Me.Text = ""
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PrevItem
+	#tag Event
+		Sub Action()
+		  SpecIndex.ShowItem(History.Pop)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events HistoryTimer
+	#tag Event
+		Sub Action()
+		  PrevItem.Visible = UBound(History) > -1
+		  NextItem.Visible = UBound(History) > -1
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
