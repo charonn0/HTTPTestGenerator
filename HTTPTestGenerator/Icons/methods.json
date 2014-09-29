@@ -1,7 +1,7 @@
 [
     {
         "method": "CONNECT",
-        "description": "\"requests that the recipient establish a tunnel to the destination origin server identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the connection is closed.\"",
+        "description": "Requests that the recipient establish a tunnel to the destination origin server identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the connection is closed.",
         "safe": true,
         "idempotent": true,
         "cacheable": false,
@@ -10,7 +10,7 @@
     },
     {
         "method": "DELETE",
-        "description": "\"requests that the origin server remove the association between the target resource and its current functionality.\"",
+        "description": "Requests that the origin server remove the association between the target resource and its current functionality.",
         "safe": false,
         "idempotent": true,
         "cacheable": false,
@@ -19,7 +19,7 @@
     },
     {
         "method": "GET",
-        "description": "\"requests transfer of a current selected representation for the target resource.\"",
+        "description": "Requests transfer of a current selected representation for the target resource.",
         "safe": true,
         "idempotent": true,
         "cacheable": true,
@@ -28,7 +28,7 @@
     },
     {
         "method": "HEAD",
-        "description": "\"is identical to GET except that the server MUST NOT send a message body in the response (i.e., the response terminates at the end of the header block).\"",
+        "description": "This method is identical to <link=GET>GET</link> except that the server <link=rfc2119#section-2>MUST NOT</link> send a message body in the response (i.e., the response terminates at the end of the header block).",
         "safe": true,
         "idempotent": true,
         "cacheable": true,
@@ -37,7 +37,7 @@
     },
     {
         "method": "OPTIONS",
-        "description": "\"requests information about the communication options available on the request/response chain identified by the effective request URI.\"",
+        "description": "Requests information about the communication options available on the request/response chain identified by the effective request URI.",
         "safe": true,
         "idempotent": true,
         "cacheable": false,
@@ -46,7 +46,7 @@
     },
     {
         "method": "POST",
-        "description": "\"requests that the target resource process the representation enclosed in the request according to the resource's own specific semantics.\"",
+        "description": "Requests that the target resource process the representation enclosed in the request according to the resource's own specific semantics.",
         "safe": false,
         "idempotent": false,
         "cacheable": false,
@@ -55,7 +55,7 @@
     },
     {
         "method": "PUT",
-        "description": "\"requests that the state of the target resource be created or replaced with the state defined by the representation enclosed in the request message payload.\"",
+        "description": "Requests that the state of the target resource be created or replaced with the state defined by the representation enclosed in the request message payload.",
         "safe": false,
         "idempotent": true,
         "cacheable": false,
@@ -64,7 +64,7 @@
     },
     {
         "method": "TRACE",
-        "description": "\"is used to invoke a remote, application-layer loopback of the request message.\"",
+        "description": "This method is used to invoke a remote, application-layer loopback of the request message.",
         "safe": true,
         "idempotent": true,
         "cacheable": false,
@@ -226,7 +226,7 @@
     },
     {
         "method": "PATCH",
-        "description": "\"requests that a set of changes described in the request entity be applied to the resource identified by the Request-URI.\"",
+        "description": "Requests that a set of changes described in the request entity be applied to the resource identified by the Request-URI.",
         "safe": false,
         "idempotent": false,
         "cacheable": false,
