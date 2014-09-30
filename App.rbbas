@@ -276,6 +276,9 @@ Inherits Application
 	#tag EndProperty
 
 
+	#tag Constant, Name = IsGenerator, Type = Boolean, Dynamic = False, Default = \"True", Scope = Public
+	#tag EndConstant
+
 	#tag Constant, Name = kEditClear, Type = String, Dynamic = False, Default = \"&Delete", Scope = Public
 		#Tag Instance, Platform = Windows, Language = Default, Definition  = \"&Delete"
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"&Delete"
