@@ -294,11 +294,11 @@ Begin ContainerControl SpecViewer
       InitialParent   =   ""
       Italic          =   ""
       Left            =   0
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   7
       TabPanelIndex   =   0
@@ -325,11 +325,11 @@ Begin ContainerControl SpecViewer
       InitialParent   =   ""
       Italic          =   ""
       Left            =   20
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   ""
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   8
       TabPanelIndex   =   0
@@ -394,24 +394,77 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function ShowItem(SearchFor As String) As Integer
+		Function ShowItem(mItem As JSONItem, Remember As Boolean = True) As Integer
+		  If mCurrentItem <> Nil And Remember Then BackHistory.Append(mCurrentItem)
+		  mCurrentItem = mItem
+		  DescText.Clear
 		  Dim exp As Integer = -1
+		  Select Case True
+		  Case mCurrentItem = Nil
+		    TypeLabel.Text = "No Selection:"
+		    ItemName.Text = ""
+		    Return -1
+		  Case mCurrentItem.HasName("method")
+		    exp = 2
+		    TypeLabel.Text = "Request Method:"
+		    Dim s As String = mCurrentItem.Value("method")
+		    If mCurrentItem.Value("safe").BooleanValue Then
+		      s = s + " (safe; "
+		    Else
+		      s = s + " (unsafe; "
+		    End If
+		    
+		    If mCurrentItem.Value("idempotent").BooleanValue Then
+		      s = s + "idempotent; "
+		    Else
+		      s = s + "not idempotent; "
+		    End If
+		    
+		    If mCurrentItem.Value("cacheable").BooleanValue Then
+		      s = s + "cacheable) "
+		    Else
+		      s = s + "not cacheable)"
+		    End If
+		    ItemName.Text = s
+		    
+		  Case mCurrentItem.HasName("header")
+		    exp = 0
+		    TypeLabel.Text = "Header Name:"
+		    ItemName.Text = mCurrentItem.Value("header")
+		    
+		  Case mCurrentItem.HasName("code")
+		    exp = 1
+		    TypeLabel.Text = "Status Code:"
+		    ItemName.Text = mCurrentItem.Value("code") + " " + mCurrentItem.Value("phrase")
+		    
+		  Case mCurrentItem.HasName("relation")
+		    TypeLabel.Text = "IRI Relation:"
+		    ItemName.Text = mCurrentItem.Value("relation")
+		    
+		  End Select
+		  Dim ds As String = mCurrentItem.Value("description")
+		  If ds = "" Then ds = "No description available."
+		  ProcessLinks(ds)
+		  SpecLink.Text = mCurrentItem.Value("spec_title")
+		  Return exp
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function ShowItem(SearchFor As String) As Integer
 		  If Specifications.HasEntry(SearchFor) Then
 		    Select Case True
 		    Case Specifications.HeaderDescription(SearchFor) <> Nil
 		      mCurrentItem = Specifications.HeaderDescription(SearchFor)
-		      exp = 0
 		    Case Specifications.MethodDescription(SearchFor) <> Nil
 		      mCurrentItem = Specifications.MethodDescription(SearchFor)
-		      exp = 2
 		    Case Specifications.StatusCodeDescription(Val(SearchFor)) <> Nil
 		      mCurrentItem = Specifications.StatusCodeDescription(Val(SearchFor))
-		      exp = 1
 		    End Select
 		  End If
 		  
 		  If mCurrentItem <> Nil Then
-		    Return exp
+		    Return ShowItem(mCurrentItem)
 		  Else
 		    Return -1
 		  End If
@@ -419,69 +472,21 @@ End
 	#tag EndMethod
 
 
+	#tag Property, Flags = &h1
+		Protected BackHistory() As Variant
+	#tag EndProperty
+
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
 			  return mCurrentItem
 			End Get
 		#tag EndGetter
-		#tag Setter
-			Set
-			  DescText.Clear
-			  mCurrentItem = value
-			  Select Case True
-			  Case mCurrentItem = Nil
-			    TypeLabel.Text = "No Selection:"
-			    ItemName.Text = ""
-			    Return
-			  Case mCurrentItem.HasName("method")
-			    TypeLabel.Text = "Request Method:"
-			    Dim s As String = mCurrentItem.Value("method")
-			    History.Append(s)
-			    If mCurrentItem.Value("safe").BooleanValue Then
-			      s = s + " (safe; "
-			    Else
-			      s = s + " (unsafe; "
-			    End If
-			    
-			    If mCurrentItem.Value("idempotent").BooleanValue Then
-			      s = s + "idempotent; "
-			    Else
-			      s = s + "not idempotent; "
-			    End If
-			    
-			    If mCurrentItem.Value("cacheable").BooleanValue Then
-			      s = s + "cacheable) "
-			    Else
-			      s = s + "not cacheable)"
-			    End If
-			    
-			    ItemName.Text = s
-			  Case mCurrentItem.HasName("header")
-			    TypeLabel.Text = "Header Name:"
-			    ItemName.Text = mCurrentItem.Value("header")
-			    History.Append(mCurrentItem.Value("header"))
-			  Case mCurrentItem.HasName("code")
-			    TypeLabel.Text = "Status Code:"
-			    ItemName.Text = mCurrentItem.Value("code") + " " + mCurrentItem.Value("phrase")
-			    History.Append(mCurrentItem.Value("code"))
-			  Case mCurrentItem.HasName("relation")
-			    TypeLabel.Text = "IRI Relation:"
-			    ItemName.Text = mCurrentItem.Value("relation")
-			    History.Append(mCurrentItem.Value("relation"))
-			  End Select
-			  Dim ds As String = mCurrentItem.Value("description")
-			  If ds = "" Then ds = "No description available."
-			  ProcessLinks(ds)
-			  SpecLink.Text = mCurrentItem.Value("spec_title")
-			  mCurrentItem = Me.mCurrentItem
-			End Set
-		#tag EndSetter
 		CurrentItem As JSONItem
 	#tag EndComputedProperty
 
 	#tag Property, Flags = &h1
-		Protected Shared History() As Variant
+		Protected FwdHistory() As Variant
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -551,15 +556,31 @@ End
 #tag Events PrevItem
 	#tag Event
 		Sub Action()
-		  SpecIndex.ShowItem(History.Pop)
+		  FwdHistory.Append(mCurrentItem)
+		  Dim i As Integer = Self.ShowItem(BackHistory.Pop, False)
+		  If i > -1 Then
+		    SpecIndex.ExpandRow(i)
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events NextItem
+	#tag Event
+		Sub Action()
+		  FwdHistory.Append(mCurrentItem)
+		  Dim js As JSONItem = FwdHistory.Pop
+		  Dim i As Integer = Self.ShowItem(js)
+		  If i > -1 Then
+		    SpecIndex.ExpandRow(i)
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events HistoryTimer
 	#tag Event
 		Sub Action()
-		  PrevItem.Visible = UBound(History) > -1
-		  NextItem.Visible = UBound(History) > -1
+		  PrevItem.Visible = UBound(BackHistory) > -1
+		  NextItem.Visible = UBound(FwdHistory) > -1
 		  
 		End Sub
 	#tag EndEvent
