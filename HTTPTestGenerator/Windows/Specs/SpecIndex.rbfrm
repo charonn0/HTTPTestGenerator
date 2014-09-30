@@ -452,7 +452,7 @@ End
 		    Dim j As JSONItem = tag
 		    Call SpecViewer1.ShowItem(j)
 		  Else
-		    Break
+		    'Break
 		  End Select
 		  
 		  

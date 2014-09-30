@@ -257,7 +257,7 @@ Begin ContainerControl SpecViewer
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   True
-      Left            =   0
+      Left            =   7
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -274,7 +274,7 @@ Begin ContainerControl SpecViewer
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
-      Top             =   227
+      Top             =   -32
       Transparent     =   True
       Underline       =   ""
       Visible         =   True
@@ -533,16 +533,6 @@ End
 		  Else
 		    SpecIndex.ShowItem(LinkValue)
 		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseEnterLink(LinkValue As Variant, LinkText As String, X As Integer, Y As Integer)
-		  LinkTarget.Text = LinkValue.StringValue
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub MouseExitLink(LinkValue As Variant, LinkText As String, X As Integer, Y As Integer)
-		  LinkTarget.Text = ""
 		End Sub
 	#tag EndEvent
 #tag EndEvents
