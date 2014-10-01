@@ -45,6 +45,7 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "No Selection:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -121,6 +122,7 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "No Selection"
       TextAlign       =   0
       TextColor       =   &h000000FF
@@ -155,6 +157,7 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Specification:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -189,6 +192,7 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Description:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -268,6 +272,7 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "HTTP://WWW.GOOGLE.COM"
       TextAlign       =   2
       TextColor       =   &h00808080
@@ -343,6 +348,7 @@ Begin ContainerControl SpecViewer
       Width           =   21
    End
    Begin Timer HistoryTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   0
@@ -350,8 +356,11 @@ Begin ContainerControl SpecViewer
       Mode            =   2
       Period          =   150
       Scope           =   0
+      TabIndex        =   9
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   259
+      Visible         =   True
       Width           =   32
    End
 End
@@ -528,7 +537,7 @@ End
 	#tag Event
 		Sub ClickLink(LinkValue As Variant, LinkText As String)
 		  If Left(LinkValue, 3) = "rfc" Then ' spec URL
-		    Dim u As New HTTP.URI("http://tools.ietf.org/html/" + LinkValue)
+		    Dim u As HTTP.URI = "http://tools.ietf.org/html/" + LinkValue
 		    ShowURL(u.ToString)
 		  Else
 		    SpecIndex.ShowItem(LinkValue)

@@ -4,7 +4,7 @@ Inherits HTTP.Response
 	#tag Method, Flags = &h0
 		Sub Constructor(Target As FolderItem, ServerPath As String)
 		  Me.Target = Target
-		  Me.RequestPath = New URI(ServerPath)
+		  Me.RequestPath = ServerPath
 		  Super.Constructor("HTTP/1.0 200 OK" + CRLF)
 		  Me.ContentType = "text/html"
 		  'Dim d As New Date
@@ -168,7 +168,7 @@ Inherits HTTP.Response
 		    head = ReplaceAll(head, "%DIRECTION%", "&amp;dir=0")
 		  End If
 		  pagedata = Replace(pagedata, "%TABLE%", head + Join(lines, EndOfLine))
-		  pagedata = ReplaceAll(pagedata, "%PAGETITLE%", "Index of " + DecodeURLComponent(RequestPath.Path))
+		  pagedata = ReplaceAll(pagedata, "%PAGETITLE%", "Index of " + EncodeURLComponent(RequestPath.Path))
 		  If Ubound(Items) + 1 = 1 Then
 		    pagedata = Replace(pagedata, "%ITEMCOUNT%", "1 item.")
 		  Else

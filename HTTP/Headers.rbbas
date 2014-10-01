@@ -1,8 +1,8 @@
 #tag Class
 Protected Class Headers
 Inherits InternetHeaders
-	#tag Method, Flags = &h1000
-		Sub Constructor(Data As String)
+	#tag Method, Flags = &h1001
+		Protected Sub Constructor(Data As String)
 		  // Calling the overridden superclass constructor.
 		  Super.Constructor
 		  Dim lines() As String = data.Split(CRLF)
@@ -58,6 +58,12 @@ Inherits InternetHeaders
 		Sub DeleteAllHeaders()
 		  Super.DeleteAllHeaders
 		  ReDim Cookies(-1)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Operator_Convert(NewHeaders As String)
+		  Me.Constructor(NewHeaders)
 		End Sub
 	#tag EndMethod
 

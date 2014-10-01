@@ -12,8 +12,8 @@ Inherits HTTP.Message
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub Constructor(Data As String)
+	#tag Method, Flags = &h1
+		Protected Sub Constructor(Data As String)
 		  Dim line As String
 		  line = NthField(data.Trim, CRLF, 1)
 		  
@@ -26,13 +26,13 @@ Inherits HTTP.Message
 		  Dim h As String = NthField(data, CRLF + CRLF, 1)
 		  data = Replace(data, h + CRLF + CRLF, "")
 		  // Calling the overridden superclass constructor.
-		  Super.Constructor(New Headers(h))
+		  Super.Constructor(h)
 		  Me.MessageBody = Replace(data, h, "")
 		  
 		  Me.Method = Method(NthField(line, " ", 1).Trim)
 		  If Me.Method = RequestMethod.InvalidMethod Then Me.MethodName = NthField(line, " ", 1).Trim
 		  
-		  Me.Path = New URI(NthField(line, " ", 2))
+		  Me.Path = NthField(line, " ", 2)
 		  Me.ProtocolVersion = CDbl(Replace(NthField(line, " ", 3).Trim, "HTTP/", ""))
 		End Sub
 	#tag EndMethod
@@ -92,6 +92,12 @@ Inherits HTTP.Message
 		  Me.Method = Method(Name)
 		  mTrueMethodName = Name
 		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Operator_Convert(NewRequest As String)
+		  Me.Constructor(NewRequest)
 		End Sub
 	#tag EndMethod
 

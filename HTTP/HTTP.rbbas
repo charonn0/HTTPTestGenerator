@@ -459,7 +459,7 @@ Protected Module HTTP
 		      ErrorPages.Value(error) = page
 		    Next
 		  End If
-		  Dim errpage As New Response("")
+		  Dim errpage As HTTP.Response = ""
 		  errpage.StatusCode = ErrorNumber
 		  errpage.MessageBody = ErrorPages.Value(ErrorNumber).StringValue
 		  If RedirectLink <> "" Then

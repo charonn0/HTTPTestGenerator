@@ -78,14 +78,14 @@ End
 #tag WindowCode
 	#tag Method, Flags = &h1
 		Protected Function ExtractLinks(HTML As String, BaseURL As String) As Pair()
-		  Dim base As New HTTP.URI(BaseURL)
+		  Dim base As HTTP.URI = BaseURL
 		  Dim hrefRegex As New Regex
 		  hrefRegex.SearchPattern = "<A[^>]*?HREF\s*=\s*""([^""]+)""[^>]*?>([\s\S]*?)<\/A>"
 		  hrefRegex.Options.CaseSensitive = False
 		  Dim output() As Pair
 		  dim r As RegExMatch = hrefRegex.Search(HTML)
 		  Do Until r = Nil
-		    Dim u As New HTTP.URI(r.SubExpressionString(1))
+		    Dim u As HTTP.URI = r.SubExpressionString(1)
 		    If u.Host = "" Then u.Host = base.Host
 		    output.Append(u:r.SubExpressionString(2))
 		    r = hrefRegex.Search

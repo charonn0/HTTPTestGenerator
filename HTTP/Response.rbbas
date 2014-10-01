@@ -1,8 +1,8 @@
 #tag Class
 Protected Class Response
 Inherits HTTP.Message
-	#tag Method, Flags = &h1000
-		Sub Constructor(Raw As String)
+	#tag Method, Flags = &h1001
+		Protected Sub Constructor(Raw As String)
 		  Dim body As Integer = InStr(raw, CRLF + CRLF) + 3
 		  Me.MessageBody = Right(raw, raw.Len - body)
 		  raw = Replace(raw, Me.MessageBody, "").Trim
@@ -11,7 +11,7 @@ Inherits HTTP.Message
 		  raw = Replace(raw, line + CRLF, "")
 		  raw = Replace(raw, Me.MessageBody, "")
 		  // Calling the overridden superclass constructor.
-		  Super.Constructor(New HTTP.Headers(raw))
+		  Super.Constructor(raw)
 		  Dim d As Double = CDbl(Replace(NthField(line, " ", 1).Trim, "HTTP/", ""))
 		  If d > 0 Then Me.ProtocolVersion = d
 		  Me.StatusCode = Val(NthField(line, " ", 2))
@@ -23,6 +23,12 @@ Inherits HTTP.Message
 		Function Headers() As HTTP.Headers
 		  Return mheaders
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Operator_Convert(NewValue As String)
+		  Me.Constructor(NewValue)
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0

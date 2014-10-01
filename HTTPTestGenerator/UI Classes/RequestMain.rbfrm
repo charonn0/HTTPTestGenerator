@@ -611,7 +611,7 @@ End
 		Sub DropObject(Obj As DragItem, action As Integer)
 		  #pragma Unused action
 		  If Obj.TextAvailable Then
-		    Dim u As New HTTP.URI(Obj.Text)
+		    Dim u As HTTP.URI = Obj.Text
 		    Me.Text = u.ToString
 		  End If
 		End Sub

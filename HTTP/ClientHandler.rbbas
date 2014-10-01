@@ -30,8 +30,7 @@ Inherits SSLSocket
 	#tag Method, Flags = &h1
 		Protected Function ReadNextRequest() As HTTP.Request
 		  If NthField(Me.Lookahead, CRLF + CRLF, 1).Trim = "" Then Return Nil
-		  Dim data As MemoryBlock = Me.Read(InStr(Me.Lookahead, CRLF + CRLF) + 3)
-		  Dim clientrequest As New Request(data)
+		  Dim clientrequest As HTTP.Request = Me.Read(InStr(Me.Lookahead, CRLF + CRLF) + 3)
 		  If clientrequest.HasHeader("Content-Length") Then
 		    Dim cl As Integer = Val(clientrequest.Header("Content-Length"))
 		    If cl + 3 <= Me.Lookahead.LenB Then

@@ -6,8 +6,8 @@ Protected Class URI
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub Constructor(URL As String)
+	#tag Method, Flags = &h1
+		Protected Sub Constructor(URL As String)
 		  ' Pass a URI string to parse. e.g. http://user:password@www.example.com:8080/?foo=bar&bat=baz#Top
 		  
 		  If NthField(URL, ":", 1) <> "mailto" Then
@@ -67,7 +67,7 @@ Protected Class URI
 		        mPath.Remove(i)
 		        Continue
 		      End If
-		      mPath(i) = DecodeURLComponent(mPath(i))
+		      mPath(i) = EncodeURLComponent(mPath(i))
 		    Next
 		    
 		  Else
@@ -83,14 +83,20 @@ Protected Class URI
 		      Me.Host = URL
 		    End If
 		  End If
-		  Me.Scheme = DecodeURLComponent(Me.Scheme)
-		  Me.Username = DecodeURLComponent(Me.Username)
-		  Me.Password = DecodeURLComponent(Me.Password)
-		  Me.Host = DecodeURLComponent(Me.Host)
+		  Me.Scheme = EncodeURLComponent(Me.Scheme)
+		  Me.Username = EncodeURLComponent(Me.Username)
+		  Me.Password = EncodeURLComponent(Me.Password)
+		  Me.Host = EncodeURLComponent(Me.Host)
 		  For Each arg As String In Me.Arguments
-		    arg = DecodeURLComponent(arg)
+		    arg = EncodeURLComponent(arg)
 		  Next
-		  Me.Fragment = DecodeURLComponent(Me.Fragment)
+		  Me.Fragment = EncodeURLComponent(Me.Fragment)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Operator_Convert(NewValue As String)
+		  Me.Constructor(NewValue)
 		End Sub
 	#tag EndMethod
 
@@ -124,7 +130,7 @@ Protected Class URI
 		  Dim s() As String = Split(NewPath, "/")
 		  ReDim mPath(-1)
 		  For i As Integer = 0 To UBound(s)
-		    If s(i).Trim <> "" Then mPath.Append(DecodeURLComponent(s(i)))
+		    If s(i).Trim <> "" Then mPath.Append(EncodeURLComponent(s(i)))
 		  Next
 		End Sub
 	#tag EndMethod
