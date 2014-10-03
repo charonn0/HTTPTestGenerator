@@ -32,12 +32,12 @@ Implements FormInterface
 	#tag Method, Flags = &h0
 		 Shared Function FromString(FormData As String, Boundary As String) As MultipartForm
 		  Dim form As New MultipartForm
-		  Dim elements() As String = Split(FormData, "--" + Boundary + CRLF)
+		  Dim elements() As String = Split(FormData, "--" + Boundary)' + CRLF)
 		  form.Boundary = Boundary
 		  
 		  Dim ecount As Integer = UBound(elements)
 		  For i As Integer = 1 To ecount
-		    Dim line As String = NthField(elements(i), CRLF, 1)
+		    Dim line As String = NthField(elements(i).LTrim, CRLF, 1)
 		    Dim name As String = NthField(line, ";", 2)
 		    name = NthField(name, "=", 2)
 		    name = ReplaceAll(name, """", "")
