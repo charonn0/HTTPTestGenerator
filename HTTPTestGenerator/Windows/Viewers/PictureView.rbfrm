@@ -50,6 +50,18 @@ Begin ContainerControl PictureView Implements Viewer
       Visible         =   True
       Width           =   614
    End
+   Begin Timer Timer1
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   637
+      LockedInPosition=   False
+      Mode            =   0
+      Period          =   1
+      Scope           =   0
+      TabPanelIndex   =   0
+      Top             =   14
+      Width           =   32
+   End
 End
 #tag EndWindow
 
@@ -79,6 +91,7 @@ End
 		  If wRatio = Source.Width And hRatio = Source.Height Then Return Source
 		  Dim photo As New Picture(wRatio, hRatio)
 		  Photo.Graphics.DrawPicture(Source, 0, 0, Photo.Width, Photo.Height, 0, 0, Source.Width, Source.Height)
+		  Timer1.Mode = Timer.ModeSingle
 		  Return photo
 		  
 		Exception
@@ -89,9 +102,10 @@ End
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As HTTP.Message)
 		  // Part of the Viewer interface.
+		  MIMEType = Message.ContentType
 		  Image = Picture.FromData(Message.MessageBody)
 		  ImageView.Refresh(False)
-		  Self.Window.Title = "Message body - " + Message.ContentType.ToString + " (" + Format(mratio * 100, "##0.0#") + "%)"
+		  
 		  
 		End Sub
 	#tag EndMethod
@@ -99,6 +113,10 @@ End
 
 	#tag Property, Flags = &h1
 		Protected Image As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected MIMEType As ContentType
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -152,6 +170,13 @@ End
 		    gg.DrawString(s, w, h)
 		  End If
 		  g.DrawPicture(Buffer, 0, 0)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Timer1
+	#tag Event
+		Sub Action()
+		  Self.Window.Title = "Message body - " + MIMEType.ToString + " (" + Format(mratio * 100, "##0.0#") + "%)"
 		End Sub
 	#tag EndEvent
 #tag EndEvents
