@@ -67,7 +67,7 @@ Protected Class URI
 		        mPath.Remove(i)
 		        Continue
 		      End If
-		      mPath(i) = EncodeURLComponent(mPath(i))
+		      mPath(i) = DecodeURLComponent(mPath(i))
 		    Next
 		    
 		  Else
