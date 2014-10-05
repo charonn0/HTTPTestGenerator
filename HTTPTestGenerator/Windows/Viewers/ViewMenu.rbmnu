@@ -5,27 +5,33 @@ Begin Menu ViewMenu
       Text = "View As..."
       Index = -2147483648
       AutoEnable = True
-      Begin MenuItem PlainTextMenu
-         SpecialMenu = 0
-         Text = "Plain Text"
-         Index = -2147483648
-         AutoEnable = True
-      End
-      Begin MenuItem ViewPictureMenu
-         SpecialMenu = 0
-         Text = "Picture"
-         Index = -2147483648
-         AutoEnable = True
-      End
       Begin MenuItem BinMenu
          SpecialMenu = 0
-         Text = "Binary"
+         Text = "application/octet-stream"
+         Index = -2147483648
+         AutoEnable = True
+      End
+      Begin MenuItem PlainTextMenu
+         SpecialMenu = 0
+         Text = "text/plain"
+         Index = -2147483648
+         AutoEnable = True
+      End
+      Begin MenuItem HTMLMenu
+         SpecialMenu = 0
+         Text = "text/html"
          Index = -2147483648
          AutoEnable = True
       End
       Begin MenuItem FormMenu
          SpecialMenu = 0
          Text = "HTML Form"
+         Index = -2147483648
+         AutoEnable = True
+      End
+      Begin MenuItem ViewPictureMenu
+         SpecialMenu = 0
+         Text = "image/*"
          Index = -2147483648
          AutoEnable = True
       End
