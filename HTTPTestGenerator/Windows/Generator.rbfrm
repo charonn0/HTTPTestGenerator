@@ -29,22 +29,17 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
-      TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   35
-      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -52,11 +47,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   79
-      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -70,13 +62,12 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   True
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   0
@@ -125,7 +116,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -143,7 +133,6 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -151,11 +140,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
-      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   123
-      Visible         =   True
       Width           =   32
    End
 End
@@ -278,9 +264,9 @@ End
 		  End If
 		  
 		  If Sock.Secure Then
-		    PrintLog("Attempting a secure connection to '" + Request.Path.Host + "' on port " + Str(Sock.Port) + "...")
+		    PrintConsole("Attempting a secure connection to '" + Request.Path.Host + "' on port " + Str(Sock.Port) + "...")
 		  Else
-		    PrintLog("Attempting a connection to '" + Request.Path.Host + "' on port " + Str(Sock.Port) + "...")
+		    PrintConsole("Attempting a connection to '" + Request.Path.Host + "' on port " + Str(Sock.Port) + "...")
 		  End If
 		  
 		  Sock.Connect()
@@ -288,28 +274,20 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Sub PrintLog(Line As String)
-		  Dim t As TextArea = RequestMain1.LogOutput
+		Protected Sub PrintConsole(Line As String, LinkValue As Variant = Nil)
 		  Dim sr As New StyleRun
 		  sr.Font = App.FixedWidthFont
-		  If Sequence Mod 2 = 0 Then
-		    sr.TextColor = &c00800000
+		  If LinkValue = Nil Then
+		    sr.TextColor = &c00000000
 		  Else
 		    sr.TextColor = &c0000FF00
+		    sr.Underline = True
 		  End If
-		  sr.Bold = True
-		  'sr.Text = "-----" + Format(Sequence, "000000000") + "-----" + CRLF
-		  't.StyledText.AppendStyleRun(sr)
-		  sr.Text = Line.Trim + CRLF
-		  t.StyledText.AppendStyleRun(sr)
-		  #If TargetWin32 Then
-		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
-		    Const SB_BOTTOM = 7
-		    Const WM_VSCROLL = &h115
-		    Call SendMessageW(t.Handle, WM_VSCROLL, SB_BOTTOM, Nil)
-		  #Else
-		    t.ScrollPosition = t.LineNumAtCharPos(t.Text.Len)
-		  #endif
+		  sr.Text = Line.Trim
+		  RequestMain1.ConsoleOut.PrintOther(sr, LinkValue)
+		  sr.Text = CRLF
+		  sr.Underline = Not sr.Underline
+		  RequestMain1.ConsoleOut.PrintOther(sr)
 		End Sub
 	#tag EndMethod
 
@@ -446,7 +424,7 @@ End
 		#tag Setter
 			Set
 			  mSequence = value
-			  PrintLog("Sequence: #" + Format(value, "000000000"))
+			  PrintConsole("Sequence: #" + Format(value, "000000000"))
 			End Set
 		#tag EndSetter
 		Sequence As Integer
@@ -466,22 +444,23 @@ End
 		  If Me.Secure Then
 		    Select Case Me.ConnectionType
 		    Case Me.SSLv2
-		      PrintLog("Secure connection established using SSLv2 only!.")
+		      PrintConsole("Secure connection established using SSLv2 only!.")
 		    Case Me.SSLv23
-		      PrintLog("Secure connection established using SSLv2 or SSLv3.")
+		      PrintConsole("Secure connection established using SSLv2 or SSLv3.")
 		    Case Me.SSLv3
-		      PrintLog("Secure connection established using SSLv3.")
+		      PrintConsole("Secure connection established using SSLv3.")
 		    Case Me.TLSv1
-		      PrintLog("Secure connection established using TLSv1.")
+		      PrintConsole("Secure connection established using TLSv1.")
 		    End Select
 		  Else
-		    PrintLog("Connection established.")
+		    PrintConsole("Connection established.")
 		  End If
-		  PrintLog("Remote host is at " + Me.RemoteAddress)
+		  Dim link As HTTP.URI = Request.Path.Scheme + "://" + Me.RemoteAddress + ":" + Format(Request.Path.Port, "-#####0")
+		  PrintConsole("Remote host is at " + Me.RemoteAddress, link)
 		  Output = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
 		  Dim s As String = Request.ToString
-		  PrintLog("Sending request... (" + FormatBytes(s.LenB) + ")")
+		  PrintConsole("Sending request... (" + FormatBytes(s.LenB) + ")")
 		  Me.Write(s)
 		  SendSz = 0
 		  RequestMain1.URL.AddItem(RequestMain1.URL.Text)
@@ -490,7 +469,7 @@ End
 	#tag Event
 		Sub Error()
 		  TimeOut.Mode = Timer.ModeOff
-		  PrintLog(FormatSocketError(Me.LastErrorCode))
+		  PrintConsole(FormatSocketError(Me.LastErrorCode))
 		  Select Case Me.LastErrorCode
 		  Case 102
 		    'ResponseMain1.IPAddress.Text = "Closed by host"
@@ -512,9 +491,9 @@ End
 	#tag Event
 		Sub SendComplete(UserAborted As Boolean)
 		  If Not UserAborted Then
-		    PrintLog("Send operation completed.")
+		    PrintConsole("Send operation completed.")
 		  Else
-		    PrintLog("Send operation aborted!")
+		    PrintConsole("Send operation aborted!")
 		  End If
 		End Sub
 	#tag EndEvent
@@ -530,7 +509,7 @@ End
 		Sub DataAvailable()
 		  TimeOut.Reset
 		  If DataReceivedTimer.Mode = Timer.ModeOff Then
-		    PrintLog("Receiving data...")
+		    PrintConsole("Receiving data...")
 		  End If
 		  Output = Output + Me.ReadAll
 		  RawText = Self.Request.ToString
@@ -566,20 +545,20 @@ End
 		      u = Request.Path
 		      u.Path = redir
 		    End If
-		    PrintLog("Redirect (" + Str(Response.StatusCode) + "): " + u.ToString)
+		    PrintConsole("Redirect (" + Str(Response.StatusCode) + "): " + u.ToString)
 		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
-		      PrintLog("Following...")
+		      PrintConsole("Following...")
 		      RequestMain1.URL.Text = u.ToString
 		      Perform()
 		    Else
-		      PrintLog("Not following.")
+		      PrintConsole("Not following.")
 		    End If
 		  Case 401
-		    PrintLog("Not authenticated.")
+		    PrintConsole("Not authenticated.")
 		    Dim r As String = NthField(Response.Header("WWW-Authenticate"), "=", 2)
 		    Dim p As Pair = Authenicator.Authenticate(r, Response.Path.Scheme = "https")
 		    If p <> Nil Then
-		      PrintLog("Authenticating...")
+		      PrintConsole("Authenticating...")
 		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
 		      RequestMain1.RequestHeaders.AddRow("Authorization", s)
 		      RequestMain1.RequestHeaders.RowTag(RequestMain1.RequestHeaders.LastIndex) = "Authorization":s
@@ -684,7 +663,7 @@ End
 		    Me.Reset
 		  Else
 		    Sock.Disconnect
-		    PrintLog("Canceled.")
+		    PrintConsole("Canceled.")
 		    ResponseMain1.Code.TextColor = &c80808000
 		    ResponseMain1.Code.Text = "Timed out."
 		    RequestMain1.Sender.Enabled = True

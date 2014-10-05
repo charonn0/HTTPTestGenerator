@@ -33,6 +33,7 @@ Inherits BaseCanvas
 		  #pragma Unused deltaX
 		  #pragma Unused X
 		  #pragma Unused Y
+		  #pragma BackgroundTasks Off
 		  If Stream = Nil Then Return False
 		  Dim data As String
 		  Stream.Position = Offset
@@ -605,7 +606,7 @@ Inherits BaseCanvas
 			Set
 			  If Stream = Nil Or value >= Stream.Length Then Return
 			  mOffset = value
-			  Update()
+			  Update(True)
 			  
 			End Set
 		#tag EndSetter

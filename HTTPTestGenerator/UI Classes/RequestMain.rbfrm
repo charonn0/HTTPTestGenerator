@@ -304,9 +304,7 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
-      TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
@@ -378,7 +376,7 @@ Begin ContainerControl RequestMain
       Visible         =   True
       Width           =   353
    End
-   Begin TextArea LogOutput
+   Begin HREFArea ConsoleOut
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -781,12 +779,12 @@ End
 		  #pragma Unused DeltaX
 		  #pragma Unused DeltaY
 		  RequestHeaders.Height = Me.Top - RequestHeaders.Top - 1
-		  LogOutput.Top = Me.Top + Me.Height + 1
-		  LogOutput.Height = Me.Window.Height - LogOutput.Top - 5
+		  ConsoleOut.Top = Me.Top + Me.Height + 1
+		  ConsoleOut.Height = Me.Window.Height - ConsoleOut.Top - 5
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events LogOutput
+#tag Events ConsoleOut
 	#tag Event
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
@@ -808,5 +806,23 @@ End
 		    Return True
 		  End Select
 		End Function
+	#tag EndEvent
+	#tag Event
+		Sub ClickLink(LinkValue As Variant, LinkText As String)
+		  Select Case True
+		  Case LinkValue IsA HTTP.Request
+		    RawViewer.ViewRaw(HTTP.Request(LinkValue))
+		    
+		  Case LinkValue IsA HTTP.Response
+		    RawViewer.ViewRaw(HTTP.Response(LinkValue))
+		    
+		  Case LinkValue IsA HTTP.URI
+		    ShowURL(HTTP.URI(LinkValue).ToString)
+		    
+		  Else
+		    SpecIndex.ShowItem(LinkText)
+		  End Select
+		  
+		End Sub
 	#tag EndEvent
 #tag EndEvents
