@@ -101,6 +101,17 @@ End
 	#tag EndMenuHandler
 
 	#tag MenuHandler
+		Function HTMLMenu() As Boolean Handles HTMLMenu.Action
+			Dim type As ContentType = "text/html"
+			Dim c As Viewer = SetViewer(Type)
+			Self.Title = "Message body - " + Type.ToString
+			c.ViewRaw(CurrentMessage)
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
 		Function PlainTextMenu() As Boolean Handles PlainTextMenu.Action
 			Dim type As ContentType = "text/plain"
 			Dim c As Viewer = SetViewer(Type)
