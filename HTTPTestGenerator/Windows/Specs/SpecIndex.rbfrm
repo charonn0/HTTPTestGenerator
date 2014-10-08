@@ -313,11 +313,11 @@ End
 		Sub ShowItem(SearchFor As String = "")
 		  Me.Show
 		  Dim exp As Integer = SpecViewer1.ShowItem(SearchFor)
-		  If exp > -1 Then
-		    Me.ExpandRow(exp)
-		  ElseIf exp > -1 Then
+		  If exp <= -1 Then
 		    Call MsgBox("No specification found for: " + SearchFor, 48, "Index entry not found")
 		  End If
+		  
+		  Me.ExpandRow(exp)
 		  
 		End Sub
 	#tag EndMethod
