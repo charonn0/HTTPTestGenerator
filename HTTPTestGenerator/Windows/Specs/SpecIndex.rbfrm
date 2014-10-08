@@ -287,8 +287,8 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Open()
-		  Me.Left = Generator.Left + (Generator.Width - Me.Width) / 2
-		  Me.Top = Generator.Top + (Generator.Height - Me.Height) / 2
+		  Me.Left = Window(1).Left + (Window(1).Width - Me.Width) / 2
+		  Me.Top = Window(1).Top + (Window(1).Height - Me.Height) / 2
 		  Call Specifications.HeaderDescription("")
 		  Call Specifications.MethodDescription("")
 		  'Call Specifications.RelationDescription("")

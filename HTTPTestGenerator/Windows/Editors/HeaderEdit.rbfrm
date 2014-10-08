@@ -46,7 +46,6 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Name:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -81,7 +80,6 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Value:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -252,7 +250,6 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Auto:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -346,8 +343,8 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Open()
-		  Me.Left = Generator.Left + (Generator.Width - Me.Width) / 2
-		  Me.Top = Generator.Top + (Generator.Height - Me.Height) / 2
+		  Me.Left = Window(1).Left + (Window(1).Width - Me.Width) / 2
+		  Me.Top = Window(1).Top + (Window(1).Height - Me.Height) / 2
 		End Sub
 	#tag EndEvent
 

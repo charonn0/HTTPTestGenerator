@@ -42,6 +42,7 @@ Begin Window RawViewer Implements Viewer
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   0
       Value           =   0
       Visible         =   True
@@ -65,8 +66,8 @@ End
 
 	#tag Event
 		Sub Open()
-		  Me.Left = Generator.Left + (Generator.Width - Me.Width) / 2
-		  Me.Top = Generator.Top + (Generator.Height - Me.Height) / 2
+		  Me.Left = Window(1).Left + (Window(1).Width - Me.Width) / 2
+		  Me.Top = Window(1).Top + (Window(1).Height - Me.Height) / 2
 		End Sub
 	#tag EndEvent
 
