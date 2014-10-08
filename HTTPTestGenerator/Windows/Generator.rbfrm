@@ -211,7 +211,7 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub GenerateHeaders()
-		  If Request.Path.Username <> "" Or Request.Path.Password <> "" Then
+		  If Request <> Nil And Request.Path.Username <> "" Or Request.Path.Password <> "" Then
 		    If MsgBox("Auto-set HTTP Authorization header?", 4 + 32, "User credentials detected in URL") = 6 Then
 		      Request.Header("Authorization") = "Basic " + EncodeBase64(Request.Path.Username + ":" + Request.Path.Password)
 		    End If

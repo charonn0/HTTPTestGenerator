@@ -1675,12 +1675,12 @@ Implements MessageReceiver
 		      
 		      dim tmpPic as Picture
 		      if mBackBuffer <> nil then
-		        tmpPic = NewPicture(gr.Width, gr.Height, 32)
+		        tmpPic = New Picture(gr.Width, gr.Height, 32)
 		        g = tmpPic.Graphics
 		        g.DrawPicture mBackBuffer, 0, 0, Width, Height, 0, 0, Width, Height
 		      end
 		      
-		      dim blockPicture as Picture = NewPicture(self.Width - LineNumOffset, self.Height, 32)
+		      dim blockPicture as Picture = New Picture(self.Width - LineNumOffset, self.Height, 32)
 		      Dim gb As Graphics = blockPicture.Graphics
 		      
 		      gb.ForeColor = &c000000
@@ -3832,7 +3832,7 @@ Implements MessageReceiver
 		  // called by CaretBlinker to update the text cursor beam
 		  
 		  if ignoreRepaint then Return
-		  if Graphics = nil then Return
+		  'if Graphics = nil then Return
 		  
 		  //see if caret is visible
 		  dim ScrollPosition as Integer = self.ScrollPosition
@@ -3993,12 +3993,11 @@ Implements MessageReceiver
 		  
 		  dim stream as BinaryStream
 		  
-		  //Modified by Dr. Gerard Hammond to allow the file to be saved even if it's already open by another app.
-		  if toFile.Exists = false then
-		    stream = toFile.CreateBinaryFile(FileType)
+		  If Not toFile.Exists then
+		    stream = BinaryStream.Create(toFile, True)
 		  else
-		    stream = toFile.OpenAsBinaryFile(true) //open Writeable
-		    stream.Length = 0 ////truncate the file
+		    stream = BinaryStream.Open(toFile, True)
+		    stream.Position = stream.Length
 		  end if
 		  
 		  if stream = nil then Return False

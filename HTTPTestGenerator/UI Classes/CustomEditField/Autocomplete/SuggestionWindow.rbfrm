@@ -142,7 +142,7 @@ End
 		    Declare Function SetWindowPos Lib "user32" (hwnd as Integer, hWndInstertAfter as Integer, _
 		    x as Integer, y as Integer, cx as Integer, cy as Integer, flags as Integer) as Integer
 		    
-		    oldFlags = GetWindowLong(w.WinHWND, GWL_STYLE)
+		    oldFlags = GetWindowLong(w.Handle, GWL_STYLE)
 		    
 		    if not set then
 		      newFlags = BitwiseAnd( oldFlags, Bitwise.OnesComplement( flag ) )
@@ -151,8 +151,8 @@ End
 		    end
 		    
 		    
-		    styleFlags = SetWindowLong( w.WinHWND, GWL_STYLE, newFlags )
-		    styleFlags = SetWindowPos( w.WinHWND, 0, 0, 0, 0, 0, SWP_NOMOVE +_
+		    styleFlags = SetWindowLong( w.Handle, GWL_STYLE, newFlags )
+		    styleFlags = SetWindowPos( w.Handle, 0, 0, 0, 0, 0, SWP_NOMOVE +_
 		    SWP_NOSIZE + SWP_NOZORDER + SWP_FRAMECHANGED )
 		  #else
 		    #pragma unused w

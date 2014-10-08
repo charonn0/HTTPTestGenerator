@@ -160,6 +160,7 @@ Begin ContainerControl CustomScrollableEditField
       Width           =   192
    End
    Begin Timer SelChangeDeferrer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       InitialParent   =   ""
@@ -168,8 +169,11 @@ Begin ContainerControl CustomScrollableEditField
       Mode            =   0
       Period          =   0
       Scope           =   0
+      TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   0
+      Visible         =   True
       Width           =   32
    End
 End
