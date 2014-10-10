@@ -128,6 +128,7 @@ Picture=markermask;HTTPTestGenerator/Icons/markermask.bmp;&h6BE98FFF;&h12F36FFF;
 Picture=button;HTTPTestGenerator/Icons/button.png;&h194EAFFF;&h12F36FFF;false;0;&h0
 MenuBar=CustomEditMenu;HTTPTestGenerator/UI Classes/CustomEditField/CustomEditMenu.rbmnu;&h667DB7FF;&h712C7FFF;false
 Window=SyntaxHilightContainer;HTTPTestGenerator/UI Classes/Controls/SyntaxHilightContainer.rbfrm;&h1FBD67FF;&h33E51FFF;false
+Class=CookieJar;HTTP/CookieJar.rbbas;&h15A3FFFF;&h196B37FF;false
 DefaultWindow=Generator
 MajorVersion=1
 MinorVersion=0
