@@ -547,13 +547,14 @@ End
 	#tag EndEvent
 	#tag Event
 		Function ConstructContextualMenu(base As MenuItem, x As Integer, y As Integer) As Boolean
+		  base.Append(New MenuItem("Clear all cookies"))
 		  Dim row As Integer = Me.RowFromXY(X, Y)
 		  If row > -1 Then
 		    Dim m As New MenuItem("View spec...")
 		    m.Tag = Me.RowTag(Me.RowFromXY(X, Y))
 		    base.Append(m)
-		    Return True
 		  End If
+		  Return True
 		End Function
 	#tag EndEvent
 	#tag Event
@@ -566,6 +567,13 @@ End
 		    Else
 		      SpecIndex.ShowItem("Cookie")
 		    End If
+		    Return True
+		  Case "Clear all cookies"
+		    For i As Integer = Me.ListCount - 1 DownTo 0
+		      If Me.RowTag(i) <> Nil And Me.RowTag(i) IsA HTTP.Cookie Then
+		        Me.RemoveRow(i)
+		      End If
+		    Next
 		    Return True
 		  End Select
 		End Function
@@ -642,25 +650,45 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub ValueChanged()
-		  Dim c As Cookie
-		  Dim editindex As Integer = -1
-		  
-		  If RequestHeaders.ListIndex > -1 And RequestHeaders.Cell(RequestHeaders.ListIndex, 0) = "Cookie" Then
-		    Dim n, v As String
-		    n = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 1)
-		    v = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 2)
-		    c = New Cookie(n, v)
-		    editindex = RequestHeaders.ListIndex
-		  End If
-		  c = CookieEdit.GetCookie(c)
-		  If c <> Nil Then
-		    If editindex > -1 Then
-		      RequestHeaders.Cell(editindex, 1) = c.Name + "=" + c.Value
-		      RequestHeaders.RowTag(editindex) = c
-		    Else
-		      RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
-		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
-		    End If
+		  Dim mnu As New MenuItem("EditCookieMenu")
+		  mnu.Append(New MenuItem("Add cookie..."))
+		  mnu.Append(New MenuItem("Load cookies from a file..."))
+		  Dim res As MenuItem = mnu.PopUp
+		  If res <> Nil Then
+		    Select Case res.Text
+		    Case "Add cookie..."
+		      Dim editindex As Integer = -1
+		      Dim c As Cookie
+		      
+		      If RequestHeaders.ListIndex > -1 And RequestHeaders.Cell(RequestHeaders.ListIndex, 0) = "Cookie" Then
+		        Dim n, v As String
+		        n = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 1)
+		        v = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 2)
+		        c = New Cookie(n, v)
+		        editindex = RequestHeaders.ListIndex
+		      End If
+		      c = CookieEdit.GetCookie(c)
+		      If c <> Nil Then
+		        If editindex > -1 Then
+		          RequestHeaders.Cell(editindex, 1) = c.Name + "=" + c.Value
+		          RequestHeaders.RowTag(editindex) = c
+		        Else
+		          RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		          RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
+		        End If
+		      End If
+		      
+		    Case "Load cookies from a file..."
+		      Dim f As FolderItem = GetOpenFolderItem(FileTypes1.NetscapeCookieJar)
+		      If f <> Nil Then
+		        Dim cj As HTTP.CookieJar = HTTP.CookieJar.LoadFromFile(f)
+		        For i As Integer = 0 To cj.Count - 1
+		          Dim c As Cookie = cj.Item(i)
+		          RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		          RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
+		        Next
+		      End If
+		    End Select
 		  End If
 		End Sub
 	#tag EndEvent

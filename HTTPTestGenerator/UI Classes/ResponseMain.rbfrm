@@ -424,6 +424,8 @@ End
 #tag Events CookieList
 	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  If Me.ListCount <= 0 Then Return False
+		  base.Append(New MenuItem("Save cookies to a file..."))
 		  Dim r As Integer = Me.RowFromXY(X, Y)
 		  If r > -1 Then
 		    Dim m As New MenuItem("Copy to request headers")
@@ -435,12 +437,26 @@ End
 	#tag EndEvent
 	#tag Event
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  If hitItem.Text = "Copy to request headers" Then
+		  Select Case hitItem.Text 
+		  Case "Copy to request headers" 
 		    Dim c As Cookie = hitItem.Tag
 		    Generator.RequestMain1.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
 		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = c
 		    Return True
-		  End If
+		  Case "Save cookies to a file..."
+		    Dim cj As New HTTP.CookieJar
+		    For i As Integer = 0 To Me.ListCount - 1
+		      Dim c As Cookie = Me.RowTag(i)
+		      If c.Domain = "" Then
+		        c = New Cookie(c.ToString) ' force copy
+		        c.Domain = Response.Path.Host
+		      End If
+		      cj.Append(c)
+		    Next
+		    Dim f As FolderItem = GetSaveFolderItem(FileTypes1.NetscapeCookieJar, ReplaceAll(Response.Path.Host, ".", "_") + ".jar")
+		    If f <> Nil Then cj.SaveAs(f)
+		    Return True
+		  End Select
 		End Function
 	#tag EndEvent
 	#tag Event
