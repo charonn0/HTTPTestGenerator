@@ -1,6 +1,18 @@
 #tag Module
 Protected Module Specifications
 	#tag Method, Flags = &h1
+		Protected Function GlossaryDefinition(Term As String) As JSONItem
+		  If HTTPGlossary = Nil Then HTTPGlossary = New JSONItem(glossary)
+		  For i As Integer = 0 To HTTPGlossary.Count - 1
+		    Dim item As JSONItem = HTTPGlossary.Value(i)
+		    If item <> Nil And item.Lookup("word", "") = Term Then
+		      Return item
+		    End If
+		  Next
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function HasEntry(EntryName As Variant) As Boolean
 		  Select Case True
 		  Case EntryName = ""
@@ -10,6 +22,8 @@ Protected Module Specifications
 		  Case MethodDescription(EntryName) <> Nil
 		    Return True
 		  Case StatusCodeDescription(Val(EntryName)) <> Nil
+		    Return True
+		  Case GlossaryDefinition(EntryName) <> Nil
 		    Return True
 		  End Select
 		End Function
@@ -66,6 +80,10 @@ Protected Module Specifications
 
 	#tag Property, Flags = &h1
 		Protected Headers As JSONItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected HTTPGlossary As JSONItem
 	#tag EndProperty
 
 	#tag Property, Flags = &h1

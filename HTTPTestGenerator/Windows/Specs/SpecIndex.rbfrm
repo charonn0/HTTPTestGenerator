@@ -293,6 +293,7 @@ End
 		  Call Specifications.MethodDescription("")
 		  'Call Specifications.RelationDescription("")
 		  Call Specifications.StatusCodeDescription(0)
+		  Call Specifications.GlossaryDefinition("")
 		End Sub
 	#tag EndEvent
 
@@ -303,6 +304,7 @@ End
 		  HelpIndex.AddFolder("Headers")
 		  HelpIndex.AddFolder("Status Codes")
 		  HelpIndex.AddFolder("Request Methods")
+		  HelpIndex.AddFolder("Glossary")
 		  If index > -1 Then
 		    HelpIndex.Expanded(index) = True
 		  End If
@@ -313,7 +315,7 @@ End
 		Sub ShowItem(SearchFor As String = "")
 		  Me.Show
 		  Dim exp As Integer = SpecViewer1.ShowItem(SearchFor)
-		  If exp <= -1 Then
+		  If exp <= -1 And SearchFor <> "" Then
 		    Call MsgBox("No specification found for: " + SearchFor, 48, "Index entry not found")
 		  End If
 		  
@@ -409,6 +411,22 @@ End
 		      HelpIndex.InsertRow(row + 1, j.Value("method"), 1)
 		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
 		      If SpecViewer1.CurrentItem <> Nil And SpecViewer1.CurrentItem.Lookup("method", "") = j.Value("method") Then
+		        HelpIndex.ListIndex = HelpIndex.LastIndex
+		      End If
+		    Next
+		    
+		  Case Me.Cell(row, 0) = "Glossary"
+		    For i As Integer = 0 To Specifications.HTTPGlossary.Count - 1
+		      Dim j As JSONItem = Specifications.HTTPGlossary.Value(i)
+		      h.Append(j)
+		      n.Append(j.Value("word"))
+		    Next
+		    n.SortWith(h)
+		    For i As Integer = UBound(h) DownTo 0
+		      Dim j As JSONItem = h(i)
+		      HelpIndex.InsertRow(row + 1, j.Value("word").StringValue.Titlecase, 1)
+		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
+		      If SpecViewer1.CurrentItem <> Nil And SpecViewer1.CurrentItem.Lookup("word", "") = j.Value("word") Then
 		        HelpIndex.ListIndex = HelpIndex.LastIndex
 		      End If
 		    Next

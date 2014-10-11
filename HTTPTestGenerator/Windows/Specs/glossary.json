@@ -1,0 +1,50 @@
+[
+    {
+        "word": "origin server",
+        "description": "The program that can originate authoritative responses for a given target resource. Compare to:  <link=proxy server>proxy</link>, <link=gateway server>gateway</link>, or <link=tunnel server>tunnel</link>",
+		"spec_title": "RFC7230#2.1",
+        "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.1"
+    },
+    {
+        "word": "proxy server",
+        "description": "A message-forwarding agent that is selected by the client, usually via local configuration rules, to receive requests for some type(s) of absolute URI and attempt to satisfy those requests via translation through the HTTP interface.",
+		"spec_title": "RFC7230#2.3",
+        "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
+    },
+	{
+        "word": "gateway server",
+        "description": "An intermediary that acts as an <link=origin server>origin server</link> for the outbound connection but translates received requests and forwards them inbound to another server or servers.",
+		"spec_title": "RFC7230#2.3",
+        "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
+    },
+	{
+        "word": "tunnel server",
+        "description": "An intermediary that acts as a blind relay between two connections without changing the messages.  Once active, a tunnel is not considered a party to the HTTP communication, though the tunnel might have been initiated by an HTTP request.",
+		"spec_title": "RFC7230#2.3",
+        "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
+    },
+	{
+        "word": "intermediary",
+        "description": "HTTP enables the use of intermediaries to satisfy requests through a chain of connections.  There are three common forms of HTTP intermediary: proxy, gateway, and tunnel. In some cases, a single intermediary might act as an origin server, proxy, gateway, or tunnel, switching behavior based on the nature of each request.",
+		"spec_title": "RFC7230#2.3",
+        "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
+    },
+	{
+        "word": "client",
+        "description": "A program that establishes a connection to a server for the purpose of sending one or more HTTP requests.",
+		"spec_title": "RFC7230#2.1",
+        "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.1"
+    },
+		{
+        "word": "server",
+        "description": "A program that accepts connections in order to service HTTP requests by sending HTTP responses.",
+		"spec_title": "RFC7230#2.1",
+        "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.1"
+    },
+			{
+        "word": "request method",
+        "description": "The primary source of request semantics; it indicates the purpose for which the client has made this request and what is expected by the client as a successful result.",
+		"spec_title": "RFC7231#4",
+        "spec_href": "http://tools.ietf.org/html/rfc7231#section-4"
+    }
+]

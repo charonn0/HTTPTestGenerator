@@ -45,7 +45,6 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "No Selection:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -122,7 +121,6 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "No Selection"
       TextAlign       =   0
       TextColor       =   &h000000FF
@@ -157,7 +155,6 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Specification:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -192,7 +189,6 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Description:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -272,7 +268,6 @@ Begin ContainerControl SpecViewer
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "HTTP://WWW.GOOGLE.COM"
       TextAlign       =   2
       TextColor       =   &h00808080
@@ -348,7 +343,6 @@ Begin ContainerControl SpecViewer
       Width           =   21
    End
    Begin Timer HistoryTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   0
@@ -356,11 +350,8 @@ Begin ContainerControl SpecViewer
       Mode            =   2
       Period          =   150
       Scope           =   0
-      TabIndex        =   9
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   259
-      Visible         =   True
       Width           =   32
    End
 End
@@ -446,6 +437,11 @@ End
 		    TypeLabel.Text = "Status Code:"
 		    ItemName.Text = mCurrentItem.Value("code") + " " + mCurrentItem.Value("phrase")
 		    
+		  Case mCurrentItem.HasName("word")
+		    exp = 3
+		    TypeLabel.Text = "Definition of:"
+		    ItemName.Text = mCurrentItem.Value("word").StringValue.Titlecase
+		    
 		  Case mCurrentItem.HasName("relation")
 		    TypeLabel.Text = "IRI Relation:"
 		    ItemName.Text = mCurrentItem.Value("relation")
@@ -469,6 +465,8 @@ End
 		      mCurrentItem = Specifications.MethodDescription(SearchFor)
 		    Case Specifications.StatusCodeDescription(Val(SearchFor)) <> Nil
 		      mCurrentItem = Specifications.StatusCodeDescription(Val(SearchFor))
+		    Case Specifications.GlossaryDefinition(SearchFor) <> Nil
+		      mCurrentItem = Specifications.GlossaryDefinition(SearchFor)
 		    End Select
 		  End If
 		  
