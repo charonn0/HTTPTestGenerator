@@ -127,7 +127,7 @@
     },
     {
         "method": "LABEL",
-        "description": "",
+        "description": "A LABEL request can be applied to a version to modify the labels that select that version.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
