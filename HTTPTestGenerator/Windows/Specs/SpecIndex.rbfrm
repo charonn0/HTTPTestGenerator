@@ -36,7 +36,7 @@ Begin Window SpecIndex
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   159
+      Left            =   162
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -109,26 +109,43 @@ Begin Window SpecIndex
       Visible         =   True
       Width           =   80
    End
-   Begin TabPanel TabPanel1
+   Begin Listbox HelpIndex
       AutoDeactivate  =   True
+      AutoHideScrollbars=   True
       Bold            =   ""
+      Border          =   True
+      ColumnCount     =   1
+      ColumnsResizable=   ""
+      ColumnWidths    =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      DefaultRowHeight=   -1
       Enabled         =   True
+      EnableDrag      =   ""
+      EnableDragReorder=   ""
+      GridLinesHorizontal=   0
+      GridLinesVertical=   0
+      HasHeading      =   ""
+      HeadingIndex    =   -1
       Height          =   355
       HelpTag         =   ""
+      Hierarchical    =   True
       Index           =   -2147483648
       InitialParent   =   ""
+      InitialValue    =   ""
       Italic          =   ""
-      Left            =   4
+      Left            =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
-      Panels          =   ""
+      RequiresSelection=   ""
       Scope           =   0
-      SmallTabs       =   ""
-      TabDefinition   =   "Index\rSearch"
-      TabIndex        =   4
+      ScrollbarHorizontal=   ""
+      ScrollBarVertical=   True
+      SelectionType   =   0
+      TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -136,150 +153,10 @@ Begin Window SpecIndex
       TextUnit        =   0
       Top             =   0
       Underline       =   ""
-      Value           =   1
+      UseFocusRing    =   True
       Visible         =   True
-      Width           =   150
-      Begin Listbox HelpIndex
-         AutoDeactivate  =   True
-         AutoHideScrollbars=   True
-         Bold            =   ""
-         Border          =   True
-         ColumnCount     =   1
-         ColumnsResizable=   ""
-         ColumnWidths    =   ""
-         DataField       =   ""
-         DataSource      =   ""
-         DefaultRowHeight=   -1
-         Enabled         =   True
-         EnableDrag      =   ""
-         EnableDragReorder=   ""
-         GridLinesHorizontal=   0
-         GridLinesVertical=   0
-         HasHeading      =   ""
-         HeadingIndex    =   -1
-         Height          =   316
-         HelpTag         =   ""
-         Hierarchical    =   True
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         InitialValue    =   ""
-         Italic          =   ""
-         Left            =   12
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         RequiresSelection=   ""
-         Scope           =   0
-         ScrollbarHorizontal=   ""
-         ScrollBarVertical=   True
-         SelectionType   =   0
-         TabIndex        =   0
-         TabPanelIndex   =   1
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0
-         TextUnit        =   0
-         Top             =   30
-         Underline       =   ""
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   134
-         _ScrollWidth    =   -1
-      End
-      Begin TextField SearchField
-         AcceptTabs      =   ""
-         Alignment       =   0
-         AutoDeactivate  =   True
-         AutomaticallyCheckSpelling=   False
-         BackColor       =   &hFFFFFF
-         Bold            =   ""
-         Border          =   True
-         CueText         =   ""
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Format          =   ""
-         Height          =   22
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         Italic          =   ""
-         Left            =   12
-         LimitText       =   0
-         LockBottom      =   ""
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Mask            =   ""
-         Password        =   ""
-         ReadOnly        =   ""
-         Scope           =   0
-         TabIndex        =   0
-         TabPanelIndex   =   2
-         TabStop         =   True
-         Text            =   ""
-         TextColor       =   &h000000
-         TextFont        =   "System"
-         TextSize        =   0
-         TextUnit        =   0
-         Top             =   32
-         Underline       =   ""
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   134
-      End
-      Begin Listbox SearchList
-         AutoDeactivate  =   True
-         AutoHideScrollbars=   True
-         Bold            =   ""
-         Border          =   True
-         ColumnCount     =   1
-         ColumnsResizable=   ""
-         ColumnWidths    =   ""
-         DataField       =   ""
-         DataSource      =   ""
-         DefaultRowHeight=   -1
-         Enabled         =   True
-         EnableDrag      =   ""
-         EnableDragReorder=   ""
-         GridLinesHorizontal=   0
-         GridLinesVertical=   0
-         HasHeading      =   ""
-         HeadingIndex    =   -1
-         Height          =   290
-         HelpTag         =   ""
-         Hierarchical    =   ""
-         Index           =   -2147483648
-         InitialParent   =   "TabPanel1"
-         InitialValue    =   ""
-         Italic          =   ""
-         Left            =   12
-         LockBottom      =   True
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         RequiresSelection=   ""
-         Scope           =   0
-         ScrollbarHorizontal=   ""
-         ScrollBarVertical=   True
-         SelectionType   =   0
-         TabIndex        =   1
-         TabPanelIndex   =   2
-         TabStop         =   True
-         TextFont        =   "System"
-         TextSize        =   0
-         TextUnit        =   0
-         Top             =   58
-         Underline       =   ""
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   134
-         _ScrollWidth    =   -1
-      End
+      Width           =   160
+      _ScrollWidth    =   -1
    End
 End
 #tag EndWindow
@@ -332,9 +209,9 @@ End
 		Sub Moved(DeltaX As Integer, DeltaY As Integer)
 		  #pragma Unused DeltaX
 		  #pragma Unused DeltaY
-		  SpecViewer1.Left = Me.Left + Me.Width + 1
+		  SpecViewer1.Left = Me.Left + Me.Width + 2
 		  SpecViewer1.Width = Self.Width - SpecViewer1.Left
-		  TabPanel1.Width = Me.Left
+		  HelpIndex.Width = Me.Left - 2
 		  Me.Invalidate
 		End Sub
 	#tag EndEvent
