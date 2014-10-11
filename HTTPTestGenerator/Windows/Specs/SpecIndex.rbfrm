@@ -136,7 +136,7 @@ Begin Window SpecIndex
       TextUnit        =   0
       Top             =   0
       Underline       =   ""
-      Value           =   0
+      Value           =   1
       Visible         =   True
       Width           =   150
       Begin Listbox HelpIndex
@@ -313,7 +313,7 @@ End
 
 	#tag Method, Flags = &h0
 		Sub ShowItem(SearchFor As String = "")
-		  Me.Show
+		  If Not Me.Visible Then Me.Show
 		  Dim exp As Integer = SpecViewer1.ShowItem(SearchFor)
 		  If exp <= -1 And SearchFor <> "" Then
 		    Call MsgBox("No specification found for: " + SearchFor, 48, "Index entry not found")
