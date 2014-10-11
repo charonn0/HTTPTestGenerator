@@ -104,7 +104,7 @@ Begin ContainerControl RequestMain
       Visible         =   True
       Width           =   72
    End
-   Begin HintTextField URL
+   Begin TextField URL
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
@@ -112,15 +112,13 @@ Begin ContainerControl RequestMain
       BackColor       =   "&cFFFFFF00"
       Bold            =   False
       Border          =   True
-      CueText         =   ""
+      CueText         =   "Request URL"
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
       Format          =   ""
-      HasText         =   False
       Height          =   22
       HelpTag         =   ""
-      HintText        =   "Request URL"
       Index           =   -2147483648
       Italic          =   False
       Left            =   82
@@ -433,6 +431,28 @@ End
 
 
 	#tag Method, Flags = &h0
+		Sub AddHistoryItem(URL As HTTP.URI)
+		  If History = Nil Then History = New Dictionary
+		  History.Value(URL.ToString) = URL
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function SearchHistory(Search As String) As HTTP.URI()
+		  If History = Nil Then History = New Dictionary
+		  Dim res() As HTTP.URI
+		  
+		  For Each u As String In History.Keys
+		    If InStr(u, Search) > 0 Or Search = "" Then
+		      res.Append(History.Value(u))
+		    End If
+		  Next
+		  
+		  Return res
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub SetProgress(Percent As Integer)
 		  ProgressBar1.Maximum = 100
 		  If Percent >= 0 Then
@@ -475,6 +495,10 @@ End
 
 	#tag Property, Flags = &h21
 		Private Formtype As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected History As Dictionary
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h1
@@ -622,11 +646,31 @@ End
 		  End If
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Sub KeyUp(Key As String)
+		  If Asc(Key) = &h1F Then  //Down arrow
+		    Dim res() As HTTP.URI = SearchHistory(Me.Text)
+		    If UBound(res) > -1 Then
+		      Dim mnu As New MenuItem("History")
+		      For Each item As HTTP.URI In res
+		        Dim mnuitem As New MenuItem(item.ToString)
+		        mnuitem.Tag = item
+		        mnu.Append(mnuitem)
+		      Next
+		      Dim choice As MenuItem = mnu.PopUp(TrueWindow.Left + Me.Left, TrueWindow.Top + Me.Top + Me.Height)
+		      If choice <> Nil Then
+		        Me.Text = choice.Text
+		      End If
+		    End If
+		  End If
+		End Sub
+	#tag EndEvent
 #tag EndEvents
 #tag Events ProtocolVer
 	#tag Event
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
+		  Me.SelLength = 0
 		End Sub
 	#tag EndEvent
 #tag EndEvents
