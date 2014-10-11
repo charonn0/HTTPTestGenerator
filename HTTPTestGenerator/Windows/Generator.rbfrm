@@ -151,7 +151,7 @@ End
 	#tag Event
 		Sub Open()
 		  #If DebugBuild Then
-		    RequestMain1.URL.Text = "https://www.google.com/"
+		    'RequestMain1.URL.Text = "https://www.google.com/"
 		  #endif
 		End Sub
 	#tag EndEvent
@@ -463,7 +463,7 @@ End
 		  PrintConsole("Sending request... (" + FormatBytes(s.LenB) + ")")
 		  Me.Write(s)
 		  SendSz = 0
-		  RequestMain1.URL.AddItem(RequestMain1.URL.Text)
+		  RequestMain1.AddHistoryItem(RequestMain1.URL.Text)
 		End Sub
 	#tag EndEvent
 	#tag Event
