@@ -106,15 +106,13 @@ Inherits TextArea
 		    remain = Replace(remain, Message.MethodName, "")
 		    sr.Text = Message.MethodName
 		    sr.Underline = True
-		    Links.Append(Message.MethodName)
-		    Me.StyledText.AppendStyleRun(sr)
+		    Me.PrintOther(sr, Message.MethodName)
 		    sr.Text = remain
 		    sr.Underline = False
 		  Else
 		    sr.Text = remain
 		  End If
-		  Me.StyledText.AppendStyleRun(sr)
-		  Links.Append(Nil)
+		  Me.PrintOther(sr)
 		  
 		  sr = New StyleRun
 		  If Message.MessageBody.Trim.LenB > 0 Then
@@ -122,14 +120,11 @@ Inherits TextArea
 		    sr.Text = CRLF + "View request body..."
 		    sr.TextColor = &c80808000
 		    sr.Underline = True
-		    Links.Append(Message)
-		    Me.StyledText.AppendStyleRun(sr)
+		    Me.PrintOther(sr, Message)
 		  End If
 		  sr.Text = CRLF + CRLF
 		  sr.Underline = False
-		  Me.StyledText.AppendStyleRun(sr)
-		  Links.Append(Nil)
-		  
+		  Me.PrintOther(sr)
 		End Sub
 	#tag EndMethod
 
@@ -143,20 +138,16 @@ Inherits TextArea
 		  If Message.StatusMessage <> "" Then
 		    Dim msg As String = NthField(remain, CRLF, 1)
 		    sr.Text = NthField(msg, " ", 1) + " "
-		    Me.StyledText.AppendStyleRun(sr)
-		    Links.Append(Nil)
-		    
+		    Me.PrintOther(sr)
 		    sr.Text = Right(msg, msg.Len - sr.Text.Len)
 		    sr.Underline = True
-		    Me.StyledText.AppendStyleRun(sr)
-		    Links.Append(Message.StatusCode)
+		    Me.PrintOther(sr, Message.StatusCode)
 		    sr.Underline = False
 		    sr.Text = CRLF + Replace(remain, msg, "").Trim
 		  Else
 		    sr.Text = remain
 		  End If
-		  Me.StyledText.AppendStyleRun(sr)
-		  Links.Append(Nil)
+		  Me.PrintOther(sr)
 		  
 		  If Message.MessageBody.Trim.LenB > 0 Then
 		    sr = New StyleRun
@@ -164,13 +155,11 @@ Inherits TextArea
 		    sr.Text = CRLF + "View response body..."
 		    sr.TextColor = &c80808000
 		    sr.Underline = True
-		    Me.StyledText.AppendStyleRun(sr)
-		    Links.Append(Message)
+		    Me.PrintOther(sr, Message)
 		  End If
 		  sr.Text = CRLF + CRLF
 		  sr.Underline = False
-		  Me.StyledText.AppendStyleRun(sr)
-		  Links.Append(Nil)
+		  Me.PrintOther(sr)
 		End Sub
 	#tag EndMethod
 
