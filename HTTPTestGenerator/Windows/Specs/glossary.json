@@ -7,19 +7,19 @@
     },
     {
         "word": "proxy server",
-        "description": "A message-forwarding agent that is selected by the client, usually via local configuration rules, to receive requests for some type(s) of absolute URI and attempt to satisfy those requests via translation through the HTTP interface.",
+        "description": "A message-forwarding agent that is selected by the <link=client>client</link>, usually via local configuration rules, to receive requests for some type(s) of absolute URI and attempt to satisfy those requests via translation through the HTTP interface. Compare to:  <link=origin server>origin</link>, <link=gateway server>gateway</link>, or <link=tunnel server>tunnel</link>",
 		"spec_title": "RFC7230#2.3",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
     },
 	{
         "word": "gateway server",
-        "description": "An intermediary that acts as an <link=origin server>origin server</link> for the outbound connection but translates received requests and forwards them inbound to another server or servers.",
+        "description": "An <link=intermediary>intermediary</link> that acts as an <link=origin server>origin server</link> for the outbound connection but translates received requests and forwards them inbound to another <link=web server>server</link> or servers. Compare to:  <link=proxy server>proxy</link>, <link=origin server>origin</link>, or <link=tunnel server>tunnel</link>",
 		"spec_title": "RFC7230#2.3",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
     },
 	{
         "word": "tunnel server",
-        "description": "An intermediary that acts as a blind relay between two connections without changing the messages.  Once active, a tunnel is not considered a party to the HTTP communication, though the tunnel might have been initiated by an HTTP request.",
+        "description": "An <link=intermediary>intermediary</link> that acts as a blind relay between two connections without changing the messages.  Once active, a tunnel is not considered a party to the HTTP communication, though the tunnel might have been initiated by an HTTP request. Compare to:  <link=proxy server>proxy</link>, <link=gateway server>gateway</link>, or <link=origin server>origin</link>",
 		"spec_title": "RFC7230#2.3",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
     },
@@ -31,19 +31,62 @@
     },
 	{
         "word": "client",
-        "description": "A program that establishes a connection to a server for the purpose of sending one or more HTTP requests.",
+        "description": "A program that establishes a connection to a <link=web server>server</link> for the purpose of sending one or more HTTP requests. Also known as a User-Agent.",
 		"spec_title": "RFC7230#2.1",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.1"
     },
+	{
+        "word": "user agent",
+        "description": "See: <link=client>Client</link>",
+		"spec_title": "",
+        "spec_href": ""
+    },
+
+	{
+        "word": "cache",
+        "description": "An HTTP cache is a local store of response messages and the subsystem that controls storage, retrieval, and deletion of messages in it. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any <link=client>client</link> or <link=web server>server</link> <link=rfc2119#section-5>MAY</link> employ a cache, though a cache cannot be used by a <link=web server>server</link> that is acting as a tunnel.",
+		"spec_title": "RFC7234#1",
+        "spec_href": "http://tools.ietf.org/html/rfc7234#section-1"
+    },
+	
 		{
-        "word": "server",
+        "word": "cacheable",
+        "description": "Request methods can be defined as \"cacheable\" to indicate that responses to them are allowed to be stored for future reuse; for specific requirements see <link=RFC7234>RFC7234</link>.  In general, <link=safe>safe methods</link> that do not depend on a current or authoritative response are defined as cacheable; this specification defines <link=GET>GET</link>, <link=HEAD>HEAD</link>, and <link=POST>POST</link> as cacheable, although the overwhelming majority of cache implementations only support GET and HEAD.",
+		"spec_title": "RFC7231#4.2.3",
+        "spec_href": "http://tools.ietf.org/html/rfc7231#section-4.2.3"
+
+    },	
+	{
+        "word": "representation",
+        "description": "A \"representation\" is information that is intended to reflect a past, current, or desired state of a given resource, in a format that can be readily communicated via the protocol, and that consists of a set of representation metadata and a potentially unbounded stream of representation data.",
+		"spec_title": "RFC7231#3",
+        "spec_href": "http://tools.ietf.org/html/rfc7231#section-3"
+    },
+
+
+	{
+        "word": "idempotent",
+        "description": "A request method is considered \"idempotent\" if the intended effect on the <link=web server>server</link> of multiple identical requests with that method is the same as the effect for a single such request.  Of the request methods defined by this specification, <link=PUT>PUT</link>, <link=DELETE>DELETE</link>, and <link=safe>safe</link> request methods are idempotent.",
+		"spec_title": "RFC7231#4.2.2",
+        "spec_href": "http://tools.ietf.org/html/rfc7231#section-4.2.2"
+    },
+
+	{
+        "word": "safe",
+        "description": "Request methods are considered \"safe\" if their defined semantics are essentially read-only; i.e., the <link=client>client</link> does not request, and does not expect, any state change on the origin <link=web server>server</link> as a result of applying a safe method to a target resource.  Likewise, reasonable use of a safe method is not expected to cause any harm, loss of property, or unusual burden on the origin server.",
+		"spec_title": "RFC7231#4.2.1",
+        "spec_href": "http://tools.ietf.org/html/rfc7231#section-4.2.1"
+    },
+
+	{
+        "word": "web server",
         "description": "A program that accepts connections in order to service HTTP requests by sending HTTP responses.",
 		"spec_title": "RFC7230#2.1",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.1"
     },
 			{
         "word": "request method",
-        "description": "The primary source of request semantics; it indicates the purpose for which the client has made this request and what is expected by the client as a successful result.",
+        "description": "The primary source of request semantics; it indicates the purpose for which the <link=client>client</link> has made this request and what is expected by the <link=user agent>client</link> as a successful result.",
 		"spec_title": "RFC7231#4",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-4"
     }

@@ -1,7 +1,7 @@
 [
     {
         "method": "CONNECT",
-        "description": "Requests that the recipient establish a tunnel to the destination origin server identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the connection is closed.",
+        "description": "Requests that the recipient establish a tunnel to the destination  <link=origin server>origin server</link> identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the connection is closed.",
         "safe": true,
         "idempotent": true,
         "cacheable": false,
@@ -10,7 +10,7 @@
     },
     {
         "method": "DELETE",
-        "description": "Requests that the origin server remove the association between the target resource and its current functionality.",
+        "description": "Requests that the  <link=origin server>origin server</link> remove the association between the target resource and its current functionality.",
         "safe": false,
         "idempotent": true,
         "cacheable": false,
@@ -28,7 +28,7 @@
     },
     {
         "method": "HEAD",
-        "description": "This method is identical to <link=GET>GET</link> except that the server <link=rfc2119#section-2>MUST NOT</link> send a message body in the response (i.e., the response terminates at the end of the header block).",
+        "description": "This method is identical to <link=GET>GET</link> except that the <link=web server>server</link> <link=rfc2119#section-2>MUST NOT</link> send a message body in the response (i.e., the response terminates at the end of the header block).",
         "safe": true,
         "idempotent": true,
         "cacheable": true,
@@ -136,7 +136,7 @@
     },
     {
         "method": "LINK",
-        "description": "",
+        "description": "The LINK method establishes one or more Link relationships between the existing resource identified by the Request-URI and other existing resources. The difference between LINK and other methods allowing links to be established between resources is that the LINK method does not allow any message-body to be sent in the request and does not directly result in the creation of new resources.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",

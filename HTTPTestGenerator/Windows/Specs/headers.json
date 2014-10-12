@@ -49,13 +49,13 @@
     },
     {
         "header": "Expect",
-        "description": "This header is used to indicate that particular server behaviors are required by the client.",
+        "description": "This header is used to indicate that particular <link=web server>server</link> behaviors are required by the client.",
         "spec_title": "RFC7231#5.1.1",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.1.1"
     },
     {
         "header": "Host",
-        "description": "This header provides the host and port information from the target URI, enabling the origin server to distinguish among resources while servicing requests for multiple host names on a single IP address.",
+        "description": "This header provides the host and port information from the target URI, enabling the  <link=origin server>origin server</link> to distinguish among resources while servicing requests for multiple host names on a single IP address.",
         "spec_title": "RFC7230#5.4",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-5.4"
     },
@@ -79,7 +79,7 @@
     },
     {
         "header": "TE",
-        "description": "Indicates what transfer codings, besides chunked, the client is willing to accept in response, and whether or not the client is willing to accept trailer fields in a chunked transfer coding.",
+        "description": "Indicates what transfer codings, besides chunked, the <link=user agent>client</link> is willing to accept in response, and whether or not the <link=user agent>client</link> is willing to accept trailer fields in a chunked transfer coding.",
         "spec_title": "RFC7230#4.3",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-4.3"
     },
@@ -103,13 +103,13 @@
     },
     {
         "header": "If-Range",
-        "description": "Informally, its meaning is: if the representation is unchanged, send me the part(s) that I am requesting in Range; otherwise, send me the entire representation.",
+        "description": "Informally, its meaning is: if the representation is unchanged, send me the part(s) that I am requesting in <link=range>Range</link>; otherwise, send me the entire representation.",
         "spec_title": "RFC7233#3.2",
         "spec_href": "http://tools.ietf.org/html/rfc7233#section-3.2"
     },
     {
         "header": "If-Unmodified-Since",
-        "description": "This header can be used to make a request method conditional by modification date: if the selected representation has been modified since the time specified in this field, then the server MUST NOT perform the requested operation and MUST instead respond with the <link=412>412 Precondition Failed</link> status code.",
+        "description": "This header can be used to make a request method conditional by modification date: if the selected representation has been modified since the time specified in this field, then the <link=web server>server</link> <link=rfc2119#section-2>MUST NOT</link> perform the requested operation and <link=rfc2119#section-1>MUST</link> instead respond with the <link=412>412 Precondition Failed</link> status code.",
         "spec_title": "RFC7232#3.4",
         "spec_href": "http://tools.ietf.org/html/rfc7232#section-3.4"
     },
@@ -121,31 +121,31 @@
     },
     {
         "header": "Accept-Charset",
-        "description": "This header can be sent by a user agent to indicate what charsets are acceptable in textual response content.",
+        "description": "This header can be sent by a <link=user agent>user agent</link> to indicate what charsets are acceptable in textual response content.",
         "spec_title": "RFC7231#5.3.3",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.3.3"
     },
     {
         "header": "Accept-Encoding",
-        "description": "This header can be used by user agents to indicate what response content-codings are acceptable in the response.",
+        "description": "This header can be used by <link=user agent>user agents</link> to indicate what response content-codings are acceptable in the response.",
         "spec_title": "RFC7231#5.3.4",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.3.4"
     },
     {
         "header": "Accept-Language",
-        "description": "This header can be used by user agents to indicate the set of natural languages that are preferred in the response.",
+        "description": "This header can be used by <link=user agent>user agents</link> to indicate the set of natural languages that are preferred in the response.",
         "spec_title": "RFC7231#5.3.5",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.3.5"
     },
     {
         "header": "Authorization",
-        "description": "This header allows a user agent to authenticate itself with a server -- usually, but not necessarily, after receiving a <link=401>401 Unauthorized</link> response.",
+        "description": "This header allows a <link=user agent>user agent</link> to authenticate itself with a <link=web server>server</link> -- usually, but not necessarily, after receiving a <link=401>401 Unauthorized</link> response.",
         "spec_title": "RFC7235#4.2",
         "spec_href": "http://tools.ietf.org/html/rfc7235#section-4.2"
     },
     {
         "header": "Proxy-Authorization",
-        "description": "This header allows the client to identify itself (or its user) to a proxy that requires authentication.",
+        "description": "This header allows the <link=user agent>client</link> to identify itself (or its user) to a proxy that requires authentication.",
         "spec_title": "RFC7235#4.4",
         "spec_href": "http://tools.ietf.org/html/rfc7235#section-4.4"
     },
@@ -157,25 +157,25 @@
     },
     {
         "header": "From",
-        "description": "This header contains an Internet email address for a human user who controls the requesting user agent.",
+        "description": "This header contains an Internet email address for a human user who controls the requesting <link=user agent>user agent</link>.",
         "spec_title": "RFC7231#5.5.1",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.5.1"
     },
     {
         "header": "Referer",
-        "description": "This header allows the user agent to specify a URI reference for the resource from which the target URI was obtained (i.e., the \"referrer\", though the field name is misspelled).",
+        "description": "This header allows the <link=user agent>user agent</link> to specify a URI reference for the resource from which the target URI was obtained (i.e., the \"referrer\", though the field name is misspelled).",
         "spec_title": "RFC7231#5.5.2",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.5.2"
     },
     {
         "header": "User-Agent",
-        "description": "This header contains information about the user agent originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular user agent limitations, and for analytics regarding browser or operating system use.",
+        "description": "This header contains information about the <link=user agent>user agent</link> originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular <link=user agent>user agent</link> limitations, and for analytics regarding browser or operating system use.",
         "spec_title": "RFC7231#5.5.3",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.5.3"
     },
     {
         "header": "Age",
-        "description": "This header conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the origin server.",
+        "description": "This header conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the  <link=origin server>origin server</link>.",
         "spec_title": "RFC7234#5.1",
         "spec_href": "http://tools.ietf.org/html/rfc7234#section-5.1"
     },
@@ -205,7 +205,7 @@
     },
     {
         "header": "Retry-After",
-        "description": "Indicates how long the user agent ought to wait before making a follow-up request.",
+        "description": "Indicates how long the <link=user agent>user agent</link> ought to wait before making a follow-up request.",
         "spec_title": "RFC7231#7.1.3",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.1.3"
     },
@@ -217,7 +217,7 @@
     },
     {
         "header": "Vary",
-        "description": "Describes what parts of a request message, aside from the method and request target, might influence the origin server's process for selecting and representing the response.",
+        "description": "Describes what parts of a request message, aside from the method and request target, might influence the  <link=origin server>origin server</link>'s process for selecting and representing the response.",
         "spec_title": "RFC7231#7.1.4",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.1.4"
     },
@@ -235,7 +235,7 @@
     },
     {
         "header": "Last-Modified",
-        "description": "This header provides a timestamp indicating the date and time at which the origin server believes the selected representation was last modified, as determined at the conclusion of handling the request.",
+        "description": "This header provides a timestamp indicating the date and time at which the  <link=origin server>origin server</link> believes the selected representation was last modified, as determined at the conclusion of handling the request.",
         "spec_title": "RFC7232#2.2",
         "spec_href": "http://tools.ietf.org/html/rfc7232#section-2.2"
     },
@@ -253,7 +253,7 @@
     },
     {
         "header": "Accept-Ranges",
-        "description": "This header allows a server to indicate that it supports range requests for the target resource.",
+        "description": "This header allows a <link=web server>server</link> to indicate that it supports range requests for the target resource.",
         "spec_title": "RFC7233#2.3",
         "spec_href": "http://tools.ietf.org/html/rfc7233#section-2.3"
     },
@@ -265,7 +265,7 @@
     },
     {
         "header": "Server",
-        "description": "This header contains information about the software used by the origin server to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular server limitations, and for analytics regarding server or operating system use.",
+        "description": "This header contains information about the software used by the  <link=origin server>origin server</link> to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular <link=web server>server</link> limitations, and for analytics regarding <link=web server>server</link> or operating system use.",
         "spec_title": "RFC7231#7.4.2",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.4.2"
     },
@@ -277,7 +277,7 @@
     },
     {
         "header": "Accept-Post",
-        "description": "Indicates server support for specific media types for entity bodies in HTTP <link=POST>POST</link> requests.",
+        "description": "Indicates <link=web server>server</link> support for specific media types for entity bodies in HTTP <link=POST>POST</link> requests.",
         "spec_title": "draft-wilde-accept-post",
         "spec_href": "http://tools.ietf.org/html/draft-wilde-accept-post"
     },
@@ -331,7 +331,7 @@
     },
     {
         "header": "Content-Disposition",
-        "description": "a means for the origin server to suggest a default filename if the user requests that the content is saved to a file. This usage is derived from the definition of Content-Disposition in <link=rfc1806>RFC 1806</link>",
+        "description": "a means for the  <link=origin server>origin server</link> to suggest a default filename if the user requests that the content is saved to a file. This usage is derived from the definition of Content-Disposition in <link=rfc1806>RFC 1806</link>",
         "spec_title": "RFC6266",
         "spec_href": "http://tools.ietf.org/html/rfc6266"
     },
@@ -349,7 +349,7 @@
     },
     {
         "header": "Cookie",
-        "description": "This header is used by HTTP servers to store state called cookies) at HTTP user agents, letting the servers maintain a stateful session over the mostly stateless HTTP protocol. Although cookies have many historical infelicities that degrade their security and privacy, the Cookie and Set-Cookie header fields are widely used on the Internet.",
+        "description": "This header is used by HTTP servers to store state called cookies) at HTTP <link=user agent>user agents</link>, letting the servers maintain a stateful session over the mostly stateless HTTP protocol. Although cookies have many historical infelicities that degrade their security and privacy, the Cookie and Set-Cookie header fields are widely used on the Internet.",
         "spec_title": "RFC6265",
         "spec_href": "http://tools.ietf.org/html/rfc6265"
     },
@@ -373,13 +373,13 @@
     },
     {
         "header": "Prefer",
-        "description": "This header is used to indicate that particular server behaviors are preferred by the client, but not required for successful completion of the request.",
+        "description": "This header is used to indicate that particular <link=web server>server</link> behaviors are preferred by the client, but not required for successful completion of the request.",
         "spec_title": "draft-snell-http-prefer#2",
         "spec_href": "http://tools.ietf.org/html/draft-snell-http-prefer#section-2"
     },
     {
         "header": "Preference-Applied",
-        "description": "<link=rfc2119#section-5>MAY</link> be included within a response message as an indication as to which <link=Prefer>Prefer</link> tokens were honored by the server and applied to the processing of a request.",
+        "description": "<link=rfc2119#section-5>MAY</link> be included within a response message as an indication as to which <link=Prefer>Prefer</link> tokens were honored by the <link=web server>server</link> and applied to the processing of a request.",
         "spec_title": "draft-snell-http-prefer#3",
         "spec_href": "http://tools.ietf.org/html/draft-snell-http-prefer#section-3"
     },
@@ -409,7 +409,7 @@
     },
     {
         "header": "Accept-Features",
-        "description": "This header can be used by a user agent to give information about the presence or absence of certain features in the feature set of the current request.",
+        "description": "This header can be used by a <link=user agent>user agent</link> to give information about the presence or absence of certain features in the feature set of the current request.",
         "spec_title": "RFC2295#8.2",
         "spec_href": "http://tools.ietf.org/html/rfc2295#section-8.2"
     },
@@ -433,7 +433,7 @@
     },
     {
         "header": "CH",
-        "description": "Describes an example list of client preferences that the server can use to adapt and optimize the resource to satisfy a given request.",
+        "description": "Describes an example list of <link=user agent>client</link> preferences that the <link=web server>server</link> can use to adapt and optimize the resource to satisfy a given request.",
         "spec_title": "draft-grigorik-http-client-hints",
         "spec_href": "http://tools.ietf.org/html/draft-grigorik-http-client-hints"
     },
@@ -595,7 +595,7 @@
     },
     {
         "header": "TCN",
-        "description": "This header is used by a server to signal that the resource is transparently negotiated.",
+        "description": "This header is used by a <link=web server>server</link> to signal that the resource is transparently negotiated.",
         "spec_title": "RFC2295#8.5",
         "spec_href": "http://tools.ietf.org/html/rfc2295#section-8.5"
     },
@@ -613,7 +613,7 @@
     },
     {
         "header": "X-Frame-Options",
-        "description": "Indicates a policy that specifies whether the browser should render the transmitted resource within a <frame> or an <iframe>. Servers can declare this policy in the header of their HTTP responses to prevent clickjacking attacks, which ensures that their content is not embedded into other pages or frames.",
+        "description": "Indicates a policy that specifies whether the browser should render the transmitted resource within a frame or an iframe. Servers can declare this policy in the header of their HTTP responses to prevent clickjacking attacks, which ensures that their content is not embedded into other pages or frames.",
         "spec_title": "RFC7034",
         "spec_href": "http://tools.ietf.org/html/rfc7034"
     }
