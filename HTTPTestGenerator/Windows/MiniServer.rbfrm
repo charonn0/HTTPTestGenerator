@@ -320,8 +320,9 @@ End
 		      ClientRequest.RangeEnd < 0, _
 		      ClientRequest.RangeEnd - ClientRequest.RangeStart > ResponseDocument.MessageBody.LenB, _
 		      ClientRequest.RangeEnd < ClientRequest.RangeStart
+		      Dim sz As Integer = ResponseDocument.MessageBody.LenB
 		      ResponseDocument = HTTP.ErrorPage(416) ' Requested Range is not Satisfiable
-		      ResponseDocument.Header("Content-Range") = "bytes */" + Str(ResponseDocument.MessageBody.LenB)
+		      ResponseDocument.Header("Content-Range") = "bytes */" + Str(sz)
 		      
 		    Case ClientRequest.RangeEnd - ClientRequest.RangeStart > 0
 		      ResponseDocument.StatusCode = 206 'partial content
