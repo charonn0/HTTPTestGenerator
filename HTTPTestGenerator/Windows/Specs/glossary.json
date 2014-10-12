@@ -41,7 +41,12 @@
 		"spec_title": "",
         "spec_href": ""
     },
-
+	{
+        "word": "collection resource",
+        "description": "The purpose of a collection resource is to model collection-like objects (e.g., file system directories) within a server's namespace.",
+		"spec_title": "RFC4918#5",
+        "spec_href": "http://tools.ietf.org/html/rfc4918#section-5"
+    },
 	{
         "word": "cache",
         "description": "An HTTP cache is a local store of response messages and the subsystem that controls storage, retrieval, and deletion of messages in it. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any <link=client>client</link> or <link=web server>server</link> <link=rfc2119#section-5>MAY</link> employ a cache, though a cache cannot be used by a <link=web server>server</link> that is acting as a tunnel.",

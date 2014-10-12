@@ -118,7 +118,7 @@
     },
     {
         "method": "COPY",
-        "description": "",
+        "description": "The COPY method creates a duplicate of the source resource identified by the Request-URI, in the destination resource identified by the URI in the <link=Destination>Destination</link> header. The Destination header <link=rfc2119#section-1>MUST</link> be present. The exact behavior of the COPY method depends on the type of the source resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -145,7 +145,7 @@
     },
     {
         "method": "LOCK",
-        "description": "",
+        "description": "The LOCK method is used to take out a lock of any access type and to refresh an existing lock. ",
         "safe": false,
         "idempotent": false,
         "cacheable": "",
@@ -154,7 +154,7 @@
     },
     {
         "method": "MERGE",
-        "description": "",
+        "description": "Performs the logical merge of a specified version (the \"merge source\") into a specified version-controlled resource (the \"merge target\").",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -163,7 +163,7 @@
     },
     {
         "method": "MKACTIVITY",
-        "description": "",
+        "description": "Creates a new activity resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -172,7 +172,7 @@
     },
     {
         "method": "MKCALENDAR",
-        "description": "",
+        "description": "Creates a new calendar  <link=collection resource>collection resource</link> .",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -181,7 +181,7 @@
     },
     {
         "method": "MKCOL",
-        "description": "",
+        "description": "Creates a new  <link=collection resource>collection resource</link>  at the location specified by the Request-URI.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -208,7 +208,7 @@
     },
     {
         "method": "MOVE",
-        "description": "",
+        "description": "The MOVE operation on a <link=collection resource>non-collection resource</link> is the logical equivalent of a <link=COPY>COPY</link>, followed by consistency maintenance processing, followed by a delete of the source, where all three actions are performed in a single operation.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -217,7 +217,7 @@
     },
     {
         "method": "ORDERPATCH",
-        "description": "",
+        "description": "used to change the ordering semantics of a <link=collection resource>collection</link>, to change the order of the collection's members in the ordering, or both.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
