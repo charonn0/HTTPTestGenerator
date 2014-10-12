@@ -211,7 +211,9 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub GenerateHeaders()
-		  If Request <> Nil And Request.Path.Username <> "" Or Request.Path.Password <> "" Then
+		  If Request = Nil Then Return
+		  
+		  If Request.Path.Username <> "" Or Request.Path.Password <> "" Then
 		    If MsgBox("Auto-set HTTP Authorization header?", 4 + 32, "User credentials detected in URL") = 6 Then
 		      Request.Header("Authorization") = "Basic " + EncodeBase64(Request.Path.Username + ":" + Request.Path.Password)
 		    End If
@@ -229,16 +231,6 @@ End
 		    Me.Request.Header("Connection") = "close"
 		  End If
 		  
-		  'If Me.Request.Headers.AcceptableTypes.Ubound <= -1 And Not Me.Request.HasHeader("Accept") Then
-		  'Me.Request.Header("Accept") = "*/*"
-		  'ElseIf Not Me.Request.HasHeader("Accept") Then
-		  'Dim output() As String
-		  'For Each t As ContentType In Me.Request.Headers.AcceptableTypes
-		  'output.Append(t.ToString)
-		  'Next
-		  'ReDim Me.Request.Headers.AcceptableTypes(-1)
-		  'Me.Request.Header("Accept") = Join(output, ",")
-		  'End If
 		End Sub
 	#tag EndMethod
 
