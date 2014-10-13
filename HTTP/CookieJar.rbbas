@@ -31,7 +31,7 @@ Protected Class CookieJar
 		  While Not tis.EOF
 		    Dim line As String = tis.ReadLine
 		    If Left(line.Trim, 1) = "#" Or Line = "" Then Continue ' comment line
-		    If CountFields(Line, Chr(9)) <> 7 Then Raise New UnsupportedFormatException
+		    If CountFields(Line, Chr(9)) <> 7 Then Continue ' Raise New UnsupportedFormatException
 		    Dim domain, flag, path, secure, expiration, name, value As String
 		    domain = NthField(line, Chr(9), 1)
 		    flag = NthField(line, Chr(9), 2)
