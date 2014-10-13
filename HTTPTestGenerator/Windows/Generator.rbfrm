@@ -237,7 +237,6 @@ End
 	#tag Method, Flags = &h0
 		Sub Perform()
 		  TimeOut.Mode = Timer.ModeSingle
-		  Sequence = Sequence + 1
 		  Output = ""
 		  Generate()
 		  Sock.Close
@@ -255,46 +254,15 @@ End
 		    Sock.Port = 80
 		  End If
 		  
-		  If Sock.Secure Then
-		    PrintConsole("Attempting a secure connection to '" + Request.Path.Host + "' on port " + Str(Sock.Port) + "...")
-		  Else
-		    PrintConsole("Attempting a connection to '" + Request.Path.Host + "' on port " + Str(Sock.Port) + "...")
-		  End If
-		  
 		  Sock.Connect()
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Sub PrintConsole(Line As String, LinkValue As Variant = Nil)
-		  Dim sr As New StyleRun
-		  sr.Font = App.FixedWidthFont
-		  If LinkValue = Nil Then
-		    sr.TextColor = &c00000000
-		  Else
-		    sr.TextColor = &c0000FF00
-		    sr.Underline = True
-		  End If
-		  sr.Text = Line.Trim
-		  RequestMain1.ConsoleOut.PrintOther(sr, LinkValue)
-		  sr.Text = CRLF
-		  sr.Underline = Not sr.Underline
-		  RequestMain1.ConsoleOut.PrintOther(sr)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
 		Protected Sub PrintOutput(Req As HTTP.Request, Resp As HTTP.Response)
-		  'Req = Replace(Req, Request.MethodName, "<link=" + Request.MethodName + ">" + Request.MethodName + "</link>")
-		  
-		  Dim t As HREFArea = ResponseMain1.OutputLog
-		  Dim sr As New StyleRun
-		  sr.Font = App.FixedWidthFont
-		  sr.Text = "-----" + Format(Sequence, "000000000") + "-----" + CRLF
-		  t.PrintOther(sr)
-		  t.PrintRequest(Req)
-		  t.PrintResponse(Resp)
-		  t.ScrollToEnd()
+		  ResponseMain1.OutputLog.PrintRequest(Req)
+		  ResponseMain1.OutputLog.PrintResponse(Resp)
+		  ResponseMain1.OutputLog.ScrollToEnd()
 		  
 		End Sub
 	#tag EndMethod
@@ -379,10 +347,6 @@ End
 		Private MessageBodyRaw As String
 	#tag EndProperty
 
-	#tag Property, Flags = &h21
-		Private mSequence As Integer
-	#tag EndProperty
-
 	#tag Property, Flags = &h0
 		Output As String
 	#tag EndProperty
@@ -407,21 +371,6 @@ End
 		Private SendSz As Integer
 	#tag EndProperty
 
-	#tag ComputedProperty, Flags = &h0
-		#tag Getter
-			Get
-			  return mSequence
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  mSequence = value
-			  PrintConsole("Sequence: #" + Format(value, "000000000"))
-			End Set
-		#tag EndSetter
-		Sequence As Integer
-	#tag EndComputedProperty
-
 	#tag Property, Flags = &h21
 		Private SplitterThumb As Picture
 	#tag EndProperty
@@ -433,26 +382,9 @@ End
 	#tag Event
 		Sub Connected()
 		  TimeOut.Reset
-		  If Me.Secure Then
-		    Select Case Me.ConnectionType
-		    Case Me.SSLv2
-		      PrintConsole("Secure connection established using SSLv2 only!.")
-		    Case Me.SSLv23
-		      PrintConsole("Secure connection established using SSLv2 or SSLv3.")
-		    Case Me.SSLv3
-		      PrintConsole("Secure connection established using SSLv3.")
-		    Case Me.TLSv1
-		      PrintConsole("Secure connection established using TLSv1.")
-		    End Select
-		  Else
-		    PrintConsole("Connection established.")
-		  End If
-		  Dim link As HTTP.URI = Request.Path.Scheme + "://" + Me.RemoteAddress + ":" + Format(Request.Path.Port, "-#####0")
-		  PrintConsole("Remote host is at " + Me.RemoteAddress, link)
 		  Output = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
 		  Dim s As String = Request.ToString
-		  PrintConsole("Sending request... (" + FormatBytes(s.LenB) + ")")
 		  Me.Write(s)
 		  SendSz = 0
 		  RequestMain1.AddHistoryItem(RequestMain1.URL.Text)
@@ -461,7 +393,6 @@ End
 	#tag Event
 		Sub Error()
 		  TimeOut.Mode = Timer.ModeOff
-		  PrintConsole(FormatSocketError(Me.LastErrorCode))
 		  Select Case Me.LastErrorCode
 		  Case 102
 		    'ResponseMain1.IPAddress.Text = "Closed by host"
@@ -481,15 +412,6 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub SendComplete(UserAborted As Boolean)
-		  If Not UserAborted Then
-		    PrintConsole("Send operation completed.")
-		  Else
-		    PrintConsole("Send operation aborted!")
-		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
 		Function SendProgress(BytesSent As Integer, BytesLeft As Integer) As Boolean
 		  #pragma Unused BytesLeft
 		  Dim sz As Integer = MessageBodyRaw.LenB
@@ -500,9 +422,6 @@ End
 	#tag Event
 		Sub DataAvailable()
 		  TimeOut.Reset
-		  If DataReceivedTimer.Mode = Timer.ModeOff Then
-		    PrintConsole("Receiving data...")
-		  End If
 		  Output = Output + Me.ReadAll
 		  RawText = Self.Request.ToString
 		  DataReceivedTimer.Mode = Timer.ModeSingle
@@ -537,20 +456,14 @@ End
 		      u = Request.Path
 		      u.Path = redir
 		    End If
-		    PrintConsole("Redirect (" + Str(Response.StatusCode) + "): " + u.ToString)
 		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
-		      PrintConsole("Following...")
 		      RequestMain1.URL.Text = u.ToString
 		      Perform()
-		    Else
-		      PrintConsole("Not following.")
 		    End If
 		  Case 401
-		    PrintConsole("Not authenticated.")
 		    Dim r As String = NthField(Response.Header("WWW-Authenticate"), "=", 2)
 		    Dim p As Pair = Authenicator.Authenticate(r, Response.Path.Scheme = "https")
 		    If p <> Nil Then
-		      PrintConsole("Authenticating...")
 		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
 		      RequestMain1.RequestHeaders.AddRow("Authorization", s)
 		      RequestMain1.RequestHeaders.RowTag(RequestMain1.RequestHeaders.LastIndex) = "Authorization":s
@@ -655,7 +568,6 @@ End
 		    Me.Reset
 		  Else
 		    Sock.Disconnect
-		    PrintConsole("Canceled.")
 		    ResponseMain1.Code.TextColor = &c80808000
 		    ResponseMain1.Code.Text = "Timed out."
 		    RequestMain1.Sender.Enabled = True

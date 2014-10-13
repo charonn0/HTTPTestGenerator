@@ -114,7 +114,7 @@ Inherits TextArea
 		  End If
 		  Me.PrintOther(sr)
 		  
-		  sr = New StyleRun
+		  'sr = New StyleRun
 		  If Message.MessageBody.Trim.LenB > 0 Then
 		    sr.Font = App.FixedWidthFont
 		    sr.Text = CRLF + "View request body..."
@@ -123,7 +123,7 @@ Inherits TextArea
 		    Me.PrintOther(sr, Message)
 		  End If
 		  sr.Text = CRLF + CRLF
-		  sr.Underline = False
+		  sr.Underline = Not sr.Underline
 		  Me.PrintOther(sr)
 		End Sub
 	#tag EndMethod
@@ -158,7 +158,7 @@ Inherits TextArea
 		    Me.PrintOther(sr, Message)
 		  End If
 		  sr.Text = CRLF + CRLF
-		  sr.Underline = False
+		  sr.Underline = Not sr.Underline
 		  Me.PrintOther(sr)
 		End Sub
 	#tag EndMethod
