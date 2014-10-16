@@ -209,84 +209,6 @@ Begin ContainerControl RequestMain
       Visible         =   True
       Width           =   98
    End
-   Begin PlacardButton EditCookies11
-      AcceptFocus     =   True
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      Backdrop        =   ""
-      Bold            =   False
-      Border          =   ""
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   25
-      HelpTag         =   ""
-      Hilight         =   ""
-      Icon            =   17051647
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   334
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      Sticky          =   ""
-      TabIndex        =   6
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   "&c00000000"
-      textColorDown   =   "&c000000"
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   33
-      Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
-      Visible         =   True
-      Width           =   25
-   End
-   Begin PlacardButton EditRaw11
-      AcceptFocus     =   True
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      Backdrop        =   ""
-      Bold            =   False
-      Border          =   ""
-      DoubleBuffer    =   False
-      Enabled         =   True
-      EraseBackground =   True
-      Height          =   25
-      HelpTag         =   ""
-      Hilight         =   ""
-      Icon            =   978827263
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   307
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      Sticky          =   ""
-      TabIndex        =   5
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextColor       =   "&c00000000"
-      textColorDown   =   "&c000000"
-      TextFont        =   "System"
-      TextSize        =   0
-      Top             =   33
-      Underline       =   False
-      UseFocusRing    =   True
-      Value           =   False
-      Visible         =   True
-      Width           =   25
-   End
    Begin ProgressBar ProgressBar1
       AutoDeactivate  =   True
       Enabled         =   True
@@ -308,44 +230,137 @@ Begin ContainerControl RequestMain
       Visible         =   False
       Width           =   124
    End
-   Begin PlacardButton StopButton
+   Begin BevelButton EditRaw
       AcceptFocus     =   False
-      AcceptTabs      =   ""
       AutoDeactivate  =   True
-      Backdrop        =   ""
+      BackColor       =   "&c00000000"
+      Bevel           =   0
       Bold            =   False
-      Border          =   ""
-      DoubleBuffer    =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
       Enabled         =   True
-      EraseBackground =   True
-      Height          =   20
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
       HelpTag         =   ""
-      Hilight         =   ""
-      Icon            =   1880547327
+      Icon            =   978827263
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   225
-      LockBottom      =   False
+      Left            =   317
+      LockBottom      =   ""
       LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
+      LockLeft        =   True
+      LockRight       =   ""
       LockTop         =   True
+      MenuValue       =   0
       Scope           =   0
-      Sticky          =   ""
-      TabIndex        =   9
+      TabIndex        =   10
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   "&c00000000"
-      textColorDown   =   "&c000000"
       TextFont        =   "System"
-      TextSize        =   0
-      Top             =   34
+      TextSize        =   ""
+      TextUnit        =   0
+      Top             =   42
       Underline       =   False
-      UseFocusRing    =   True
+      Value           =   False
+      Visible         =   True
+      Width           =   22
+   End
+   Begin BevelButton EditCookies
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      BackColor       =   &h00000000
+      Bevel           =   0
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   ""
+      Icon            =   17051647
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   339
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   &h00000000
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
+      Top             =   42
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
+   End
+   Begin BevelButton StopButton
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      BackColor       =   "&c00000000"
+      Bevel           =   0
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   ""
+      Icon            =   1880547327
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   228
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
+      Top             =   33
+      Underline       =   False
       Value           =   False
       Visible         =   False
-      Width           =   20
+      Width           =   23
    End
 End
 #tag EndWindow
@@ -614,65 +629,9 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events EditCookies11
+#tag Events EditRaw
 	#tag Event
-		Sub Open()
-		  Me.HelpTag = "Add a cookie to request"
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub ValueChanged()
-		  Dim mnu As New MenuItem("EditCookieMenu")
-		  mnu.Append(New MenuItem("Add cookie..."))
-		  mnu.Append(New MenuItem("Load cookies from a file..."))
-		  Dim res As MenuItem = mnu.PopUp
-		  If res <> Nil Then
-		    Select Case res.Text
-		    Case "Add cookie..."
-		      Dim editindex As Integer = -1
-		      Dim c As Cookie
-		      
-		      If RequestHeaders.ListIndex > -1 And RequestHeaders.Cell(RequestHeaders.ListIndex, 0) = "Cookie" Then
-		        Dim n, v As String
-		        n = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 1)
-		        v = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 2)
-		        c = New Cookie(n, v)
-		        editindex = RequestHeaders.ListIndex
-		      End If
-		      c = CookieEdit.GetCookie(c)
-		      If c <> Nil Then
-		        If editindex > -1 Then
-		          RequestHeaders.Cell(editindex, 1) = c.Name + "=" + c.Value
-		          RequestHeaders.RowTag(editindex) = c
-		        Else
-		          RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
-		          RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
-		        End If
-		      End If
-		      
-		    Case "Load cookies from a file..."
-		      Dim f As FolderItem = GetOpenFolderItem(FileTypes1.NetscapeCookieJar)
-		      If f <> Nil Then
-		        Dim cj As HTTP.CookieJar = HTTP.CookieJar.LoadFromFile(f)
-		        For i As Integer = 0 To cj.Count - 1
-		          Dim c As Cookie = cj.Item(i)
-		          RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
-		          RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
-		        Next
-		      End If
-		    End Select
-		  End If
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events EditRaw11
-	#tag Event
-		Sub Open()
-		  Me.HelpTag = "Edit HTTP request body"
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub ValueChanged()
+		Sub Action()
 		  Dim mnu As New MenuItem("EditRawMenu")
 		  mnu.Append(New MenuItem("HTML form output"))
 		  mnu.Append(New MenuItem("Edit raw"))
@@ -761,15 +720,61 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag Events EditCookies
+	#tag Event
+		Sub Action()
+		  Dim mnu As New MenuItem("EditCookieMenu")
+		  mnu.Append(New MenuItem("Add cookie..."))
+		  mnu.Append(New MenuItem("Load cookies from a file..."))
+		  Dim res As MenuItem = mnu.PopUp
+		  If res <> Nil Then
+		    Select Case res.Text
+		    Case "Add cookie..."
+		      Dim editindex As Integer = -1
+		      Dim c As Cookie
+		      
+		      If RequestHeaders.ListIndex > -1 And RequestHeaders.Cell(RequestHeaders.ListIndex, 0) = "Cookie" Then
+		        Dim n, v As String
+		        n = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 1)
+		        v = NthField(RequestHeaders.Cell(RequestHeaders.ListIndex, 1), "=", 2)
+		        c = New Cookie(n, v)
+		        editindex = RequestHeaders.ListIndex
+		      End If
+		      c = CookieEdit.GetCookie(c)
+		      If c <> Nil Then
+		        If editindex > -1 Then
+		          RequestHeaders.Cell(editindex, 1) = c.Name + "=" + c.Value
+		          RequestHeaders.RowTag(editindex) = c
+		        Else
+		          RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		          RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
+		        End If
+		      End If
+		      
+		    Case "Load cookies from a file..."
+		      Dim f As FolderItem = GetOpenFolderItem(FileTypes1.NetscapeCookieJar)
+		      If f <> Nil Then
+		        Dim cj As HTTP.CookieJar = HTTP.CookieJar.LoadFromFile(f)
+		        For i As Integer = 0 To cj.Count - 1
+		          Dim c As Cookie = cj.Item(i)
+		          RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		          RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
+		        Next
+		      End If
+		    End Select
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events StopButton
 	#tag Event
-		Sub Open()
-		  Me.HelpTag = "Cancel request"
+		Sub Action()
+		  Perform(True)
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub ValueChanged()
-		  Perform(True)
+		Sub Open()
+		  Me.HelpTag = "Cancel request"
 		End Sub
 	#tag EndEvent
 #tag EndEvents
