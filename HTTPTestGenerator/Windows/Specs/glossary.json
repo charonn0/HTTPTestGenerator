@@ -1,25 +1,25 @@
 [
     {
         "word": "origin server",
-        "description": "The program that can originate authoritative responses for a given target resource. Compare to:  <link=proxy server>proxy</link>, <link=gateway server>gateway</link>, or <link=tunnel server>tunnel</link>",
+        "description": "The program that can originate authoritative responses for a given target resource. c.f. <link=proxy server>proxy</link>, <link=gateway server>gateway</link>, or <link=tunnel server>tunnel</link>",
 		"spec_title": "RFC7230#2.1",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.1"
     },
     {
         "word": "proxy server",
-        "description": "A message-forwarding agent that is selected by the <link=client>client</link>, usually via local configuration rules, to receive requests for some type(s) of absolute URI and attempt to satisfy those requests via translation through the HTTP interface. Compare to:  <link=origin server>origin</link>, <link=gateway server>gateway</link>, or <link=tunnel server>tunnel</link>",
+        "description": "A message-forwarding agent that is selected by the <link=client>client</link>, usually via local configuration rules, to receive requests for some type(s) of absolute URI and attempt to satisfy those requests via translation through the HTTP interface. c.f. <link=origin server>origin</link>, <link=gateway server>gateway</link>, or <link=tunnel server>tunnel</link>",
 		"spec_title": "RFC7230#2.3",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
     },
 	{
         "word": "gateway server",
-        "description": "An <link=intermediary>intermediary</link> that acts as an <link=origin server>origin server</link> for the outbound connection but translates received requests and forwards them inbound to another <link=web server>server</link> or servers. Compare to:  <link=proxy server>proxy</link>, <link=origin server>origin</link>, or <link=tunnel server>tunnel</link>",
+        "description": "An <link=intermediary>intermediary</link> that acts as an <link=origin server>origin server</link> for the outbound connection but translates received requests and forwards them inbound to another <link=web server>server</link> or servers. c.f. <link=proxy server>proxy</link>, <link=origin server>origin</link>, or <link=tunnel server>tunnel</link>",
 		"spec_title": "RFC7230#2.3",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
     },
 	{
         "word": "tunnel server",
-        "description": "An <link=intermediary>intermediary</link> that acts as a blind relay between two connections without changing the messages.  Once active, a tunnel is not considered a party to the HTTP communication, though the tunnel might have been initiated by an HTTP request. Compare to:  <link=proxy server>proxy</link>, <link=gateway server>gateway</link>, or <link=origin server>origin</link>",
+        "description": "An <link=intermediary>intermediary</link> that acts as a blind relay between two connections without changing the messages.  Once active, a tunnel is not considered a party to the HTTP communication, though the tunnel might have been initiated by an HTTP request. c.f. <link=proxy server>proxy</link>, <link=gateway server>gateway</link>, or <link=origin server>origin</link>",
 		"spec_title": "RFC7230#2.3",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.3"
     },
