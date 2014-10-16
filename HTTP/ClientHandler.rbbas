@@ -128,7 +128,7 @@ Inherits SSLSocket
 		    
 		    ' set this again in case they got overwritten
 		    doc.Path = clientrequest.Path
-		    doc.ProtocolVersion = clientrequest.ProtocolVersion
+		    If doc.StatusCode <> 505 Then doc.ProtocolVersion = clientrequest.ProtocolVersion ' 505 HTTP Version Not Supported
 		    
 		    ' set the Connection header if needed (default "close")
 		    If clientrequest.Header("Connection") = "keep-alive" Then
