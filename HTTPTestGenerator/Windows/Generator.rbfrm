@@ -260,10 +260,8 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Sub PrintOutput(Req As HTTP.Request, Resp As HTTP.Response)
-		  ResponseMain1.OutputLog.PrintRequest(Req)
-		  ResponseMain1.OutputLog.PrintResponse(Resp)
-		  ResponseMain1.OutputLog.ScrollToEnd()
-		  
+		  ResponseMain1.Log(Req, 0)
+		  ResponseMain1.Log(Resp, 0)
 		End Sub
 	#tag EndMethod
 
@@ -271,64 +269,9 @@ End
 		Sub Update(Raw As String)
 		  Response = Raw
 		  Response.Path = New HTTP.URI(Request.Path)
-		  ResponseMain1.Code.Text = Str(Response.StatusCode) + " " + HTTP.CodeToMessage(Response.StatusCode)
-		  Select Case Response.StatusCode
-		  Case 100 To 199
-		    ResponseMain1.Code.TextColor = &c4F4F4F00
-		  Case 200 To 299
-		    ResponseMain1.Code.TextColor = &c00808000
-		  Case 300 To 399
-		    ResponseMain1.Code.TextColor = &c00800000
-		  Case 400 To 499
-		    ResponseMain1.Code.TextColor = &cFF000000
-		  Case 500 To 599
-		    ResponseMain1.Code.TextColor = &cFF800000
-		  End Select
-		  ResponseMain1.ResponseHeaders.DeleteAllRows
-		  For i As Integer = 0 To Response.Headers.Count - 1
-		    Dim n, v As String
-		    n = Response.Headers.Name(i)
-		    v = Response.Headers.Value(n)
-		    
-		    ResponseMain1.ResponseHeaders.AddRow(n, v)
-		    ResponseMain1.ResponseHeaders.RowTag(ResponseMain1.ResponseHeaders.LastIndex) = n:v
-		  Next
-		  'ResponseMain1.CookiesButton.Visible = Response.Headers.CookieCount > 0
-		  ResponseMain1.CookieList.DeleteAllRows
-		  For i As Integer = 0 To Response.Headers.CookieCount - 1
-		    Dim c As Cookie = Response.Headers.Cookie(i)
-		    ResponseMain1.CookieList.AddRow("")
-		    Dim d As New Date
-		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 0) = c.Name
-		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 1) = c.Value
-		    If c.Expires <> Nil And c.Expires.TotalSeconds - d.TotalSeconds >= 3600 Then
-		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 2) = c.Expires.ShortDate + " " + c.Expires.ShortTime + " UTC " + Format(c.Expires.GMTOffset, "+-#0.0#")
-		    Else
-		      ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 2) = "End of session"
-		    End If
-		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 3) = c.Domain
-		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 4) = c.Path
-		    Dim restrictions() As String
-		    If c.Secure Then
-		      restrictions.Append("Secure")
-		    End If
-		    If c.httpOnly Then
-		      restrictions.Append("HTTP Only")
-		    End If
-		    ResponseMain1.CookieList.Cell(ResponseMain1.CookieList.LastIndex, 5) = Join(restrictions, ", ")
-		    
-		    ResponseMain1.CookieList.RowTag(ResponseMain1.CookieList.LastIndex) = c
-		  Next
+		  ResponseMain1.ViewResponse(Response)
 		  
 		  Self.Title = "HTTP Request Generator - Viewing '" + Request.Path.ToString + "'"
-		  If Sock.IsConnected Then
-		    'ResponseMain1.IPAddress1.Text = "Open"
-		    'ResponseMain1.IPAddress.TextColor = &c00804000
-		  Else
-		    'ResponseMain1.IPAddress1.Text = "Closed by server"
-		    'ResponseMain1.IPAddress1.TextColor = &c80808000
-		    'ResponseMain1.IPAddress.TextColor = &c80808000
-		  End If
 		  '#If HTTP.GZIPAvailable Then
 		  'If Response.GetHeader("Content-Encoding") = "gzip" Then
 		  'Me.Response.MessageBody = GZip.Uncompress(Me.Response.MessageBody, Me.Response.MessageBody.LenB^2)
@@ -393,17 +336,16 @@ End
 	#tag Event
 		Sub Error()
 		  TimeOut.Mode = Timer.ModeOff
+		  ResponseMain1.ViewResponse(Nil)
 		  Select Case Me.LastErrorCode
 		  Case 102
 		    'ResponseMain1.IPAddress.Text = "Closed by host"
 		    'ResponseMain1.IPAddress.TextColor = &c80808000
 		    
 		  Case 103
-		    ResponseMain1.Code.Text = FormatSocketError(Me.LastErrorCode)
-		    ResponseMain1.ResponseHeaders.DeleteAllRows
+		    ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), -1)
 		  Else
-		    ResponseMain1.Code.TextColor = &cFF000000
-		    ResponseMain1.Code.Text = FormatSocketError(Me.LastErrorCode)
+		    ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), -1)
 		  End Select
 		  RequestMain1.Sender.Enabled = True
 		  RequestMain1.Sender.Caption = "Send Request"
@@ -550,16 +492,6 @@ End
 		  #endif
 		End Sub
 	#tag EndEvent
-	#tag Event
-		Function GetRequest() As HTTP.Request
-		  Return Request
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function GetResponse() As HTTP.Response
-		  Return Response
-		End Function
-	#tag EndEvent
 #tag EndEvents
 #tag Events TimeOut
 	#tag Event
@@ -568,8 +500,7 @@ End
 		    Me.Reset
 		  Else
 		    Sock.Disconnect
-		    ResponseMain1.Code.TextColor = &c80808000
-		    ResponseMain1.Code.Text = "Timed out."
+		    ResponseMain1.Log("Timed out.", -1)
 		    RequestMain1.Sender.Enabled = True
 		    RequestMain1.Sender.Caption = "Send Request"
 		    RequestMain1.ProgressBar1.Visible = False

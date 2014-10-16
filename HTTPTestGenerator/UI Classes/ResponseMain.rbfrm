@@ -75,7 +75,7 @@ Begin ContainerControl ResponseMain
       LockRight       =   True
       LockTop         =   True
       Multiline       =   False
-      Scope           =   0
+      Scope           =   2
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
@@ -123,7 +123,7 @@ Begin ContainerControl ResponseMain
       LockRight       =   True
       LockTop         =   True
       RequiresSelection=   False
-      Scope           =   0
+      Scope           =   2
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
@@ -172,7 +172,7 @@ Begin ContainerControl ResponseMain
       LockRight       =   True
       LockTop         =   True
       RequiresSelection=   False
-      Scope           =   0
+      Scope           =   2
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   1
@@ -270,7 +270,7 @@ Begin ContainerControl ResponseMain
       Mask            =   ""
       Multiline       =   True
       ReadOnly        =   True
-      Scope           =   0
+      Scope           =   2
       ScrollbarHorizontal=   False
       ScrollbarVertical=   True
       Styled          =   True
@@ -292,45 +292,109 @@ End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Hook, Flags = &h0
-		Event GetMessageData() As String
-	#tag EndHook
+	#tag Method, Flags = &h1
+		Protected Sub Clear()
+		  CookieList.DeleteAllRows
+		  ResponseHeaders.DeleteAllRows
+		  Code.Text = ""
+		End Sub
+	#tag EndMethod
 
-	#tag Hook, Flags = &h0
-		Event GetRequest() As HTTP.Request
-	#tag EndHook
+	#tag Method, Flags = &h1
+		Protected Sub LoadCookies(Headers As HTTP.Headers)
+		  CookieList.DeleteAllRows
+		  For i As Integer = 0 To Headers.CookieCount - 1
+		    Dim c As Cookie = Headers.Cookie(i)
+		    CookieList.AddRow("")
+		    Dim d As New Date
+		    CookieList.Cell(CookieList.LastIndex, 0) = c.Name
+		    CookieList.Cell(CookieList.LastIndex, 1) = c.Value
+		    If c.Expires <> Nil And c.Expires.TotalSeconds - d.TotalSeconds >= 3600 Then
+		      CookieList.Cell(CookieList.LastIndex, 2) = c.Expires.ShortDate + " " + c.Expires.ShortTime + " UTC " + Format(c.Expires.GMTOffset, "+-#0.0#")
+		    Else
+		      CookieList.Cell(CookieList.LastIndex, 2) = "End of session"
+		    End If
+		    CookieList.Cell(CookieList.LastIndex, 3) = c.Domain
+		    CookieList.Cell(CookieList.LastIndex, 4) = c.Path
+		    Dim restrictions() As String
+		    If c.Secure Then
+		      restrictions.Append("Secure")
+		    End If
+		    If c.httpOnly Then
+		      restrictions.Append("HTTP Only")
+		    End If
+		    CookieList.Cell(CookieList.LastIndex, 5) = Join(restrictions, ", ")
+		    
+		    CookieList.RowTag(CookieList.LastIndex) = c
+		  Next
+		End Sub
+	#tag EndMethod
 
-	#tag Hook, Flags = &h0
-		Event GetResponse() As HTTP.Response
-	#tag EndHook
+	#tag Method, Flags = &h0
+		Sub Log(Message As Variant, Level As Integer)
+		  If Level <= LogLevel Then
+		    Select Case VarType(Message)
+		    Case Variant.TypeString
+		      Dim sr As New StyleRun
+		      sr.Text = Message
+		      OutputLog.PrintOther(sr)
+		      sr.Bold = Not sr.Bold
+		      sr.Text = CRLF
+		      OutputLog.PrintOther(sr)
+		    Else
+		      If Message IsA HTTP.Request Then
+		        OutputLog.PrintRequest(Message)
+		      ElseIf Message IsA HTTP.Response Then
+		        OutputLog.PrintResponse(Message)
+		      End If
+		    End Select
+		    OutputLog.ScrollToEnd()
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub SetStatus(StatusCode As Integer)
+		  Code.Text = Str(StatusCode) + " " + HTTP.CodeToMessage(StatusCode)
+		  Select Case StatusCode
+		  Case 100 To 199
+		    Code.TextColor = &c4F4F4F00
+		  Case 200 To 299
+		    Code.TextColor = &c00808000
+		  Case 300 To 399
+		    Code.TextColor = &c00800000
+		  Case 400 To 499
+		    Code.TextColor = &cFF000000
+		  Case 500 To 599
+		    Code.TextColor = &cFF800000
+		  End Select
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ViewResponse(resp As HTTP.Response)
+		  Me.Clear
+		  If resp = Nil Then Return
+		  
+		  Me.SetStatus(resp.StatusCode)
+		  
+		  For i As Integer = 0 To resp.Headers.Count - 1
+		    Dim n, v As String
+		    n = resp.Headers.Name(i)
+		    v = resp.Headers.Value(n)
+		    
+		    ResponseHeaders.AddRow(n, v)
+		    ResponseHeaders.RowTag(ResponseHeaders.LastIndex) = n:v
+		  Next
+		  
+		  LoadCookies(resp.Headers)
+		End Sub
+	#tag EndMethod
 
 
-	#tag ComputedProperty, Flags = &h1
-		#tag Getter
-			Get
-			  return RaiseEvent GetMessageData
-			End Get
-		#tag EndGetter
-		Protected MessageBodyRaw As String
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h1
-		#tag Getter
-			Get
-			  return RaiseEvent GetRequest
-			End Get
-		#tag EndGetter
-		Protected Request As HTTP.Request
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h1
-		#tag Getter
-			Get
-			  return RaiseEvent GetResponse
-			End Get
-		#tag EndGetter
-		Protected Response As HTTP.Response
-	#tag EndComputedProperty
+	#tag Property, Flags = &h1
+		Protected LogLevel As Integer
+	#tag EndProperty
 
 
 #tag EndWindowCode
@@ -371,7 +435,7 @@ End
 		Sub MouseUp(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  SpecIndex.ShowItem(Format(Response.StatusCode, "#"))
+		  SpecIndex.ShowItem(Format(Generator.Response.StatusCode, "#"))
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -437,8 +501,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  Select Case hitItem.Text 
-		  Case "Copy to request headers" 
+		  Select Case hitItem.Text
+		  Case "Copy to request headers"
 		    Dim c As Cookie = hitItem.Tag
 		    Generator.RequestMain1.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
 		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = c
@@ -449,11 +513,11 @@ End
 		      Dim c As Cookie = Me.RowTag(i)
 		      If c.Domain = "" Then
 		        c = New Cookie(c.ToString) ' force copy
-		        c.Domain = Response.Path.Host
+		        c.Domain = Generator.Response.Path.Host
 		      End If
 		      cj.Append(c)
 		    Next
-		    Dim f As FolderItem = GetSaveFolderItem(FileTypes1.NetscapeCookieJar, ReplaceAll(Response.Path.Host, ".", "_") + ".jar")
+		    Dim f As FolderItem = GetSaveFolderItem(FileTypes1.NetscapeCookieJar, ReplaceAll(Generator.Response.Path.Host, ".", "_") + ".jar")
 		    If f <> Nil Then cj.SaveAs(f)
 		    Return True
 		  End Select
@@ -527,6 +591,22 @@ End
 		  #pragma Unused X
 		  #pragma Unused Y
 		  base.Append(New MenuItem("Clear log"))
+		  Dim squelch As New MenuItem("&Verbosity")
+		  
+		  Dim verb As New MenuItem("HTTP Only")
+		  If LogLevel = 0 Then verb.Checked = True
+		  squelch.Append(verb)
+		  
+		  verb = New MenuItem("Socketry")
+		  If LogLevel = 1 Then verb.Checked = True
+		  squelch.Append(verb)
+		  
+		  verb = New MenuItem("Debug")
+		  If LogLevel = 2 Then verb.Checked = True
+		  squelch.Append(verb)
+		  
+		  base.Append(squelch)
+		  
 		  Return True
 		End Function
 	#tag EndEvent
@@ -536,6 +616,13 @@ End
 		  Case "Clear log"
 		    Me.Clear
 		    Return True
+		  Case "HTTP Only"
+		    LogLevel = 0
+		    
+		  Case "Socketry"
+		    LogLevel = 1
+		  Case "Debug"
+		    LogLevel = 2
 		  End Select
 		End Function
 	#tag EndEvent
