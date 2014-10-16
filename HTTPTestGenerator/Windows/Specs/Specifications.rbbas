@@ -1,6 +1,21 @@
 #tag Module
 Protected Module Specifications
 	#tag Method, Flags = &h1
+		Protected Function GetEntry(EntryName As Variant) As JSONItem
+		  Select Case True
+		  Case Specifications.HeaderDescription(EntryName) <> Nil
+		    Return Specifications.HeaderDescription(EntryName)
+		  Case Specifications.MethodDescription(EntryName) <> Nil
+		    Return Specifications.MethodDescription(EntryName)
+		  Case Specifications.StatusCodeDescription(Val(EntryName)) <> Nil
+		    Return Specifications.StatusCodeDescription(Val(EntryName.StringValue))
+		  Case Specifications.GlossaryDefinition(EntryName) <> Nil
+		    Return Specifications.GlossaryDefinition(EntryName)
+		  End Select
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function GlossaryDefinition(Term As String) As JSONItem
 		  If HTTPGlossary = Nil Then HTTPGlossary = New JSONItem(glossary)
 		  For i As Integer = 0 To HTTPGlossary.Count - 1
@@ -50,18 +65,6 @@ Protected Module Specifications
 		      Return item
 		    End If
 		  Next
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function RelationDescription(RelationName As String) As JSONItem
-		  'If Relations = Nil Then Relations = New JSONItem(RelationDescriptions)
-		  'For i As Integer = 0 To Relations.Count - 1
-		  'Dim item As JSONItem = Relations.Value(i)
-		  'If item <> Nil And item.Lookup("relation", "") = RelationName Then
-		  'Return item
-		  'End If
-		  'Next
 		End Function
 	#tag EndMethod
 

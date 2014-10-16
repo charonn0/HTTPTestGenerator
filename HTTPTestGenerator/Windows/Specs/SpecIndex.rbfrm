@@ -7,7 +7,7 @@ Begin Window SpecIndex
    Frame           =   3
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   3.56e+2
+   Height          =   3.21e+2
    ImplicitInstance=   True
    LiveResize      =   True
    MacProcID       =   0
@@ -23,7 +23,7 @@ Begin Window SpecIndex
    Resizeable      =   True
    Title           =   "Specification Index"
    Visible         =   True
-   Width           =   6.44e+2
+   Width           =   6.25e+2
    Begin Splitter Splitter1
       AcceptFocus     =   ""
       AcceptTabs      =   ""
@@ -32,11 +32,11 @@ Begin Window SpecIndex
       DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   True
-      Height          =   356
+      Height          =   321
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   162
+      Left            =   179
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -50,33 +50,6 @@ Begin Window SpecIndex
       UseFocusRing    =   True
       Visible         =   True
       Width           =   8
-   End
-   Begin SpecViewer SpecViewer1
-      AcceptFocus     =   True
-      AcceptTabs      =   True
-      AutoDeactivate  =   True
-      BackColor       =   &hFFFFFF
-      Backdrop        =   ""
-      Enabled         =   True
-      EraseBackground =   True
-      HasBackColor    =   False
-      Height          =   350
-      HelpTag         =   ""
-      InitialParent   =   ""
-      Left            =   172
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   5
-      UseFocusRing    =   ""
-      Visible         =   True
-      Width           =   466
    End
    Begin PushButton PushButton1
       AutoDeactivate  =   True
@@ -127,7 +100,7 @@ Begin Window SpecIndex
       GridLinesVertical=   0
       HasHeading      =   ""
       HeadingIndex    =   -1
-      Height          =   355
+      Height          =   320
       HelpTag         =   ""
       Hierarchical    =   True
       Index           =   -2147483648
@@ -138,7 +111,7 @@ Begin Window SpecIndex
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   True
+      LockRight       =   False
       LockTop         =   True
       RequiresSelection=   ""
       Scope           =   0
@@ -155,8 +128,366 @@ Begin Window SpecIndex
       Underline       =   ""
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   160
+      Width           =   175
       _ScrollWidth    =   -1
+   End
+   Begin Timer HistoryTimer
+      Height          =   32
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   218
+      LockedInPosition=   False
+      Mode            =   2
+      Period          =   150
+      Scope           =   0
+      TabPanelIndex   =   0
+      Top             =   350
+      Width           =   32
+   End
+   Begin Rectangle Rectangle1
+      AutoDeactivate  =   True
+      BorderWidth     =   1
+      BottomRightColor=   &h000000
+      Enabled         =   True
+      FillColor       =   "&cFFFFFFFF"
+      Height          =   321
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   191
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   15
+      TabPanelIndex   =   0
+      Top             =   0
+      TopLeftColor    =   &h000000
+      Visible         =   True
+      Width           =   434
+      Begin TextField ItemName
+         AcceptTabs      =   ""
+         Alignment       =   0
+         AutoDeactivate  =   True
+         AutomaticallyCheckSpelling=   False
+         BackColor       =   &hFFFFFF
+         Bold            =   ""
+         Border          =   True
+         CueText         =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   22
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   304
+         LimitText       =   0
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Mask            =   ""
+         Password        =   ""
+         ReadOnly        =   True
+         Scope           =   0
+         TabIndex        =   0
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Text            =   ""
+         TextColor       =   &h000000
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   7
+         Underline       =   ""
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   310
+      End
+      Begin Label SpecLink
+         AutoDeactivate  =   True
+         Bold            =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   304
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Multiline       =   ""
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   1
+         TabPanelIndex   =   0
+         Text            =   "No Selection"
+         TextAlign       =   0
+         TextColor       =   &h000000FF
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   34
+         Transparent     =   False
+         Underline       =   True
+         Visible         =   True
+         Width           =   310
+      End
+      Begin HREFArea DescText
+         AcceptTabs      =   ""
+         Alignment       =   0
+         AutoDeactivate  =   True
+         AutomaticallyCheckSpelling=   True
+         BackColor       =   &hFFFFFF
+         Bold            =   ""
+         Border          =   True
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Format          =   ""
+         Height          =   245
+         HelpTag         =   ""
+         HideSelection   =   True
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   304
+         LimitText       =   0
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Mask            =   ""
+         Multiline       =   True
+         ReadOnly        =   True
+         Scope           =   0
+         ScrollbarHorizontal=   ""
+         ScrollbarVertical=   True
+         Styled          =   True
+         TabIndex        =   2
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Text            =   ""
+         TextColor       =   &h000000
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   66
+         Underline       =   ""
+         UseFocusRing    =   True
+         Visible         =   True
+         Width           =   310
+      End
+      Begin Label Label2
+         AutoDeactivate  =   True
+         Bold            =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   199
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   ""
+         LockTop         =   True
+         Multiline       =   ""
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   4
+         TabPanelIndex   =   0
+         Text            =   "Description:"
+         TextAlign       =   2
+         TextColor       =   &h000000
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   64
+         Transparent     =   True
+         Underline       =   ""
+         Visible         =   True
+         Width           =   100
+      End
+      Begin Label Label1
+         AutoDeactivate  =   True
+         Bold            =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   199
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   ""
+         LockTop         =   True
+         Multiline       =   ""
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   5
+         TabPanelIndex   =   0
+         Text            =   "Specification:"
+         TextAlign       =   2
+         TextColor       =   &h000000
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   34
+         Transparent     =   True
+         Underline       =   ""
+         Visible         =   True
+         Width           =   100
+      End
+      Begin Label TypeLabel
+         AutoDeactivate  =   True
+         Bold            =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   199
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   ""
+         LockTop         =   True
+         Multiline       =   ""
+         Scope           =   0
+         Selectable      =   False
+         TabIndex        =   6
+         TabPanelIndex   =   0
+         Text            =   "No Selection:"
+         TextAlign       =   2
+         TextColor       =   &h000000
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   8
+         Transparent     =   True
+         Underline       =   ""
+         Visible         =   True
+         Width           =   100
+      End
+      Begin PushButton PrevItem
+         AutoDeactivate  =   True
+         Bold            =   ""
+         ButtonStyle     =   0
+         Cancel          =   ""
+         Caption         =   "<-"
+         Default         =   ""
+         Enabled         =   True
+         Height          =   22
+         HelpTag         =   "View previous item"
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   218
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   ""
+         LockTop         =   False
+         Scope           =   0
+         TabIndex        =   7
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   279
+         Underline       =   ""
+         Visible         =   False
+         Width           =   21
+      End
+      Begin PushButton NextItem
+         AutoDeactivate  =   True
+         Bold            =   ""
+         ButtonStyle     =   0
+         Cancel          =   ""
+         Caption         =   "->"
+         Default         =   ""
+         Enabled         =   True
+         Height          =   22
+         HelpTag         =   "View next item"
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   240
+         LockBottom      =   True
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   ""
+         LockTop         =   False
+         Scope           =   0
+         TabIndex        =   8
+         TabPanelIndex   =   0
+         TabStop         =   True
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   279
+         Underline       =   ""
+         Visible         =   False
+         Width           =   21
+      End
+   End
+   Begin Label LinkTarget
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   True
+      Left            =   788
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   False
+      Multiline       =   ""
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   16
+      TabPanelIndex   =   0
+      Text            =   "HTTP://WWW.GOOGLE.COM"
+      TextAlign       =   2
+      TextColor       =   &h00808080
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   -78
+      Transparent     =   True
+      Underline       =   ""
+      Visible         =   True
+      Width           =   342
    End
 End
 #tag EndWindow
@@ -175,8 +506,77 @@ End
 	#tag EndEvent
 
 
-	#tag Method, Flags = &h0
-		Sub ExpandRow(Index As Integer)
+	#tag Method, Flags = &h1
+		Protected Function CurrentItem() As JSONItem
+		  Return FwdHistory(FwdHistory.Ubound)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub DisplayItem(mItem As JSONItem)
+		  DescText.Clear
+		  Dim exp As Integer = -1
+		  Select Case True
+		  Case mItem = Nil
+		    TypeLabel.Text = "No Selection:"
+		    ItemName.Text = ""
+		    Return
+		  Case mItem.HasName("method")
+		    exp = 2
+		    TypeLabel.Text = "Request Method:"
+		    Dim s As String = mItem.Value("method")
+		    If mItem.Value("safe").BooleanValue Then
+		      s = s + " (safe; "
+		    Else
+		      s = s + " (unsafe; "
+		    End If
+		    
+		    If mItem.Value("idempotent").BooleanValue Then
+		      s = s + "idempotent; "
+		    Else
+		      s = s + "not idempotent; "
+		    End If
+		    
+		    If mItem.Value("cacheable").BooleanValue Then
+		      s = s + "cacheable) "
+		    Else
+		      s = s + "not cacheable)"
+		    End If
+		    ItemName.Text = s
+		    
+		  Case mItem.HasName("header")
+		    exp = 0
+		    TypeLabel.Text = "Header Name:"
+		    ItemName.Text = mItem.Value("header")
+		    
+		  Case mItem.HasName("code")
+		    exp = 1
+		    TypeLabel.Text = "Status Code:"
+		    ItemName.Text = mItem.Value("code") + " " + mItem.Value("phrase")
+		    
+		  Case mItem.HasName("word")
+		    exp = 3
+		    TypeLabel.Text = "Definition of:"
+		    ItemName.Text = mItem.Value("word").StringValue.Titlecase
+		    
+		  Case mItem.HasName("relation")
+		    TypeLabel.Text = "IRI Relation:"
+		    ItemName.Text = mItem.Value("relation")
+		    
+		  End Select
+		  Dim ds As String = mItem.Value("description")
+		  If ds = "" Then ds = "No description available."
+		  ProcessLinks(ds)
+		  SpecLink.Text = mItem.Value("spec_title")
+		  FwdHistory.Append(mItem)
+		  SuppressChange = True
+		  ExpandRow(exp)
+		  SuppressChange = False
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub ExpandRow(Index As Integer)
 		  HelpIndex.DeleteAllRows
 		  HelpIndex.AddFolder("Headers")
 		  HelpIndex.AddFolder("Status Codes")
@@ -188,18 +588,89 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Function HilightText(SearchString As String, StartPos As Integer = 1) As Integer
+		  Dim i As Integer = InStr(StartPos, DescText.Text, SearchString)
+		  If i > 0 Then
+		    DescText.SelStart = i - 1
+		    DescText.SelLength = SearchString.Len
+		    Return i - 1 + SearchString.Len
+		  End If
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub ProcessLinks(Text As String)
+		  Dim lines() As String = Split(Text, "</link>")
+		  Dim sr As New StyleRun
+		  For i As Integer = 0 To UBound(lines)
+		    Dim ln As String = lines(i)
+		    Dim linktext, url As String
+		    linktext = NthField(ln, ">", 2)
+		    ln = Replace(ln, ">" + linktext, "")
+		    url = NthField(ln, "<link=", 2)
+		    Dim href As New StyleRun
+		    sr.Text = NthField(ln, "<link=", 1)
+		    href.Text = linktext
+		    href.TextColor = &c0000FF00
+		    href.Underline = True
+		    DescText.PrintOther(sr)
+		    DescText.PrintOther(href, url)
+		  Next
+		  sr.Text = CRLF
+		  sr.Bold = Not sr.Bold
+		  DescText.PrintOther(sr)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function SearchIndex(SearchFor As String) As JSONItem
+		  Dim mItem As JSONItem
+		  If Specifications.HasEntry(SearchFor) Then
+		    Select Case True
+		    Case Specifications.HeaderDescription(SearchFor) <> Nil
+		      mItem = Specifications.HeaderDescription(SearchFor)
+		    Case Specifications.MethodDescription(SearchFor) <> Nil
+		      mItem = Specifications.MethodDescription(SearchFor)
+		    Case Specifications.StatusCodeDescription(Val(SearchFor)) <> Nil
+		      mItem = Specifications.StatusCodeDescription(Val(SearchFor))
+		    Case Specifications.GlossaryDefinition(SearchFor) <> Nil
+		      mItem = Specifications.GlossaryDefinition(SearchFor)
+		    End Select
+		  End If
+		  Return mItem
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub ShowItem(SearchFor As String = "")
 		  If Not Me.Visible Then Me.Show
-		  Dim exp As Integer = SpecViewer1.ShowItem(SearchFor)
-		  If exp <= -1 And SearchFor <> "" Then
+		  Dim js As JSONItem = SearchIndex(SearchFor)
+		  If js = Nil And SearchFor <> "" Then
 		    Call MsgBox("No specification found for: " + SearchFor, 48, "Index entry not found")
+		  Else
+		    DisplayItem(js)
 		  End If
-		  
-		  Me.ExpandRow(exp)
 		  
 		End Sub
 	#tag EndMethod
+
+
+	#tag Property, Flags = &h1
+		Protected FwdHistory() As JSONItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected History() As JSONItem
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mCurrentItem1 As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		SuppressChange As Boolean
+	#tag EndProperty
 
 
 #tag EndWindowCode
@@ -209,8 +680,8 @@ End
 		Sub Moved(DeltaX As Integer, DeltaY As Integer)
 		  #pragma Unused DeltaX
 		  #pragma Unused DeltaY
-		  SpecViewer1.Left = Me.Left + Me.Width + 2
-		  SpecViewer1.Width = Self.Width - SpecViewer1.Left
+		  Rectangle1.Left = Me.Left + Me.Width + 2
+		  Rectangle1.Width = Self.Width - Rectangle1.Left
 		  HelpIndex.Width = Me.Left - 2
 		  Me.Invalidate
 		End Sub
@@ -240,8 +711,8 @@ End
 		    For i As Integer = UBound(h) DownTo 0
 		      Dim j As JSONItem = h(i)
 		      Me.InsertRow(row + 1, j.Value("header"), 1)
-		      Me.RowTag(Me.LastIndex) = j
-		      If SpecViewer1.CurrentItem <> Nil And SpecViewer1.CurrentItem.Lookup("header", "") = j.Value("header") Then
+		      Me.RowTag(Me.LastIndex) = j'.Value("header")
+		      If Self.CurrentItem <> Nil And Self.CurrentItem.Lookup("header", "") = j.Value("header") Then
 		        Me.ListIndex = Me.LastIndex
 		      End If
 		    Next
@@ -270,8 +741,8 @@ End
 		    For i As Integer = UBound(h) DownTo 0
 		      Dim j As JSONItem = h(i)
 		      HelpIndex.InsertRow(row + 1, j.Value("code") + " " + j.Value("phrase"), 1)
-		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
-		      If SpecViewer1.CurrentItem <> Nil And SpecViewer1.CurrentItem.Lookup("code", -1) = j.Value("code") Then
+		      HelpIndex.RowTag(HelpIndex.LastIndex) = j'.Value("code").StringValue
+		      If Self.CurrentItem <> Nil And Self.CurrentItem.Lookup("code", -1) = j.Value("code") Then
 		        HelpIndex.ListIndex = HelpIndex.LastIndex
 		      End If
 		    Next
@@ -286,8 +757,8 @@ End
 		    For i As Integer = UBound(h) DownTo 0
 		      Dim j As JSONItem = h(i)
 		      HelpIndex.InsertRow(row + 1, j.Value("method"), 1)
-		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
-		      If SpecViewer1.CurrentItem <> Nil And SpecViewer1.CurrentItem.Lookup("method", "") = j.Value("method") Then
+		      HelpIndex.RowTag(HelpIndex.LastIndex) = j'.Value("method")
+		      If Self.CurrentItem <> Nil And Self.CurrentItem.Lookup("method", "") = j.Value("method") Then
 		        HelpIndex.ListIndex = HelpIndex.LastIndex
 		      End If
 		    Next
@@ -302,8 +773,8 @@ End
 		    For i As Integer = UBound(h) DownTo 0
 		      Dim j As JSONItem = h(i)
 		      HelpIndex.InsertRow(row + 1, j.Value("word").StringValue.Titlecase, 1)
-		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
-		      If SpecViewer1.CurrentItem <> Nil And SpecViewer1.CurrentItem.Lookup("word", "") = j.Value("word") Then
+		      HelpIndex.RowTag(HelpIndex.LastIndex) = j'.Value("word")
+		      If Self.CurrentItem <> Nil And Self.CurrentItem.Lookup("word", "") = j.Value("word") Then
 		        HelpIndex.ListIndex = HelpIndex.LastIndex
 		      End If
 		    Next
@@ -318,8 +789,8 @@ End
 		    For i As Integer = UBound(h) DownTo 0
 		      Dim j As JSONItem = h(i)
 		      HelpIndex.InsertRow(row + 1, j.Value("relation"), 1)
-		      HelpIndex.RowTag(HelpIndex.LastIndex) = j
-		      If SpecViewer1.CurrentItem <> Nil And SpecViewer1.CurrentItem.Lookup("relation", "") = j.Value("relation") Then
+		      HelpIndex.RowTag(HelpIndex.LastIndex) = j'.Value("relation")
+		      If Self.CurrentItem <> Nil And Self.CurrentItem.Lookup("relation", "") = j.Value("relation") Then
 		        HelpIndex.ListIndex = HelpIndex.LastIndex
 		      End If
 		    Next
@@ -336,21 +807,97 @@ End
 	#tag Event
 		Sub Change()
 		  If Me.ListIndex < 0 Then Return
+		  If SuppressChange Then
+		    Return
+		  End If
+		  
 		  Dim tag As Variant = Me.RowTag(Me.ListIndex)
 		  Select Case True
 		  Case Me.ListIndex < 0
 		    Return
 		  Case tag <> Nil And VarType(tag) = Variant.TypeString
-		    Dim s As String = Me.RowTag(Me.ListIndex)
-		    Call SpecViewer1.ShowItem(s)
+		    Dim s As String = tag
+		    ShowItem(s)
 		  Case tag IsA JSONItem
 		    Dim j As JSONItem = tag
-		    Call SpecViewer1.ShowItem(j)
+		    DisplayItem(j)
 		  Else
 		    'Break
 		  End Select
 		  
 		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events HistoryTimer
+	#tag Event
+		Sub Action()
+		  NextItem.Visible = (History.Ubound > -1)
+		  PrevItem.Visible = (FwdHistory.Ubound > 0)
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events SpecLink
+	#tag Event
+		Sub MouseEnter()
+		  Me.MouseCursor = System.Cursors.FingerPointer
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  Me.MouseCursor = System.Cursors.StandardPointer
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  Return Me.Text <> ""
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
+		  If CurrentItem <> Nil Then
+		    ShowURL(CurrentItem.Value("spec_href"))
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events DescText
+	#tag Event
+		Sub ClickLink(LinkValue As Variant, LinkText As String)
+		  #pragma Unused LinkText
+		  If Left(LinkValue, 3) = "rfc" Then ' spec URL
+		    Dim u As HTTP.URI = "http://tools.ietf.org/html/" + LinkValue
+		    ShowURL(u.ToString)
+		  Else
+		    SpecIndex.ShowItem(LinkValue)
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PrevItem
+	#tag Event
+		Sub Action()
+		  History.Append(FwdHistory.Pop)
+		  DisplayItem(FwdHistory.Pop)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events NextItem
+	#tag Event
+		Sub Action()
+		  DisplayItem(History.Pop)
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events LinkTarget
+	#tag Event
+		Sub Open()
+		  Me.Text = ""
 		End Sub
 	#tag EndEvent
 #tag EndEvents

@@ -56,7 +56,6 @@ MenuBar=ViewMenu;HTTPTestGenerator/Windows/Viewers/ViewMenu.rbmnu;&h560ACFFF;&h1
 Folder=Specs;HTTPTestGenerator/Windows/Specs;&h307BCFFF;&hEA397FF;false
 Module=Specifications;HTTPTestGenerator/Windows/Specs/Specifications.rbbas;&h703547FF;&h307BCFFF;false
 Window=SpecIndex;HTTPTestGenerator/Windows/Specs/SpecIndex.rbfrm;&h389167FF;&h307BCFFF;false
-Window=SpecViewer;HTTPTestGenerator/Windows/Specs/SpecViewer.rbfrm;&h3D5837FF;&h307BCFFF;false
 RawData=headerdescriptions;HTTPTestGenerator/Windows/Specs/headers.json;&h703E07FF;&h307BCFFF;false
 RawData=methoddescriptions;HTTPTestGenerator/Windows/Specs/methods.json;&h50E79FFF;&h307BCFFF;false
 RawData=statuscodedescriptions;HTTPTestGenerator/Windows/Specs/status-codes.json;&h4D92EFFF;&h307BCFFF;false
