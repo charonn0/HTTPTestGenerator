@@ -1311,6 +1311,7 @@ Protected Module HTTP
 			    "pnt":"image/x-macpaint", _
 			    "mac":"image/x-macpaint", _
 			    "pcx":"image/x-pcx", _
+			    "pdf":"application/pdf", _
 			    "pnm":"image/x-portable-anymap", _
 			    "pbm":"image/x-portable-bitmap", _
 			    "pgm":"image/x-portable-graymap", _
