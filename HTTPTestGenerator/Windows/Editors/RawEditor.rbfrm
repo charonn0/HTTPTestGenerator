@@ -43,10 +43,10 @@ Begin Window RawEditor
       Italic          =   False
       Left            =   0
       LimitText       =   0
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       Mask            =   ""
       Multiline       =   True
@@ -54,7 +54,7 @@ Begin Window RawEditor
       Scope           =   0
       ScrollbarHorizontal=   False
       ScrollbarVertical=   True
-      Styled          =   True
+      Styled          =   False
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
