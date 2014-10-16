@@ -28,6 +28,7 @@ Begin Window SuggestionWindow
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
       Bold            =   ""
+      Border          =   True
       ColumnCount     =   1
       ColumnsResizable=   ""
       ColumnWidths    =   ""
@@ -64,6 +65,7 @@ Begin Window SuggestionWindow
       TabStop         =   True
       TextFont        =   "SmallSystem"
       TextSize        =   0
+      TextUnit        =   0
       Top             =   0
       Underline       =   ""
       UseFocusRing    =   False
@@ -73,7 +75,6 @@ Begin Window SuggestionWindow
       _ScrollWidth    =   -1
    End
    Begin Timer Timer1
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   0
@@ -81,11 +82,8 @@ Begin Window SuggestionWindow
       Mode            =   0
       Period          =   10
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   305
-      Visible         =   True
       Width           =   32
    End
 End
@@ -169,8 +167,10 @@ End
 		  dim option as String
 		  for each option in options
 		    optionList.AddRow option
-		    if self.Graphics.StringWidth(option) > self.Width then  //auto-expand to fit the options. Thanks to Dr Gerard Hammond
-		      self.Width = self.Graphics.StringWidth(option)  + 10
+		    Dim p As New Picture(Self.Width, Self.Height, 32)
+		    Self.DrawInto(p.Graphics, 0, 0)
+		    if p.Graphics.StringWidth(option) > self.Width then  //auto-expand to fit the options. Thanks to Dr Gerard Hammond
+		      self.Width = p.Graphics.StringWidth(option)  + 10
 		    end
 		  next
 		  if optionList.ListCount > 0 then _

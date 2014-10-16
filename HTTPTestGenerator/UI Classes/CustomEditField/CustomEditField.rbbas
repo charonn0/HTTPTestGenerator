@@ -1292,7 +1292,7 @@ Implements MessageReceiver
 		  #endif
 		  
 		  dim lock as new LinesLock(self) // makes sure we're not updating while LineHighlighter is busy
-		  
+		  #pragma Unused lock
 		  self.updateIndentation()
 		  
 		  if not mRedrawEverything and not mRedrawCaret then
@@ -2364,6 +2364,7 @@ Implements MessageReceiver
 
 	#tag Method, Flags = &h21
 		Private Sub HighlightNow(caller as Timer)
+		  #pragma Unused caller
 		  if mHighlighter = nil or mHighlighter.State = Thread.NotRunning then
 		    highlighterTask(true).Run
 		  end if
@@ -2420,7 +2421,7 @@ Implements MessageReceiver
 		  // This internal function performs no undo, no change notification, nor updating of the caret position
 		  
 		  dim lock as new LinesLock(self) // prevents LineHighlighter from interfering while we're modifying the lines
-		  
+		  #pragma Unused lock
 		  if ReadOnly then
 		    break
 		    Return
@@ -3058,7 +3059,7 @@ Implements MessageReceiver
 		  dim depth as integer
 		  dim char as String
 		  dim maxOffset as Integer = TextStorage.Length
-		  
+		  #pragma Unused maxOffset
 		  dim textToSearch as String = TextStorage.getText(offset + 1, TextStorage.Length - (offset + 1))
 		  if textToSearch.Encoding <> nil and textToSearch.Encoding.Equals(Encodings.UTF16) then textToSearch = textToSearch.ConvertEncoding(Encodings.UTF8)
 		  
@@ -3533,7 +3534,7 @@ Implements MessageReceiver
 		  end
 		  
 		  dim aa as integer = line.indent
-		  
+		  #pragma Unused aa
 		  if mIndentVisually then
 		    // we're done
 		    return modified
@@ -3545,8 +3546,9 @@ Implements MessageReceiver
 		  
 		  dim newIndentation as String = indentStr (line.indent)
 		  dim newIndentLen as Integer = newIndentation.Len
-		  
+		  #pragma Unused newIndentLen
 		  dim theText as String, moveCaret as Integer
+		  #pragma Unused moveCaret
 		  if ltrimLine then
 		    // Discard leading spaces from current line
 		    theText = newIndentation
@@ -3610,7 +3612,7 @@ Implements MessageReceiver
 		  // This method is used internally by the control, and externally by the undo mechanism, you shouldn't use it directly, use instead selstart and seltext.
 		  
 		  dim lock as new LinesLock(self) // prevents LineHighlighter from interfering while we're modifying the lines
-		  
+		  #pragma Unused lock
 		  if ReadOnly then
 		    break
 		    beep
@@ -3793,7 +3795,7 @@ Implements MessageReceiver
 	#tag Method, Flags = &h0
 		Sub Redo()
 		  dim lock as new LinesLock(self) // prevents LineHighlighter from interfering while we're modifying the lines
-		  
+		  #pragma Unused lock
 		  ignoreRepaint = true
 		  UndoMgr.Redo
 		  
@@ -3850,6 +3852,7 @@ Implements MessageReceiver
 
 	#tag Method, Flags = &h21
 		Private Sub redrawNow(caller as Timer)
+		  #pragma Unused caller
 		  self.Invalidate
 		End Sub
 	#tag EndMethod
@@ -3876,6 +3879,7 @@ Implements MessageReceiver
 		  // we don't want the user to be able to accidentally cause an
 		  // entire screen erase.  So we override Refresh by making it
 		  // a private function.
+		  #pragma Unused eraseBackground
 		  break
 		End Sub
 	#tag EndMethod
@@ -3886,6 +3890,11 @@ Implements MessageReceiver
 		  // we don't want the user to be able to accidentally cause an
 		  // entire screen erase.  So we override Refresh by making it
 		  // a private function.
+		  #pragma Unused x
+		  #pragma Unused y
+		  #pragma Unused width
+		  #pragma Unused height
+		  #pragma Unused eraseBackground
 		  break
 		End Sub
 	#tag EndMethod
@@ -3911,7 +3920,7 @@ Implements MessageReceiver
 		  // Removes all leading white space, adding proper indentation (using Tab chars) instead
 		  
 		  dim lock as new LinesLock(self) // prevents LineHighlighter from interfering while we're modifying the lines
-		  
+		  #pragma Unused lock
 		  #if DebugBuild and (EditFieldGlobals.DebugTiming or EditFieldGlobals.DebugIndentation)
 		    dim runtimer as new Debugging.LifeTimer("ReindentText "+str(fromLine)+" to "+str(toLine))
 		  #endif
@@ -3989,6 +3998,7 @@ Implements MessageReceiver
 
 	#tag Method, Flags = &h0
 		Function Save(toFile as folderItem, fileType as string = "Text", encoding as textencoding = nil) As boolean
+		  #pragma Unused fileType
 		  if toFile = nil then Return False
 		  
 		  dim stream as BinaryStream
@@ -4243,7 +4253,7 @@ Implements MessageReceiver
 	#tag Method, Flags = &h0
 		Sub Undo()
 		  dim lock as new LinesLock(self) // prevents LineHighlighter from interfering while we're modifying the lines
-		  
+		  #pragma Unused lock
 		  ignoreRepaint = true
 		  UndoMgr.Undo
 		  
@@ -4282,7 +4292,7 @@ Implements MessageReceiver
 		Private Sub updateIndentation()
 		  if mKeepEntireTextIndented then
 		    dim lock as new LinesLock(self) // prevents LineHighlighter from interfering while we're modifying the lines
-		    
+		    #pragma Unused lock
 		    dim trimLines as Boolean = not mIndentVisually
 		    dim indentationState as Variant
 		    
@@ -5868,7 +5878,7 @@ Implements MessageReceiver
 			  StopHighlighter
 			  
 			  dim lock as new LinesLock(self) // prevents LineHighlighter from interfering while we're modifying the lines
-			  
+			  #pragma Unused lock
 			  loadingDocument = true
 			  ignoreRepaint = true
 			  mCaretLine = 0

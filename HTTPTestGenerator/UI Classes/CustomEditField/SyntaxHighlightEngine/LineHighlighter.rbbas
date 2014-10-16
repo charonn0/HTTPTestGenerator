@@ -77,7 +77,7 @@ Inherits Thread
 		  #pragma DisableBackgroundTasks
 		  
 		  dim lock as new LinesLock(owner)
-		  
+		  #pragma Unused lock
 		  dim line, previous, nextLine as TextLine
 		  dim context, previousContext as HighlightContext
 		  dim processed as Integer

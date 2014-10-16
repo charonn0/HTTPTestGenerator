@@ -316,6 +316,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Function ConstructContextualMenu(base as menuitem, x as integer, y as integer) As boolean
+		  #pragma Unused x
+		  #pragma Unused y
 		  //Paul Rodman's Suggestion
 		  if base.Count>0 then base.Append new MenuItem("-")
 		  '//--

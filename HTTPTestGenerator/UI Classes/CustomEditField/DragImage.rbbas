@@ -45,6 +45,8 @@ Protected Module DragImage
 		    OSError = QDEndCGContext(gworldData, c)
 		    
 		    return image
+		  #else
+		    #pragma Unused p
 		  #endif
 		End Function
 	#tag EndMethod
@@ -76,6 +78,9 @@ Protected Module DragImage
 		    'kDragOpaqueTranslucency = 3 0%
 		    
 		    dim OSError as Integer = SetDragImageWithCGImage(d.Handle, theImage, offset, kDragStandardTranslucency)
+		  #else
+		    #pragma Unused d
+		    #pragma Unused p
 		  #endif
 		  
 		finally // careful: any "return" above will not execute this finally block!

@@ -509,7 +509,7 @@ End
 		    return res = 0
 		    
 		  #else
-		    
+		    #pragma Unused ringVisible
 		    // Draw something with RB's own functions
 		    // ...
 		    
