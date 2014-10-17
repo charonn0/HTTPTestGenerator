@@ -376,6 +376,7 @@ End
 		  Case 500 To 599
 		    Code.TextColor = &cFF800000
 		  End Select
+		  mStatus = StatusCode
 		End Sub
 	#tag EndMethod
 
@@ -394,7 +395,7 @@ End
 		    ResponseHeaders.AddRow(n, v)
 		    ResponseHeaders.RowTag(ResponseHeaders.LastIndex) = n:v
 		  Next
-		  
+		  mHost = resp.Path
 		  LoadCookies(resp.Headers)
 		End Sub
 	#tag EndMethod
@@ -402,6 +403,14 @@ End
 
 	#tag Property, Flags = &h1
 		Protected LogLevel As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mHost As HTTP.URI
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mStatus As Integer
 	#tag EndProperty
 
 
@@ -443,7 +452,7 @@ End
 		Sub MouseUp(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  SpecIndex.ShowItem(Format(Generator.Response.StatusCode, "#"))
+		  SpecIndex.ShowItem(Format(mStatus, "#"))
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -521,11 +530,11 @@ End
 		      Dim c As Cookie = Me.RowTag(i)
 		      If c.Domain = "" Then
 		        c = New Cookie(c.ToString) ' force copy
-		        c.Domain = Generator.Response.Path.Host
+		        c.Domain = mHost.Host
 		      End If
 		      cj.Append(c)
 		    Next
-		    Dim f As FolderItem = GetSaveFolderItem(FileTypes1.NetscapeCookieJar, ReplaceAll(Generator.Response.Path.Host, ".", "_") + ".jar")
+		    Dim f As FolderItem = GetSaveFolderItem(FileTypes1.NetscapeCookieJar, ReplaceAll(mHost.Host, ".", "_") + ".jar")
 		    If f <> Nil Then cj.SaveAs(f)
 		    Return True
 		  End Select

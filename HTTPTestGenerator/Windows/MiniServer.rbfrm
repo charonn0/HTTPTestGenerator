@@ -561,11 +561,7 @@ End
 		    Dim u As HTTP.URI = HTTP.URI(LinkValue)
 		    If u.Scheme = "" Then u.Scheme = "http"
 		    Generator.RequestMain1.URL.Text = u.ToString
-		    Generator.RequestMain1.Sender.Enabled = False
-		    Generator.RequestMain1.Sender.Caption = "Sending..."
-		    Generator.RequestMain1.ProgressBar1.Visible = True
-		    Generator.RequestMain1.StopButton.Visible = True
-		    Generator.Perform()
+		    Generator.RequestMain1.Perform()
 		    
 		  Case LinkValue IsA FolderItem
 		    FolderItem(LinkValue).Launch
