@@ -411,6 +411,16 @@ End
 
 #tag WindowCode
 	#tag Event
+		Sub Open()
+		  #If TargetWin32 Then
+		    Me.DoubleBuffer = True
+		    Me.EraseBackground = False
+		  #endif
+		  NextRequest = ""
+		End Sub
+	#tag EndEvent
+
+	#tag Event
 		Sub Resized()
 		  Sender.Left = (Me.Width \ 2) - (Sender.Width \ 2)
 		End Sub
@@ -421,6 +431,53 @@ End
 		Sub AddHistoryItem(URL As HTTP.URI)
 		  If History = Nil Then History = New Dictionary
 		  History.Value(URL.ToString) = URL
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub Generate()
+		  Dim oldbody As String
+		  If NextRequest <> Nil Then oldbody = NextRequest.MessageBody
+		  NextRequest = ""
+		  NextRequest.MessageBody = oldbody
+		  NextRequest.Method = HTTP.Method(RequestMethod.Text)
+		  If NextRequest.Method = HTTP.RequestMethod.InvalidMethod Then NextRequest.MethodName = RequestMethod.Text
+		  NextRequest.Path = URL.Text
+		  NextRequest.Path.Fragment = ""
+		  If NextRequest.path.Path = "" Then NextRequest.path.Path = "/"
+		  NextRequest.ProtocolVersion = CDbl(NthField(ProtocolVer.Text, "/", 2))
+		  
+		  
+		  Dim u As HTTP.URI = URL.Text
+		  If u.Username <> "" Or u.Password <> "" Then
+		    If MsgBox("Auto-set HTTP Authorization header?", 4 + 32, "User credentials detected in URL") = 6 Then
+		      NextRequest.Header("Authorization") = "Basic " + EncodeBase64(u.Username + ":" + u.Password)
+		      u.Username = ""
+		      u.Password = ""
+		      URL.Text = u.ToString
+		    End If
+		  End If
+		  
+		  For i As Integer = 0 To RequestHeaders.ListCount - 1
+		    NextRequest.Header(RequestHeaders.Cell(i, 0), True) = RequestHeaders.Cell(i, 1)
+		  Next
+		  
+		  If Not NextRequest.HasHeader("Host") And NextRequest.ProtocolVersion >= 1.1 Then
+		    NextRequest.Header("Host") = u.Host
+		  End If
+		  
+		  If Not NextRequest.HasHeader("Connection") And NextRequest.ProtocolVersion >= 1.1 Then
+		    NextRequest.Header("Connection") = "close"
+		  End If
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Perform()
+		  Me.Generate()
+		  RaiseEvent Perform(NextRequest)
 		End Sub
 	#tag EndMethod
 
@@ -452,31 +509,7 @@ End
 
 
 	#tag Hook, Flags = &h0
-		Event Generate()
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event GenerateHeaders()
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event GetMessageData() As String
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event GetRequest() As HTTP.Request
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event GetResponse() As HTTP.Response
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event Perform(Cancel As Boolean)
-	#tag EndHook
-
-	#tag Hook, Flags = &h0
-		Event SetMessageData(Data As String)
+		Event Perform(NewRequest As HTTP.Request)
 	#tag EndHook
 
 
@@ -488,37 +521,9 @@ End
 		Protected History As Dictionary
 	#tag EndProperty
 
-	#tag ComputedProperty, Flags = &h1
-		#tag Getter
-			Get
-			  return RaiseEvent GetMessageData
-			End Get
-		#tag EndGetter
-		#tag Setter
-			Set
-			  RaiseEvent SetMessageData(value)
-			End Set
-		#tag EndSetter
-		Protected MessageBodyRaw As String
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h1
-		#tag Getter
-			Get
-			  return RaiseEvent GetRequest
-			End Get
-		#tag EndGetter
-		Protected Request As HTTP.Request
-	#tag EndComputedProperty
-
-	#tag ComputedProperty, Flags = &h1
-		#tag Getter
-			Get
-			  return RaiseEvent GetResponse
-			End Get
-		#tag EndGetter
-		Protected Response As HTTP.Response
-	#tag EndComputedProperty
+	#tag Property, Flags = &h1
+		Protected NextRequest As HTTP.Request
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		Security As Integer
@@ -528,13 +533,6 @@ End
 #tag EndWindowCode
 
 #tag Events RequestHeaders
-	#tag Event
-		Sub AddNew(NewIndex As Integer, Header As Pair)
-		  #pragma Unused NewIndex
-		  #pragma Unused Header
-		  GenerateHeaders()
-		End Sub
-	#tag EndEvent
 	#tag Event
 		Sub Open()
 		  Me.AddRow("Connection", "close")
@@ -594,15 +592,8 @@ End
 		End Function
 	#tag EndEvent
 	#tag Event
-		Sub Removed(Header As Pair)
-		  #pragma Unused Header
-		  GenerateHeaders()
-		End Sub
-	#tag EndEvent
-	#tag Event
 		Sub Cleared()
-		  MessageBodyRaw = ""
-		  RaiseEvent Generate()
+		  NextRequest = ""
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -617,7 +608,7 @@ End
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  If Asc(key) = &h0D Or Asc(key) = &h03 And Not Keyboard.AsyncControlKey Then
-		    Perform(False)
+		    RaiseEvent Perform(Nil)
 		    Return True
 		  End If
 		End Function
@@ -668,7 +659,7 @@ End
 #tag Events Sender
 	#tag Event
 		Sub Action()
-		  Perform(False)
+		  Self.Perform()
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -686,19 +677,19 @@ End
 		  mnu.Append(New MenuItem("Clear all"))
 		  Dim res As MenuItem = mnu.PopUp
 		  If res <> Nil Then
-		    RaiseEvent Generate()
+		    'RaiseEvent Generate()
 		    Select Case res.Text
 		    Case "HTML form output"
 		      Dim formgen As New FormGenerator
 		      Dim formraw As Variant
 		      If Not Formtype Then
 		        Dim olddata As HTTP.URLEncodedForm
-		        If MessageBodyRaw <> "" Then olddata = New HTTP.URLEncodedForm(MessageBodyRaw)
+		        If NextRequest.MessageBody <> "" Then olddata = New HTTP.URLEncodedForm(NextRequest.MessageBody)
 		        formraw = formgen.SetFormData(olddata)
 		      Else
 		        Try
-		          Dim typ As ContentType = Request.ContentType
-		          formraw = formgen.SetFormData(MultipartForm.FromString(MessageBodyRaw, typ.Boundary))
+		          Dim typ As ContentType = NextRequest.ContentType
+		          formraw = formgen.SetFormData(MultipartForm.FromString(NextRequest.MessageBody, typ.Boundary))
 		        Catch UnsupportedFormatException
 		          formraw = formgen.SetFormData(Nil)
 		        End Try
@@ -712,12 +703,12 @@ End
 		      If formraw <> Nil Then
 		        If formraw IsA HTTP.URLEncodedForm Then
 		          If HTTP.URLEncodedForm(formraw).Count = 0 Then Return
-		          MessageBodyRaw = HTTP.URLEncodedForm(formraw).ToString
+		          NextRequest.MessageBody = HTTP.URLEncodedForm(formraw).ToString
 		          Type = "application/x-www-form-urlencoded"
 		        Else
 		          Dim m As MultipartForm = formraw
 		          If m.Count = 0 Then Return
-		          MessageBodyRaw = m.ToString
+		          NextRequest.MessageBody = m.ToString
 		          Type = "multipart/form-data; boundary=" + m.Boundary
 		        End If
 		        
@@ -733,25 +724,25 @@ End
 		        Next
 		        RequestHeaders.AddRow("Content-Type", type, "")
 		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Type":type
-		        RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
-		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(MessageBodyRaw))
+		        RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
+		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
 		        
 		      End If
 		      
 		    Case "Edit raw"
-		      Dim raw As String = RawEditor.EditRaw(MessageBodyRaw)
+		      Dim raw As String = RawEditor.EditRaw(NextRequest.MessageBody)
 		      If raw.Trim = "" Then Return
 		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
 		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
 		          RequestHeaders.RemoveRow(i)
 		        End If
 		      Next
-		      MessageBodyRaw = raw
-		      RequestHeaders.AddRow("Content-Length", Str(LenB(MessageBodyRaw)), "")
-		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(MessageBodyRaw))
+		      NextRequest.MessageBody = raw
+		      RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
+		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
 		      
 		    Case "Clear all"
-		      MessageBodyRaw = ""
+		      NextRequest.MessageBody = ""
 		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
 		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
 		          RequestHeaders.RemoveRow(i)
@@ -816,13 +807,13 @@ End
 #tag EndEvents
 #tag Events StopButton
 	#tag Event
-		Sub Action()
-		  Perform(True)
+		Sub Open()
+		  Me.HelpTag = "Cancel request"
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub Open()
-		  Me.HelpTag = "Cancel request"
+		Sub Action()
+		  RaiseEvent Perform(Nil)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

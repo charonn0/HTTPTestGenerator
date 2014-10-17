@@ -83,6 +83,7 @@ Begin ContainerControl HTMLView Implements Viewer
       HasBackColor    =   False
       Height          =   286
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -162,16 +163,13 @@ End
 #tag Events LinkList
 	#tag Event
 		Function CellClick(row as Integer, column as Integer, x as Integer, y as Integer) As Boolean
+		  #pragma Unused x
+		  #pragma Unused y
 		  If row < Me.ListCount And column = 1 Then
 		    Dim u As HTTP.URI = Me.Cell(row, column)
 		    If u.Host = "" Then u.Host = BaseURL
 		    If u.Scheme = "" Then u.Scheme = "http"
-		    Generator.RequestMain1.URL.Text = u.ToString
-		    Generator.RequestMain1.Sender.Enabled = False
-		    Generator.RequestMain1.Sender.Caption = "Sending..."
-		    Generator.RequestMain1.ProgressBar1.Visible = True
-		    Generator.RequestMain1.StopButton.Visible = True
-		    Generator.Perform()
+		    Generator.RequestMain1.Perform()
 		    Return True
 		  End If
 		  
@@ -179,6 +177,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
+		  #pragma Unused x
+		  #pragma Unused y
 		  If row < Me.ListCount And column = 1 Then
 		    g.ForeColor = &c0000FF00
 		    g.Underline = True

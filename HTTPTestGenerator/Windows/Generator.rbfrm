@@ -205,57 +205,13 @@ End
 	#tag EndMenuHandler
 
 
-	#tag Method, Flags = &h21
-		Private Sub Generate()
-		  Me.Request = ""
-		  Me.Request.Method = HTTP.Method(RequestMain1.RequestMethod.Text)
-		  If Me.Request.Method = HTTP.RequestMethod.InvalidMethod Then Me.Request.MethodName = RequestMain1.RequestMethod.Text
-		  Me.Request.Path = RequestMain1.URL.Text
-		  Me.Request.Path.Fragment = ""
-		  If Me.Request.path.Path = "" Then Me.Request.path.Path = "/"
-		  Me.Request.ProtocolVersion = CDbl(NthField(RequestMain1.ProtocolVer.Text, "/", 2))
-		  GenerateHeaders()
-		  Me.Request.MessageBody = MessageBodyRaw
-		  
-		  
-		  'If gziprequest.Value Then
-		  'Me.Request.SetHeader("Accept-Encoding", "gzip")
-		  'End If
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
-		Private Sub GenerateHeaders()
-		  If Request = Nil Then Return
-		  
-		  If Request.Path.Username <> "" Or Request.Path.Password <> "" Then
-		    If MsgBox("Auto-set HTTP Authorization header?", 4 + 32, "User credentials detected in URL") = 6 Then
-		      Request.Header("Authorization") = "Basic " + EncodeBase64(Request.Path.Username + ":" + Request.Path.Password)
-		    End If
-		  End If
-		  
-		  For i As Integer = 0 To RequestMain1.RequestHeaders.ListCount - 1
-		    Me.Request.Header(RequestMain1.RequestHeaders.Cell(i, 0), True) = RequestMain1.RequestHeaders.Cell(i, 1)
-		  Next
-		  
-		  If Not Me.Request.HasHeader("Host") And Me.Request.ProtocolVersion >= 1.1 Then
-		    Me.Request.Header("Host") = Request.Path.Host
-		  End If
-		  
-		  If Not Me.Request.HasHeader("Connection") And Me.Request.ProtocolVersion >= 1.1 Then
-		    Me.Request.Header("Connection") = "close"
-		  End If
-		  
-		End Sub
-	#tag EndMethod
-
 	#tag Method, Flags = &h0
-		Sub Perform()
+		Sub Perform(NewRequest As HTTP.Request)
+		  If CurrentRequest <> Nil Then OldRequests.Append(CurrentRequest)
+		  CurrentRequest = NewRequest
 		  TimeOut.Mode = Timer.ModeSingle
-		  Output = ""
-		  Generate()
 		  Sock.Close
-		  Sock.Address = Request.Path.Host
+		  Sock.Address = CurrentRequest.Path.Host
 		  Select Case RequestMain1.Security
 		  Case 1 ' SSL2 only
 		    sock.Secure = True
@@ -273,7 +229,7 @@ End
 		    sock.ConnectionType = SSLSocket.TLSv1
 		    
 		  Else 'auto
-		    If Request.Path.Scheme = "https" Then
+		    If CurrentRequest.Path.Scheme = "https" Then
 		      Sock.Secure = True
 		      sock.ConnectionType = Sock.TLSv1
 		    Else
@@ -281,8 +237,8 @@ End
 		    End If
 		  End Select
 		  Dim p As Integer
-		  If Request.Path.Port > 0 Then
-		    p = Request.Path.Port
+		  If CurrentRequest.Path.Port > 0 Then
+		    p = CurrentRequest.Path.Port
 		  ElseIf Sock.Secure Then
 		    p = 443
 		  Else
@@ -303,22 +259,6 @@ End
 		Protected Sub PrintOutput(Req As HTTP.Request, Resp As HTTP.Response)
 		  ResponseMain1.Log(Req, 0)
 		  ResponseMain1.Log(Resp, 0)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1000
-		Sub Update(Raw As String)
-		  Response = Raw
-		  Response.Path = New HTTP.URI(Request.Path)
-		  ResponseMain1.ViewResponse(Response)
-		  
-		  Self.Title = "HTTP Request Generator - Viewing '" + Request.Path.ToString + "'"
-		  '#If HTTP.GZIPAvailable Then
-		  'If Response.GetHeader("Content-Encoding") = "gzip" Then
-		  'Me.Response.MessageBody = GZip.Uncompress(Me.Response.MessageBody, Me.Response.MessageBody.LenB^2)
-		  'End If
-		  '#endif
-		  
 		End Sub
 	#tag EndMethod
 
@@ -343,36 +283,28 @@ End
 		Private ConnectOK As Boolean
 	#tag EndProperty
 
+	#tag Property, Flags = &h0
+		CurrentRequest As HTTP.Request
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		CurrentResponse As HTTP.Response
+	#tag EndProperty
+
 	#tag Property, Flags = &h21
 		Private mDown As Boolean
 	#tag EndProperty
 
-	#tag Property, Flags = &h21
-		Private MessageBodyRaw As String
+	#tag Property, Flags = &h1
+		Protected OldRequests() As HTTP.Request
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		Output As String
+	#tag Property, Flags = &h1
+		Protected OldResponses() As HTTP.Response
 	#tag EndProperty
 
-	#tag Property, Flags = &h21
-		Private RawText As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Request As HTTP.Request
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		RequestURL As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		Response As HTTP.Response
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private SendSz As Integer
+	#tag Property, Flags = &h1
+		Protected ResponseBuffer As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -388,14 +320,13 @@ End
 		  ConnectOK = True
 		  ResponseMain1.Log("Connected to '" + Me.RemoteAddress + " on port " + Format(Me.Port, "#####0"), 1)
 		  TimeOut.Reset
-		  Output = ""
+		  ResponseBuffer = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
-		  Dim s As String = Request.ToString
+		  Dim s As String = CurrentRequest.ToString
 		  BytesSentLast = s.LenB
 		  BytesSentTotal = BytesSentTotal + BytesSentLast
 		  Me.Write(s)
-		  SendSz = 0
-		  RequestMain1.AddHistoryItem(RequestMain1.URL.Text)
+		  RequestMain1.AddHistoryItem(CurrentRequest.Path)
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -425,20 +356,21 @@ End
 	#tag Event
 		Function SendProgress(BytesSent As Integer, BytesLeft As Integer) As Boolean
 		  #pragma Unused BytesLeft
-		  Dim sz As Integer = MessageBodyRaw.LenB
-		  SendSz = SendSz + BytesSent
-		  RequestMain1.SetProgress(SendSz * 100 / sz)
+		  'Dim sz As Integer = ResponseBuffer.LenB
+		  BytesSentTotal = BytesSentTotal + BytesSent
+		  BytesSentLast = BytesSent
+		  
+		  RequestMain1.SetProgress(BytesSentTotal * 100 / (BytesSentTotal + BytesLeft))
 		End Function
 	#tag EndEvent
 	#tag Event
 		Sub DataAvailable()
 		  TimeOut.Reset
 		  Dim newdata As String = Me.ReadAll
-		  Output = Output + newdata
+		  ResponseBuffer = ResponseBuffer + newdata
 		  BytesReceivedLast = newdata.LenB
 		  BytesReceivedTotal = BytesReceivedTotal + BytesReceivedLast
 		  ResponseMain1.Log("Receiving data (" + FormatBytes(BytesReceivedLast) + ")...", 2)
-		  RawText = Self.Request.ToString
 		  DataReceivedTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndEvent
@@ -446,43 +378,34 @@ End
 #tag Events DataReceivedTimer
 	#tag Event
 		Sub Action()
-		  Update(Output)
-		  Dim resp, out As String
-		  resp = NthField(Output, CRLF + CRLF, 1) + CRLF + CRLF
-		  Out = Replace(Output, resp, "")
-		  PrintOutput(Request, Response)
-		  If Response.HasHeader("Content-Type") Then
-		    Dim tp As ContentType = Response.Header("Content-Type")
-		    If tp.CharSet <> Nil Then
-		      Out = DefineEncoding(Out, tp.CharSet)
-		    End If
-		  End If
+		  If CurrentResponse <> Nil Then OldResponses.Append(CurrentResponse)
+		  CurrentResponse = ResponseBuffer
+		  CurrentResponse.Path = New HTTP.URI(CurrentRequest.Path)
+		  ResponseMain1.ViewResponse(CurrentResponse)
 		  
-		  If Response.ContentType = "message/http" Then
-		    out = DefineEncoding(out, Encodings.UTF8)
-		    out = ReplaceAll(out, CRLF, &u00B6 + EndOfLine.Windows) ' pilcrow
-		  End If
+		  Self.Title = "HTTP Request Generator - Viewing '" + CurrentRequest.Path.ToString + "'"
+		  PrintOutput(CurrentRequest, CurrentResponse)
 		  
-		  Select Case Response.StatusCode
+		  Select Case CurrentResponse.StatusCode
 		  Case 301, 302, 307, 308
-		    Dim redir As String = Response.Header("Location")
+		    Dim redir As String = CurrentResponse.Header("Location")
 		    Dim u As HTTP.URI = redir
 		    If u.Host = "" Then
-		      u = Request.Path
+		      u = CurrentRequest.Path
 		      u.Path = redir
 		    End If
-		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
+		    If MsgBox("CurrentResponse redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
 		      RequestMain1.URL.Text = u.ToString
-		      Perform()
+		      RequestMain1.Perform()
 		    End If
 		  Case 401
-		    Dim r As String = NthField(Response.Header("WWW-Authenticate"), "=", 2)
-		    Dim p As Pair = Authenicator.Authenticate(r, Response.Path.Scheme = "https")
+		    Dim r As String = NthField(CurrentResponse.Header("WWW-Authenticate"), "=", 2)
+		    Dim p As Pair = Authenicator.Authenticate(r, CurrentResponse.Path.Scheme = "https")
 		    If p <> Nil Then
 		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
 		      RequestMain1.RequestHeaders.AddRow("Authorization", s)
 		      RequestMain1.RequestHeaders.RowTag(RequestMain1.RequestHeaders.LastIndex) = "Authorization":s
-		      Perform()
+		      RequestMain1.Perform()
 		    End If
 		  End Select
 		  'Self.Refresh
@@ -491,55 +414,16 @@ End
 #tag EndEvents
 #tag Events RequestMain1
 	#tag Event
-		Function GetMessageData() As String
-		  Return MessageBodyRaw
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function GetRequest() As HTTP.Request
-		  Return Request
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function GetResponse() As HTTP.Response
-		  Return Response
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub SetMessageData(Data As String)
-		  MessageBodyRaw = Data
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  #If TargetWin32 Then
-		    Me.DoubleBuffer = True
-		    Me.EraseBackground = False
-		  #endif
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Perform(Cancel As Boolean)
-		  If Not Cancel Then
+		Sub Perform(NewRequest As HTTP.Request)
+		  If NewRequest <> Nil Then
 		    RequestMain1.Sender.Enabled = False
 		    RequestMain1.Sender.Caption = "Sending..."
 		    RequestMain1.ProgressBar1.Visible = True
 		    RequestMain1.StopButton.Visible = True
-		    'RequestMain1.Refresh
-		    Perform()
+		    Self.Perform(NewRequest)
 		  Else
 		    Sock.Disconnect
 		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub GenerateHeaders()
-		  Self.GenerateHeaders
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub Generate()
-		  Self.Generate
 		End Sub
 	#tag EndEvent
 #tag EndEvents
