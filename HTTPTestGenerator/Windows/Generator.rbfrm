@@ -351,6 +351,7 @@ End
 		  RequestMain1.Sender.Caption = "Send Request"
 		  RequestMain1.ProgressBar1.Visible = False
 		  RequestMain1.StopButton.Visible = False
+		  ConnectOK = False
 		End Sub
 	#tag EndEvent
 	#tag Event
