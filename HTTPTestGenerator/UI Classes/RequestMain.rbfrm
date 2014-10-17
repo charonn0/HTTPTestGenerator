@@ -245,7 +245,7 @@ Begin ContainerControl RequestMain
       HasBackColor    =   False
       HasMenu         =   0
       Height          =   22
-      HelpTag         =   ""
+      HelpTag         =   "Edit request body"
       Icon            =   978827263
       IconAlign       =   1
       IconDX          =   0
@@ -289,7 +289,7 @@ Begin ContainerControl RequestMain
       HasBackColor    =   False
       HasMenu         =   0
       Height          =   22
-      HelpTag         =   ""
+      HelpTag         =   "Edit request cookies"
       Icon            =   17051647
       IconAlign       =   1
       IconDX          =   0
@@ -361,6 +361,50 @@ Begin ContainerControl RequestMain
       Value           =   False
       Visible         =   False
       Width           =   23
+   End
+   Begin BevelButton EditSecurity
+      AcceptFocus     =   False
+      AutoDeactivate  =   True
+      BackColor       =   "&c00000000"
+      Bevel           =   0
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   "Edit connection security"
+      Icon            =   635267071
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   295
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
+      Top             =   42
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
    End
 End
 #tag EndWindow
@@ -475,6 +519,10 @@ End
 		#tag EndGetter
 		Protected Response As HTTP.Response
 	#tag EndComputedProperty
+
+	#tag Property, Flags = &h0
+		Security As Integer
+	#tag EndProperty
 
 
 #tag EndWindowCode
@@ -775,6 +823,53 @@ End
 	#tag Event
 		Sub Open()
 		  Me.HelpTag = "Cancel request"
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EditSecurity
+	#tag Event
+		Sub Action()
+		  Dim mnu As New MenuItem("EditSecurityMenu")
+		  Dim chld As New MenuItem("Automatic")
+		  chld.Checked = (Security = 0)
+		  mnu.Append(chld)
+		  
+		  chld = New MenuItem("SSLv2 Only")
+		  chld.Checked = (Security = 1)
+		  mnu.Append(chld)
+		  
+		  chld = New MenuItem("SSLv3 Only")
+		  chld.Checked = (Security = 2)
+		  mnu.Append(chld)
+		  
+		  chld = New MenuItem("SSLv3 or SSLv2")
+		  chld.Checked = (Security = 3)
+		  mnu.Append(chld)
+		  
+		  chld = New MenuItem("TLSv1 Only")
+		  chld.Checked = (Security = 4)
+		  mnu.Append(chld)
+		  
+		  Dim res As MenuItem = mnu.PopUp
+		  If res <> Nil Then
+		    Select Case res.Text
+		    Case "Automatic"
+		      Security = 0
+		      
+		    Case "SSLv2 Only"
+		      Security = 1
+		      
+		    Case "SSLv3 Only"
+		      Security = 2
+		      
+		    Case "SSLv3 or SSLv2"
+		      Security = 3
+		      
+		    Case "TLSv1 Only"
+		      Security = 4
+		    End Select
+		  End If
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

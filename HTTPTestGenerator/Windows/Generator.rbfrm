@@ -241,20 +241,46 @@ End
 		  Generate()
 		  Sock.Close
 		  Sock.Address = Request.Path.Host
-		  If Request.Path.Scheme = "https" Then
-		    Sock.Secure = True
-		  Else
-		    Sock.Secure = False
-		  End If
+		  Select Case RequestMain1.Security
+		  Case 1 ' SSL2 only
+		    sock.Secure = True
+		    sock.ConnectionType = SSLSocket.SSLv2
+		  Case 2 ' SSL3 only
+		    sock.Secure = True
+		    sock.ConnectionType = SSLSocket.SSLv3
+		    
+		  Case 3 ' SSL2/3
+		    sock.Secure = True
+		    sock.ConnectionType = SSLSocket.SSLv23
+		    
+		  Case 4 ' TLS only
+		    sock.Secure = True
+		    sock.ConnectionType = SSLSocket.TLSv1
+		    
+		  Else 'auto
+		    If Request.Path.Scheme = "https" Then
+		      Sock.Secure = True
+		      sock.ConnectionType = Sock.TLSv1
+		    Else
+		      Sock.Secure = False
+		    End If
+		  End Select
+		  Dim p As Integer
 		  If Request.Path.Port > 0 Then
-		    Sock.Port = Request.Path.Port
+		    p = Request.Path.Port
 		  ElseIf Sock.Secure Then
-		    sock.Port = 443
+		    p = 443
 		  Else
-		    Sock.Port = 80
+		    p = 80
 		  End If
-		  
+		  Sock.Port = p
+		  If sock.Secure Then
+		    ResponseMain1.Log("Attempting a secure connection to " + Request.Path.ToString + " on port " + Format(p, "#####0"), 1)
+		  Else
+		    ResponseMain1.Log("Attempting a connection to " + Request.Path.ToString + " on port " + Format(p, "#####0"), 1)
+		  End If
 		  Sock.Connect()
+		  
 		End Sub
 	#tag EndMethod
 
@@ -324,6 +350,7 @@ End
 #tag Events Sock
 	#tag Event
 		Sub Connected()
+		  ResponseMain1.Log("Connected to '" + Me.RemoteAddress + " on port " + Format(Me.Port, "#####0"), 1)
 		  TimeOut.Reset
 		  Output = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
@@ -339,8 +366,7 @@ End
 		  ResponseMain1.ViewResponse(Nil)
 		  Select Case Me.LastErrorCode
 		  Case 102
-		    'ResponseMain1.IPAddress.Text = "Closed by host"
-		    'ResponseMain1.IPAddress.TextColor = &c80808000
+		    ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), 1)
 		    
 		  Case 103
 		    ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), -1)
@@ -363,6 +389,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub DataAvailable()
+		  ResponseMain1.Log("Receiving data...", 2)
 		  TimeOut.Reset
 		  Output = Output + Me.ReadAll
 		  RawText = Self.Request.ToString
