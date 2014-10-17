@@ -608,7 +608,7 @@ End
 	#tag Event
 		Function KeyDown(Key As String) As Boolean
 		  If Asc(key) = &h0D Or Asc(key) = &h03 And Not Keyboard.AsyncControlKey Then
-		    RaiseEvent Perform(Nil)
+		    Self.Perform()
 		    Return True
 		  End If
 		End Function
