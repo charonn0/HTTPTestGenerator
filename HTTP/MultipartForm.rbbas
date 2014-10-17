@@ -52,24 +52,20 @@ Implements FormInterface
 		        Exit Do
 		      End If
 		    Loop
-		    If CountFields(line, ";") < 3 Then 'form FormData
+		    If CountFields(line, ";") < 3 Then 'form field
 		      form.Element(nm) = NthField(elements(i), CRLF + CRLF, 2)
-		    Else 'file
+		    Else 'file field
 		      Dim filename As String = NthField(line, ";", 3)
 		      filename = NthField(filename, "=", 2)
 		      filename = ReplaceAll(filename, """", "")
 		      Dim tmp As FolderItem = SpecialFolder.Temporary.Child(filename)
-		      Try
-		        Dim bs As BinaryStream = BinaryStream.Create(tmp, True)
-		        Dim filedata As MemoryBlock = elements(i)
-		        Dim t As Integer = InStr(filedata, CRLF + CRLF) + 3
-		        filedata = filedata.StringValue(t, filedata.Size - t - 2)
-		        bs.Write(filedata)
-		        bs.Close
-		        form.Element(nm) = tmp
-		      Catch Err As IOException
-		        Continue For i
-		      End Try
+		      Dim bs As BinaryStream = BinaryStream.Create(tmp, True)
+		      Dim filedata As MemoryBlock = elements(i)
+		      Dim t As Integer = InStr(filedata, CRLF + CRLF) + 3
+		      filedata = filedata.StringValue(t, filedata.Size - t - 2)
+		      bs.Write(filedata)
+		      bs.Close
+		      form.Element(nm) = tmp
 		    End If
 		  Next
 		  
