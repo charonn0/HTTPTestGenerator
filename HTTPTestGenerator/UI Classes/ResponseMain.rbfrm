@@ -45,6 +45,7 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Status:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -79,6 +80,7 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "000 No Error Code"
       TextAlign       =   0
       TextColor       =   "&cFF000000"
@@ -310,7 +312,9 @@ End
 		    CookieList.Cell(CookieList.LastIndex, 0) = c.Name
 		    CookieList.Cell(CookieList.LastIndex, 1) = c.Value
 		    If c.Expires <> Nil And c.Expires.TotalSeconds - d.TotalSeconds >= 3600 Then
-		      CookieList.Cell(CookieList.LastIndex, 2) = c.Expires.ShortDate + " " + c.Expires.ShortTime + " UTC " + Format(c.Expires.GMTOffset, "+-#0.0#")
+		      Dim utc As String = "UTC"
+		      If c.Expires.GMTOffset <> 0.0 Then utc = utc + " " + Format(c.Expires.GMTOffset, "+-#0.0#")
+		      CookieList.Cell(CookieList.LastIndex, 2) = c.Expires.ShortDate + " " + c.Expires.ShortTime + " " + utc
 		    Else
 		      CookieList.Cell(CookieList.LastIndex, 2) = "End of session"
 		    End If
