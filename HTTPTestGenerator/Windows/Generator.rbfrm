@@ -246,9 +246,9 @@ End
 		  End If
 		  Sock.Port = p
 		  If sock.Secure Then
-		    ResponseMain1.Log("Attempting a secure connection to " + Request.Path.Host + " on port " + Format(p, "#####0"), 1)
+		    ResponseMain1.Log("Attempting a secure connection to " + CurrentRequest.Path.Host + " on port " + Format(p, "#####0"), 1)
 		  Else
-		    ResponseMain1.Log("Attempting a connection to " + Request.Path.Host + " on port " + Format(p, "#####0"), 1)
+		    ResponseMain1.Log("Attempting a connection to " + CurrentRequest.Path.Host + " on port " + Format(p, "#####0"), 1)
 		  End If
 		  Sock.Connect()
 		  
