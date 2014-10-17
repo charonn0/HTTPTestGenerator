@@ -7,6 +7,12 @@ Protected Class Message
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub DeleteAllHeaders()
+		  mHeaders.DeleteAllHeaders
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function HasHeader(HeaderName As String) As Boolean
 		  For i As Integer = 0 To mHeaders.Count - 1
 		    If mHeaders.Name(i) = HeaderName Then Return True
