@@ -70,6 +70,7 @@ Begin Window Generator
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
+      Security        =   ""
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
@@ -308,6 +309,26 @@ End
 	#tag EndMethod
 
 
+	#tag Property, Flags = &h1
+		Protected BytesReceivedLast As UInt64
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected BytesReceivedTotal As UInt64
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected BytesSentLast As UInt64
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected BytesSentTotal As UInt64
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private ConnectOK As Boolean
+	#tag EndProperty
+
 	#tag Property, Flags = &h21
 		Private mDown As Boolean
 	#tag EndProperty
@@ -350,11 +371,14 @@ End
 #tag Events Sock
 	#tag Event
 		Sub Connected()
+		  ConnectOK = True
 		  ResponseMain1.Log("Connected to '" + Me.RemoteAddress + " on port " + Format(Me.Port, "#####0"), 1)
 		  TimeOut.Reset
 		  Output = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
 		  Dim s As String = Request.ToString
+		  BytesSentLast = s.LenB
+		  BytesSentTotal = BytesSentTotal + BytesSentLast
 		  Me.Write(s)
 		  SendSz = 0
 		  RequestMain1.AddHistoryItem(RequestMain1.URL.Text)
@@ -366,7 +390,12 @@ End
 		  ResponseMain1.ViewResponse(Nil)
 		  Select Case Me.LastErrorCode
 		  Case 102
-		    ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), 1)
+		    If Not ConnectOK And Me.Secure And RequestMain1.Security > 0 Then ' might be a problem with our ciphersuite
+		      ResponseMain1.Log("Secure connection failed.", -1)
+		      ResponseMain1.Log("This may be due to an incompatible SSL/TLS version, in which case setting the connection security to ""Automatic"" might resolve the error.", 1)
+		    Else
+		      ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), 1)
+		    End If
 		    
 		  Case 103
 		    ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), -1)
@@ -389,9 +418,12 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub DataAvailable()
-		  ResponseMain1.Log("Receiving data...", 2)
 		  TimeOut.Reset
-		  Output = Output + Me.ReadAll
+		  Dim newdata As String = Me.ReadAll
+		  Output = Output + newdata
+		  BytesReceivedLast = newdata.LenB
+		  BytesReceivedTotal = BytesReceivedTotal + BytesReceivedLast
+		  ResponseMain1.Log("Receiving data (" + FormatBytes(BytesReceivedLast) + ")...", 2)
 		  RawText = Self.Request.ToString
 		  DataReceivedTimer.Mode = Timer.ModeSingle
 		End Sub

@@ -337,6 +337,14 @@ End
 		    Case Variant.TypeString
 		      Dim sr As New StyleRun
 		      sr.Text = Message
+		      Select Case Level
+		      Case 1 ' Socketry
+		        sr.TextColor = &c0000FF00
+		      Case 2 ' debug
+		        sr.TextColor = &c80808000
+		      Case -1 ' error
+		        sr.TextColor = &cFF000000
+		      End Select
 		      OutputLog.PrintOther(sr)
 		      sr.Bold = Not sr.Bold
 		      sr.Text = CRLF
