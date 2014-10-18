@@ -37,11 +37,12 @@ Inherits SSLSocket
 		      Dim msg As String = Me.Read(cl + 3)
 		      clientrequest.MessageBody = msg
 		    Else ' still data coming
-		      Dim d As String
+		      Dim d As New MemoryBlock(0)
+		      Dim entity As New BinaryStream(d)
 		      Do
-		        d = d + Me.ReadAll
+		        entity.Write(Me.ReadAll)
 		        App.YieldToNextThread
-		      Loop Until d.LenB >= cl
+		      Loop Until entity.Length >= cl
 		      clientrequest.MessageBody = d
 		    End If
 		  End If
