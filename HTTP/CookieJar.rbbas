@@ -13,7 +13,7 @@ Protected Class CookieJar
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Insert(Index As Integer, Assigns NewCookie As HTTP.Cookie)
+		Sub Insert(Index As Integer, NewCookie As HTTP.Cookie)
 		  mCookies.Insert(Index, NewCookie)
 		End Sub
 	#tag EndMethod
@@ -50,6 +50,27 @@ Protected Class CookieJar
 		  Wend
 		  
 		  Return cj
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Remove(Index As Integer)
+		  mCookies.Remove(Index)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function RemoveExpired(ExpireSessionCookies As Boolean) As HTTP.Cookie()
+		  Dim now As New Date
+		  Dim stale() As HTTP.Cookie
+		  For i As Integer = UBound(mCookies) DownTo 0
+		    Dim c As HTTP.Cookie = mCookies(i)
+		    If (c.Expires <> Nil And c.Expires.TotalSeconds < now.TotalSeconds) Or (c.Expires = Nil And ExpireSessionCookies) Then
+		      stale.Append(c)
+		      mCookies.Remove(i)
+		    End If
+		  Next
+		  Return stale
 		End Function
 	#tag EndMethod
 
