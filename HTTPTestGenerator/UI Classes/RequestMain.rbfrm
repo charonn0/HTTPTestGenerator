@@ -59,7 +59,7 @@ Begin ContainerControl RequestMain
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
-      TabIndex        =   3
+      TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -92,7 +92,7 @@ Begin ContainerControl RequestMain
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   1
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -132,7 +132,7 @@ Begin ContainerControl RequestMain
       Password        =   False
       ReadOnly        =   False
       Scope           =   0
-      TabIndex        =   0
+      TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
@@ -166,7 +166,7 @@ Begin ContainerControl RequestMain
       LockRight       =   True
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   2
+      TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -198,7 +198,7 @@ Begin ContainerControl RequestMain
       LockRight       =   True
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   4
+      TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -231,7 +231,7 @@ Begin ContainerControl RequestMain
       Width           =   124
    End
    Begin BevelButton EditRaw
-      AcceptFocus     =   False
+      AcceptFocus     =   True
       AutoDeactivate  =   True
       BackColor       =   "&c00000000"
       Bevel           =   0
@@ -261,7 +261,7 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
-      TabIndex        =   10
+      TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   "&c00000000"
@@ -275,7 +275,7 @@ Begin ContainerControl RequestMain
       Width           =   22
    End
    Begin BevelButton EditCookies
-      AcceptFocus     =   False
+      AcceptFocus     =   True
       AutoDeactivate  =   True
       BackColor       =   &h00000000
       Bevel           =   0
@@ -305,7 +305,7 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
-      TabIndex        =   11
+      TabIndex        =   6
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   &h00000000
@@ -349,7 +349,7 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
-      TabIndex        =   12
+      TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   "&c00000000"
@@ -363,7 +363,7 @@ Begin ContainerControl RequestMain
       Width           =   23
    End
    Begin BevelButton EditSecurity
-      AcceptFocus     =   False
+      AcceptFocus     =   True
       AutoDeactivate  =   True
       BackColor       =   "&c00000000"
       Bevel           =   0
@@ -393,7 +393,7 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
-      TabIndex        =   13
+      TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
       TextColor       =   "&c00000000"
