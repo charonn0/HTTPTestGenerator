@@ -508,7 +508,7 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Function CurrentItem() As JSONItem
-		  Return FwdHistory(FwdHistory.Ubound)
+		  If UBound(FwdHistory) > -1 Then Return FwdHistory(FwdHistory.Ubound)
 		End Function
 	#tag EndMethod
 
@@ -520,6 +520,9 @@ End
 		  Case mItem = Nil
 		    TypeLabel.Text = "No Selection:"
 		    ItemName.Text = ""
+		    SuppressChange = True
+		    ExpandRow(exp)
+		    SuppressChange = False
 		    Return
 		  Case mItem.HasName("method")
 		    exp = 2
