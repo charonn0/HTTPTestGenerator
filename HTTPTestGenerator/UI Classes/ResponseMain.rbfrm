@@ -45,7 +45,6 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Status:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -80,7 +79,6 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "000 No Error Code"
       TextAlign       =   0
       TextColor       =   "&cFF000000"
