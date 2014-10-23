@@ -442,21 +442,30 @@ End
 		  NextRequest.MessageBody = oldbody
 		  NextRequest.Method = HTTP.Method(RequestMethod.Text)
 		  If NextRequest.Method = HTTP.RequestMethod.InvalidMethod Then NextRequest.MethodName = RequestMethod.Text
-		  NextRequest.Path = URL.Text
-		  NextRequest.Path.Fragment = ""
-		  If NextRequest.path.Path = "" Then NextRequest.path.Path = "/"
 		  NextRequest.ProtocolVersion = CDbl(NthField(ProtocolVer.Text, "/", 2))
 		  
 		  
 		  Dim u As HTTP.URI = URL.Text
 		  If u.Username <> "" Or u.Password <> "" Then
 		    If MsgBox("Auto-set HTTP Authorization header?", 4 + 32, "User credentials detected in URL") = 6 Then
-		      NextRequest.Header("Authorization") = "Basic " + EncodeBase64(u.Username + ":" + u.Password)
-		      u.Username = ""
-		      u.Password = ""
-		      URL.Text = u.ToString
+		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		        If RequestHeaders.Cell(i, 0) = "Authorization" Then
+		          RequestHeaders.RemoveRow(i)
+		          Exit For
+		        End If
+		      Next
+		      RequestHeaders.AddRow("Authorization", "Basic " + EncodeBase64(u.Username + ":" + u.Password))
+		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Authorization":"Basic " + EncodeBase64(u.Username + ":" + u.Password)
 		    End If
 		  End If
+		  
+		  u.Username = ""
+		  u.Password = ""
+		  URL.Text = u.ToString
+		  NextRequest.Path = u
+		  NextRequest.Path.Fragment = ""
+		  If NextRequest.path.Path = "" Then NextRequest.path.Path = "/"
+		  
 		  
 		  For i As Integer = 0 To RequestHeaders.ListCount - 1
 		    NextRequest.Header(RequestHeaders.Cell(i, 0), True) = RequestHeaders.Cell(i, 1)
