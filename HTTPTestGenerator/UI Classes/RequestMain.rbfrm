@@ -256,8 +256,8 @@ Begin ContainerControl RequestMain
       Left            =   317
       LockBottom      =   ""
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
@@ -300,8 +300,8 @@ Begin ContainerControl RequestMain
       Left            =   339
       LockBottom      =   ""
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
@@ -388,8 +388,8 @@ Begin ContainerControl RequestMain
       Left            =   295
       LockBottom      =   ""
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
