@@ -117,6 +117,10 @@ Inherits Pair
 		    data = data + "; secure"
 		  End If
 		  
+		  If Me.httpOnly Then
+		    data = data + "; httpOnly"
+		  End If
+		  
 		  Return data
 		End Function
 	#tag EndMethod
@@ -238,12 +242,6 @@ Inherits Pair
 			InitialValue="0"
 			Type="Integer"
 			InheritedFrom="Object"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Value"
-			Group="Behavior"
-			Type="String"
-			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
