@@ -10,6 +10,7 @@ Protected Class URI
 		Protected Sub Constructor(URL As String)
 		  ' Pass a URI string to parse. e.g. http://user:password@www.example.com:8080/?foo=bar&bat=baz#Top
 		  
+		  Dim isIPv6 As Boolean
 		  If NthField(URL, ":", 1) <> "mailto" Then
 		    If InStr(URL, "://") > 0 Then
 		      Me.Scheme = NthField(URL, "://", 1)
@@ -31,18 +32,22 @@ Protected Class URI
 		        Me.Port = Val(s)
 		        URL = URL.Replace(":" + Format(Me.Port, "######"), "")
 		      End If
-		    ElseIf Left(URL, 1) = "[" And InStr(URL, "]:") > 0 Then ' ipv6 with Me.Port
+		    ElseIf Left(URL, 1) = "[" And InStr(URL, "]:") > 0 Then ' ipv6 with port
+		      isIPv6 = True
 		      Dim s As String = NthField(URL, "]:", 2)
 		      s = NthField(s, "?", 1)
 		      Me.Port = Val(s)
 		      URL = URL.Replace("]:" + Format(Me.Port, "######"), "]")
+		    ElseIf Left(URL, 1) = "[" And InStr(URL, "]/") > 0 Then ' ipv6 with path
+		      isIPv6 = True
+		      'URL = URL.Replace("]/", "]")
 		    Else
 		      Me.Port = SchemeToPort(Me.Scheme)
 		    End If
 		    
 		    
 		    If Instr(URL, "#") > 0 Then
-		      Me.Fragment = NthField(URL, "#", 2)  //    #Me.Fragment
+		      Me.Fragment = NthField(URL, "#", 2)  //    #fragment
 		      URL = URL.Replace("#" + Me.Fragment, "")
 		    End If
 		    
@@ -86,7 +91,7 @@ Protected Class URI
 		  Me.Scheme = EncodeURLComponent(Me.Scheme)
 		  Me.Username = EncodeURLComponent(Me.Username)
 		  Me.Password = EncodeURLComponent(Me.Password)
-		  Me.Host = EncodeURLComponent(Me.Host)
+		  If Not isIPv6 Then Me.Host = EncodeURLComponent(Me.Host)
 		  For Each arg As String In Me.Arguments
 		    arg = EncodeURLComponent(arg)
 		  Next

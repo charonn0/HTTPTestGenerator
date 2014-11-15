@@ -456,12 +456,12 @@ End
 		      Next
 		      RequestHeaders.AddRow("Authorization", "Basic " + EncodeBase64(u.Username + ":" + u.Password))
 		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Authorization":"Basic " + EncodeBase64(u.Username + ":" + u.Password)
+		      u.Username = ""
+		      u.Password = ""
+		      URL.Text = u.ToString
 		    End If
 		  End If
 		  
-		  u.Username = ""
-		  u.Password = ""
-		  URL.Text = u.ToString
 		  NextRequest.Path = u
 		  NextRequest.Path.Fragment = ""
 		  If NextRequest.path.Path = "" Then NextRequest.path.Path = "/"
