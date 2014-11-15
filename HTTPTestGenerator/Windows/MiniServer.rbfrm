@@ -120,7 +120,6 @@ Begin Window MiniServer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -165,7 +164,6 @@ Begin Window MiniServer
       Width           =   80
    End
    Begin ServerSocket Socket
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -174,11 +172,8 @@ Begin Window MiniServer
       MinimumSocketsAvailable=   2
       Port            =   0
       Scope           =   0
-      TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   0
-      Visible         =   True
       Width           =   32
    End
    Begin HREFArea HTTPLog
@@ -228,7 +223,6 @@ Begin Window MiniServer
       Width           =   583
    End
    Begin Timer LogTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -236,15 +230,11 @@ Begin Window MiniServer
       Mode            =   0
       Period          =   1
       Scope           =   0
-      TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   34
-      Visible         =   True
       Width           =   32
    End
    Begin Timer ListenTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -252,11 +242,8 @@ Begin Window MiniServer
       Mode            =   0
       Period          =   1
       Scope           =   0
-      TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   67
-      Visible         =   True
       Width           =   32
    End
 End
@@ -275,6 +262,13 @@ End
 		End Function
 	#tag EndEvent
 
+
+	#tag Method, Flags = &h21
+		Private Sub ConnectedHandler(Sender As HTTP.ClientHandler)
+		  msgs.Append(1:"Client connecting from " + Sender.RemoteAddress + CRLF)
+		  LogTimer.Mode = Timer.ModeSingle
+		End Sub
+	#tag EndMethod
 
 	#tag Method, Flags = &h21
 		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
@@ -396,11 +390,11 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		Logging As Boolean = True
+		LogLevel As Integer = 0
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected msgs() As HTTP.Message
+		Protected msgs() As Variant
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -504,6 +498,7 @@ End
 		  Dim sock As New HTTP.ClientHandler
 		  AddHandler sock.MessageSent, WeakAddressOf MessageSentHandler
 		  AddHandler sock.HandleRequest, WeakAddressOf HandleRequestHandler
+		  AddHandler sock.Connected, WeakAddressOf ConnectedHandler
 		  If ConnectionType <> ConnectionTypes.Insecure Then
 		    sock.CertificatePassword = CertificatePassword
 		    sock.CertificateFile = CertificateFile
@@ -532,23 +527,6 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
-		  #pragma Unused X
-		  #pragma Unused Y
-		  base.Append(New MenuItem("Clear log"))
-		  Return True
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
-		  Select Case hitItem.Text
-		  Case "Clear log"
-		    Me.Clear
-		    Return True
-		  End Select
-		End Function
-	#tag EndEvent
-	#tag Event
 		Sub ClickLink(LinkValue As Variant, LinkText As String)
 		  Select Case True
 		  Case LinkValue IsA HTTP.Request
@@ -573,6 +551,46 @@ End
 		  
 		End Sub
 	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  base.Append(New MenuItem("Clear log"))
+		  Dim squelch As New MenuItem("&Verbosity")
+		  
+		  Dim verb As New MenuItem("HTTP Only")
+		  If LogLevel = 0 Then verb.Checked = True
+		  squelch.Append(verb)
+		  
+		  verb = New MenuItem("Socketry")
+		  If LogLevel = 1 Then verb.Checked = True
+		  squelch.Append(verb)
+		  
+		  verb = New MenuItem("Debug")
+		  If LogLevel = 2 Then verb.Checked = True
+		  squelch.Append(verb)
+		  
+		  base.Append(squelch)
+		  
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Select Case hitItem.Text
+		  Case "Clear log"
+		    Me.Clear
+		    Return True
+		  Case "HTTP Only"
+		    LogLevel = 0
+		    
+		  Case "Socketry"
+		    LogLevel = 1
+		  Case "Debug"
+		    LogLevel = 2
+		  End Select
+		End Function
+	#tag EndEvent
 #tag EndEvents
 #tag Events LogTimer
 	#tag Event
@@ -585,12 +603,17 @@ End
 		      HTTPLog.PrintRequest(p)
 		    Case IsA HTTP.Response
 		      HTTPLog.PrintResponse(p)
+		    Case IsA Pair
+		      Dim pp As Pair = p
+		      If pp.Left <= LogLevel Then
+		        Dim sr As New StyleRun
+		        sr.Font = App.FixedWidthFont
+		        sr.Text = pp.Right
+		        sr.TextColor = &c00000000
+		        HTTPLog.PrintOther(sr)
+		      End If
 		    Else
-		      Dim sr As New StyleRun
-		      sr.Font = App.FixedWidthFont
-		      sr.Text = p
-		      sr.TextColor = &c00000000
-		      HTTPLog.PrintOther(sr)
+		      Break
 		    End Select
 		  Wend
 		  HTTPLog.ScrollToEnd()
