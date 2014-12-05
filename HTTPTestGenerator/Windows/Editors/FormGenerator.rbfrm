@@ -262,7 +262,7 @@ Begin Window FormGenerator
       Cancel          =   False
       Caption         =   "File"
       Default         =   False
-      Enabled         =   False
+      Enabled         =   True
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
@@ -373,7 +373,7 @@ End
 		        Form.Element(HTTPForm.Cell(i, 0)) = f
 		      Else
 		        Form.Element(HTTPForm.Cell(i, 0)) = f.AbsolutePath
-		        MsgBox("File element '" + f.AbsolutePath + "' has been stripped.")
+		        MsgBox("This form encoding cannot encode files. Form element '" + f.AbsolutePath + "' has been truncated.")
 		      End If
 		    Else
 		      Form.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
@@ -404,7 +404,6 @@ End
 #tag Events FormType
 	#tag Event
 		Sub Action()
-		  FileAdd.Enabled = Me.Value
 		  Form = New MultipartForm
 		End Sub
 	#tag EndEvent
@@ -412,7 +411,6 @@ End
 #tag Events FormType1
 	#tag Event
 		Sub Action()
-		  FileAdd.Enabled = Not Me.Value
 		  Form = New HTTP.URLEncodedForm("")
 		End Sub
 	#tag EndEvent
@@ -420,6 +418,13 @@ End
 #tag Events FileAdd
 	#tag Event
 		Sub Action()
+		  If FormType1.Value Then
+		    If MsgBox("Change form encoding to 'multipart/form-data'?", 4 + 48, "Current encoding does not support files") = 6 Then
+		      FormType.Value = True
+		    Else
+		      Return
+		    End If
+		  End If
 		  Dim f As FolderItem = GetOpenFolderItem("")
 		  If f <> Nil Then
 		    HTTPForm.AddRow(f.Name, f.AbsolutePath, "")
