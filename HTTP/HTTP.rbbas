@@ -666,6 +666,7 @@ Protected Module HTTP
 			    "cdmiq":"application/cdmi-queue", _
 			    "cu":"application/cu-seeme", _
 			    "davmount":"application/davmount+xml", _
+			    "daa":"application/x-daa", _
 			    "dssc":"application/dssc+der", _
 			    "xdssc":"application/dssc+xml", _
 			    "ecma":"application/ecmascript", _
