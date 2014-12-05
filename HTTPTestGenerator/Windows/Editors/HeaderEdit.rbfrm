@@ -463,15 +463,9 @@ End
 		  Case "Host"
 		    HeaderValue.Text = "www.example.com"
 		  Case "User-Agent"
-		    'AutoValue.DeleteAllRows
-		    'AutoValue.AddRow("BSHTTP\1.0")
-		    'AutoValue.AddRow(BROWSER_CHROME_WIN64)
-		    'AutoValue.AddRow(BROWSER_FIREFOX_WIN64)
-		    'AutoValue.AddRow(BROWSER_IE)
-		    'AutoValue.AddRow(BROWSER_SAFARI_OSX)
 		    AutoValue.Visible = True
 		    AutoHeader.ListIndex = 0
-		    'HeaderValue.Visible = False
+		    If HeaderValue.Text.Trim = "" Then HeaderValue.Text = "BSHTTP\1.0"
 		    
 		  Case "Accept"
 		    'Dim s As String = MIMEEdit.GetMIME("text/html")
@@ -532,13 +526,15 @@ End
 		      HeaderValue.Text = BROWSER_CHROME_WIN64
 		    Case 2
 		      HeaderValue.Text = BROWSER_FIREFOX_WIN64
-		    Case 0
+		    Case 3
 		      HeaderValue.Text = BROWSER_IE
-		    Case 0
+		    Case 4
 		      HeaderValue.Text = BROWSER_SAFARI_OSX
 		    End Select
-		  Else
+		  ElseIf Me.Text <> "" Then
 		    HeaderValue.Text = Me.Text
+		  Else
+		    HeaderValue.Text = "BSHTTP\1.0"
 		  End If
 		  
 		End Sub
