@@ -390,19 +390,19 @@ Protected Module HTTP
 		        page = ReplaceAll(page, "%DOCUMENT%", "Permission to access this resource is denied.")
 		        
 		      Case 404
-		        page = ReplaceAll(page, "%DOCUMENT%", "This resource cannot be found on this server. ")
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource cannot be found. ")
 		        
 		      Case 405
-		        page = ReplaceAll(page, "%DOCUMENT%", "The specified HTTP request method is not allowed for this resource. ")
+		        page = ReplaceAll(page, "%DOCUMENT%", "The specified HTTP request method is not allowed for this resource.")
 		        
 		      Case 406
-		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser did not specify an acceptable Content-Type that was compatible with this resource.")
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser did not specify an acceptable Content-Type that is compatible with this resource.")
 		        
 		      Case 410
 		        page = ReplaceAll(page, "%DOCUMENT%", "This resource has been removed.")
 		        
 		      Case 411
-		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser must specify the length of the request payload.")
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser did not specify the length of the request payload.")
 		        
 		      Case 413
 		        page = ReplaceAll(page, "%DOCUMENT%", "The request payload is too large.")
@@ -420,7 +420,7 @@ Protected Module HTTP
 		        page = ReplaceAll(page, "%DOCUMENT%", "I'm a little teapot, short and stout; here is my handle, here is my spout.")
 		        
 		      Case 426
-		        page = ReplaceAll(page, "%DOCUMENT%", "This resource is not available over an insecure connection.")
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource is not available via the current network protocol.")
 		        
 		      Case 429
 		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser has made too many requests of this server.")

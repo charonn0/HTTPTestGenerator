@@ -14,8 +14,11 @@ Inherits Pair
 		  End If
 		  l = NthField(data, "=", 1)
 		  r = Right(data, data.Len - l.Len - 1)
-		  'NthField(data, "=", 2)
-		  Me.Constructor(l, r)
+		  
+		  // Calling the overridden superclass constructor.
+		  // Constructor(left As Variant, right As Variant) -- From Pair
+		  Super.Constructor(l, r)
+		  
 		  If m <> "" Then
 		    Dim items() As String = Split(m, ";")
 		    For Each item As String In items
@@ -85,6 +88,8 @@ Inherits Pair
 		    Dim l, r As String
 		    l = NthField(s(x).Trim, "=", 1)
 		    r = NthField(s(x).Trim, "=", 2)
+		    // Calling the superclass constructor.
+		    // Constructor(left As Variant, right As Variant) -- From Pair
 		    Dim c As New Cookie(l, r)
 		    ret.Append(c)
 		  Next
