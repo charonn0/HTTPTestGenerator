@@ -312,7 +312,7 @@ Begin Window SpecIndex
          Selectable      =   False
          TabIndex        =   4
          TabPanelIndex   =   0
-         Text            =   "Description:"
+         Text            =   "Abstract:"
          TextAlign       =   2
          TextColor       =   &h000000
          TextFont        =   "System"
@@ -876,6 +876,8 @@ End
 		  If Left(LinkValue, 3) = "rfc" Then ' spec URL
 		    Dim u As HTTP.URI = "http://tools.ietf.org/html/" + LinkValue
 		    ShowURL(u.ToString)
+		  ElseIf Left(LinkValue, 4) = "http" Then ' web URL
+		    ShowURL(LinkValue)
 		  Else
 		    SpecIndex.ShowItem(LinkValue)
 		  End If
