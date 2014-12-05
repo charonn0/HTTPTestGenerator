@@ -397,7 +397,7 @@
     },
     {
         "header": "Via",
-        "description": "",
+        "description": "The \"Via\" header field indicates the presence of intermediate protocols and recipients between the user agent and the <link=server>server</link> (on requests) or between the <link=origin server>origin server</link> and the <link=client>client</link> (on responses), similar to the <link=rfc5322#section-3.6.7>\"Received\"</link> header field in email. Via can be used for tracking message forwards, avoiding request loops, and identifying the protocol capabilities of senders along the request/response chain.",
         "spec_title": "RFC7230#5.7.1",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-5.7.1"
     },
@@ -469,7 +469,7 @@
     },
     {
         "header": "Depth",
-        "description": "standard",
+        "description": "The Depth header may be used with the <link=LOCK>LOCK</link> method. Values other than 0 or infinity <link=rfc2119#section-2>MUST NOT</link> be used with the Depth header on a LOCK method. All resources that support the LOCK method <link=rfc2119#section-1>MUST</link> support the Depth header.\r\nA Depth header of value 0 means to just lock the resource specified by the <link=Request-URI>Request-URI</link>.",
         "spec_title": "RFC4918",
         "spec_href": "http://tools.ietf.org/html/rfc4918"
     },
@@ -481,7 +481,7 @@
     },
     {
         "header": "IM",
-        "description": "",
+        "description": "The IM response-header field is used to indicate the instance-manipulations, if any, that have been applied to the instance represented by the response. Typical instance manipulations include delta encoding and compression.",
         "spec_title": "RFC3229#10.5.2",
         "spec_href": "http://tools.ietf.org/html/rfc3229#section-10.5.2"
     },
@@ -535,9 +535,9 @@
     },
     {
         "header": "Redirect-Ref",
-        "description": "",
-        "spec_title": "RFC4437",
-        "spec_href": "http://tools.ietf.org/html/rfc4437"
+        "description": "The Redirect-Ref header is used in all <link=3xx>3xx</link> responses from redirect reference resources.  The value is the link target as specified during redirect reference resource creation.",
+        "spec_title": "RFC4437#12.1",
+        "spec_href": "http://tools.ietf.org/html/rfc4437#section-12.1"
     },
     {
         "header": "Schedule-Reply",

@@ -73,7 +73,7 @@
     },
     {
         "method": "ACL",
-        "description": "",
+        "description": "The ACL method modifies the access control list (which can be read via the DAV:acl property) of a resource.  Specifically, the ACL method only permits modification to ACEs that are not inherited, and are not protected.  An ACL method invocation modifies all non-inherited and non-protected ACEs in a resource's access control list to exactly match the ACEs contained within in the DAV:acl XML element (specified in <link=rfc3744#section-5.5>Section 5.5</link>) of the request body.\r\n\r\nAn ACL request body <link=rfc2119#section-1>MUST</link> contain only one DAV:acl XML element. Unless the non-inherited and non-protected ACEs of the DAV:acl property of the resource can be updated to be exactly the value specified in the ACL request, the ACL request MUST fail.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -82,7 +82,7 @@
     },
     {
         "method": "BASELINE-CONTROL",
-        "description": "",
+        "description": "A collection can be placed under baseline control with a BASELINE-CONTROL request.  When a collection is placed under baseline control, the DAV:version-controlled-configuration property of the collection is set to identify a new version-controlled configuration. This version-controlled configuration can be checked out and then checked in to create a new baseline for that collection.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -91,7 +91,7 @@
     },
     {
         "method": "BIND",
-        "description": "",
+        "description": "The BIND method modifies the collection identified by the <link=Request-URI>Request-URI</link>, by adding a new binding from the segment specified in the BIND body to the resource identified in the BIND body.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -100,7 +100,7 @@
     },
     {
         "method": "CHECKIN",
-        "description": "",
+        "description": "A CHECKIN request can be applied to a checked-out version-controlled resource to produce a new version whose content and dead properties are copied from the checked-out resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -109,7 +109,7 @@
     },
     {
         "method": "CHECKOUT",
-        "description": "",
+        "description": "A CHECKOUT request can be applied to a checked-in version-controlled resource to allow modifications to the content and dead properties of that version-controlled resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -118,7 +118,7 @@
     },
     {
         "method": "COPY",
-        "description": "The COPY method creates a duplicate of the source resource identified by the Request-URI, in the destination resource identified by the URI in the <link=Destination>Destination</link> header. The Destination header <link=rfc2119#section-1>MUST</link> be present. The exact behavior of the COPY method depends on the type of the source resource.",
+        "description": "The COPY method creates a duplicate of the source resource identified by the <link=Request-URI>Request-URI</link>, in the destination resource identified by the URI in the <link=Destination>Destination</link> header. The Destination header <link=rfc2119#section-1>MUST</link> be present. The exact behavior of the COPY method depends on the type of the source resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -136,7 +136,7 @@
     },
     {
         "method": "LINK",
-        "description": "The LINK method establishes one or more Link relationships between the existing resource identified by the Request-URI and other existing resources. The difference between LINK and other methods allowing links to be established between resources is that the LINK method does not allow any message-body to be sent in the request and does not directly result in the creation of new resources.",
+        "description": "The LINK method establishes one or more Link relationships between the existing resource identified by the <link=Request-URI>Request-URI</link> and other existing resources. The difference between LINK and other methods allowing links to be established between resources is that the LINK method does not allow any message-body to be sent in the request and does not directly result in the creation of new resources.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -181,7 +181,7 @@
     },
     {
         "method": "MKCOL",
-        "description": "Creates a new  <link=collection resource>collection resource</link>  at the location specified by the Request-URI.",
+        "description": "Creates a new  <link=collection resource>collection resource</link>  at the location specified by the <link=Request-URI>Request-URI</link>.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -190,7 +190,7 @@
     },
     {
         "method": "MKREDIRECTREF",
-        "description": "",
+        "description": "The MKREDIRECTREF method requests the creation of a redirect reference resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -199,7 +199,7 @@
     },
     {
         "method": "MKWORKSPACE",
-        "description": "",
+        "description": "A MKWORKSPACE request creates a new workspace resource.  A server <link=rfc2119#section-5>MAY</link> restrict workspace creation to particular collections, but a client can determine the location of these collections from a DAV:workspace-collection-set <link=OPTIONS>OPTIONS request</link> (see <link=rfc3253#section-6.4>Section 6.4</link>).",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -226,7 +226,7 @@
     },
     {
         "method": "PATCH",
-        "description": "Requests that a set of changes described in the request entity be applied to the resource identified by the Request-URI.",
+        "description": "Requests that a set of changes described in the request entity be applied to the resource identified by the <link=Request-URI>Request-URI</link>.",
         "safe": false,
         "idempotent": false,
         "cacheable": false,
@@ -235,7 +235,7 @@
     },
     {
         "method": "PROPFIND",
-        "description": "",
+        "description": "The PROPFIND method retrieves properties defined on the resource identified by the <link=Request-URI>Request-URI</link>, if the resource does not have any internal members, or on the resource identified by the Request-URI and potentially its member resources, if the resource is a collection that has internal member URLs.  All DAV-compliant resources <link=rfc2119#section-1>MUST</link> support the PROPFIND method and the propfind XML element (<link=rfc4918#section-14.20>Section 14.20</link>) along with all XML elements defined for use with that element.",
         "safe": true,
         "idempotent": true,
         "cacheable": "",
@@ -244,7 +244,7 @@
     },
     {
         "method": "PROPPATCH",
-        "description": "",
+        "description": "The PROPPATCH method processes instructions specified in the request body to set and/or remove properties defined on the resource identified by the <link=Request-URI>Request-URI</link>.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -253,7 +253,7 @@
     },
     {
         "method": "REBIND",
-        "description": "",
+        "description": "The REBIND method removes a binding to a resource from a collection, and adds a binding to that resource into the collection identified by the <link=Request-URI>Request-URI</link>.  The request body specifies the binding to be added (segment) and the old binding to be removed (href). It is effectively an atomic form of a <link=MOVE>MOVE</link> request, and <link=rfc2119#section-1>MUST</link> be treated the same way as MOVE for the purpose of determining access permissions.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -262,7 +262,7 @@
     },
     {
         "method": "REPORT",
-        "description": "",
+        "description": " A REPORT request is an extensible mechanism for obtaining information about a resource. Unlike a resource property, which has a single value, the value of a report can depend on additional information specified in the REPORT request body and in the REPORT request headers.",
         "safe": true,
         "idempotent": true,
         "cacheable": "",
@@ -271,7 +271,7 @@
     },
     {
         "method": "SEARCH",
-        "description": "",
+        "description": "The client invokes the SEARCH method to initiate a server-side search.  The body of the request defines the query.  The server <link=rfc2119#section-1>MUST</link> emit an entity matching the WebDAV multistatus format. (<link=RFC4918#section-13>RFC4918, section-13</link>)",
         "safe": true,
         "idempotent": true,
         "cacheable": "",
@@ -280,7 +280,7 @@
     },
     {
         "method": "UNBIND",
-        "description": "",
+        "description": "The UNBIND method modifies the collection identified by the <link=Request-URI>Request-URI</link> by removing the binding identified by the segment specified in the UNBIND body.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -289,7 +289,7 @@
     },
     {
         "method": "UNCHECKOUT",
-        "description": "",
+        "description": "An UNCHECKOUT request can be applied to a checked-out version-controlled resource to cancel the <link=CHECKOUT>CHECKOUT</link> and restore the pre-CHECKOUT state of the version-controlled resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -298,7 +298,7 @@
     },
     {
         "method": "UNLINK",
-        "description": "",
+        "description": "The UNLINK method removes one or more Link relationships from the existing resource identified by the <link=Request-URI>Request-URI</link>. These relationships may have been established using the LINK method or by any other method supporting the Link header. The removal of a link to a resource does not imply that the resource ceases to exist or becomes   inaccessible for future references.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -307,7 +307,7 @@
     },
     {
         "method": "UNLOCK",
-        "description": "",
+        "description": "The UNLOCK method removes the lock identified by the lock token in the <link=Lock-Token>Lock-Token</link> request header.  The <link=Request-URI>Request-URI</link> <link=rfc2119#section-1>MUST</link> identify a resource within the scope of the lock.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -316,7 +316,7 @@
     },
     {
         "method": "UPDATE",
-        "description": "",
+        "description": "The UPDATE method modifies the content and dead properties of a checked-in version-controlled resource (the \"update target\") to be those of a specified version (the \"update source\") from the version history of that version-controlled resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -325,7 +325,7 @@
     },
     {
         "method": "UPDATEREDIRECTREF",
-        "description": "",
+        "description": "The UPDATEREDIRECTREF method requests the update of a redirect reference resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -334,7 +334,7 @@
     },
     {
         "method": "VERSION-CONTROL",
-        "description": "",
+        "description": "A VERSION-CONTROL request can be used to create a version-controlled resource at the request-URL.  It can be applied to a versionable resource or to a version-controlled resource.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",

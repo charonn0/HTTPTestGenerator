@@ -48,6 +48,12 @@
         "spec_href": "http://tools.ietf.org/html/rfc4918#section-5"
     },
 	{
+        "word": "Request-URI",
+        "description": "The Uniform Resource Identifier of the resource being requested in a given transaction.",
+		"spec_title": "RFC7230#3.1.1",
+        "spec_href": "https://tools.ietf.org/html/rfc7230#section-3.1.1"
+    },
+	{
         "word": "cache",
         "description": "An HTTP cache is a local store of response messages and the subsystem that controls storage, retrieval, and deletion of messages in it. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any <link=client>client</link> or <link=web server>server</link> <link=rfc2119#section-5>MAY</link> employ a cache, though a cache cannot be used by a <link=web server>server</link> that is acting as a tunnel.",
 		"spec_title": "RFC7234#1",
