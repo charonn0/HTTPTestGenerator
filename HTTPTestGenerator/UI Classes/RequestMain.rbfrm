@@ -55,7 +55,7 @@ Begin ContainerControl RequestMain
       LockRight       =   True
       LockTop         =   True
       RequiresSelection=   False
-      Scope           =   0
+      Scope           =   2
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
@@ -513,6 +513,20 @@ End
 		  Else
 		    ProgressBar1.Value = 100 + Percent
 		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SetRequestCookie(c As HTTP.Cookie)
+		  Me.SetRequestHeader("Cookie", c.ToString, c)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SetRequestHeader(Name As String, Value As String, Tag As Variant = Nil)
+		  If Tag = Nil Then Tag = Name:Value
+		  RequestHeaders.AddRow(Name, Value)
+		  RequestHeaders.RowTag(RequestHeaders.LastIndex) = Tag
 		End Sub
 	#tag EndMethod
 

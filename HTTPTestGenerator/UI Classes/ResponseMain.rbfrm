@@ -404,6 +404,10 @@ End
 
 
 	#tag Property, Flags = &h1
+		Protected CookiesUseUTC As Boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
 		Protected LogLevel As Integer
 	#tag EndProperty
 
@@ -485,8 +489,7 @@ End
 		    Dim nm, vl As String
 		    nm = c.Left
 		    vl = c.Right
-		    Generator.RequestMain1.RequestHeaders.AddRow(nm, vl, "")
-		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = nm:vl
+		    Generator.RequestMain1.SetRequestHeader(nm, vl)
 		    Return True
 		    
 		  Case "View spec..."
@@ -510,12 +513,21 @@ End
 		  If Me.ListCount <= 0 Then Return False
 		  base.Append(New MenuItem("Save cookies to a file..."))
 		  Dim r As Integer = Me.RowFromXY(X, Y)
+		  Dim c As Integer = Me.ColumnFromXY(X, Y)
 		  If r > -1 Then
 		    Dim m As New MenuItem("Copy to request headers")
 		    m.Tag = Me.RowTag(r)
 		    Base.Append(m)
-		    Return True
+		  Else
+		    Base.Append(New MenuItem("Copy all to request headers"))
 		  End If
+		  If c = 2 Then 
+		    Dim m As New MenuItem("Toggle UTC")
+		    m.Tag = Me.RowTag(r)
+		    Base.Append(m)
+		  End If
+		  
+		  Return True
 		End Function
 	#tag EndEvent
 	#tag Event
@@ -523,9 +535,32 @@ End
 		  Select Case hitItem.Text
 		  Case "Copy to request headers"
 		    Dim c As Cookie = hitItem.Tag
-		    Generator.RequestMain1.RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
-		    Generator.RequestMain1.RequestHeaders.RowTag(Generator.RequestMain1.RequestHeaders.LastIndex) = c
+		    Generator.RequestMain1.SetRequestCookie(c)
 		    Return True
+		    
+		  Case "Copy all to request headers"
+		    For i As Integer = 0 To Me.ListCount - 1
+		      Dim c As Cookie = Me.RowTag(i)
+		      Generator.RequestMain1.SetRequestCookie(c)
+		    Next
+		    Return True
+		    
+		  Case "Toggle UTC"
+		    CookiesUseUTC = Not CookiesUseUTC
+		    Dim d As New Date
+		    For i As Integer = 0 To Me.ListCount - 1
+		      Dim c As HTTP.Cookie = Me.RowTag(i)
+		      If c.Expires <> Nil And c.Expires.TotalSeconds - d.TotalSeconds >= 3600 Then
+		        Dim utc As String = "UTC"
+		        If CookiesUseUTC Then c.Expires.GMTOffset = d.GMTOffset
+		        If c.Expires.GMTOffset <> 0.0 Then utc = utc + " " + Format(c.Expires.GMTOffset, "+-#0.0#")
+		        CookieList.Cell(CookieList.LastIndex, 2) = c.Expires.ShortDate + " " + c.Expires.ShortTime + " " + utc
+		      Else
+		        CookieList.Cell(CookieList.LastIndex, 2) = "End of session"
+		      End If
+		    Next
+		    Return True
+		    
 		  Case "Save cookies to a file..."
 		    Dim cj As New HTTP.CookieJar
 		    For i As Integer = 0 To Me.ListCount - 1
