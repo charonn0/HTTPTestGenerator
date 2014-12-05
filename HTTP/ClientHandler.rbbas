@@ -4,7 +4,7 @@ Inherits SSLSocket
 	#tag Event
 		Sub DataAvailable()
 		  ' Worker is a property of this class.
-		  ' Worker.Run is handled by the ThreadRun method, which in turn calls the DefaultHandler method.
+		  ' Worker.Run is handled by the ThreadRun method
 		  If Worker.State <> Thread.Running Then Worker.Run
 		End Sub
 	#tag EndEvent
@@ -111,8 +111,7 @@ Inherits SSLSocket
 		      End If
 		    End Select
 		    
-		    ' Verify that the response is proper for a given response if the request
-		    ' uses HTTP 1.1 or newer and EnforceContentType is True
+		    ' Verify that the resource is of an Acceptable ContentType (HTTP 1.1 only)
 		    If EnforceContentType And ClientRequest.ProtocolVersion > 1.0 And doc.StatusCode < 300 And doc.StatusCode >= 200 Then
 		      If Not clientrequest.Accepts(doc.ContentType) Then
 		        Dim accepted As ContentType = doc.ContentType
@@ -121,9 +120,10 @@ Inherits SSLSocket
 		      End If
 		    End If
 		    
-		    If clientrequest.Method = RequestMethod.HEAD Then
-		      doc.MessageBody = ""
-		    ElseIf doc.HasHeader("Content-Length") And Val(doc.Header("Content-Length")) <> doc.MessageBody.LenB Then
+		    'If clientrequest.Method = RequestMethod.HEAD Then
+		    'doc.MessageBody = ""
+		    'Else
+		    If doc.HasHeader("Content-Length") And Val(doc.Header("Content-Length")) <> doc.MessageBody.LenB Then
 		      doc.Header("Content-Length") = Str(doc.MessageBody.LenB)
 		    End If
 		    
