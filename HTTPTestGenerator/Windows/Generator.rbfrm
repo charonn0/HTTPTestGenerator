@@ -29,22 +29,17 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
-      TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   35
-      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -52,11 +47,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   79
-      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -70,7 +62,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -126,7 +117,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -144,7 +134,6 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -152,11 +141,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
-      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   123
-      Visible         =   True
       Width           =   32
    End
 End
@@ -402,7 +388,7 @@ End
 		    End If
 		  Case 401
 		    Dim r As String = NthField(CurrentResponse.Header("WWW-Authenticate"), "=", 2)
-		    Dim p As Pair = Authenicator.Authenticate(r, CurrentResponse.Path.Scheme = "https")
+		    Dim p As Pair = Authenticator.Authenticate(r, CurrentResponse.Path.Scheme = "https")
 		    If p <> Nil Then
 		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
 		      RequestMain1.SetRequestHeader("Authorization", s)

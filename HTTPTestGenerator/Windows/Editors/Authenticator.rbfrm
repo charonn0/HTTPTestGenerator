@@ -1,5 +1,5 @@
 #tag Window
-Begin Window Authenicator
+Begin Window Authenticator
    BackColor       =   &hFFFFFF
    Backdrop        =   ""
    CloseButton     =   False
@@ -356,13 +356,14 @@ End
 		Sub Open()
 		  Me.Left = Window(1).Left + (Window(1).Width - Me.Width) / 2
 		  Me.Top = Window(1).Top + (Window(1).Height - Me.Height) / 2
+		  RealmField.Text = mRealm
 		End Sub
 	#tag EndEvent
 
 
 	#tag Method, Flags = &h0
 		Function Authenticate(realm As String, secure As Boolean) As Pair
-		  RealmField.Text = realm
+		  mRealm = realm
 		  If Not secure Then
 		    IsSecure.Text = "Insecure Connection"
 		    IsSecure.TextColor = &cFF000000
@@ -401,12 +402,16 @@ End
 		  If Me.Username <> "" Or Me.Password <> "" Then
 		    Password = Me.Password
 		    Username = Me.UserName
-		    Realm = RealmField.Text
+		    Realm = mRealm
 		    Return True
 		  End If
 		End Function
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h1
+		Protected mRealm As String
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		Password As String
@@ -424,6 +429,7 @@ End
 		Sub Action()
 		  UserName = UserField.Text
 		  Password = PassField.Text
+		  mRealm = RealmField.Text
 		  Self.Close
 		End Sub
 	#tag EndEvent

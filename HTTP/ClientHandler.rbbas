@@ -28,6 +28,29 @@ Inherits SSLSocket
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Shared Function GZip(MessageBody As String) As String
+		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
+		  
+		  #If GZipAvailable And TargetHasGUI Then'
+		    Dim size As Single = MessageBody.LenB
+		    If size > 2^26 Then Return MessageBody 'if bigger than 64MB, don't try compressing it.
+		    MessageBody = GZip.Compress(MessageBody)
+		    If GZip.Error <> 0 Then
+		      Raise New RuntimeException
+		    End If
+		    Dim mb As New MemoryBlock(MessageBody.LenB + 8)
+		    mb.Byte(0) = &h1F 'magic
+		    mb.Byte(1) = &h8B 'magic
+		    mb.Byte(2) = &h08 'use deflate
+		    mb.StringValue(8, MessageBody.LenB) = MessageBody
+		    Return mb
+		  #Else
+		    Return MessageBody
+		  #EndIf
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function ReadNextRequest() As HTTP.Request
 		  If NthField(Me.Lookahead, CRLF + CRLF, 1).Trim = "" Then Return Nil
 		  Dim clientrequest As HTTP.Request = Me.Read(InStr(Me.Lookahead, CRLF + CRLF) + 3)
@@ -70,13 +93,19 @@ Inherits SSLSocket
 		    Dim doc As Response = ErrorPage(200)
 		    Dim clientrequest As Request
 		    clientrequest = ReadNextRequest()
+		    Dim user, pass, pw As String
+		    If clientrequest <> Nil Then
+		      pw = DecodeBase64(Replace(clientrequest.Header("Authorization"), "Basic ", ""))
+		      pass = NthField(pw, ":", 2)
+		      user = NthField(pw, ":", 1)
+		    End If
 		    
 		    ' start processing the request.
 		    Select Case True
 		    Case clientrequest = Nil
 		      doc = ErrorPage(400) 'bad request
 		      
-		    Case AuthenticationRequired And Not Authenticate(clientrequest)
+		    Case AuthenticationRequired And Not Authenticate(clientrequest, user, pass, AuthenticationRealm)
 		      doc = ErrorPage(401)
 		      doc.Header("WWW-Authenticate") = "Basic realm=""" + AuthenticationRealm + """"
 		      
@@ -158,7 +187,7 @@ Inherits SSLSocket
 
 
 	#tag Hook, Flags = &h0
-		Event Authenticate(ClientRequest As HTTP.Request) As Boolean
+		Event Authenticate(ClientRequest As HTTP.Request, Username As String, Password As String, Realm As String) As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
@@ -186,9 +215,17 @@ Inherits SSLSocket
 		EnforceContentType As Boolean = True
 	#tag EndProperty
 
+	#tag Property, Flags = &h0
+		UseGZip As Boolean = GZipAvailable
+	#tag EndProperty
+
 	#tag Property, Flags = &h21
 		Private Worker As Thread
 	#tag EndProperty
+
+
+	#tag Constant, Name = GZipAvailable, Type = Boolean, Dynamic = False, Default = \"False", Scope = Public
+	#tag EndConstant
 
 
 	#tag ViewBehavior

@@ -246,6 +246,102 @@ Begin Window MiniServer
       Top             =   67
       Width           =   32
    End
+   Begin ComboBox SecurityLevel
+      AutoComplete    =   False
+      AutoDeactivate  =   True
+      Bold            =   False
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialValue    =   "No security\r\nAutomatic\r\nSSLv2 Only\r\nSSLv3 Only\r\nSSLv3 or SSLv2\r\nTLSv1 Only"
+      Italic          =   False
+      Left            =   382
+      ListIndex       =   0
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   False
+      Scope           =   0
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   299
+      Underline       =   False
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   103
+   End
+   Begin CheckBox AuthRequired
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "Authenticate"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   272
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   False
+      Scope           =   0
+      State           =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   302
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   98
+   End
+   Begin CheckBox GZipEnable
+      AutoDeactivate  =   True
+      Bold            =   False
+      Caption         =   "GZip"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   209
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   False
+      Scope           =   0
+      State           =   0
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   11.0
+      TextUnit        =   0
+      Top             =   302
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   57
+   End
 End
 #tag EndWindow
 
@@ -262,6 +358,14 @@ End
 		End Function
 	#tag EndEvent
 
+
+	#tag Method, Flags = &h21
+		Private Function AuthenticateHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, Username As String, Password As String, Realm As String) As Boolean
+		  #pragma Unused Sender
+		  #pragma Unused ClientRequest
+		  Return (Username = AuthenticationUser) And (Password = AuthenticationPass) And (Realm = AuthenticationRealm)
+		End Function
+	#tag EndMethod
 
 	#tag Method, Flags = &h21
 		Private Sub ConnectedHandler(Sender As HTTP.ClientHandler)
@@ -354,6 +458,10 @@ End
 
 
 	#tag Property, Flags = &h0
+		AuthenticationPass As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		AuthenticationRealm As String = """""""""""""""Restricted Area"""""""""""""""
 	#tag EndProperty
 
@@ -362,15 +470,15 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		AuthenticationUser As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		CertificateFile As FolderItem
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		CertificatePassword As String
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		ConnectionType As ConnectionTypes = ConnectionTypes.Insecure
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -383,6 +491,10 @@ End
 
 	#tag Property, Flags = &h0
 		EnforceContentType As Boolean = True
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected GZip As Boolean
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -499,22 +611,26 @@ End
 		  AddHandler sock.MessageSent, WeakAddressOf MessageSentHandler
 		  AddHandler sock.HandleRequest, WeakAddressOf HandleRequestHandler
 		  AddHandler sock.Connected, WeakAddressOf ConnectedHandler
-		  If ConnectionType <> ConnectionTypes.Insecure Then
+		  AddHandler sock.Authenticate, WeakAddressOf AuthenticateHandler
+		  If SecurityLevel.Text <> "No security" Then
+		    sock.Secure = True
 		    sock.CertificatePassword = CertificatePassword
 		    sock.CertificateFile = CertificateFile
-		    sock.Secure = True
+		    Select Case SecurityLevel.Text
+		    Case "SSLv2 Only"
+		      sock.ConnectionType = SSLSocket.SSLv2
+		    Case "SSLv3 Only"
+		      sock.ConnectionType = SSLSocket.SSLv3
+		    Case "SSLv3 or SSLv2"
+		      sock.ConnectionType = SSLSocket.SSLv23
+		    Case "TLSv1 Only", "Automatic"
+		      sock.ConnectionType = SSLSocket.TLSv1
+		    End Select
 		  End If
+		  
 		  sock.AuthenticationRequired = AuthenticationRequired
 		  sock.AuthenticationRealm = AuthenticationRealm
 		  sock.EnforceContentType = EnforceContentType
-		  Select Case ConnectionType
-		  Case ConnectionTypes.SSLv3
-		    Sock.ConnectionType = SSLSocket.SSLv3
-		  Case ConnectionTypes.TLSv1
-		    Sock.ConnectionType = SSLSocket.TLSv1
-		  Case ConnectionTypes.Insecure
-		    sock.Secure = False
-		  End Select
 		  socks.Append(New WeakRef(sock))
 		  Return sock
 		End Function
@@ -538,8 +654,12 @@ End
 		  Case LinkValue IsA HTTP.URI
 		    Dim u As HTTP.URI = HTTP.URI(LinkValue)
 		    If u.Scheme = "" Then u.Scheme = "http"
-		    Generator.RequestMain1.URL.Text = u.ToString
-		    Generator.RequestMain1.Perform()
+		    If u.Scheme = "https" Then ' client doesn't work with https ATM
+		      ShowURL(u.ToString)
+		    Else
+		      Generator.RequestMain1.URL.Text = u.ToString
+		      Generator.RequestMain1.Perform()
+		    End If
 		    
 		  Case LinkValue IsA FolderItem
 		    FolderItem(LinkValue).Launch
@@ -640,6 +760,42 @@ End
 		    Socket.Listen
 		    Me.Mode = Timer.ModeOff
 		    HTTPLog.ScrollToEnd()
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events SecurityLevel
+	#tag Event
+		Sub Change()
+		  If Me.Text <> "No security" Then
+		    Dim f As FolderItem = CertificateFile
+		    Dim s As String = CertificateEntry.GetCert(f, "")
+		    If s <> "" And f.Exists Then
+		      CertificateFile = f
+		      CertificatePassword = s
+		    Else
+		      Me.ListIndex = 0
+		    End If
+		  Else
+		    CertificateFile.Delete
+		    CertificateFile = Nil
+		    CertificatePassword = ""
+		  End If
+		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events AuthRequired
+	#tag Event
+		Sub Action()
+		  If Me.Value Then
+		    If Authenticator.SetCredentials(AuthenticationUser, AuthenticationPass, AuthenticationRealm, "Set authentication credentials") Then
+		      AuthenticationRequired = True
+		    Else
+		      Me.Value = False
+		    End If
+		  Else
+		    AuthenticationRequired = False
 		  End If
 		End Sub
 	#tag EndEvent

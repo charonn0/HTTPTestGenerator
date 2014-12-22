@@ -46,6 +46,7 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Name:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -80,6 +81,7 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Value:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -250,6 +252,7 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Auto:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -508,7 +511,7 @@ End
 		        p = NthField(tmp, ":", 2)
 		      End If
 		    End If
-		    If Authenicator.GetCredentials(u, p) Then
+		    If Authenticator.GetCredentials(u, p) Then
 		      HeaderValue.Text = "Basic " + EncodeBase64(u + ":" + p)
 		    End If
 		  End Select
