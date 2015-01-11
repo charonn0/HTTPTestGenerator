@@ -88,6 +88,7 @@ Begin Window Authenticator
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Realm:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -164,6 +165,7 @@ Begin Window Authenticator
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Username:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -240,6 +242,7 @@ Begin Window Authenticator
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Password:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -336,6 +339,7 @@ Begin Window Authenticator
       Selectable      =   False
       TabIndex        =   8
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Secure Connection"
       TextAlign       =   1
       TextColor       =   &h00008000
@@ -364,6 +368,7 @@ End
 	#tag Method, Flags = &h0
 		Function Authenticate(realm As String, secure As Boolean) As Pair
 		  mRealm = realm
+		  RealmField.Text = mRealm
 		  If Not secure Then
 		    IsSecure.Text = "Insecure Connection"
 		    IsSecure.TextColor = &cFF000000

@@ -241,6 +241,9 @@ Inherits Canvas
 		    count = count + 1
 		  Loop
 		  Return count
+		  
+		Exception Err As NilObjectException
+		  Return 0
 		End Function
 	#tag EndMethod
 
@@ -284,6 +287,9 @@ Inherits Canvas
 	#tag Method, Flags = &h0
 		Function LineHeight() As Integer
 		  Return BinGraphics.StringHeight("00", BinGraphics.Width)
+		  
+		Exception Err As NilObjectException
+		  Return 0
 		End Function
 	#tag EndMethod
 
@@ -340,9 +346,8 @@ Inherits Canvas
 		  
 		  
 		  
-		  
-		  
-		  
+		Exception Err As NilObjectException
+		  Return 0
 		  
 		  
 		  
@@ -382,6 +387,9 @@ Inherits Canvas
 		Function VisibleLineCount() As Integer
 		  Dim h As Integer = LineHeight
 		  Return BinGraphics.Height \ h
+		  
+		Exception Err As NilObjectException
+		  Return 0
 		End Function
 	#tag EndMethod
 
@@ -1129,6 +1137,7 @@ Inherits Canvas
 			Name="TextFont"
 			Group="Behavior"
 			Type="String"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextSize"

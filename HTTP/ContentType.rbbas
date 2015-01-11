@@ -145,6 +145,9 @@ Class ContentType
 		  If Me.CharSet <> Nil And Me.CharSet.internetName <> "" Then
 		    data = data + "; CharSet=" + Me.CharSet.internetName
 		  End If
+		  If Me.Boundary.Trim <> "" Then
+		    data = data + "; boundary=" + Me.Boundary
+		  End If
 		  Return Data
 		End Function
 	#tag EndMethod

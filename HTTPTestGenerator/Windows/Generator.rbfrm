@@ -391,6 +391,7 @@ End
 		    Dim p As Pair = Authenticator.Authenticate(r, CurrentResponse.Path.Scheme = "https")
 		    If p <> Nil Then
 		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
+		      RequestMain1.DeleteRequestHeader("Authorization")
 		      RequestMain1.SetRequestHeader("Authorization", s)
 		      RequestMain1.Perform()
 		    End If

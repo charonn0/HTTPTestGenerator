@@ -2,12 +2,6 @@
 Protected Class App
 Inherits Application
 	#tag Event
-		Sub Open()
-		  App.UseGDIPlus = True
-		End Sub
-	#tag EndEvent
-
-	#tag Event
 		Function UnhandledException(error As RuntimeException) As Boolean
 		  Dim w As New ErrorHandler
 		  Return w.ShowException(error, DebugBuild)

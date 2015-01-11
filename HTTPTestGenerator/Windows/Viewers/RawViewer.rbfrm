@@ -42,7 +42,6 @@ Begin Window RawViewer Implements Viewer
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   0
       Value           =   0
       Visible         =   True
@@ -118,6 +117,25 @@ End
 			Dim c As Viewer = SetViewer(Type)
 			Self.Title = "Message body - " + Type.ToString
 			c.ViewRaw(CurrentMessage)
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SaveMenu() As Boolean Handles SaveMenu.Action
+			Dim nm As String = CurrentMessage.Path.Path
+			If CountFields(nm, "/") > 0 Then
+			nm = NthField(nm, "/", CountFields(nm, "/"))
+			Else
+			nm = "untitled"
+			End If
+			Dim f As FolderItem = GetSaveFolderItem("", nm)
+			If f <> Nil Then
+			Dim bs As BinaryStream = BinaryStream.Create(f, True)
+			bs.Write(CurrentMessage.MessageBody)
+			bs.Close
+			End If
 			Return True
 			
 		End Function

@@ -258,7 +258,7 @@ Begin Window MiniServer
       Index           =   -2147483648
       InitialValue    =   "No security\r\nAutomatic\r\nSSLv2 Only\r\nSSLv3 Only\r\nSSLv3 or SSLv2\r\nTLSv1 Only"
       Italic          =   False
-      Left            =   382
+      Left            =   313
       ListIndex       =   0
       LockBottom      =   True
       LockedInPosition=   False
@@ -272,7 +272,7 @@ Begin Window MiniServer
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   299
+      Top             =   298
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -290,7 +290,7 @@ Begin Window MiniServer
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   272
+      Left            =   203
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -304,43 +304,11 @@ Begin Window MiniServer
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   302
+      Top             =   301
       Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   98
-   End
-   Begin CheckBox GZipEnable
-      AutoDeactivate  =   True
-      Bold            =   False
-      Caption         =   "GZip"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   209
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   False
-      Scope           =   0
-      State           =   0
-      TabIndex        =   14
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   11.0
-      TextUnit        =   0
-      Top             =   302
-      Underline       =   False
-      Value           =   False
-      Visible         =   True
-      Width           =   57
    End
 End
 #tag EndWindow
@@ -376,7 +344,6 @@ End
 
 	#tag Method, Flags = &h21
 		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
-		  msgs.Append(ClientRequest)
 		  Select Case ClientRequest.Method
 		  Case RequestMethod.GET, RequestMethod.HEAD
 		    Dim item As FolderItem = HTTP.FindFile(Me.DocumentRoot, ClientRequest.Path.Path)
@@ -432,8 +399,6 @@ End
 		    ResponseDocument.Header("Content-Length") = Str(ResponseDocument.MessageBody.LenB)
 		    Return True
 		  End Select
-		  
-		  LogTimer.Mode = Timer.ModeSingle
 		End Function
 	#tag EndMethod
 
@@ -456,13 +421,20 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h21
+		Private Sub PeekRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request)
+		  msgs.Append(ClientRequest)
+		  LogTimer.Mode = Timer.ModeSingle
+		End Sub
+	#tag EndMethod
+
 
 	#tag Property, Flags = &h0
 		AuthenticationPass As String
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		AuthenticationRealm As String = """""""""""""""Restricted Area"""""""""""""""
+		AuthenticationRealm As String = "Restricted Area"
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -610,6 +582,7 @@ End
 		  Dim sock As New HTTP.ClientHandler
 		  AddHandler sock.MessageSent, WeakAddressOf MessageSentHandler
 		  AddHandler sock.HandleRequest, WeakAddressOf HandleRequestHandler
+		  AddHandler sock.PeekRequest, WeakAddressOf PeekRequestHandler
 		  AddHandler sock.Connected, WeakAddressOf ConnectedHandler
 		  AddHandler sock.Authenticate, WeakAddressOf AuthenticateHandler
 		  If SecurityLevel.Text <> "No security" Then

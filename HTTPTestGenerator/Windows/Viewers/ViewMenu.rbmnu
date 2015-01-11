@@ -36,5 +36,11 @@ Begin Menu ViewMenu
          AutoEnable = True
       End
    End
+   Begin MenuItem SaveMenu
+      SpecialMenu = 0
+      Text = "Save As..."
+      Index = -2147483648
+      AutoEnable = True
+   End
 End
 #tag EndMenu

@@ -434,6 +434,14 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Sub DeleteRequestHeader(Name As String)
+		  For i As Integer = RequestHeaders.LastIndex DownTo 0
+		    If RequestHeaders.Cell(i, 0) = Name Then RequestHeaders.RemoveRow(i)
+		  Next
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Sub Generate()
 		  Dim oldbody As String
