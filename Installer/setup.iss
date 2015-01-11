@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "HTTP Request Generator"
-#define MyAppVersion "0.02"
+#define MyAppVersion "0.03"
 #define MyAppPublisher "Andrew Lambert"
 #define MyAppURL "http://www.boredomsoft.org/http-request-generator.bs"
 #define MyAppExeName "httpreq.exe"
