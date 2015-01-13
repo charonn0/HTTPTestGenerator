@@ -382,7 +382,11 @@ End
 		      u = CurrentRequest.Path
 		      u.Path = redir
 		    End If
-		    If MsgBox("CurrentResponse redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
+		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
+		      If CurrentRequest.MethodName <> "GET" And (CurrentResponse.StatusCode = 301 Or CurrentResponse.StatusCode = 302) Then
+		        Dim msg As String = "Would you like to convert the request method from '" + CurrentRequest.MethodName + "' to 'GET'?"
+		        If MsgBox(msg, 4 + 32, "Client behavior compatibility option") = 6 Then RequestMain1.RequestMethod.ListIndex = 0
+		      End If
 		      RequestMain1.URL.Text = u.ToString
 		      RequestMain1.Perform()
 		    End If
