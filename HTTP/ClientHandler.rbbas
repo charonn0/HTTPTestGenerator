@@ -157,7 +157,7 @@ Inherits SSLSocket
 		  'Return an HTTP 500 Internal Server Error page.
 		  Dim errpage As Response = ErrorPage(500)
 		  errpage.Header("Connection") = "close"
-		  Me.Purge
+		  'Me.Purge
 		  Me.SendMessage(errpage)
 		  Me.Close
 		End Sub
