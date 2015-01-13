@@ -64,7 +64,7 @@
     },
     {
         "method": "TRACE",
-        "description": "This method is used to invoke a remote, application-layer loopback of the request message.",
+        "description": "This method is used to invoke a remote, application-layer loopback of the request message. The final recipient of the request <link=rfc2119#section-3>SHOULD</link> reflect the message received back to the <link=client>client</link> as the message body of a <link=200>200(OK)</link> response with a <link=Content-Type>Content-Type</link> of \"message/http\" (<link=http://tools.ietf.org/html/rfc7230#section-8.3.1>Section 8.3.1 of RFC7230</link>).",
         "safe": true,
         "idempotent": true,
         "cacheable": false,
