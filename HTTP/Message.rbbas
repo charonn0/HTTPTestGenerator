@@ -7,6 +7,14 @@ Protected Class Message
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub Constructor(CopyFrom As HTTP.Message)
+		  Me.ProtocolVersion = CopyFrom.ProtocolVersion
+		  Me.Path = CopyFrom.Path
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub DeleteAllHeaders()
 		  mHeaders.DeleteAllHeaders
 		End Sub

@@ -214,6 +214,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Function AutocompleteOptionsForPrefix(prefix as string) As AutocompleteOptions
+		  #pragma Unused prefix
 		  //you can replace this with your own Autocomplete engine...
 		  'dim options as new AutocompleteOptions
 		  'dim commonPrefix as String
@@ -240,6 +241,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub SelChanged(line as integer, column as integer, length as integer)
+		  #pragma Unused column
+		  #pragma Unused length
 		  'dim tmp as String = str(line)+":"+str(column)
 		  'if length > 0 then tmp = tmp + " ("+str(length)+")"
 		  

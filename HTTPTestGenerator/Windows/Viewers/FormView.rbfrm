@@ -148,7 +148,11 @@ End
 		    If tag = Nil Then Return False
 		    Select Case tag
 		    Case IsA FolderItem
-		      FolderItem(tag).Launch
+		      #If TargetWin32 Then
+		        SpecialFolder.System.Child("explorer.exe").Launch("/select, """ + FolderItem(tag).AbsolutePath + """")
+		      #Else
+		        FolderItem(tag).Parent.Launch
+		      #endif
 		      Return True
 		      
 		    End Select

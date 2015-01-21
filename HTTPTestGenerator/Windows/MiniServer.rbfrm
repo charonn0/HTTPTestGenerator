@@ -423,6 +423,7 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub PeekRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request)
+		  #pragma Unused Sender
 		  msgs.Append(ClientRequest)
 		  LogTimer.Mode = Timer.ModeSingle
 		End Sub
