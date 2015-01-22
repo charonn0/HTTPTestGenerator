@@ -99,9 +99,10 @@ Inherits Pair
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function ToString() As String
+		Function ToString(SetCookie As Boolean) As String
 		  'serialize the object
 		  Dim data As String = Me.Name + "=" + Me.Value
+		  If Not SetCookie Then Return data
 		  
 		  If Me.Expires <> Nil Then
 		    Dim now As New Date

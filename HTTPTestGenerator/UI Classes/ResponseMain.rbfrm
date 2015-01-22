@@ -521,7 +521,7 @@ End
 		  Else
 		    Base.Append(New MenuItem("Copy all to request headers"))
 		  End If
-		  If c = 2 Then 
+		  If c = 2 Then
 		    Dim m As New MenuItem("Toggle UTC")
 		    m.Tag = Me.RowTag(r)
 		    Base.Append(m)
@@ -566,7 +566,7 @@ End
 		    For i As Integer = 0 To Me.ListCount - 1
 		      Dim c As Cookie = Me.RowTag(i)
 		      If c.Domain = "" Then
-		        c = New Cookie(c.ToString) ' force copy
+		        c = New Cookie(c.ToString(True)) ' force copy
 		        c.Domain = mHost.Host
 		      End If
 		      cj.Append(c)
@@ -596,7 +596,7 @@ End
 		    If Me.Selected(i) Then
 		      Dim c As Cookie = Me.RowTag(i)
 		      If c <> Nil Then
-		        data = data + c.ToString + CRLF
+		        data = data + c.ToString(True) + CRLF
 		      End If
 		    End If
 		  Next

@@ -526,7 +526,7 @@ End
 
 	#tag Method, Flags = &h0
 		Sub SetRequestCookie(c As HTTP.Cookie)
-		  Me.SetRequestHeader("Cookie", c.ToString, c)
+		  Me.SetRequestHeader("Cookie", c.ToString(False), c)
 		End Sub
 	#tag EndMethod
 

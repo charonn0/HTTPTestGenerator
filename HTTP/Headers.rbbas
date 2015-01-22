@@ -73,9 +73,9 @@ Inherits InternetHeaders
 		  
 		  For Each c As Cookie In Me.Cookies
 		    If SetCookies Then
-		      data = data + CRLF + "Set-Cookie: " + c.ToString
+		      data = data + CRLF + "Set-Cookie: " + c.ToString(SetCookies)
 		    Else
-		      data = data + CRLF + "Cookie: " + c.Name + "=" + c.Value
+		      data = data + CRLF + "Cookie: " + c.ToString(SetCookies)
 		    End If
 		  Next
 		  
