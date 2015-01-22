@@ -20,7 +20,7 @@ Begin Window ErrorHandler
    MinimizeButton  =   False
    MinWidth        =   469
    Placement       =   1
-   Resizeable      =   False
+   Resizeable      =   True
    Title           =   "Error"
    Visible         =   True
    Width           =   5.03e+2
@@ -669,16 +669,13 @@ End
 	#tag Event
 		Sub Action()
 		  If Me.Value Then
-		    Self.Height = lastheight
+		    Self.Height = self.MaxHeight
 		    errorStack.Visible = True
 		    ShowHide.Text = "Hide technical details"
-		    Self.Resizeable = True
 		  Else
-		    lastheight = Self.Height
 		    errorStack.Visible = False
 		    Self.Height = 100
 		    ShowHide.Text = "Show technical details"
-		    Self.Resizeable = False
 		  End If
 		End Sub
 	#tag EndEvent
