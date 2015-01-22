@@ -29,22 +29,17 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
-      TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   35
-      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -52,11 +47,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   79
-      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -70,7 +62,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -126,7 +117,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -144,7 +134,6 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -152,11 +141,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
-      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   123
-      Visible         =   True
       Width           =   32
    End
 End
@@ -269,13 +255,22 @@ End
 		  Dim h As HTTP.Headers = data
 		  Dim body As New MemoryBlock(0)
 		  Dim w As New BinaryStream(body)
-		  w.Write(data)
-		  Dim length As Integer = CDbl(h.CommaSeparatedValues("Content-Length"))
-		  While w.Length < length
-		    w.Write(sock.Read(Min(Sock.Lookahead.LenB, (length + data.LenB) - w.Length)))
-		  Wend
+		  w.Write(data + CRLF + CRLF)
+		  Select Case True
+		  Case h.CommaSeparatedValues("Content-Length") <> ""
+		    Dim length As Integer = CDbl(h.CommaSeparatedValues("Content-Length"))
+		    While w.Length < length
+		      w.Write(sock.Read(Min(Sock.Lookahead.LenB, (length + data.LenB) - w.Length)))
+		    Wend
+		  Case h.CommaSeparatedValues("Transfer-Encoding") <> ""
+		    Break
+		    
+		  Case h.CommaSeparatedValues("Connection") = "close"
+		    
+		  Else
+		    Break
+		  End Select
 		  w.Close
-		  
 		  Return data
 		End Function
 	#tag EndMethod
@@ -390,11 +385,11 @@ End
 	#tag Event
 		Sub DataAvailable()
 		  TimeOut.Reset
-		  'Dim newdata As String = Me.ReadAll
-		  'ResponseBuffer = ResponseBuffer + newdata
-		  'BytesReceivedLast = newdata.LenB
-		  'BytesReceivedTotal = BytesReceivedTotal + BytesReceivedLast
-		  'ResponseMain1.Log("Receiving data (" + FormatBytes(BytesReceivedLast) + ")...", 2)
+		  Dim newdata As String = Me.ReadAll
+		  ResponseBuffer = ResponseBuffer + newdata
+		  BytesReceivedLast = newdata.LenB
+		  BytesReceivedTotal = BytesReceivedTotal + BytesReceivedLast
+		  ResponseMain1.Log("Receiving data (" + FormatBytes(BytesReceivedLast) + ")...", 2)
 		  DataReceivedTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndEvent
@@ -403,7 +398,7 @@ End
 	#tag Event
 		Sub Action()
 		  If CurrentResponse <> Nil Then OldResponses.Append(CurrentResponse)
-		  CurrentResponse = ReadNextResponse
+		  CurrentResponse = ResponseBuffer'ReadNextResponse
 		  If CurrentResponse = Nil Then Return
 		  CurrentResponse.Path = New HTTP.URI(CurrentRequest.Path)
 		  ResponseMain1.ViewResponse(CurrentResponse)

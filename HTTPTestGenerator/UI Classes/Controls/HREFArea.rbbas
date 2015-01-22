@@ -70,7 +70,6 @@ Inherits TextArea
 		      Return Links(i)
 		    End If
 		  Next
-		  Return Nil
 		End Function
 	#tag EndMethod
 
@@ -89,6 +88,8 @@ Inherits TextArea
 
 	#tag Method, Flags = &h0
 		Sub PrintOther(Text As StyleRun, LinkValue As Variant = Nil)
+		  If App.CurrentThread <> Nil Then Break
+		  
 		  Me.StyledText.AppendStyleRun(Text)
 		  Links.Append(LinkValue)
 		End Sub
