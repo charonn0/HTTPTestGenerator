@@ -68,6 +68,12 @@ Inherits InternetHeaders
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub SetCookie(NewCookie As HTTP.Cookie)
+		  Cookies.Append(NewCookie)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function Source(SetCookies As Boolean = False) As String
 		  Dim data As String = Super.Source
 		  

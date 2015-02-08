@@ -4,23 +4,19 @@ Inherits Pair
 	#tag Method, Flags = &h1000
 		Sub Constructor(Raw As String)
 		  'accepts a single raw Cookie string (e.g. "SessionID=12345; Port=80; httpOnly")
-		  Dim l, r, m, data As String
+		  Dim l, r, meta, data As String
+		  data = NthField(Raw, ";", 1)
+		  meta = NthField(Raw, data + ";", 2).Trim
 		  
-		  If InStr(Raw, ";") > 0 Then
-		    data = NthField(Raw, ";", 1)
-		    m = NthField(Raw, data + ";", 2).Trim
-		  Else
-		    data = raw
-		  End If
 		  l = NthField(data, "=", 1)
-		  r = Right(data, data.Len - l.Len - 1)
+		  r = NthField(data, l + "=", 2)
 		  
 		  // Calling the overridden superclass constructor.
 		  // Constructor(left As Variant, right As Variant) -- From Pair
-		  Super.Constructor(l, r)
+		  Super.Constructor(l.Trim, r.Trim)
 		  
-		  If m <> "" Then
-		    Dim items() As String = Split(m, ";")
+		  If meta <> "" Then
+		    Dim items() As String = Split(meta, ";")
 		    For Each item As String In items
 		      Dim k, v As String
 		      k = NthField(item, "=", 1)
