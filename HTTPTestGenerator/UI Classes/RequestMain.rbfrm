@@ -344,8 +344,8 @@ Begin ContainerControl RequestMain
       Left            =   228
       LockBottom      =   ""
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
+      LockLeft        =   False
+      LockRight       =   True
       LockTop         =   True
       MenuValue       =   0
       Scope           =   0
