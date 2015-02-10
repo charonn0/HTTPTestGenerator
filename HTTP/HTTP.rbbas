@@ -340,6 +340,26 @@ Protected Module HTTP
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Function DecodeChunkedData(Data As MemoryBlock) As MemoryBlock
+		  Dim instream As New BinaryStream(Data)
+		  Dim output As New MemoryBlock(0)
+		  Dim outstream As New BinaryStream(output)
+		  Do Until instream.EOF
+		    Dim char As String
+		    While InStrB(char, CRLF) <= 0 And Not instream.EOF
+		      char = char + Chr(instream.ReadByte)
+		    Wend
+		    Dim sz As Integer = Val("&h" + NthField(char, ";", 1))
+		    outstream.Write(instream.Read(sz))
+		    Call instream.Read(2)
+		  Loop
+		  instream.Close
+		  outstream.Close
+		  Return output
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function ErrorPage(ErrorNumber As Integer, RedirectLink As String = "") As HTTP.Response
 		  Static ErrorPages As Dictionary
 		  If ErrorPages = Nil Then
@@ -390,10 +410,10 @@ Protected Module HTTP
 		        page = ReplaceAll(page, "%DOCUMENT%", "Permission to access this resource is denied.")
 		        
 		      Case 404
-		        page = ReplaceAll(page, "%DOCUMENT%", "This resource cannot be found. ")
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource could not be found.")
 		        
 		      Case 405
-		        page = ReplaceAll(page, "%DOCUMENT%", "The specified HTTP request method is not allowed for this resource.")
+		        page = ReplaceAll(page, "%DOCUMENT%", "That request method is not allowed for this resource.")
 		        
 		      Case 406
 		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser did not specify an acceptable Content-Type that is compatible with this resource.")
@@ -426,13 +446,13 @@ Protected Module HTTP
 		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser has made too many requests of this server.")
 		        
 		      Case 451
-		        page = ReplaceAll(page, "%DOCUMENT%", "This resource is unavailable as a result of a legal demand.")
+		        page = ReplaceAll(page, "%DOCUMENT%", "This resource is unavailable as a result of a <a href=""%REDIR_LINK%"">legal demand</a>.")
 		        
 		      Case 500
 		        page = ReplaceAll(page, "%DOCUMENT%", "An error ocurred while processing your request.")
 		        
 		      Case 501
-		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser made a request that is not implemented by this server.")
+		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser used a request method that is not implemented by this server.")
 		        
 		      Case 503
 		        page = ReplaceAll(page, "%DOCUMENT%", "This server is currently unavailable to process your requst.")
@@ -591,6 +611,55 @@ Protected Module HTTP
 		  End Select
 		  
 		  Return err
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function GZipCompress(Data As MemoryBlock) As MemoryBlock
+		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
+		  #If GZipAvailable And TargetHasGUI Then
+		    Dim compressed As String = GZip.Compress(Data)
+		    If GZip.Error <> 0 Then Raise New RuntimeException
+		    Dim output As New MemoryBlock(0)
+		    Dim stream As New BinaryStream(output)
+		    stream.WriteByte(&h1F) 'magic
+		    stream.WriteByte(&h8B) 'magic
+		    stream.WriteByte(&h08) 'use deflate
+		    stream.Position = 8
+		    stream.Write(compressed)
+		    stream.Position = stream.Position + 4
+		    stream.WriteUInt32(Data.Size)
+		    stream.Close
+		    Return output
+		  #Else
+		    'GZIPAvailable must be set to True and the GZip plugin must be installed.
+		    #pragma Warning "GZip is disabled."
+		    Return Data
+		  #EndIf
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function GZipDecompress(Data As MemoryBlock) As MemoryBlock
+		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
+		  #If GZipAvailable And TargetHasGUI Then
+		    Dim input As New BinaryStream(Data)
+		    If input.ReadByte <> &h1F Then Return Data 'bad magic
+		    If input.ReadByte <> &h8B Then Return Data 'bad magic
+		    If input.ReadByte <> &h08 Then Raise New UnsupportedFormatException 'not using deflate
+		    input.Position = input.Length - 4
+		    Dim sz As UInt32 = input.ReadUInt32
+		    Dim decompressed As String = GZip.Uncompress(Data.StringValue(8, Data.Len - 12), sz)
+		    If GZip.Error <> 0 Then
+		      If DebugBuild Then MsgBox("Error: " + Str(GZip.Error))
+		      Return Data
+		    End If
+		    Return decompressed
+		  #Else
+		    'GZIPAvailable must be set to True and the GZip plugin must be installed.
+		    #pragma Warning "GZip is disabled."
+		    Return Data
+		  #EndIf
 		End Function
 	#tag EndMethod
 
@@ -1456,10 +1525,13 @@ Protected Module HTTP
 	#tag Constant, Name = BlankErrorPage, Type = String, Dynamic = False, Default = \"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r<html xmlns\x3D\"http://www.w3.org/1999/xhtml\">\r<head>\r<meta http-equiv\x3D\"Content-Type\" content\x3D\"text/html; charset\x3Diso-8859-1\" />\r<title>%HTTPERROR%</title>\r<style type\x3D\"text/css\">\r<!--\ra:link {\r\tcolor: #0000FF;\r\ttext-decoration: none;\r}\ra:visited {\r\ttext-decoration: none;\r\tcolor: #990000;\r}\ra:hover {\r\ttext-decoration: underline;\r\tcolor: #009966;\r}\ra:active {\r\ttext-decoration: none;\r\tcolor: #FF0000;\r}\r-->\r</style></head>\r\r<body>\r<h1>%HTTPERROR%</h1>\r<p>%DOCUMENT%</p>\r<hr />\r<p>%SIGNATURE%</p>\r</body>\r</html>", Scope = Protected
 	#tag EndConstant
 
-	#tag Constant, Name = DaemonVersion, Type = String, Dynamic = False, Default = \"BoredomServe/1.0", Scope = Public
+	#tag Constant, Name = DaemonVersion, Type = String, Dynamic = False, Default = \"BoredomServe/1.0", Scope = Protected
 		#Tag Instance, Platform = Mac OS, Language = Default, Definition  = \"BoredomServe/1.0 (Mac OS X)"
 		#Tag Instance, Platform = Windows, Language = Default, Definition  = \"BoredomServe/1.0 (Win32)"
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"BoredomServe/1.0 (GNU/Linux)"
+	#tag EndConstant
+
+	#tag Constant, Name = GZipAvailable, Type = Boolean, Dynamic = False, Default = \"True", Scope = Protected
 	#tag EndConstant
 
 

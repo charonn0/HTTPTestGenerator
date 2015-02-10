@@ -51,6 +51,7 @@ Begin ContainerControl PictureView Implements Viewer
       Width           =   614
    End
    Begin Timer Timer1
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   637
@@ -58,8 +59,11 @@ Begin ContainerControl PictureView Implements Viewer
       Mode            =   0
       Period          =   1
       Scope           =   0
+      TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   14
+      Visible         =   True
       Width           =   32
    End
 End
@@ -100,10 +104,10 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As HTTP.Message)
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType)
 		  // Part of the Viewer interface.
-		  MIMEType = Message.ContentType
-		  Image = Picture.FromData(Message.MessageBody)
+		  MIMEType = Type
+		  Image = Picture.FromData(Message)
 		  ImageView.Refresh(False)
 		  
 		  

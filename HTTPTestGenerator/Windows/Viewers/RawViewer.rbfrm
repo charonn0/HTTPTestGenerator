@@ -1,5 +1,5 @@
 #tag Window
-Begin Window RawViewer Implements Viewer
+Begin Window RawViewer
    BackColor       =   16777215
    Backdrop        =   0
    CloseButton     =   True
@@ -74,9 +74,9 @@ End
 	#tag MenuHandler
 		Function BinMenu() As Boolean Handles BinMenu.Action
 			Dim type As ContentType = "application/octet-stream"
-			Dim c As Viewer = SetViewer(Type)
 			Self.Title = "Message body - " + Type.ToString
-			c.ViewRaw(CurrentMessage)
+			SetViewer(type)
+			SetMessage(CurrentMessage.MessageBody)
 			Return True
 			
 		End Function
@@ -84,17 +84,16 @@ End
 
 	#tag MenuHandler
 		Function FormMenu() As Boolean Handles FormMenu.Action
-			Dim c As Viewer
 			If CurrentMessage.ContentType.Accepts("multipart/form-data") Then
-			c = SetViewer("multipart/form-data")
+			SetViewer("multipart/form-data")
 			ElseIf CurrentMessage.ContentType.Accepts("application/x-www-form-urlencoded") Then
-			c = SetViewer("application/x-www-form-urlencoded")
+			SetViewer("application/x-www-form-urlencoded")
 			Else
 			MsgBox("Invalid form type.")
 			Return True
 			End If
 			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString
-			c.ViewRaw(CurrentMessage)
+			SetMessage(CurrentMessage.MessageBody)
 			Return True
 			
 		End Function
@@ -103,9 +102,9 @@ End
 	#tag MenuHandler
 		Function HTMLMenu() As Boolean Handles HTMLMenu.Action
 			Dim type As ContentType = "text/html"
-			Dim c As Viewer = SetViewer(Type)
 			Self.Title = "Message body - " + Type.ToString
-			c.ViewRaw(CurrentMessage)
+			SetViewer(type)
+			SetMessage(CurrentMessage.MessageBody)
 			Return True
 			
 		End Function
@@ -114,9 +113,9 @@ End
 	#tag MenuHandler
 		Function PlainTextMenu() As Boolean Handles PlainTextMenu.Action
 			Dim type As ContentType = "text/plain"
-			Dim c As Viewer = SetViewer(Type)
 			Self.Title = "Message body - " + Type.ToString
-			c.ViewRaw(CurrentMessage)
+			SetViewer(type)
+			SetMessage(CurrentMessage.MessageBody)
 			Return True
 			
 		End Function
@@ -124,6 +123,11 @@ End
 
 	#tag MenuHandler
 		Function SaveMenu() As Boolean Handles SaveMenu.Action
+			Dim data As MemoryBlock = CurrentMessage.MessageBody
+			If AutoDecompress And MsgBox("Would you like to decompress the message body before saving?", 4 + 32, "Compression was applied to this message.") = 6 Then
+			data = HTTP.GZipDecompress(data)
+			End If
+			
 			Dim nm As String = CurrentMessage.Path.Path
 			If CountFields(nm, "/") > 0 Then
 			nm = NthField(nm, "/", CountFields(nm, "/"))
@@ -144,9 +148,9 @@ End
 	#tag MenuHandler
 		Function ViewPictureMenu() As Boolean Handles ViewPictureMenu.Action
 			Dim type As ContentType = "image/*"
-			Dim c As Viewer = SetViewer(Type)
 			Self.Title = "Message body - " + Type.ToString
-			c.ViewRaw(CurrentMessage)
+			SetViewer(type)
+			SetMessage(CurrentMessage.MessageBody)
 			Return True
 			
 		End Function
@@ -154,7 +158,15 @@ End
 
 
 	#tag Method, Flags = &h1
-		Protected Function SetViewer(Type As ContentType) As Viewer
+		Protected Sub SetMessage(Message As MemoryBlock)
+		  Dim data As MemoryBlock = Message
+		  If AutoDecompress Then data = HTTP.GZipDecompress(data)
+		  CurrentView.ViewRaw(data, CurrentMessage.ContentType)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub SetViewer(Type As ContentType)
 		  If CurrentView <> Nil Then CurrentView.Close
 		  Select Case True
 		  Case Type.Accepts("image/*")
@@ -177,20 +189,38 @@ End
 		    
 		  End Select
 		  ContainerControl(CurrentView).EmbedWithinPanel(ViewContainer, 0, 0, 0, ViewContainer.Width, ViewContainer.Height)
-		  Return CurrentView
-		End Function
+		  
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As HTTP.Message)
 		  Self.Title = "Message body - " + Message.ContentType.ToString
-		  Dim c As Viewer = SetViewer(Message.ContentType)
+		  If HTTP.GZipAvailable And Message.Header("Content-Encoding") = "gzip" And _
+		    MsgBox("Would you like to decompress the message body?", 4 + 32, "Compression was applied to this message.") = 6 Then
+		    AutoDecompress = True
+		  End If
 		  CurrentMessage = Message
-		  c.ViewRaw(Message)
+		  If Message.Header("Content-Encoding") = "gzip" And Not AutoDecompress Then
+		    SetViewer("application/octet-stream")
+		  Else
+		    SetViewer(Message.ContentType)
+		  End If
+		  Try
+		    SetMessage(Message.MessageBody)
+		  Catch
+		    MsgBox("An error occured while decompressing the message body.")
+		    Self.Close
+		    Return
+		  End Try
 		  Me.ShowModal
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h21
+		Private AutoDecompress As Boolean
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private CurrentMessage As HTTP.Message

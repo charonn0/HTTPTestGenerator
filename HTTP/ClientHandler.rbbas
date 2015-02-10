@@ -84,7 +84,7 @@ Inherits SSLSocket
 		      doc = ErrorPage(400) 'bad request
 		      
 		    Case AuthenticationRequired And Not Authenticate(clientrequest, user, pass, AuthenticationRealm)
-		      doc = ErrorPage(401)
+		      doc = ErrorPage(401) ' Unauthorized
 		      doc.Header("WWW-Authenticate") = "Basic realm=""" + AuthenticationRealm + """"
 		      
 		    Case clientrequest.ProtocolVersion < 1.0 Or clientrequest.ProtocolVersion >= 1.2
@@ -96,9 +96,9 @@ Inherits SSLSocket
 		        ' No one handled the request, so we send an error message of some sort
 		        Select Case clientrequest.Method
 		        Case RequestMethod.HEAD, RequestMethod.GET
-		          doc = ErrorPage(404)
+		          doc = ErrorPage(404) ' Not found
 		        Case RequestMethod.TRACE
-		          doc = ErrorPage(200)
+		          doc = ErrorPage(200) ' OK
 		          doc.Header("Content-Length") = Str(doc.MessageBody.LenB)
 		          doc.Header("Content-Type") = "message/http"
 		          doc.MessageBody = clientrequest.ToString(True)
@@ -111,7 +111,7 @@ Inherits SSLSocket
 		          ElseIf clientrequest.MethodName = "" Then
 		            doc = ErrorPage(400) 'bad request
 		          ElseIf clientrequest.MethodName <> "" Then
-		            doc = ErrorPage(405)
+		            doc = ErrorPage(405) ' method not allowed
 		            doc.Header("Allow") = "GET, HEAD, TRACE, OPTIONS"
 		          End If
 		        End Select
@@ -125,6 +125,20 @@ Inherits SSLSocket
 		        doc = ErrorPage(406) 'Not Acceptable
 		        doc.ContentType = accepted
 		      End If
+		    End If
+		    
+		    Dim types() As String = Split(ClientRequest.Header("Accept-Encoding"), ",")
+		    If UseGZip Then
+		      For i As Integer = 0 To UBound(types)
+		        If types(i).Trim = "gzip" Then
+		          Dim compressed As String = HTTP.GZipCompress(doc.MessageBody)
+		          If compressed.LenB <> clientrequest.MessageBody.LenB Then
+		            doc.Header("Content-Encoding") = "gzip"
+		            doc.MessageBody = compressed
+		            Exit For
+		          End If
+		        End If
+		      Next
 		    End If
 		    
 		    'If clientrequest.Method = RequestMethod.HEAD Then
@@ -152,7 +166,9 @@ Inherits SSLSocket
 		    End If
 		  Loop
 		  
-		Exception Err
+		  
+		  
+		Exception Err As RuntimeException
 		  If Err IsA EndException Or Err IsA ThreadEndException Then Raise Err
 		  'Return an HTTP 500 Internal Server Error page.
 		  Dim errpage As Response = ErrorPage(500)
@@ -204,10 +220,6 @@ Inherits SSLSocket
 	#tag Property, Flags = &h21
 		Private Worker As Thread
 	#tag EndProperty
-
-
-	#tag Constant, Name = GZipAvailable, Type = Boolean, Dynamic = False, Default = \"False", Scope = Public
-	#tag EndConstant
 
 
 	#tag ViewBehavior

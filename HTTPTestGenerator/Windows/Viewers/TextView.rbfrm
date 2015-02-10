@@ -73,8 +73,9 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As HTTP.Message)
-		  PlainText.Text = Message.MessageBody
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType)
+		  PlainText.Text = Message
+		  Self.Title = "Message body - " + Type.ToString
 		End Sub
 	#tag EndMethod
 

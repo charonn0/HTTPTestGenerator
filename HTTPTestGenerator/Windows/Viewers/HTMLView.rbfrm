@@ -48,7 +48,7 @@ Begin ContainerControl HTMLView Implements Viewer
       InitialParent   =   ""
       InitialValue    =   "Link Text	Link Value"
       Italic          =   ""
-      Left            =   0
+      Left            =   586
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -65,10 +65,10 @@ Begin ContainerControl HTMLView Implements Viewer
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
-      Top             =   298
+      Top             =   -178
       Underline       =   ""
       UseFocusRing    =   True
-      Visible         =   True
+      Visible         =   False
       Width           =   614
       _ScrollWidth    =   -1
    End
@@ -81,9 +81,8 @@ Begin ContainerControl HTMLView Implements Viewer
       Enabled         =   True
       EraseBackground =   True
       HasBackColor    =   False
-      Height          =   286
+      Height          =   457
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -123,20 +122,20 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As HTTP.Message)
-		  LinkList.DeleteAllRows
-		  Dim p() As Pair = ExtractLinks(Message.MessageBody, "")
-		  For i As Integer = 0 To UBound(p)
-		    Dim u As HTTP.URI = p(i).Left
-		    Dim t As String = p(i).Right
-		    LinkList.AddRow(t, u.ToString)
-		    LinkList.RowTag(LinkList.LastIndex) = u
-		  Next
-		  BaseURL = Message.Path.Host
-		  
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType)
+		  'LinkList.DeleteAllRows
+		  'Dim p() As Pair = ExtractLinks(Message, "")
+		  'For i As Integer = 0 To UBound(p)
+		  'Dim u As HTTP.URI = p(i).Left
+		  'Dim t As String = p(i).Right
+		  'LinkList.AddRow(t, u.ToString)
+		  'LinkList.RowTag(LinkList.LastIndex) = u
+		  'Next
+		  'BaseURL = Message.Path.Host
+		  Self.Title = "Message body - " + Type.ToString
 		  Dim def As New HighlightDefinition
 		  Call def.LoadFromXml(HTMLSyntaxDef)
-		  SyntaxHilightContainer1.SetText(Message.MessageBody, def)
+		  SyntaxHilightContainer1.SetText(Message, def)
 		End Sub
 	#tag EndMethod
 
