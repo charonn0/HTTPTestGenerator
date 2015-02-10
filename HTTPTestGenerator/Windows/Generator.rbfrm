@@ -166,6 +166,14 @@ End
 
 
 	#tag MenuHandler
+		Function AboutItem() As Boolean Handles AboutItem.Action
+			AboutWindow.Show
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
 		Function QuitMenu() As Boolean Handles QuitMenu.Action
 			Quit()
 			Return True

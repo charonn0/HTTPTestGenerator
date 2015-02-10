@@ -17,6 +17,12 @@ Begin Menu MenuBar1
          Index = -2147483648
          AutoEnable = True
       End
+      Begin MenuItem AboutItem
+         SpecialMenu = 0
+         Text = "About..."
+         Index = -2147483648
+         AutoEnable = True
+      End
       Begin MenuItem QuitMenu
          SpecialMenu = 0
          Text = "Exit"
