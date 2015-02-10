@@ -23,7 +23,7 @@ Begin Window ErrorHandler
    Resizeable      =   True
    Title           =   "Error"
    Visible         =   True
-   Width           =   5.03e+2
+   Width           =   5.36e+2
    Begin Label StaticText1
       AutoDeactivate  =   True
       Bold            =   False
@@ -56,7 +56,7 @@ Begin Window ErrorHandler
       Transparent     =   True
       Underline       =   False
       Visible         =   True
-      Width           =   443
+      Width           =   476
    End
    Begin TextArea errorStack
       AcceptTabs      =   False
@@ -84,7 +84,7 @@ Begin Window ErrorHandler
       LockTop         =   True
       Mask            =   ""
       Multiline       =   True
-      ReadOnly        =   False
+      ReadOnly        =   True
       Scope           =   0
       ScrollbarHorizontal=   False
       ScrollbarVertical=   True
@@ -101,7 +101,7 @@ Begin Window ErrorHandler
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   False
-      Width           =   477
+      Width           =   510
    End
    Begin PushButton QuitApp
       AutoDeactivate  =   True
@@ -116,7 +116,7 @@ Begin Window ErrorHandler
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   314
+      Left            =   347
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   False
