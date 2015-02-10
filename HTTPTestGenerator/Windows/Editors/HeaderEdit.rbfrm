@@ -46,7 +46,6 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Name:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -81,7 +80,6 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Value:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -252,7 +250,6 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Auto:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -437,6 +434,7 @@ End
 	#tag Event
 		Sub Open()
 		  Me.AddRow("Host")
+		  Me.AddRow("Referer")
 		  Me.AddRow("User-Agent")
 		  Me.AddRow("Accept")
 		  Me.AddRow("Accept-Encoding")
@@ -465,6 +463,10 @@ End
 		  Select Case Me.Text
 		  Case "Host"
 		    HeaderValue.Text = "www.example.com"
+		    
+		  Case "Referer"
+		    HeaderValue.Text = "http:/www.example.com/index.html"
+		    
 		  Case "User-Agent"
 		    AutoValue.Visible = True
 		    AutoHeader.ListIndex = 0
