@@ -1,69 +1,47 @@
 #tag Class
-Protected Class AddRemoveList
-Inherits PrettyListBox
+Protected Class PrettyListBox
+Inherits ListBox
 	#tag Event
 		Function CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
-		  If row = Me.ListCount And column = Me.ColumnCount -1 Then
-		    Dim x, y As Integer
-		    x = (0.5 * g.Width) - (0.5 * plus.Width)
-		    y = (0.5 * g.Height) - (0.5 * plus.Height)
-		    g.DrawPicture(plus, x, y)
-		    Return True
-		  ElseIf row < Me.ListCount And column = Me.ColumnCount - 1 Then
-		    Dim x, y As Integer
-		    x = (0.5 * g.Width) - (0.5 * plus.Width)
-		    y = (0.5 * g.Height) - (0.5 * plus.Height)
-		    g.DrawPicture(minus, x, y)
-		    Return True
+		  Dim ret As Boolean
+		  If Me.Selected(row) Then
+		    Dim ratio, endratio as Double
+		    Dim sc, ec As Color
+		    sc = &c0080FF00
+		    ec = &c0000FF00
+		    For i As Integer = 0 To g.Height
+		      ratio = (g.Height - i) / g.Height
+		      endratio = i / g.Height
+		      g.ForeColor = RGB(ec.Red * endratio + sc.Red * ratio, ec.Green * endratio + sc.Green * ratio, ec.Blue * endratio + sc.Blue * ratio)
+		      g.DrawLine(0, i, g.Width, i)
+		    next
+		    g.ForeColor = sc
+		    g.DrawLine(0, 0, g.Width, 0)
+		    ret = True
 		  End If
+		  Return RaiseEvent CellBackgroundPaint(g, row, column) Or ret
 		  
 		End Function
 	#tag EndEvent
 
 	#tag Event
-		Function MouseDown(x As Integer, y As Integer) As Boolean
-		  Dim a, b As Integer
-		  a = Me.RowFromXY(X, Y)
-		  b = Me.ColumnFromXY(X, Y)
-		  
-		  If Y > Me.HeaderHeight And a = -1 And x >= 0.95 * Me.Width Then
-		    RaiseEvent AddNew(a)
-		    Return True
-		  ElseIf a < Me.ListCount And b = Me.ColumnCount - 1 Then
-		    RaiseEvent Remove(a)
-		    Return True
+		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
+		  If Me.Selected(row) Then
+		    g.ForeColor = &cFFFFFF00
 		  Else
-		    Return False
+		    g.ForeColor = &c00000000
 		  End If
-		  
-		  
+		  Return RaiseEvent CellTextPaint(g, row, column, x, y)
 		End Function
-	#tag EndEvent
-
-	#tag Event
-		Sub MouseMove(X As Integer, Y As Integer)
-		  Dim row, column As Integer
-		  row = Me.RowFromXY(X, Y)
-		  If row = -1 Then
-		    row = Me.RowFromXY(X - Me.RowHeight + 1, Y)
-		  End If
-		  column = Me.ColumnFromXY(X, Y)
-		  If row > -1 And column = Me.ColumnCount - 1 Then
-		    Me.MouseCursor = System.Cursors.FingerPointer
-		  Else
-		    Me.MouseCursor = System.Cursors.StandardPointer
-		  End If
-		  
-		End Sub
 	#tag EndEvent
 
 
 	#tag Hook, Flags = &h0
-		Event AddNew(NewIndex As Integer)
+		Event CellBackgroundPaint(g As Graphics, row As Integer, column As Integer) As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
-		Event Remove(Row As Integer)
+		Event CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
 	#tag EndHook
 
 

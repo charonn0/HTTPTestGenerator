@@ -91,7 +91,7 @@ Begin ContainerControl ResponseMain
       Visible         =   True
       Width           =   500
    End
-   Begin Listbox ResponseHeaders
+   Begin PrettyListBox ResponseHeaders
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
       Bold            =   False
@@ -140,7 +140,7 @@ Begin ContainerControl ResponseMain
       Width           =   561
       _ScrollWidth    =   -1
    End
-   Begin Listbox CookieList
+   Begin PrettyListBox CookieList
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
       Bold            =   False
@@ -684,10 +684,12 @@ End
 		Sub ClickLink(LinkValue As Variant, LinkText As String)
 		  Select Case True
 		  Case LinkValue IsA HTTP.Request
-		    RawViewer.ViewRaw(HTTP.Request(LinkValue))
+		    Dim h As HTTP.Request = LinkValue
+		    RawViewer.ViewRaw(h)
 		    
 		  Case LinkValue IsA HTTP.Response
-		    RawViewer.ViewRaw(HTTP.Response(LinkValue))
+		    Dim h As HTTP.Response = LinkValue
+		    RawViewer.ViewRaw(h)
 		    
 		  Else
 		    SpecIndex.ShowItem(LinkText)

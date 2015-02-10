@@ -82,7 +82,7 @@ Begin Window SpecIndex
       Visible         =   True
       Width           =   80
    End
-   Begin Listbox HelpIndex
+   Begin PrettyListBox HelpIndex
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
       Bold            =   ""
@@ -167,49 +167,6 @@ Begin Window SpecIndex
       TopLeftColor    =   &h000000
       Visible         =   True
       Width           =   434
-      Begin TextField ItemName
-         AcceptTabs      =   ""
-         Alignment       =   0
-         AutoDeactivate  =   True
-         AutomaticallyCheckSpelling=   False
-         BackColor       =   &hFFFFFF
-         Bold            =   ""
-         Border          =   True
-         CueText         =   ""
-         DataField       =   ""
-         DataSource      =   ""
-         Enabled         =   True
-         Format          =   ""
-         Height          =   22
-         HelpTag         =   ""
-         Index           =   -2147483648
-         InitialParent   =   "Rectangle1"
-         Italic          =   ""
-         Left            =   304
-         LimitText       =   0
-         LockBottom      =   ""
-         LockedInPosition=   False
-         LockLeft        =   True
-         LockRight       =   True
-         LockTop         =   True
-         Mask            =   ""
-         Password        =   ""
-         ReadOnly        =   True
-         Scope           =   0
-         TabIndex        =   0
-         TabPanelIndex   =   0
-         TabStop         =   True
-         Text            =   ""
-         TextColor       =   &h000000
-         TextFont        =   "System"
-         TextSize        =   0
-         TextUnit        =   0
-         Top             =   7
-         Underline       =   ""
-         UseFocusRing    =   True
-         Visible         =   True
-         Width           =   310
-      End
       Begin Label SpecLink
          AutoDeactivate  =   True
          Bold            =   ""
@@ -229,7 +186,7 @@ Begin Window SpecIndex
          LockTop         =   True
          Multiline       =   ""
          Scope           =   0
-         Selectable      =   False
+         Selectable      =   True
          TabIndex        =   1
          TabPanelIndex   =   0
          Text            =   "No Selection"
@@ -239,7 +196,7 @@ Begin Window SpecIndex
          TextSize        =   0
          TextUnit        =   0
          Top             =   34
-         Transparent     =   False
+         Transparent     =   True
          Underline       =   True
          Visible         =   True
          Width           =   310
@@ -453,6 +410,40 @@ Begin Window SpecIndex
          Underline       =   ""
          Visible         =   False
          Width           =   21
+      End
+      Begin Label ItemName
+         AutoDeactivate  =   True
+         Bold            =   True
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   304
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   True
+         LockTop         =   True
+         Multiline       =   ""
+         Scope           =   0
+         Selectable      =   True
+         TabIndex        =   9
+         TabPanelIndex   =   0
+         Text            =   "No Selection"
+         TextAlign       =   0
+         TextColor       =   &h00000000
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   8
+         Transparent     =   True
+         Underline       =   False
+         Visible         =   True
+         Width           =   310
       End
    End
    Begin Label LinkTarget
