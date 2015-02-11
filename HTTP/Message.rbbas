@@ -53,7 +53,13 @@ Protected Class Message
 		  
 		  Dim i As Integer = InStrB(MessageBody, CRLF)
 		  If i <= 0 Then Return False
-		  Return Val("&h" + NthField(NthFieldB(MessageBody, CRLF, 1), ";", 1)) > 0
+		  If i > 64 Then Return False 'too big to be a chunk header
+		  Dim hed, sz As String
+		  hed = NthFieldB(MessageBody, CRLF, 1)
+		  sz = NthField(hed, ";", 1)
+		  If IsNumeric(sz) Then 
+		    Return Val("&h" + sz) > 0
+		  End If
 		End Function
 	#tag EndMethod
 
