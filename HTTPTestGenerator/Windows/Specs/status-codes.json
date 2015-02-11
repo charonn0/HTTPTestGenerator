@@ -288,7 +288,7 @@
     },
     {
         "code": "500",
-        "phrase": "Internal <link=web server>server</link> Error",
+        "phrase": "Internal Server Error",
         "description": "Indicates that the <link=web server>server</link> encountered an unexpected condition that prevented it from fulfilling the request.",
         "spec_title": "RFC7231#6.6.1",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.1"

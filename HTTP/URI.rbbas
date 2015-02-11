@@ -1,7 +1,7 @@
 #tag Class
 Protected Class URI
 	#tag Method, Flags = &h0
-		Sub Constructor(CopyURI As HTTP.URi)
+		Sub Constructor(CopyURI As HTTP.URI)
 		  Me.Constructor(CopyURI.ToString)
 		End Sub
 	#tag EndMethod
