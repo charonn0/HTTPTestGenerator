@@ -57,7 +57,7 @@ Protected Class Message
 		  Dim hed, sz As String
 		  hed = NthFieldB(MessageBody, CRLF, 1)
 		  sz = NthField(hed, ";", 1)
-		  If IsNumeric(sz) Then 
+		  If IsNumeric(sz) Then
 		    Return Val("&h" + sz) > 0
 		  End If
 		End Function
@@ -92,9 +92,11 @@ Protected Class Message
 			  Dim c As ContentType
 			  If Me.HasHeader("Content-Type") Then
 			    c = Me.Header("Content-Type")
-			  Else
+			  ElseIf Me.Path <> Nil Then
 			    Dim s As String = NthField(Me.Path.Path, "/", CountFields(Me.Path.Path, "/"))
 			    c = SpecialFolder.Temporary.Child(s)
+			  Else
+			    c = "application/octet-stream"
 			  End If
 			  
 			  If c.SuperType = "text" And c.CharSet = Nil Then

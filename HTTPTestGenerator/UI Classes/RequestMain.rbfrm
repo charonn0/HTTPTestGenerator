@@ -224,7 +224,9 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
+      TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
@@ -498,6 +500,14 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Function ReadHeader(PendingHeaderName As String) As String
+		  For i As Integer = 0 To RequestHeaders.ListCount - 1
+		    If RequestHeaders.Cell(i, 0) = PendingHeaderName Then Return RequestHeaders.Cell(i, 1)
+		  Next
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Function SearchHistory(Search As String) As HTTP.URI()
 		  If History = Nil Then History = New Dictionary
@@ -719,7 +729,7 @@ End
 		        formraw = formgen.SetFormData(olddata)
 		      Else
 		        Try
-		          Dim typ As ContentType = NextRequest.ContentType
+		          Dim typ As ContentType = ReadHeader("Content-Type")
 		          formraw = formgen.SetFormData(MultipartForm.FromString(NextRequest.MessageBody, typ.Boundary))
 		        Catch UnsupportedFormatException
 		          formraw = formgen.SetFormData(Nil)

@@ -44,13 +44,9 @@ Implements FormInterface
 		    If name.Trim = "" Then Continue For i
 		    Dim j As Integer
 		    Dim nm As String = name
-		    Do
-		      If form.HasElement(nm) Then
-		        j = j + 1
-		        nm = name + Str(j)
-		      Else
-		        Exit Do
-		      End If
+		    Do Until Not form.HasElement(nm)
+		      j = j + 1
+		      nm = name + Str(j)
 		    Loop
 		    If CountFields(line, ";") < 3 Then 'form field
 		      form.Element(nm) = NthField(elements(i), CRLF + CRLF, 2)
