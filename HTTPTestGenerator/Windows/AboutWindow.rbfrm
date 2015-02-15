@@ -104,6 +104,7 @@ Begin Window AboutWindow
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "HTTP Test Generator"
       TextAlign       =   0
       TextColor       =   &h000000
@@ -138,6 +139,7 @@ Begin Window AboutWindow
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Copyright ©2014-15 Andrew Lambert, All Rights Reserved."
       TextAlign       =   0
       TextColor       =   0
@@ -172,6 +174,7 @@ Begin Window AboutWindow
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "www.boredomsoft.org"
       TextAlign       =   1
       TextColor       =   &h000000FF

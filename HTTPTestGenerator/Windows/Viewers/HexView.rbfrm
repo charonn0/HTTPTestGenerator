@@ -92,7 +92,6 @@ Begin ContainerControl HexView Implements Viewer
       TextFont        =   "System"
       TextSize        =   ""
       Top             =   0
-      Underline       =   ""
       UseFocusRing    =   True
       Visible         =   True
       Width           =   594
@@ -103,7 +102,12 @@ End
 #tag WindowCode
 	#tag Event
 		Sub Resized()
-		  ScrollBar1.Maximum = HexViewer1.LineCount - (HexViewer1.VisibleLineCount \ 2)
+		  If HexViewer1.LineCount > 0 Then
+		    ScrollBar1.Maximum = HexViewer1.LineCount - (HexViewer1.VisibleLineCount \ 2)
+		  Else
+		    ScrollBar1.Maximum = 100
+		  End If
+		  
 		End Sub
 	#tag EndEvent
 

@@ -349,7 +349,7 @@
     },
     {
         "header": "Cookie",
-        "description": "This header is used by HTTP servers to store state called cookies) at HTTP <link=user agent>user agents</link>, letting the servers maintain a stateful session over the mostly stateless HTTP protocol. Although cookies have many historical infelicities that degrade their security and privacy, the Cookie and Set-Cookie header fields are widely used on the Internet.",
+        "description": "Using the Set-Cookie header field, an HTTP <link=server>server</link> can pass name/value pairs and associated metadata (called cookies) to a <link=user agent>user agent</link>.  When the user agent makes subsequent requests to the server, the user agent uses the metadata and other information to determine whether to return the name/value pairs in the Cookie header	",
         "spec_title": "RFC6265",
         "spec_href": "http://tools.ietf.org/html/rfc6265"
     },
