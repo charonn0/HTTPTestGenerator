@@ -140,7 +140,7 @@ Protected Class URI
 		  For i As Integer = 0 To UBound(s)
 		    If s(i).Trim <> "" Then mPath.Append(EncodeURLComponent(s(i)))
 		  Next
-		  mHasEndSlash = (s(s.Ubound) = "")
+		  If s.Ubound > -1 Then mHasEndSlash = (s(s.Ubound) = "") Else mHasEndSlash = False
 		End Sub
 	#tag EndMethod
 
