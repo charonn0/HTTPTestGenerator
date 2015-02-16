@@ -107,7 +107,12 @@ Inherits SSLSocket
 		          doc.Header("Allow") = "GET, HEAD, TRACE, OPTIONS"
 		        Else
 		          If clientrequest.MethodName <> "" And clientrequest.Method = RequestMethod.InvalidMethod Then
-		            doc = ErrorPage(501) 'Not implemented
+		            If clientrequest.MethodName = "BREW" Or clientrequest.MethodName = "WHEN" Then
+		              doc = ErrorPage(418) ' I'm a teapot
+		              doc.Header("Content-Type") = "message/teapot"
+		            Else
+		              doc = ErrorPage(501) 'Not implemented
+		            End If
 		          ElseIf clientrequest.MethodName = "" Then
 		            doc = ErrorPage(400) 'bad request
 		          ElseIf clientrequest.MethodName <> "" Then

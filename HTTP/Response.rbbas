@@ -36,7 +36,9 @@ Inherits HTTP.Message
 		Function ToString(HeadersOnly As Boolean = False) As String
 		  Me.Header("Content-Type") = Me.ContentType.ToString
 		  Dim msg As String = CodeToMessage(Me.StatusCode)
-		  Return "HTTP/" + Format(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF + Super.ToString(HeadersOnly)'
+		  Dim p As String = "HTTP/"
+		  If Me.StatusCode = 418 Then p = "HTCPCP/"
+		  Return p + Format(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF + Super.ToString(HeadersOnly)'
 		  
 		End Function
 	#tag EndMethod

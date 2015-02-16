@@ -1,4 +1,13 @@
 [
+	{
+        "method": "BREW",
+        "description": "Requests that an HTCPCP-compliant server commence brewing coffee.",
+        "safe": false,
+        "idempotent": true,
+        "cacheable": false,
+        "spec_title": "RFC2324#2.1.1",
+        "spec_href": "http://tools.ietf.org/html/rfc2324#section-2.1.1"
+    },
     {
         "method": "CONNECT",
         "description": "Requests that the recipient establish a tunnel to the destination  <link=origin server>origin server</link> identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the connection is closed.",
@@ -340,5 +349,14 @@
         "cacheable": "",
         "spec_title": "RFC3253#3.5",
         "spec_href": "http://tools.ietf.org/html/rfc3253#section-3.5"
+    },
+	{
+        "method": "WHEN",
+        "description": "Indicates to an HTCPCP-compliant server that a sufficient quantity of milk or non-dairy creamer has been provided.",
+        "safe": false,
+        "idempotent": true,
+        "cacheable": false,
+        "spec_title": "RFC2324#2.1.4",
+        "spec_href": "http://tools.ietf.org/html/rfc2324#section-2.1.4"
     }
 ]
