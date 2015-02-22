@@ -341,19 +341,13 @@ Protected Module HTTP
 
 	#tag Method, Flags = &h1
 		Protected Function DecodeChunkedData(Data As MemoryBlock) As MemoryBlock
-		  Dim instream As New BinaryStream(Data)
+		  Dim instream As Readable = New BinaryStream(Data)
 		  Dim output As New MemoryBlock(0)
 		  Dim outstream As New BinaryStream(output)
-		  Do Until instream.EOF
-		    Dim char As String
-		    While InStrB(char, CRLF) <= 0 And Not instream.EOF
-		      char = char + Chr(instream.ReadByte)
-		    Wend
-		    Dim sz As Integer = Val("&h" + NthField(char, ";", 1))
-		    outstream.Write(instream.Read(sz))
-		    Call instream.Read(2)
+		  Dim chunk As New ChunkedStream(instream)
+		  Do Until chunk.EOF
+		    outstream.Write(chunk.Read(1))
 		  Loop
-		  instream.Close
 		  outstream.Close
 		  Return output
 		End Function
