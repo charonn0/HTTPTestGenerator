@@ -46,9 +46,12 @@ Class ContentType
 		          SubType = "*"
 		        End If
 		      Else
-		        Select Case NthField(entry, "=", 1).Trim
+		        Dim parm, value As String
+		        parm = NthField(entry, "=", 1).Trim
+		        value = NthField(entry, "=", 2)
+		        Select Case parm
 		        Case "q"
-		          Weight = CDbl(NthField(entry, "=", 2))
+		          Weight = CDbl(value)
 		        Case "charset"
 		          Dim nm As String = NthField(entry, "=", 2)
 		          For e As Integer = 0 To Encodings.Count' - 1
@@ -59,6 +62,8 @@ Class ContentType
 		          Next
 		        Case "boundary"
 		          Boundary = NthField(entry, "boundary=", 2).Trim
+		        Else
+		          ExtraParams.Value(parm) = value
 		        End Select
 		      End If
 		      
@@ -148,6 +153,9 @@ Class ContentType
 		  If Me.Boundary.Trim <> "" Then
 		    data = data + "; boundary=" + Me.Boundary
 		  End If
+		  For Each parm As String In ExtraParams.Keys
+		    data = data + "; " + parm + "=" + ExtraParams.Value(parm)
+		  Next
 		  Return Data
 		End Function
 	#tag EndMethod
@@ -165,6 +173,25 @@ Class ContentType
 			Optional; the character encoding of the content.
 		#tag EndNote
 		CharSet As TextEncoding
+	#tag EndProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  If mExtraParams = Nil Then mExtraParams = New Dictionary
+			  return mExtraParams
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mExtraParams = value
+			End Set
+		#tag EndSetter
+		ExtraParams As Dictionary
+	#tag EndComputedProperty
+
+	#tag Property, Flags = &h21
+		Private mExtraParams As Dictionary
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
