@@ -132,27 +132,23 @@ Inherits SSLSocket
 		      End If
 		    End If
 		    
-		    Dim types() As String = Split(ClientRequest.Header("Accept-Encoding"), ",")
+		    
 		    If UseGZip Then
+		      Dim types() As String = Split(ClientRequest.Header("Accept-Encoding"), ",")
 		      For i As Integer = 0 To UBound(types)
-		        If types(i).Trim = "gzip" Then
-		          Dim compressed As String = HTTP.GZipCompress(doc.MessageBody)
-		          If compressed.LenB <> clientrequest.MessageBody.LenB Then
-		            doc.Header("Content-Encoding") = "gzip"
-		            doc.MessageBody = compressed
-		            Exit For
-		          End If
-		        End If
+		        If types(i).Trim <> "gzip" Then Continue
+		        Dim compressed As String = HTTP.GZipCompress(doc.MessageBody)
+		        If compressed.LenB = clientrequest.MessageBody.LenB Then Exit For
+		        doc.Header("Content-Encoding") = "gzip"
+		        doc.MessageBody = compressed
+		        Exit For
 		      Next
 		    End If
 		    
-		    'If clientrequest.Method = RequestMethod.HEAD Then
-		    'doc.MessageBody = ""
-		    'Else
 		    If doc.HasHeader("Content-Length") And Val(doc.Header("Content-Length")) <> doc.MessageBody.LenB Then
 		      doc.Header("Content-Length") = Str(doc.MessageBody.LenB)
 		    End If
-		    
+		    If clientrequest.Method = RequestMethod.HEAD Then doc.MessageBody = ""
 		    ' set this again in case they got overwritten
 		    doc.Path = clientrequest.Path
 		    If doc.StatusCode <> 505 Then doc.ProtocolVersion = clientrequest.ProtocolVersion ' 505 HTTP Version Not Supported
