@@ -84,7 +84,7 @@
 
 	{
         "word": "safe",
-        "description": "Request methods are considered \"safe\" if their defined semantics are essentially read-only; i.e., the <link=client>client</link> does not request, and does not expect, any state change on the origin <link=web server>server</link> as a result of applying a safe method to a target resource.  Likewise, reasonable use of a safe method is not expected to cause any harm, loss of property, or unusual burden on the origin server.",
+        "description": "<link=Request method>Request methods</link> are considered \"safe\" if their defined semantics are essentially read-only; i.e., the <link=client>client</link> does not request, and does not expect, any state change on the origin <link=web server>server</link> as a result of applying a safe method to a target resource.  Likewise, reasonable use of a safe method is not expected to cause any harm, loss of property, or unusual burden on the origin server. All safe methods are also <link=idempotent>idempotent</link>, however not all idempotent methods are safe (e.g. <link=DELETE>DELETE</link>).",
 		"spec_title": "RFC7231#4.2.1",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-4.2.1"
     },
@@ -97,7 +97,7 @@
     },
 			{
         "word": "request method",
-        "description": "The primary source of request semantics; it indicates the purpose for which the <link=client>client</link> has made this request and what is expected by the <link=user agent>client</link> as a successful result.",
+        "description": "The primary source of request semantics; it indicates the purpose for which the <link=client>client</link> has made this request and what is expected by the client as a successful result.",
 		"spec_title": "RFC7231#4",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-4"
     }

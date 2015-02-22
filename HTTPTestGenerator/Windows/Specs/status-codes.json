@@ -184,7 +184,7 @@
     {
         "code": "406",
         "phrase": "Not Acceptable",
-        "description": "Indicates that the target resource does not have a current representation that would be acceptable to the <link=user agent>user agent</link>, according to the proactive negotiation header fields received in the request, and the <link=web server>server</link> is unwilling to supply a default representation.",
+        "description": "Indicates that the target resource does not have a current representation that would be acceptable to the <link=user agent>user agent</link>, according to the proactive negotiation header fields received in the request (e.g. the <link=Accept>Accept</link> header), and the <link=web server>server</link> is unwilling to supply a default representation.",
         "spec_title": "RFC7231#6.5.6",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.6"
     },
