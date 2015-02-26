@@ -579,9 +579,9 @@ Protected Module HTTP
 		  Case 100
 		    err = err + "Failed to create the socket."
 		  Case 103
-		    err = err + "Connection timed out."
+		    err = err + "The host name cannot be resolved."
 		  Case 105
-		    err = err + "That port number is already in use."
+		    err = err + "The port number is already in use."
 		  Case 106
 		    err = err + "The socket is not ready for that command."
 		  Case 107
@@ -589,19 +589,7 @@ Protected Module HTTP
 		  Case 108
 		    err = err + "Out of memory."
 		  Else
-		    #If TargetWin32 Then
-		      Declare Function FormatMessageW Lib "Kernel32" (Flags As Integer, Source As Integer, MessageId As Integer, _
-		      LangId As Integer, Buffer As ptr, Size As Integer, Arguments As Integer) As Integer
-		      Const FORMAT_MESSAGE_FROM_SYSTEM = &H1000
-		      Dim buffer As New MemoryBlock(2048)
-		      If FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM, 0, ErrorCode, 0 , Buffer, Buffer.Size, 0) <> 0 Then
-		        err = err + Buffer.WString(0)
-		      Else
-		        err = err + "Unknown error number " + Str(ErrorCode)
-		      End If
-		    #Else
-		      err = err + "System error code. " + Str(ErrorCode)
-		    #endif
+		    err = err + "Unknown error number"
 		  End Select
 		  
 		  Return err
