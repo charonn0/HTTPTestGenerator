@@ -132,6 +132,7 @@ Begin Window SpecIndex
       _ScrollWidth    =   -1
    End
    Begin Timer HistoryTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       InitialParent   =   ""
@@ -140,8 +141,11 @@ Begin Window SpecIndex
       Mode            =   2
       Period          =   150
       Scope           =   0
+      TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   350
+      Visible         =   True
       Width           =   32
    End
    Begin Rectangle Rectangle1
@@ -163,6 +167,7 @@ Begin Window SpecIndex
       Scope           =   0
       TabIndex        =   15
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   0
       TopLeftColor    =   &h000000
       Visible         =   True
@@ -189,6 +194,7 @@ Begin Window SpecIndex
          Selectable      =   True
          TabIndex        =   1
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "No Selection"
          TextAlign       =   0
          TextColor       =   &h000000FF
@@ -269,6 +275,7 @@ Begin Window SpecIndex
          Selectable      =   False
          TabIndex        =   4
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "Abstract:"
          TextAlign       =   2
          TextColor       =   &h000000
@@ -303,6 +310,7 @@ Begin Window SpecIndex
          Selectable      =   False
          TabIndex        =   5
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "Specification:"
          TextAlign       =   2
          TextColor       =   &h000000
@@ -337,6 +345,7 @@ Begin Window SpecIndex
          Selectable      =   False
          TabIndex        =   6
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "No Selection:"
          TextAlign       =   2
          TextColor       =   &h000000
@@ -433,6 +442,7 @@ Begin Window SpecIndex
          Selectable      =   True
          TabIndex        =   9
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "No Selection"
          TextAlign       =   0
          TextColor       =   &h00000000
@@ -444,6 +454,41 @@ Begin Window SpecIndex
          Underline       =   False
          Visible         =   True
          Width           =   310
+      End
+      Begin Label ErrorPageLink
+         AutoDeactivate  =   True
+         Bold            =   ""
+         DataField       =   ""
+         DataSource      =   ""
+         Enabled         =   True
+         Height          =   20
+         HelpTag         =   ""
+         Index           =   -2147483648
+         InitialParent   =   "Rectangle1"
+         Italic          =   ""
+         Left            =   199
+         LockBottom      =   ""
+         LockedInPosition=   False
+         LockLeft        =   True
+         LockRight       =   False
+         LockTop         =   True
+         Multiline       =   ""
+         Scope           =   0
+         Selectable      =   True
+         TabIndex        =   10
+         TabPanelIndex   =   0
+         TabStop         =   True
+         Text            =   "Run Error Server"
+         TextAlign       =   2
+         TextColor       =   &h000000FF
+         TextFont        =   "System"
+         TextSize        =   0
+         TextUnit        =   0
+         Top             =   83
+         Transparent     =   True
+         Underline       =   True
+         Visible         =   False
+         Width           =   100
       End
    End
    Begin Label LinkTarget
@@ -468,6 +513,7 @@ Begin Window SpecIndex
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "HTTP://WWW.GOOGLE.COM"
       TextAlign       =   2
       TextColor       =   &h00808080
@@ -480,10 +526,38 @@ Begin Window SpecIndex
       Visible         =   True
       Width           =   342
    End
+   Begin ServerSocket ErrorPageServer
+      Enabled         =   True
+      Height          =   32
+      Index           =   -2147483648
+      Left            =   659
+      LockedInPosition=   False
+      MaximumSocketsConnected=   10
+      MinimumSocketsAvailable=   2
+      Port            =   64535
+      Scope           =   0
+      TabIndex        =   6
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   0
+      Visible         =   True
+      Width           =   32
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Event
+		Sub Close()
+		  If ErrorPageServer.IsListening Then
+		    For Each sock As TCPSocket In ErrorPageServer.ActiveConnections
+		      sock.Disconnect
+		    Next
+		    ErrorPageServer.StopListening
+		  End If
+		End Sub
+	#tag EndEvent
+
 	#tag Event
 		Sub Open()
 		  Me.Left = Window(1).Left + (Window(1).Width - Me.Width) / 2
@@ -493,6 +567,7 @@ End
 		  'Call Specifications.RelationDescription("")
 		  Call Specifications.StatusCodeDescription(0)
 		  Call Specifications.GlossaryDefinition("")
+		  ErrorPageServer.NetworkInterface = System.GetNetworkInterface(0)
 		End Sub
 	#tag EndEvent
 
@@ -506,6 +581,7 @@ End
 	#tag Method, Flags = &h1
 		Protected Sub DisplayItem(mItem As JSONItem)
 		  DescText.Clear
+		  ErrorPageLink.Visible = False
 		  Dim exp As Integer = -1
 		  Select Case True
 		  Case mItem = Nil
@@ -547,6 +623,7 @@ End
 		    exp = 1
 		    TypeLabel.Text = "Status Code:"
 		    ItemName.Text = mItem.Value("code") + " " + mItem.Value("phrase")
+		    ErrorPageLink.Visible = True
 		    
 		  Case mItem.HasName("word")
 		    exp = 3
@@ -580,6 +657,23 @@ End
 		    HelpIndex.Expanded(index) = True
 		  End If
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
+		  #pragma Unused Sender
+		  If ClientRequest.Path.Path = "" Then 'Or Not IsNumeric(ClientRequest.Path.Path) Then
+		    ResponseDocument = HTTP.ErrorPage(403)
+		    Return True
+		  End If
+		  Dim err As Integer = Val(Replace(ClientRequest.Path.Path, "/", ""))
+		  If err <= 99 Or err >= 600 Then
+		    ResponseDocument = HTTP.ErrorPage(404)
+		    Return True
+		  End If
+		  ResponseDocument = HTTP.ErrorPage(err)
+		  Return True
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
@@ -656,10 +750,6 @@ End
 
 	#tag Property, Flags = &h1
 		Protected History() As JSONItem
-	#tag EndProperty
-
-	#tag Property, Flags = &h21
-		Private mCurrentItem1 As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
@@ -890,10 +980,56 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag Events ErrorPageLink
+	#tag Event
+		Sub MouseEnter()
+		  Me.MouseCursor = System.Cursors.FingerPointer
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  Me.MouseCursor = System.Cursors.StandardPointer
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
+		  Return Me.Text <> ""
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
+		  Dim js As JSONItem = CurrentItem
+		  If js <> Nil And js.HasName("code") Then
+		    If Not ErrorPageServer.IsListening Then ErrorPageServer.Listen
+		    Dim link As String = "http://" + ErrorPageServer.NetworkInterface.IPAddress + ":" + Str(ErrorPageServer.Port) + "/" + js.Value("code")
+		    ShowURL(link)
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events LinkTarget
 	#tag Event
 		Sub Open()
 		  Me.Text = ""
 		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events ErrorPageServer
+	#tag Event
+		Sub Error(ErrorCode as Integer)
+		  #pragma Unused ErrorCode
+		  Me.StopListening
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function AddSocket() As TCPSocket
+		  Dim sock As New HTTP.ClientHandler
+		  AddHandler sock.HandleRequest, WeakAddressOf HandleRequestHandler
+		  Return sock
+		End Function
 	#tag EndEvent
 #tag EndEvents
