@@ -297,6 +297,7 @@ End
 		  CookieList.DeleteAllRows
 		  ResponseHeaders.DeleteAllRows
 		  Code.Text = ""
+		  
 		End Sub
 	#tag EndMethod
 
@@ -354,8 +355,10 @@ End
 		    Else
 		      If Message IsA HTTP.Request Then
 		        OutputLog.PrintRequest(Message)
+		        mSession.Append(Message)
 		      ElseIf Message IsA HTTP.Response Then
 		        OutputLog.PrintResponse(Message)
+		        mSession.Append(Message)
 		      End If
 		    End Select
 		    OutputLog.ScrollToEnd()
@@ -413,6 +416,10 @@ End
 
 	#tag Property, Flags = &h1
 		Protected mHost As HTTP.URI
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mSession() As HTTP.Message
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -645,6 +652,9 @@ End
 		  #pragma Unused X
 		  #pragma Unused Y
 		  base.Append(New MenuItem("Clear log"))
+		  base.Append(New MenuItem("Save log"))
+		  base.Append(New MenuItem("Load log"))
+		  
 		  Dim squelch As New MenuItem("&Verbosity")
 		  
 		  Dim verb As New MenuItem("HTTP Only")
@@ -669,7 +679,28 @@ End
 		  Select Case hitItem.Text
 		  Case "Clear log"
 		    Me.Clear
+		    ReDim mSession(-1)
 		    Return True
+		    
+		  Case "Save log"
+		    Dim f As FolderItem = GetSaveFolderItem("", "HTTPSession.dat")
+		    If f = Nil Then Return True
+		    Dim v As HTTP.SessionRecord = HTTP.SessionRecord.Create(f)
+		    Dim now As New Date
+		    Dim path As String = now.SQLDateTime
+		    If Not v.CreateDirectory(path, True) Then Return False
+		    Dim seqnum As Integer
+		    For Each m As HTTP.Message In mSession()
+		      If m IsA HTTP.Request Then
+		        v.SetValue(Path + v.PathSeparator + Str(seqnum)) = HTTP.Request(m)
+		      ElseIf m IsA HTTP.Response Then
+		        v.SetValue(Path + v.PathSeparator + Str(seqnum)) = HTTP.Response(m)
+		      End If
+		      seqnum = seqnum + 1
+		    Next
+		    v.Close
+		    Return True
+		    
 		  Case "HTTP Only"
 		    LogLevel = 0
 		    
