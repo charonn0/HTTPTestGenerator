@@ -572,7 +572,7 @@ Protected Module HTTP
 
 	#tag Method, Flags = &h0
 		Function FormatSocketError(ErrorCode As Integer) As String
-		  Dim err As String = "Socket error " + Str(ErrorCode) + ": "
+		  Dim err As String = "Socket error: "
 		  Select Case ErrorCode
 		  Case 102
 		    err = err + "Disconnected."
@@ -589,7 +589,7 @@ Protected Module HTTP
 		  Case 108
 		    err = err + "Out of memory."
 		  Else
-		    err = err + "Unknown error number"
+		    err = err + "Unknown error: number " + Str(ErrorCode)
 		  End Select
 		  
 		  Return err

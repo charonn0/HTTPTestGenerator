@@ -181,9 +181,9 @@ Inherits HTTP.Response
 		  Dim timestamp As String = "This page was generated in " + Format(timestart / 1000, "###,##0.0#") + "ms."
 		  pagedata = Replace(pagedata, "%TIME%", timestamp)
 		  
-		  Me.MessageBody = DefineEncoding(pagedata, Encodings.UTF8)
+		  Me.MessageBody = PageData
 		  Me.ContentType = "text/html"
-		  Me.Header("Content-Length") = Str(pagedata.LenB)
+		  Me.Header("Content-Length") = Str(Me.MessageBody.LenB)
 		  
 		  
 		  
