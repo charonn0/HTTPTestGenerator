@@ -60,12 +60,13 @@ Inherits TextArea
 		Protected Function FindLink(X As Integer, Y As Integer) As Variant
 		  Dim tst As Integer
 		  tst = Me.CharPosAtXY(X, Y)
-		  
-		  For i As Integer = 0 To Me.StyledText.StyleRunCount - 1
+		  Dim c As Integer = Me.StyledText.StyleRunCount - 1
+		  For i As Integer = 0 To c
 		    If Links(i) Is Nil Then Continue
 		    Dim st, op As Integer
-		    st = Me.StyledText.StyleRunRange(i).StartPos
-		    op = Me.StyledText.StyleRunRange(i).EndPos
+		    Dim r As Range = Me.StyledText.StyleRunRange(i)
+		    st = r.StartPos
+		    op = r.EndPos
 		    If tst >= st And tst <= op Then
 		      Return Links(i)
 		    End If
@@ -77,9 +78,10 @@ Inherits TextArea
 		Protected Function FindLinkText(X As Integer, Y As Integer) As String
 		  Dim tst As Integer
 		  tst = Me.CharPosAtXY(X, Y)
-		  
-		  For i As Integer = 0 To Me.StyledText.StyleRunCount - 1
-		    If tst >= Me.StyledText.StyleRunRange(i).StartPos And tst <= Me.StyledText.StyleRunRange(i).EndPos Then
+		  Dim c As Integer = Me.StyledText.StyleRunCount - 1
+		  For i As Integer = 0 To c
+		    Dim r As Range = Me.StyledText.StyleRunRange(i)
+		    If tst >= r.StartPos And tst <= r.EndPos Then
 		      Return Me.StyledText.StyleRun(i).Text
 		    End If
 		  Next
