@@ -683,7 +683,7 @@ End
 		    Return True
 		    
 		  Case "Save log"
-		    Dim f As FolderItem = GetSaveFolderItem("", "HTTPSession.dat")
+		    Dim f As FolderItem = GetSaveFolderItem(FileTypes1.HierarchicalContainerFile, "HTTPSession.hcf")
 		    If f = Nil Then Return True
 		    Dim v As HTTP.SessionRecord = HTTP.SessionRecord.Create(f)
 		    Dim now As New Date

@@ -8,4 +8,13 @@
 		Name=Netscape Cookie Jar
 	#tag EndFileType
 
+	#tag FileType
+		CodeName=HierarchicalContainerFile
+		Extension=.hcf
+		Flags=&h0
+		MacCreator=
+		MacType=
+		Name=Hierarchical Container File
+	#tag EndFileType
+
 #tag EndFileTypeSet
