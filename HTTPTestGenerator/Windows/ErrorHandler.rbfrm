@@ -21,7 +21,7 @@ Begin Window ErrorHandler
    MinWidth        =   469
    Placement       =   1
    Resizeable      =   True
-   Title           =   "Error"
+   Title           =   "Error - HTTP Request Generator"
    Visible         =   True
    Width           =   5.36e+2
    Begin Label StaticText1
@@ -107,9 +107,9 @@ Begin Window ErrorHandler
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   0
-      Cancel          =   True
+      Cancel          =   False
       Caption         =   "Quit"
-      Default         =   True
+      Default         =   False
       Enabled         =   True
       Height          =   22
       HelpTag         =   ""
@@ -123,7 +123,7 @@ Begin Window ErrorHandler
       LockRight       =   True
       LockTop         =   False
       Scope           =   0
-      TabIndex        =   0
+      TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -154,7 +154,7 @@ Begin Window ErrorHandler
       LockRight       =   False
       LockTop         =   False
       Scope           =   0
-      TabIndex        =   1
+      TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -196,7 +196,7 @@ Begin Window ErrorHandler
       AutoDeactivate  =   True
       Bold            =   False
       ButtonStyle     =   0
-      Cancel          =   False
+      Cancel          =   True
       Caption         =   "Ignore"
       Default         =   False
       Enabled         =   True
@@ -212,7 +212,7 @@ Begin Window ErrorHandler
       LockRight       =   False
       LockTop         =   False
       Scope           =   0
-      TabIndex        =   7
+      TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
@@ -243,7 +243,7 @@ Begin Window ErrorHandler
       Multiline       =   ""
       Scope           =   0
       Selectable      =   False
-      TabIndex        =   8
+      TabIndex        =   7
       TabPanelIndex   =   0
       Text            =   "Show technical details"
       TextAlign       =   0
@@ -273,7 +273,7 @@ Begin Window ErrorHandler
       LockRight       =   ""
       LockTop         =   True
       Scope           =   0
-      TabIndex        =   9
+      TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   45
@@ -301,7 +301,7 @@ Begin Window ErrorHandler
       LockRight       =   False
       LockTop         =   False
       Scope           =   0
-      TabIndex        =   2
+      TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
