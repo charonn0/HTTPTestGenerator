@@ -199,10 +199,18 @@ End
 	#tag EndMenuHandler
 
 
+	#tag Method, Flags = &h21
+		Private Sub HTTPDebugHandler(Sender As HTTP.Message, Message As String, Level As Integer)
+		  #pragma Unused Sender
+		  ResponseMain1.Log(Message, Level)
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub Perform(NewRequest As HTTP.Request)
 		  If CurrentRequest <> Nil Then OldRequests.Append(CurrentRequest)
 		  CurrentRequest = NewRequest
+		  AddHandler CurrentRequest.HTTPDebug, WeakAddressOf HTTPDebugHandler
 		  TimeOut.Mode = Timer.ModeSingle
 		  Sock.Close
 		  Sock.Address = CurrentRequest.Path.Host

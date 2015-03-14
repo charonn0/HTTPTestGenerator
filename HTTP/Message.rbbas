@@ -79,6 +79,8 @@ Protected Class Message
 		    Else
 		      data = mHeaders.Source(True) + CRLF + CRLF
 		    End If
+		  Else
+		    RaiseEvent HTTPDebug("WARN: This message contains no headers.", -1)
 		  End If
 		  If Not HeadersOnly Then data = data + Me.MessageBody
 		  Return data
@@ -86,12 +88,23 @@ Protected Class Message
 	#tag EndMethod
 
 
+	#tag Hook, Flags = &h0
+		Event HTTPDebug(Message As String, Level As Integer)
+	#tag EndHook
+
+
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
 			  Dim c As ContentType
 			  If Me.HasHeader("Content-Type") Then
-			    c = Me.Header("Content-Type")
+			    Dim s As String = Me.Header("Content-Type")
+			    If s.Trim <> "" Then
+			      c = Me.Header("Content-Type")
+			    Else
+			      c = "unspecified/unspecified"
+			      RaiseEvent HTTPDebug("WARN: Content-Type is empty.", -1)
+			    End If
 			  ElseIf Me.Path <> Nil Then
 			    Dim s As String = NthField(Me.Path.Path, "/", CountFields(Me.Path.Path, "/"))
 			    c = SpecialFolder.Temporary.Child(s)
