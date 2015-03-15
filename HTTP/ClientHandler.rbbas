@@ -5,13 +5,20 @@ Inherits SSLSocket
 		Sub DataAvailable()
 		  ' Worker is a property of this class.
 		  ' Worker.Run is handled by the ThreadRun method
-		  If Worker.State <> Thread.Running Then Worker.Run
+		  If Worker.State <> Thread.Running Then 
+		    Worker.Run
+		  Else
+		    RaiseEvent HTTPDebug("Input buffered for processing.", 1)
+		  End If
 		End Sub
 	#tag EndEvent
 
 	#tag Event
 		Sub Error()
-		  If Worker <> Nil And Worker.State <> Thread.NotRunning Then Worker.Kill
+		  If Worker <> Nil And Worker.State <> Thread.NotRunning Then 
+		    Worker.Kill
+		    RaiseEvent HTTPDebug("Worker thread killed.", 2)
+		  End If
 		  RaiseEvent Error()
 		End Sub
 	#tag EndEvent
@@ -29,6 +36,7 @@ Inherits SSLSocket
 
 	#tag Method, Flags = &h1
 		Protected Function ReadNextRequest() As HTTP.Request
+		  RaiseEvent HTTPDebug("Processing next request.", 2)
 		  If NthField(Me.Lookahead, CRLF + CRLF, 1).Trim = "" Then Return Nil
 		  Dim clientrequest As HTTP.Request = Me.Read(InStr(Me.Lookahead, CRLF + CRLF) + 3)
 		  If clientrequest.HasHeader("Content-Length") Then
@@ -40,7 +48,9 @@ Inherits SSLSocket
 		      Dim d As New MemoryBlock(0)
 		      Dim entity As New BinaryStream(d)
 		      Do
-		        entity.Write(Me.ReadAll)
+		        Dim data As MemoryBlock = Me.ReadAll
+		        RaiseEvent HTTPDebug("Read " + Str(data.Size) + " bytes", 1)
+		        entity.Write(data)
 		        App.YieldToNextThread
 		      Loop Until entity.Length >= cl
 		      clientrequest.MessageBody = d
@@ -54,6 +64,7 @@ Inherits SSLSocket
 	#tag Method, Flags = &h0
 		Sub SendMessage(HTTPMessage As HTTP.Response)
 		  Dim s As String = HTTPMessage.ToString
+		  RaiseEvent HTTPDebug("Write " + Str(s.LenB) + " bytes.", 2)
 		  Me.Write(s)
 		  Me.Flush
 		  RaiseEvent MessageSent(HTTPMessage)
@@ -81,13 +92,16 @@ Inherits SSLSocket
 		    ' start processing the request.
 		    Select Case True
 		    Case clientrequest = Nil
+		      RaiseEvent HTTPDebug("The request is malformed.", -1)
 		      doc = ErrorPage(400) 'bad request
 		      
 		    Case AuthenticationRequired And Not Authenticate(clientrequest, user, pass, AuthenticationRealm)
+		      RaiseEvent HTTPDebug("The request is unauthorized.", -1)
 		      doc = ErrorPage(401) ' Unauthorized
 		      doc.Header("WWW-Authenticate") = "Basic realm=""" + AuthenticationRealm + """"
 		      
 		    Case clientrequest.ProtocolVersion < 1.0 Or clientrequest.ProtocolVersion >= 1.2
+		      RaiseEvent HTTPDebug("The request uses an unsupported HTTP version.", -1)
 		      doc = ErrorPage(505) 'Unsupported protocol version
 		      
 		    Else
@@ -96,6 +110,7 @@ Inherits SSLSocket
 		        ' No one handled the request, so we send an error message of some sort
 		        Select Case clientrequest.Method
 		        Case RequestMethod.HEAD, RequestMethod.GET
+		          RaiseEvent HTTPDebug("The requested item was not found.", -1)
 		          doc = ErrorPage(404) ' Not found
 		        Case RequestMethod.TRACE
 		          doc = ErrorPage(200) ' OK
@@ -110,12 +125,16 @@ Inherits SSLSocket
 		            If clientrequest.MethodName = "BREW" Or clientrequest.MethodName = "WHEN" Then
 		              doc = ErrorPage(418) ' I'm a teapot
 		              doc.Header("Content-Type") = "message/teapot"
+		              RaiseEvent HTTPDebug("Compatibility mode: HTCPCP", 1)
 		            Else
+		              RaiseEvent HTTPDebug("The request used an unimplemented HTTP method.", -1)
 		              doc = ErrorPage(501) 'Not implemented
 		            End If
 		          ElseIf clientrequest.MethodName = "" Then
+		            RaiseEvent HTTPDebug("The request is malformed.", -1)
 		            doc = ErrorPage(400) 'bad request
 		          ElseIf clientrequest.MethodName <> "" Then
+		            RaiseEvent HTTPDebug("The requested method is not allowed.", -1)
 		            doc = ErrorPage(405) ' method not allowed
 		            doc.Header("Allow") = "GET, HEAD, TRACE, OPTIONS"
 		          End If
@@ -129,6 +148,7 @@ Inherits SSLSocket
 		        Dim accepted As ContentType = doc.ContentType
 		        doc = ErrorPage(406) 'Not Acceptable
 		        doc.ContentType = accepted
+		        RaiseEvent HTTPDebug("Proactive content type negotiation failed.", -1)
 		      End If
 		    End If
 		    
@@ -141,6 +161,7 @@ Inherits SSLSocket
 		        If compressed.LenB = clientrequest.MessageBody.LenB Then Exit For
 		        doc.Header("Content-Encoding") = "gzip"
 		        doc.MessageBody = compressed
+		        RaiseEvent HTTPDebug("Compressed response with gzip.", 1)
 		        Exit For
 		      Next
 		    End If
@@ -156,7 +177,9 @@ Inherits SSLSocket
 		    ' set the Connection header if needed (default "close")
 		    If clientrequest.Header("Connection") = "keep-alive" Then
 		      doc.Header("Connection") = "keep-alive"
+		      RaiseEvent HTTPDebug("The connection will be left open.", 1)
 		    ElseIf clientrequest.ProtocolVersion > 1.0 Then
+		      RaiseEvent HTTPDebug("The connection will be closed.", 1)
 		      doc.Header("Connection") = "close"
 		    End If
 		    
@@ -172,6 +195,7 @@ Inherits SSLSocket
 		Exception Err As RuntimeException
 		  If Err IsA EndException Or Err IsA ThreadEndException Then Raise Err
 		  'Return an HTTP 500 Internal Server Error page.
+		  RaiseEvent HTTPDebug("A runtime error was not handled while processing the request.", -1)
 		  Dim errpage As Response = ErrorPage(500)
 		  errpage.Header("Connection") = "close"
 		  'Me.Purge
@@ -191,6 +215,10 @@ Inherits SSLSocket
 
 	#tag Hook, Flags = &h0
 		Event HandleRequest(ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event HTTPDebug(Message As String, Level As Integer)
 	#tag EndHook
 
 	#tag Hook, Flags = &h0
