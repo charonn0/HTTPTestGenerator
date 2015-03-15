@@ -1,7 +1,12 @@
 #tag Class
-Protected Class VariantVolume
+Class VariantVolume
 	#tag Method, Flags = &h0
 		Sub Close()
+		  If mModificationDate <> Nil Then
+		    Dim f As FolderItem = mVolume.Root.Child(".META")
+		    If f.Directory Then Me.WriteValue(f.Child("MODIFY_DATE"), mModificationDate)
+		    mModificationDate = Nil
+		  End If
 		  mVolume.Flush
 		  mVolume = Nil
 		End Sub
@@ -12,6 +17,8 @@ Protected Class VariantVolume
 		  If VolumeRef = Nil Then Raise New NilObjectException
 		  mVolume = VolumeRef
 		  If Me.PathSeparator = "" Then Me.PathSeparator = "."
+		  If Me.CreationDate = Nil Then Me.CreationDate = New Date
+		  If Me.ModificationDate = Nil Then Me.ModificationDate = New Date
 		End Sub
 	#tag EndMethod
 
@@ -24,19 +31,26 @@ Protected Class VariantVolume
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Function Count(DirectoryPath As String, Dereference As Boolean = True) As Integer
-		  Dim f As FolderItem = Me.Locate(DirectoryPath, Dereference)
-		  If f <> Nil And f.Exists And f.Directory Then
+	#tag Method, Flags = &h1
+		Protected Function Count(Folder As FolderItem) As Integer
+		  If Folder <> Nil And Folder.Exists And Folder.Directory Then
 		    Dim x As Integer
-		    For i As Integer = 0 To f.Count - 1
-		      Dim item As FolderItem = f.Item(i)
+		    For i As Integer = 0 To Folder.Count - 1
+		      Dim item As FolderItem = Folder.Item(i)
 		      If Right(item.Name, 5) = ".META" Then Continue
 		      x = x + 1
 		    Next
 		    Return x
 		  End If
 		  Raise New NilObjectException
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function Count(DirectoryPath As String, Dereference As Boolean = True) As Integer
+		  Dim f As FolderItem = Me.Locate(DirectoryPath, Dereference)
+		  Return Me.Count(f)
 		  
 		End Function
 	#tag EndMethod
@@ -59,6 +73,17 @@ Protected Class VariantVolume
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Function CreateDirectory(Folder As FolderItem) As Boolean
+		  If Folder.Exists Then Return False
+		  Folder.CreateAsFolder
+		  If Folder.Exists And Folder.Directory Then
+		    Me.WriteType(Folder, TYPE_DIRECTORY)
+		    Return True
+		  End If
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Function CreateDirectory(Path As String, CreateParents As Boolean, Dereference As Boolean = True) As Boolean
 		  Dim parts() As String = Split(Path, PathSeparator)
@@ -70,30 +95,34 @@ Protected Class VariantVolume
 		    If item.Name.Trim = "" Then Return False
 		    If i <> UBound(parts) Then
 		      paths = paths + PathSeparator
-		      If Not item.Exists Then
-		        If CreateParents Then item.CreateAsFolder Else Return False
+		      If Not item.Exists And CreateParents Then
+		        If Not Me.CreateDirectory(item) Then Return False
 		      End If
 		    End If
 		  Next
 		  Dim f As FolderItem = Me.Locate(paths, Dereference)
 		  If f = Nil Or f.Exists Then Return False
 		  If f.Name.Trim = "" Then Return False
-		  f.CreateAsFolder
-		  Me.WriteType(f, TYPE_DIRECTORY)
-		  Return True
+		  Return Me.CreateDirectory(f)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function Delete(Item As FolderItem) As Boolean
+		  If Item <> Nil And Item.AbsolutePath <> mVolume.Root.AbsolutePath Then
+		    If Item.Directory And Item.Count > 0 Then Return False
+		    Item.Parent.Child(Item.Name + ".META").Delete
+		    Item.Delete
+		    mVolume.Flush
+		    Return Not Item.Exists
+		  End If
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function Delete(Path As String, Dereference As Boolean = True) As Boolean
 		  Dim f As FolderItem = Me.Locate(Path, Dereference)
-		  If f <> Nil And f.AbsolutePath <> mVolume.Root.AbsolutePath Then
-		    If f.Directory And f.Count > 0 Then Return False
-		    f.Parent.Child(f.Name + ".META").Delete
-		    f.Delete
-		    mVolume.Flush
-		    Return Not f.Exists
-		  End If
+		  Return Me.Delete(f)
 		End Function
 	#tag EndMethod
 
@@ -123,15 +152,14 @@ Protected Class VariantVolume
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Function Item(DirectoryPath As String, Index As Integer, Dereference As Boolean = True) As String
-		  Dim f As FolderItem = Me.Locate(DirectoryPath, Dereference)
-		  If f <> Nil And f.Exists And f.Directory Then
+	#tag Method, Flags = &h1
+		Protected Function Item(Folder As FolderItem, Index As Integer) As FolderItem
+		  If Folder <> Nil And Folder.Exists And Folder.Directory Then
 		    Dim x As Integer
-		    For i As Integer = 0 To f.Count - 1
-		      Dim item As FolderItem = f.Item(i)
+		    For i As Integer = 0 To Folder.Count - 1
+		      Dim item As FolderItem = Folder.Item(i)
 		      If Right(item.Name, 5) = ".META" Then Continue
-		      If x = Index Then Return item.Name
+		      If x = Index Then Return item
 		      x = x + 1
 		    Next
 		  End If
@@ -140,8 +168,23 @@ Protected Class VariantVolume
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function Item(DirectoryPath As String, Index As Integer, Dereference As Boolean = True) As String
+		  Dim f As FolderItem = Me.Locate(DirectoryPath, Dereference)
+		  Return Me.Item(f, Index).Name
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Function Locate(Path As String, Dereference As Boolean = True) As FolderItem
+		  ' Traverses the VirtualVolume directory structure using Path, and returns a FolderItem pointing to the
+		  ' located item. If the item cannot be located, returns Nil.
+		  '
+		  ' If Dereference=False and the located item is of type TYPE_SYMLINK then the returned FolderItem points
+		  ' to the link; if Dereference=True then the returned FolderItem points to the link target.
+		  '
+		  ' If the Path is empty and Dereference=False, returns the root directory of the VirtualVolume.
+		  
 		  Dim parts() As String = Split(Path, PathSeparator)
 		  Dim item As FolderItem = mVolume.Root
 		  For i As Integer = 0 To UBound(parts)
@@ -156,9 +199,9 @@ Protected Class VariantVolume
 		      Break
 		      Return Nil
 		      
-		    Case (Me.ReadType(child) = TYPE_SYMLINK Or Me.ReadType(child) = TYPE_DIRECTORY) And Dereference
+		    Case Me.ReadType(child) = TYPE_SYMLINK And Dereference
 		      Dim v As Variant = Me.ReadValue(child)
-		      If v IsA FolderItem Then 
+		      If v IsA FolderItem Then
 		        child = v
 		      Else
 		        child = Me.Locate(v.StringValue)
@@ -204,9 +247,9 @@ Protected Class VariantVolume
 		  If File.AbsolutePath = mVolume.Root.AbsolutePath Then Return mVolume.Root
 		  Dim reader As BinaryStream
 		  Try
-		    '#pragma BreakOnExceptions Off
+		    #pragma BreakOnExceptions Off
 		    reader = BinaryStream.Open(File)
-		    '#pragma BreakOnExceptions On
+		    #pragma BreakOnExceptions On
 		  Catch Err As IOException
 		    If File.Directory Then Return File
 		    Return Nil
@@ -280,6 +323,7 @@ Protected Class VariantVolume
 		  bs.LittleEndian = False
 		  bs.WriteInt32(Type)
 		  bs.Close
+		  ModificationDate = New Date
 		End Sub
 	#tag EndMethod
 
@@ -329,6 +373,7 @@ Protected Class VariantVolume
 		  End Select
 		  Me.WriteType(File, type)
 		  Writer.Close
+		  ModificationDate = New Date
 		End Sub
 	#tag EndMethod
 
@@ -341,6 +386,61 @@ Protected Class VariantVolume
 		Event SerializeValue(ByteStream As Writeable, ByRef Type As Integer, Value As Variant) As Boolean
 	#tag EndHook
 
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  Dim f As FolderItem = mVolume.Root.Child(".META")
+			  If f.Directory And f.Exists And f.Child("CREATE_DATE").Exists Then
+			    Dim d As Double = Me.ReadValue(f.Child("CREATE_DATE"))
+			    Dim dd As New Date
+			    dd.TotalSeconds = d
+			    Return dd
+			  End If
+			  
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  Dim f As FolderItem = mVolume.Root.Child(".META")
+			  If Not f.Exists Then f.CreateAsFolder
+			  If Not f.Directory Then
+			    Raise New RuntimeException ' not a VariantVolume
+			  Else
+			    Me.WriteValue(f.Child("CREATE_DATE"), value)
+			  End If
+			End Set
+		#tag EndSetter
+		CreationDate As Date
+	#tag EndComputedProperty
+
+	#tag Property, Flags = &h21
+		Private mModificationDate As Date
+	#tag EndProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  If mModificationDate <> Nil Then Return mModificationDate
+			  
+			  Dim f As FolderItem = mVolume.Root.Child(".META")
+			  If f.Directory And f.Exists And f.Child("MODIFY_DATE").Exists Then
+			    Dim d As Double = Me.ReadValue(f.Child("MODIFY_DATE"))
+			    Dim dd As New Date
+			    dd.TotalSeconds = d
+			    Return dd
+			  End If
+			  
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  ' To minimize writing to disk, this value is stored until the Close method is called.
+			  mModificationDate = value
+			End Set
+		#tag EndSetter
+		ModificationDate As Date
+	#tag EndComputedProperty
 
 	#tag Property, Flags = &h21
 		Private mPathSeparator As String
