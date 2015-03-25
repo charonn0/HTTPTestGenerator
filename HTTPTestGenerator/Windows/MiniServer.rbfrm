@@ -405,8 +405,8 @@ End
 	#tag Method, Flags = &h21
 		Private Sub HTTPDebugHandler(Sender As HTTP.ClientHandler, Message As String, Level As Integer)
 		  #pragma Unused Sender
-		  msgs.Append(Level:Message)
-		  LogTimer.Mode = Timer.ModeSingle
+		  'msgs.Append(Level:Message.Trim + HTTP.CRLF)
+		  'LogTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndMethod
 
