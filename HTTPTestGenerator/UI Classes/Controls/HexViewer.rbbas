@@ -17,8 +17,8 @@ Inherits Canvas
 
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  Me.SelectionStart = OffsetFromXY(X, Y)
-		  Return Me.SelectionStart > 0
+		  'Me.SelectionStart = OffsetFromXY(X, Y)
+		  'Return Me.SelectionStart > 0
 		End Function
 	#tag EndEvent
 
