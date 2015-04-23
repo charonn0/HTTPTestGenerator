@@ -633,7 +633,25 @@ Protected Module HTTP
 		    Dim sz As UInt32 = input.ReadUInt32
 		    Dim decompressed As String = GZip.Uncompress(Data.StringValue(8, Data.Len - 12), sz)
 		    If GZip.Error <> 0 Then
-		      If DebugBuild Then MsgBox("Error: " + Str(GZip.Error))
+		      #If DebugBuild Then
+		        Dim msg As String
+		        Select Case GZip.Error
+		        Case GZip.Z_BUF_ERROR
+		          msg = "GZip error: Output buffer too small."
+		        Case GZip.Z_ERRNO
+		          msg = "GZip error: " + Str(GZip.Error)
+		        Case GZip.Z_MEM_ERROR
+		          msg = "GZip error: Out of memory."
+		        Case GZip.Z_STREAM_ERROR
+		          msg = "GZip error: invalid stream."
+		        Case GZip.Z_DATA_ERROR
+		          msg = "GZip error: invalid input."
+		        Else
+		          msg = "GZip error: " + Str(GZip.Error)
+		        End Select
+		        Call MsgBox(msg, 16, "GZip Error")
+		      #endif
+		      
 		      Return Data
 		    End If
 		    Return decompressed
