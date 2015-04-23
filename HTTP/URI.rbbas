@@ -166,7 +166,7 @@ Protected Class URI
 		    URL = URL + EncodeURLComponent(Host)
 		  End If
 		  
-		  If Port > -1 And Scheme <> "" And SchemeToPort(Scheme) <> Port Then
+		  If Port > -1 And (Scheme <> "" And SchemeToPort(Scheme) <> Port) Then
 		    URL = URL + ":" + Format(Port, "####0")
 		  End If
 		  
