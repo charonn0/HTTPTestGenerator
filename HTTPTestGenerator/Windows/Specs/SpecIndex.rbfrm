@@ -737,6 +737,7 @@ End
 		  If js = Nil And SearchFor <> "" Then
 		    Call MsgBox("No specification found for: " + SearchFor, 48, "Index entry not found")
 		  Else
+		    ReDim History(-1)
 		    DisplayItem(js)
 		  End If
 		  
@@ -904,6 +905,7 @@ End
 		    ShowItem(s)
 		  Case tag IsA JSONItem
 		    Dim j As JSONItem = tag
+		    ReDim History(-1)
 		    DisplayItem(j)
 		  Else
 		    'Break
