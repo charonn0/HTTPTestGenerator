@@ -57,10 +57,6 @@ Protected Class URI
 		    If InStr(URL, "?") > 0 Then
 		      Dim tmp As String = NthField(URL, "?", 1)
 		      mPath = Split(tmp, "/")  //    /foo/bar.php
-		      mHasEndSlash = (mPath(mPath.Ubound) = "")
-		      For d As Integer = UBound(mPath) DownTo 0
-		        If mPath(d).Trim = "" Then mPath.Remove(d)
-		      Next
 		      URL = URL.Replace(tmp + "?", "")
 		      Me.Arguments = Split(URL, "&")
 		    ElseIf URL.Trim <> "" Then
@@ -68,7 +64,7 @@ Protected Class URI
 		      mHasEndSlash = (mPath(mPath.Ubound) = "")
 		      URL = Replace(URL, Me.Path, "")
 		    End If
-		    
+		    mHasEndSlash = (mPath(mPath.Ubound) = "")
 		    For i As Integer = UBound(mPath) DownTo 0
 		      If mPath(i).Trim = "" Then
 		        mPath.Remove(i)
@@ -117,7 +113,9 @@ Protected Class URI
 		  End If
 		  Dim s As String = Join(parent, "/").Trim
 		  If s = "" Then s = "/"
-		  Return New URI(s)
+		  Dim u As New HTTP.URI(Me)
+		  u.Path = s
+		  Return u
 		End Function
 	#tag EndMethod
 
@@ -135,10 +133,10 @@ Protected Class URI
 
 	#tag Method, Flags = &h0
 		Sub Path(Assigns NewPath As String)
-		  Dim s() As String = Split(NewPath, "/")
+		  Dim s() As String = Split(DecodeURLComponent(NewPath), "/")
 		  ReDim mPath(-1)
 		  For i As Integer = 0 To UBound(s)
-		    If s(i).Trim <> "" Then mPath.Append(EncodeURLComponent(s(i)))
+		    If s(i).Trim <> "" Then mPath.Append(s(i))
 		  Next
 		  If s.Ubound > -1 Then mHasEndSlash = (s(s.Ubound) = "") Else mHasEndSlash = False
 		End Sub
