@@ -189,7 +189,10 @@ End
 		    
 		  End Select
 		  ContainerControl(CurrentView).EmbedWithinPanel(ViewContainer, 0, 0, 0, ViewContainer.Width, ViewContainer.Height)
-		  
+		  ContainerControl(CurrentView).AcceptFocus = True
+		  ContainerControl(CurrentView).AcceptTabs = True
+		  ContainerControl(CurrentView).AcceptFocus = True
+		  ContainerControl(CurrentView).SetFocus
 		End Sub
 	#tag EndMethod
 

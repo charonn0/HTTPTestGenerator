@@ -1,6 +1,6 @@
 #tag Window
 Begin ContainerControl HexView Implements Viewer
-   AcceptFocus     =   ""
+   AcceptFocus     =   True
    AcceptTabs      =   True
    AutoDeactivate  =   True
    BackColor       =   &hFFFFFF
