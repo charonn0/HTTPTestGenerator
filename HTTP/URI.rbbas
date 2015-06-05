@@ -56,22 +56,13 @@ Protected Class URI
 		    
 		    If InStr(URL, "?") > 0 Then
 		      Dim tmp As String = NthField(URL, "?", 1)
-		      mPath = Split(tmp, "/")  //    /foo/bar.php
+		      Path = tmp  //    /foo/bar.php
 		      URL = URL.Replace(tmp + "?", "")
 		      Me.Arguments = Split(URL, "&")
 		    ElseIf URL.Trim <> "" Then
-		      mPath = Split(URL.Trim, "/")
-		      mHasEndSlash = (mPath(mPath.Ubound) = "")
+		      Path = URL.Trim
 		      URL = Replace(URL, Me.Path, "")
 		    End If
-		    mHasEndSlash = (mPath(mPath.Ubound) = "")
-		    For i As Integer = UBound(mPath) DownTo 0
-		      If mPath(i).Trim = "" Then
-		        mPath.Remove(i)
-		        Continue
-		      End If
-		      mPath(i) = DecodeURLComponent(mPath(i))
-		    Next
 		    
 		  Else
 		    Me.Scheme = "mailto"
