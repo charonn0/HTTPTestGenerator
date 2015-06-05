@@ -96,7 +96,7 @@ Implements Readable,Writeable
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		MinChunkSize As Integer = 1024
+		MinChunkSize As Integer = 32
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
