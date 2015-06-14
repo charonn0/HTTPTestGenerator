@@ -83,7 +83,12 @@ Class ContentType
 		    End If
 		    
 		  End If
-		  
+		  If InStr(SubType, "+") > 0 Then
+		    ExtendedType = NthField(SubType, "+", 1)
+		    SubType = NthField(SubType, "+", 2)
+		  Else
+		    ExtendedType = ""
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -143,7 +148,12 @@ Class ContentType
 		Function ToString() As String
 		  'serializes the object
 		  
-		  Dim data As String = SuperType + "/" + SubType
+		  Dim data As String = SuperType + "/"
+		  If ExtendedType.Trim <> "" Then
+		    data = data + ExtendedType + "+" + SubType
+		  Else
+		    data = data + SubType
+		  End If
 		  If Me.Weight < 1 Then
 		    data = data + "; q=" + Format(Me.Weight, ".##")
 		  End If
@@ -173,6 +183,10 @@ Class ContentType
 			Optional; the character encoding of the content.
 		#tag EndNote
 		CharSet As TextEncoding
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
+		ExtendedType As String
 	#tag EndProperty
 
 	#tag ComputedProperty, Flags = &h0
