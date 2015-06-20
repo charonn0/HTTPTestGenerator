@@ -1531,7 +1531,7 @@ Protected Module HTTP
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"BoredomServe/1.0 (GNU/Linux)"
 	#tag EndConstant
 
-	#tag Constant, Name = GZipAvailable, Type = Boolean, Dynamic = False, Default = \"True", Scope = Protected
+	#tag Constant, Name = GZipAvailable, Type = Boolean, Dynamic = False, Default = \"False", Scope = Protected
 	#tag EndConstant
 
 
