@@ -511,9 +511,9 @@
     },
     {
         "header": "Lock-Token",
-        "description": "standard",
-        "spec_title": "RFC4918",
-        "spec_href": "http://tools.ietf.org/html/rfc4918"
+        "description": "The Lock-Token request header is used with the <link=UNLOCK>UNLOCK</link> method to identify the lock to be removed. ",
+        "spec_title": "RFC4918#10.5",
+        "spec_href": "https://tools.ietf.org/html/rfc4918#section-10.5"
     },
     {
         "header": "Negotiate",
