@@ -55,7 +55,7 @@
     },
 	{
         "word": "cache",
-        "description": "An HTTP cache is a local store of response messages and the subsystem that controls storage, retrieval, and deletion of messages in it. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any <link=client>client</link> or <link=web server>server</link> <link=rfc2119#section-5>MAY</link> employ a cache, though a cache cannot be used by a <link=web server>server</link> that is acting as a tunnel.",
+        "description": "An HTTP cache is a local store of response messages and the subsystem that controls storage, retrieval, and deletion of messages in it. A cache stores cacheable responses in order to reduce the response time and network bandwidth consumption on future, equivalent requests. Any <link=client>client</link> or <link=web server>server</link> <link=MAY>MAY</link> employ a cache, though a cache cannot be used by a <link=web server>server</link> that is acting as a tunnel.",
 		"spec_title": "RFC7234#1",
         "spec_href": "http://tools.ietf.org/html/rfc7234#section-1"
     },
@@ -95,7 +95,31 @@
 		"spec_title": "RFC7230#2.1",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-2.1"
     },
-			{
+	{
+        "word": "MUST",
+        "description": "Indicates an absolute requirement of the specification.",
+		"spec_title": "RFC2119#1",
+        "spec_href": "http://tools.ietf.org/html/rfc2119#section-1"
+    },
+	{
+        "word": "MUST NOT",
+        "description": "Indicates an absolute prohibition of the specification.",
+		"spec_title": "RFC2119#2",
+        "spec_href": "http://tools.ietf.org/html/rfc2119#section-2"
+    },
+	{
+        "word": "SHOULD",
+        "description": "Indicates a suggested but non-mandatory requirement of the specfication.",
+		"spec_title": "RFC2119#3",
+        "spec_href": "http://tools.ietf.org/html/rfc2119#section-3"
+    },
+	{
+        "word": "SHOULD NOT",
+        "description": "Indicates a suggested but non-mandatory prohibition of the specification.",
+		"spec_title": "RFC2119#4",
+        "spec_href": "http://tools.ietf.org/html/rfc2119#section-4"
+    },
+	{
         "word": "request method",
         "description": "The primary source of request semantics; it indicates the purpose for which the <link=client>client</link> has made this request and what is expected by the client as a successful result.",
 		"spec_title": "RFC7231#4",

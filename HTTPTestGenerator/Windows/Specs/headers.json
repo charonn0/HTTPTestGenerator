@@ -109,7 +109,7 @@
     },
     {
         "header": "If-Unmodified-Since",
-        "description": "This header can be used to make a request method conditional by modification date: if the selected representation has been modified since the time specified in this field, then the <link=web server>server</link> <link=rfc2119#section-2>MUST NOT</link> perform the requested operation and <link=rfc2119#section-1>MUST</link> instead respond with the <link=412>412 Precondition Failed</link> status code.",
+        "description": "This header can be used to make a request method conditional by modification date: if the selected representation has been modified since the time specified in this field, then the <link=web server>server</link> <link=rfc2119#section-2><link=MUST NOT>MUST NOT</link></link> perform the requested operation and <link=MUST>MUST</link> instead respond with the <link=412>412 Precondition Failed</link> status code.",
         "spec_title": "RFC7232#3.4",
         "spec_href": "http://tools.ietf.org/html/rfc7232#section-3.4"
     },
@@ -379,7 +379,7 @@
     },
     {
         "header": "Preference-Applied",
-        "description": "<link=rfc2119#section-5>MAY</link> be included within a response message as an indication as to which <link=Prefer>Prefer</link> tokens were honored by the <link=web server>server</link> and applied to the processing of a request.",
+        "description": "<link=MAY>MAY</link> be included within a response message as an indication as to which <link=Prefer>Prefer</link> tokens were honored by the <link=web server>server</link> and applied to the processing of a request.",
         "spec_title": "draft-snell-http-prefer#3",
         "spec_href": "http://tools.ietf.org/html/draft-snell-http-prefer#section-3"
     },
@@ -469,7 +469,7 @@
     },
     {
         "header": "Depth",
-        "description": "The Depth header may be used with the <link=LOCK>LOCK</link> method. Values other than 0 or infinity <link=rfc2119#section-2>MUST NOT</link> be used with the Depth header on a LOCK method. All resources that support the LOCK method <link=rfc2119#section-1>MUST</link> support the Depth header.\r\nA Depth header of value 0 means to just lock the resource specified by the <link=Request-URI>Request-URI</link>.",
+        "description": "The Depth header may be used with the <link=LOCK>LOCK</link> method. Values other than 0 or infinity <link=rfc2119#section-2><link=MUST NOT>MUST NOT</link></link> be used with the Depth header on a LOCK method. All resources that support the LOCK method <link=MUST>MUST</link> support the Depth header.\r\nA Depth header of value 0 means to just lock the resource specified by the <link=Request-URI>Request-URI</link>.",
         "spec_title": "RFC4918",
         "spec_href": "http://tools.ietf.org/html/rfc4918"
     },
