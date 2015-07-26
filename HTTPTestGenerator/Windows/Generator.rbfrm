@@ -241,11 +241,11 @@ End
 		    Dim blocked As Pair = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path)
 		    If blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
 		      "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 32 + 4, "Prohibited by robots.txt") <> 6 Then
-		      ResponseMain1.Log("The request has been aborted to abide by the website's robots.txt file!", -1)
+		      ResponseMain1.Log("The request has been aborted to abide by the website's robots.txt file!" + EndOfLine.Windows, -1)
 		      CancelRequest()
 		      Return True
 		    ElseIf blocked <> Nil Then
-		      ResponseMain1.Log("Proceeding with request in defiance of the website's robots.txt file!", -1)
+		      ResponseMain1.Log("Proceeding with request in defiance of the website's robots.txt file!" + EndOfLine.Windows, -1)
 		    End If
 		  End If
 		End Function

@@ -17,4 +17,13 @@
 		Name=Hierarchical Container File
 	#tag EndFileType
 
+	#tag FileType
+		CodeName=HTTPHeaderFile
+		Extension=.hthd
+		Flags=&h0
+		MacCreator=
+		MacType=
+		Name=HTTP Header File
+	#tag EndFileType
+
 #tag EndFileTypeSet

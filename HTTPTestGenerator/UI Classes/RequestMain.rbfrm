@@ -578,6 +578,20 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Sub WriteHeader(PendingHeaderName As String, Value As String)
+		  For i As Integer = 0 To RequestHeaders.ListCount - 1
+		    If RequestHeaders.Cell(i, 0) = PendingHeaderName Then 
+		      RequestHeaders.Cell(i, 1) = Value
+		      RequestHeaders.RowTag(i) = PendingHeaderName:Value
+		      Return
+		    End If
+		  Next
+		  RequestHeaders.AddRow(PendingHeaderName, Value)
+		  RequestHeaders.RowTag(RequestHeaders.LastIndex) = PendingHeaderName:Value
+		End Sub
+	#tag EndMethod
+
 
 	#tag Hook, Flags = &h0
 		Event Perform(NewRequest As HTTP.Request)
@@ -632,6 +646,8 @@ End
 	#tag Event
 		Function ConstructContextualMenu(base As MenuItem, x As Integer, y As Integer) As Boolean
 		  base.Append(New MenuItem("Clear all cookies"))
+		  base.Append(New MenuItem("Load headers from file"))
+		  If Me.ListCount > 0 Then base.Append(New MenuItem("Save headers to a file"))
 		  Dim row As Integer = Me.RowFromXY(X, Y)
 		  If row > -1 Then
 		    Dim m As New MenuItem("View spec...")
@@ -659,6 +675,33 @@ End
 		      End If
 		    Next
 		    Return True
+		    
+		  Case "Load headers from file"
+		    Dim f As FolderItem = GetOpenFolderItem(FileTypes1.HTTPHeaderFile)
+		    If f <> Nil And f.Exists And Not f.Directory Then
+		      Dim bs As BinaryStream = BinaryStream.Open(f)
+		      Dim data As MemoryBlock = bs.Read(bs.Length)
+		      bs.Close
+		      Dim h As HTTP.Headers = data
+		      For i As Integer = 0 To h.Count - 1
+		        WriteHeader(h.Name(i), h.Value(i))
+		      Next
+		      bs.Close
+		    End If
+		  Case "Save headers to a file"
+		    Dim f As FolderItem = GetSaveFolderItem(FileTypes1.HTTPHeaderFile, "HTTP_Headers")
+		    If f <> Nil And Not f.Directory Then
+		      Dim bs As BinaryStream = BinaryStream.Create(f, True)
+		      For i As Integer = 0 To Me.ListCount - 1
+		        If Me.RowTag(i) <> Nil And Not Me.RowTag(i) IsA HTTP.Cookie And Me.RowTag(i) IsA Pair Then
+		          Dim p As Pair = Me.RowTag(i)
+		          bs.Write(p.Left + ": " + p.Right + HTTP.CRLF)
+		        End If
+		      Next
+		      bs.Write(HTTP.CRLF)
+		      bs.Close
+		    End If
+		    
 		  End Select
 		End Function
 	#tag EndEvent
