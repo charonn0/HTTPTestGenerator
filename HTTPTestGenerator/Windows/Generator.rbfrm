@@ -199,6 +199,19 @@ End
 	#tag EndMenuHandler
 
 
+	#tag Method, Flags = &h0
+		Sub CancelRequest()
+		  Sock.Disconnect
+		  DataReceivedTimer.Mode = Timer.ModeOff
+		  TimeOut.Mode = Timer.ModeOff
+		  RequestMain1.Sender.Enabled = True
+		  RequestMain1.Sender.Caption = "Send Request"
+		  RequestMain1.ProgressBar1.Visible = False
+		  RequestMain1.StopButton.Visible = False
+		  ConnectOK = False
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h21
 		Private Sub HTTPDebugHandler(Sender As HTTP.Message, Message As String, Level As Integer)
 		  #pragma Unused Sender
@@ -209,6 +222,28 @@ End
 	#tag Method, Flags = &h0
 		Sub Perform(NewRequest As HTTP.Request)
 		  If CurrentRequest <> Nil Then OldRequests.Append(CurrentRequest)
+		  If RequestMain1.HonorRobots.Value Then
+		    If mRobots = Nil Then mRobots = New Dictionary
+		    Dim rbt As String
+		    If mRobots.HasKey(NewRequest.Path.Host) Then
+		      rbt = mRobots.Value(NewRequest.Path.Host)
+		    Else
+		      Dim sck As New HTTPSocket
+		      Dim rurl As New HTTP.URI(NewRequest.Path)
+		      rurl.Path = "/robots.txt"
+		      rbt = sck.Get(rurl.ToString, 5)
+		      If rbt.Trim <> "" Then mRobots.Value(rurl.Host) = rbt
+		    End If
+		    Dim blocked As Pair = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path)
+		    If blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
+		      "'. Would you like to continue anyway?", 32 + 4, "Prohibited by robots.txt") <> 6 Then
+		      ResponseMain1.Log("The request has been aborted to abide by the website's robots.txt file!", -1)
+		      CancelRequest()
+		      Return
+		    ElseIf blocked <> Nil Then
+		      ResponseMain1.Log("Proceeding with request in defiance of the website's robots.txt file!", -1)
+		    End If
+		  End If
 		  CurrentRequest = NewRequest
 		  AddHandler CurrentRequest.HTTPDebug, WeakAddressOf HTTPDebugHandler
 		  TimeOut.Mode = Timer.ModeSingle
@@ -322,6 +357,10 @@ End
 
 	#tag Property, Flags = &h21
 		Private mDown As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mRobots As Dictionary
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -462,9 +501,7 @@ End
 		    RequestMain1.StopButton.Visible = True
 		    Self.Perform(NewRequest)
 		  Else
-		    Sock.Disconnect
-		    DataReceivedTimer.Mode = Timer.ModeOff
-		    TimeOut.Mode = Timer.ModeOff
+		    CancelRequest()
 		  End If
 		End Sub
 	#tag EndEvent

@@ -224,9 +224,7 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
-      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   57
       Value           =   0
       Visible         =   False
@@ -407,6 +405,38 @@ Begin ContainerControl RequestMain
       Value           =   False
       Visible         =   True
       Width           =   22
+   End
+   Begin CheckBox HonorRobots
+      AutoDeactivate  =   True
+      Bold            =   ""
+      Caption         =   "robots.txt"
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   "If enabled, the robots.txt for each website will be requested, and compared to the current user-agent string, if any."
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   5
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      State           =   0
+      TabIndex        =   9
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   35
+      Underline       =   ""
+      Value           =   False
+      Visible         =   True
+      Width           =   100
    End
 End
 #tag EndWindow
