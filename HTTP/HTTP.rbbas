@@ -346,7 +346,7 @@ Protected Module HTTP
 		  Dim outstream As New BinaryStream(output)
 		  Dim chunk As New ChunkedStream(instream)
 		  Do Until chunk.EOF
-		    outstream.Write(chunk.Read(1))
+		    outstream.Write(chunk.Read(64))
 		  Loop
 		  outstream.Close
 		  Return output
