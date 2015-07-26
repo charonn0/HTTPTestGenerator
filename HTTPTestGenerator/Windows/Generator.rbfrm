@@ -213,6 +213,45 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
+		Private Function CheckRobots(NewRequest As HTTP.Request) As Boolean
+		  If RequestMain1.HonorRobots.Value Then
+		    If mRobots = Nil Then mRobots = New Dictionary
+		    Dim rbt As String
+		    If mRobots.HasKey(NewRequest.Path.Host) Then
+		      rbt = mRobots.Value(NewRequest.Path.Host)
+		    Else
+		      Dim rurl As New HTTP.URI(NewRequest.Path)
+		      rurl.Path = "/robots.txt"
+		      If rurl.Scheme = "https" Then
+		        Dim sck As New HTTPSecureSocket
+		        sck.Secure = True
+		        sck.ConnectionType = SSLSocket.TLSv1
+		        rbt = sck.Get(rurl.ToString, 5)
+		      Else
+		        Dim sck As New HTTPSocket
+		        rbt = sck.Get(rurl.ToString, 5)
+		      End If
+		      
+		      If rbt.Trim <> "" Then mRobots.Value(rurl.Host) = rbt
+		    End If
+		    
+		    
+		    
+		    
+		    Dim blocked As Pair = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path)
+		    If blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
+		      "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 32 + 4, "Prohibited by robots.txt") <> 6 Then
+		      ResponseMain1.Log("The request has been aborted to abide by the website's robots.txt file!", -1)
+		      CancelRequest()
+		      Return True
+		    ElseIf blocked <> Nil Then
+		      ResponseMain1.Log("Proceeding with request in defiance of the website's robots.txt file!", -1)
+		    End If
+		  End If
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
 		Private Sub HTTPDebugHandler(Sender As HTTP.Message, Message As String, Level As Integer)
 		  #pragma Unused Sender
 		  ResponseMain1.Log(Message, Level)
@@ -222,28 +261,8 @@ End
 	#tag Method, Flags = &h0
 		Sub Perform(NewRequest As HTTP.Request)
 		  If CurrentRequest <> Nil Then OldRequests.Append(CurrentRequest)
-		  If RequestMain1.HonorRobots.Value Then
-		    If mRobots = Nil Then mRobots = New Dictionary
-		    Dim rbt As String
-		    If mRobots.HasKey(NewRequest.Path.Host) Then
-		      rbt = mRobots.Value(NewRequest.Path.Host)
-		    Else
-		      Dim sck As New HTTPSocket
-		      Dim rurl As New HTTP.URI(NewRequest.Path)
-		      rurl.Path = "/robots.txt"
-		      rbt = sck.Get(rurl.ToString, 5)
-		      If rbt.Trim <> "" Then mRobots.Value(rurl.Host) = rbt
-		    End If
-		    Dim blocked As Pair = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path)
-		    If blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
-		      "'. Would you like to continue anyway?", 32 + 4, "Prohibited by robots.txt") <> 6 Then
-		      ResponseMain1.Log("The request has been aborted to abide by the website's robots.txt file!", -1)
-		      CancelRequest()
-		      Return
-		    ElseIf blocked <> Nil Then
-		      ResponseMain1.Log("Proceeding with request in defiance of the website's robots.txt file!", -1)
-		    End If
-		  End If
+		  If CheckRobots(NewRequest) Then Return
+		  
 		  CurrentRequest = NewRequest
 		  AddHandler CurrentRequest.HTTPDebug, WeakAddressOf HTTPDebugHandler
 		  TimeOut.Mode = Timer.ModeSingle

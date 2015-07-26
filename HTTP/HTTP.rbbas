@@ -691,6 +691,7 @@ Protected Module HTTP
 		        UA.Append(value)
 		        
 		      Case "Disallow"
+		        If value.Trim = "" Then Continue ' disallows nothing
 		        paths.Append(value)
 		        
 		      Case "Sitemap", "Crawl-delay", "Allow"
