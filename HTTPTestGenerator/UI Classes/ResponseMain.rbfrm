@@ -701,6 +701,9 @@ End
 		    v.Close
 		    Return True
 		    
+		  Case "Load log"
+		    MsgBox("This feature is not yet implemented.")
+		    
 		  Case "HTTP Only"
 		    LogLevel = 0
 		    
