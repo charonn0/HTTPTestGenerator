@@ -59,6 +59,12 @@ Inherits Pair
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub Operator_Convert(CookiePair As Pair)
+		  Me.Constructor(CookiePair.Left + "=" + CookiePair.Right)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function OriginCompare(CompareTo As Cookie) As Boolean
 		  'Compares the metadata of the passed cookie to the instant cookie
 		  If CompareTo.Domain <> Me.Domain Then Return False

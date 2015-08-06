@@ -344,6 +344,20 @@ End
 
 	#tag Method, Flags = &h21
 		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
+		  Dim sessid As String = ClientRequest.Cookie("SessionID")
+		  If sessid <> "" Then
+		    Dim cache As Dictionary = mSessionCache.Lookup(sessid, New Dictionary)
+		    If cache.HasKey(ClientRequest.Path.Path) Then
+		      ResponseDocument = cache.Value(ClientRequest.Path.Path)
+		      If ResponseDocument.HasHeader("Date") And ClientRequest.HasHeader("If-Modified-Since") Then
+		        Dim pagedate As Date = HTTP.DateString(ResponseDocument.Header("Date"))
+		        Dim requestdate As Date = HTTP.DateString(ClientRequest.Header("If-Modified-Since")) 
+		        If pagedate.TotalSeconds > requestdate.TotalSeconds Then ResponseDocument = HTTP.ErrorPage(304)
+		        Return True
+		      End If
+		    End If
+		  End If
+		  
 		  Select Case ClientRequest.Method
 		  Case RequestMethod.GET, RequestMethod.HEAD
 		    Dim item As FolderItem = HTTP.FindFile(Me.DocumentRoot, ClientRequest.Path.Path)
@@ -395,7 +409,13 @@ End
 		      Str(ClientRequest.RangeStart) + "-" + Str(ClientRequest.RangeEnd) + "/" + Str(ResponseDocument.MessageBody.LenB)
 		      ResponseDocument.MessageBody = Mid(ResponseDocument.MessageBody, ClientRequest.RangeStart, ClientRequest.RangeEnd - ClientRequest.RangeStart + 1)
 		    End Select
-		    
+		    If sessid = "" Then 
+		      sessid = Format(Microseconds, "######0000000")
+		      ResponseDocument.Headers.SetCookie("SessionID":sessid)
+		    End If
+		    Dim cache As Dictionary = mSessionCache.Lookup(sessid, New Dictionary)
+		    cache.Value(ClientRequest.Path.Path) = ResponseDocument
+		    mSessionCache.Value(sessid) = cache
 		    ResponseDocument.Header("Content-Length") = Str(ResponseDocument.MessageBody.LenB)
 		    Return True
 		  End Select
@@ -484,6 +504,10 @@ End
 
 	#tag Property, Flags = &h0
 		LogLevel As Integer = 0
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mSessionCache As Dictionary
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -588,6 +612,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Function AddSocket() As TCPSocket
+		  If mSessionCache = Nil Then mSessionCache = New Dictionary
 		  Dim sock As New HTTP.ClientHandler
 		  AddHandler sock.MessageSent, WeakAddressOf MessageSentHandler
 		  AddHandler sock.HandleRequest, WeakAddressOf HandleRequestHandler

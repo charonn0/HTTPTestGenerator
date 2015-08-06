@@ -36,6 +36,7 @@ Inherits HTTP.Message
 	#tag Method, Flags = &h0
 		Function ToString(HeadersOnly As Boolean = False) As String
 		  Me.Header("Content-Type") = Me.ContentType.ToString
+		  If Not Me.HasHeader("Date") Then Me.Header("Date") = HTTP.DateString(New Date)
 		  Dim msg As String = CodeToMessage(Me.StatusCode)
 		  Dim p As String = "HTTP/"
 		  If Me.StatusCode = 418 Then p = "HTCPCP/"

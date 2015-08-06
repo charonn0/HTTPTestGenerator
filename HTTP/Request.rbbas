@@ -38,6 +38,14 @@ Inherits HTTP.Message
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function Cookie(CookieName As String) As String
+		  For i As Integer = 0 To mHeaders.CookieCount - 1
+		    If mHeaders.Cookie(i).Name = CookieName Then Return mHeaders.Cookie(i).Value
+		  Next
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function IsModifiedSince(SinceWhen As Date) As Boolean
 		  If SinceWhen = Nil Then Return False
 		  If HasHeader("If-Modified-Since") Then
