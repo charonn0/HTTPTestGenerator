@@ -29,17 +29,22 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
+      TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   35
+      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -47,8 +52,11 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
+      TabIndex        =   1
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   79
+      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -62,6 +70,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -117,6 +126,7 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -134,6 +144,7 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -141,8 +152,11 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
+      TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   123
+      Visible         =   True
       Width           =   32
    End
 End
@@ -240,12 +254,14 @@ End
 		    
 		    Dim blocked As Pair = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path)
 		    If blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
-		      "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 32 + 4, "Prohibited by robots.txt") <> 6 Then
+		      "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
 		      ResponseMain1.Log("The request has been aborted to abide by the website's robots.txt file!" + EndOfLine.Windows, -1)
 		      CancelRequest()
 		      Return True
 		    ElseIf blocked <> Nil Then
 		      ResponseMain1.Log("Proceeding with request in defiance of the website's robots.txt file!" + EndOfLine.Windows, -1)
+		    Else
+		      ResponseMain1.Log("robots.txt.was empty, proceeding normally." + EndOfLine.Windows, -1)
 		    End If
 		  End If
 		End Function
