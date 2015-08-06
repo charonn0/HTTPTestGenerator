@@ -17,6 +17,7 @@ Inherits HTTP.Message
 		  Me.StatusCode = Val(NthField(line, " ", 2))
 		  If Me.IsCompressed Then Me.MessageBody = HTTP.GZipDecompress(Me.MessageBody)
 		  If Me.IsChunked Then Me.MessageBody = HTTP.DecodeChunkedData(Me.MessageBody)
+		  If Me.ContentType.CharSet <> Nil Then MessageBody = DefineEncoding(MessageBody, Me.ContentType.CharSet)
 		End Sub
 	#tag EndMethod
 

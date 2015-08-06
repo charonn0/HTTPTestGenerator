@@ -122,6 +122,7 @@ Protected Class Message
 		#tag Setter
 			Set
 			  Me.Header("Content-Type") = value.ToString
+			  If value.CharSet <> Nil Then MessageBody = DefineEncoding(MessageBody, value.CharSet)
 			End Set
 		#tag EndSetter
 		ContentType As ContentType
