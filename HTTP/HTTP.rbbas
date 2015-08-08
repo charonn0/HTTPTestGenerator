@@ -436,7 +436,7 @@ Protected Module HTTP
 		      Case 426
 		        page = ReplaceAll(page, "%DOCUMENT%", "This resource is not available via the current network protocol.")
 		        
-		      Case 429
+		      Case 429, 420
 		        page = ReplaceAll(page, "%DOCUMENT%", "Your browser has made too many requests of this server.")
 		        
 		      Case 451
