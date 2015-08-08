@@ -261,7 +261,7 @@ End
 		    ElseIf blocked <> Nil Then
 		      ResponseMain1.Log("Proceeding with request in defiance of the website's robots.txt file!" + EndOfLine.Windows, -1)
 		    Else
-		      ResponseMain1.Log("robots.txt.was empty, proceeding normally." + EndOfLine.Windows, -1)
+		      ResponseMain1.Log("robots.txt does not prohibit this request, proceeding normally." + EndOfLine.Windows, -1)
 		    End If
 		  End If
 		End Function
@@ -324,13 +324,6 @@ End
 		  End If
 		  Sock.Connect()
 		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub PrintOutput(Req As HTTP.Request, Resp As HTTP.Response)
-		  ResponseMain1.Log(Req, 0)
-		  ResponseMain1.Log(Resp, 0)
 		End Sub
 	#tag EndMethod
 
@@ -425,7 +418,7 @@ End
 	#tag Event
 		Sub Connected()
 		  ConnectOK = True
-		  ResponseMain1.Log("Connected to '" + Me.RemoteAddress + " on port " + Format(Me.Port, "#####0"), 1)
+		  ResponseMain1.Log("Connected to '" + Me.RemoteAddress + "' on port " + Format(Me.Port, "#####0") + EndOfLine, 1)
 		  TimeOut.Reset
 		  ResponseBuffer = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
@@ -434,26 +427,14 @@ End
 		  BytesSentTotal = BytesSentTotal + BytesSentLast
 		  Me.Write(s)
 		  RequestMain1.AddHistoryItem(CurrentRequest.Path)
+		  ResponseMain1.Log(CurrentRequest, 0)
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub Error()
 		  TimeOut.Mode = Timer.ModeOff
 		  ResponseMain1.ViewResponse(Nil)
-		  Select Case Me.LastErrorCode
-		  Case 102
-		    If Not ConnectOK And Me.Secure And RequestMain1.Security > 0 Then ' might be a problem with our ciphersuite
-		      ResponseMain1.Log("Secure connection failed.", -1)
-		      ResponseMain1.Log("This may be due to an incompatible SSL/TLS version, in which case setting the connection security to ""Automatic"" might resolve the error.", 1)
-		    Else
-		      ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), 1)
-		    End If
-		    
-		  Case 103
-		    ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), -1)
-		  Else
-		    ResponseMain1.Log(FormatSocketError(Me.LastErrorCode), -1)
-		  End Select
+		  
 		  RequestMain1.Sender.Enabled = True
 		  RequestMain1.Sender.Caption = "Send Request"
 		  RequestMain1.ProgressBar1.Visible = False
@@ -479,8 +460,13 @@ End
 		  ResponseBuffer = ResponseBuffer + newdata
 		  BytesReceivedLast = newdata.LenB
 		  BytesReceivedTotal = BytesReceivedTotal + BytesReceivedLast
-		  ResponseMain1.Log("Receiving data (" + FormatBytes(BytesReceivedLast) + ")...", 2)
+		  ResponseMain1.Log("Receiving data (" + FormatBytes(BytesReceivedLast) + ")..." + EndOfLine, 2)
 		  DataReceivedTimer.Mode = Timer.ModeSingle
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub SendComplete(UserAborted As Boolean)
+		  ResponseMain1.Log("Sending data (" + FormatBytes(BytesSentLast) + ")..." + EndOfLine, 2)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -494,7 +480,7 @@ End
 		  ResponseMain1.ViewResponse(CurrentResponse)
 		  
 		  Self.Title = "HTTP Request Generator - Viewing '" + CurrentRequest.Path.ToString + "'"
-		  PrintOutput(CurrentRequest, CurrentResponse)
+		  ResponseMain1.Log(CurrentResponse, 0)
 		  
 		  Select Case CurrentResponse.StatusCode
 		  Case 301, 302, 307, 308
@@ -522,7 +508,22 @@ End
 		      RequestMain1.Perform()
 		    End If
 		  End Select
-		  'Self.Refresh
+		  Select Case Sock.LastErrorCode
+		  Case 102
+		    If Not ConnectOK And Sock.Secure And RequestMain1.Security > 0 Then ' might be a problem with our ciphersuite
+		      ResponseMain1.Log("Secure connection failed.", -1)
+		      ResponseMain1.Log("This may be due to an incompatible SSL/TLS version, in which case setting the connection security to ""Automatic"" might resolve the error." + EndOfLine, 1)
+		    Else
+		      ResponseMain1.Log(FormatSocketError(Sock.LastErrorCode) + EndOfLine, 1)
+		    End If
+		    
+		  Case 103
+		    ResponseMain1.Log(FormatSocketError(Sock.LastErrorCode) + EndOfLine, -1)
+		  Case 0 ' no error
+		    ' meh
+		  Else
+		    ResponseMain1.Log(FormatSocketError(Sock.LastErrorCode) + EndOfLine, -1)
+		  End Select
 		End Sub
 	#tag EndEvent
 #tag EndEvents
