@@ -270,8 +270,8 @@ End
 		  
 		  
 		  Dim blocked As Pair
-		  If HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path, blocked) And _
-		    MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
+		  Dim isvalid As Boolean = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path, blocked)
+		  If isvalid And blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
 		    "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
 		    ResponseMain1.Log("Alert: The request is prohibited by the website's robots.txt file!" + EndOfLine.Windows, -1)
 		    CancelRequest()
