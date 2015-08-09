@@ -342,7 +342,7 @@ End
 		      sr.Text = Message
 		      Select Case Level
 		      Case 1 ' Socketry
-		        sr.TextColor = &c0000FF00
+		        sr.TextColor = &c00408000
 		      Case 2 ' debug
 		        sr.TextColor = &c80808000
 		      Case -1 ' error
