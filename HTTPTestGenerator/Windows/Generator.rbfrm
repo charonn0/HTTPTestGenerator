@@ -325,9 +325,9 @@ End
 		  End If
 		  Sock.Port = p
 		  If sock.Secure Then
-		    ResponseMain1.Log("Attempting a secure connection to " + CurrentRequest.Path.Host + " on port " + Format(p, "#####0"), 1)
+		    ResponseMain1.Log("Attempting a secure connection to '" + CurrentRequest.Path.Host + "' on port " + Format(p, "#####0") + EndOfLine, 1)
 		  Else
-		    ResponseMain1.Log("Attempting a connection to " + CurrentRequest.Path.Host + " on port " + Format(p, "#####0"), 1)
+		    ResponseMain1.Log("Attempting a connection to '" + CurrentRequest.Path.Host + "' on port " + Format(p, "#####0") + EndOfLine, 1)
 		  End If
 		  Sock.Connect()
 		  
@@ -395,6 +395,10 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
+		Private mLastServerIP As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
 		Private mRobots As Dictionary
 	#tag EndProperty
 
@@ -424,8 +428,9 @@ End
 #tag Events Sock
 	#tag Event
 		Sub Connected()
+		  mLastServerIP = Me.RemoteAddress
 		  ConnectOK = True
-		  ResponseMain1.Log("Connected to '" + Me.RemoteAddress + "' on port " + Format(Me.Port, "#####0") + EndOfLine, 1)
+		  ResponseMain1.Log("Connected to '" + mLastServerIP + "' on port " + Format(CurrentRequest.Path.Port, "#####0") + EndOfLine, 1)
 		  TimeOut.Reset
 		  ResponseBuffer = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
@@ -467,13 +472,13 @@ End
 		  ResponseBuffer = ResponseBuffer + newdata
 		  BytesReceivedLast = newdata.LenB
 		  BytesReceivedTotal = BytesReceivedTotal + BytesReceivedLast
-		  ResponseMain1.Log("Receiving data (" + FormatBytes(BytesReceivedLast) + ")..." + EndOfLine, 2)
+		  ResponseMain1.Log("Receiving data (" + FormatBytes(BytesReceivedLast) + ")...", 2)
 		  DataReceivedTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Sub SendComplete(UserAborted As Boolean)
-		  ResponseMain1.Log("Sending data (" + FormatBytes(BytesSentLast) + ")..." + EndOfLine, 2)
+		  ResponseMain1.Log("Sending data (" + FormatBytes(BytesSentLast) + ")...", 2)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -507,7 +512,7 @@ End
 		    End If
 		  Case 401
 		    Dim r As String = NthField(CurrentResponse.Header("WWW-Authenticate"), "=", 2)
-		    Dim p As Pair = Authenticator.Authenticate(r, Sock.Secure)
+		    Dim p As Pair = Authenticator.Authenticate(r, Sock.Secure, CurrentRequest.Path.Host, mLastServerIP)
 		    If p <> Nil Then
 		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
 		      RequestMain1.DeleteRequestHeader("Authorization")
