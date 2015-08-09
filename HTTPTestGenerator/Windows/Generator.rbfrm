@@ -235,7 +235,7 @@ End
 		  If mRobots.HasKey(NewRequest.Path.Host) Then
 		    rbt = mRobots.Value(NewRequest.Path.Host)
 		  Else
-			Dim rurl As New HTTP.URI(NewRequest.Path)
+		    Dim rurl As New HTTP.URI(NewRequest.Path)
 		    rurl.Path = "/robots.txt"
 		    Dim file As FolderItem = GetTemporaryFolderItem
 		    Dim sck As SocketCore
@@ -265,22 +265,23 @@ End
 		    End If
 		    If rbt.Trim <> "" Then mRobots.Value(rurl.Host) = rbt
 		  End If
-		    
-		    
-		    
-		    
-		    Dim blocked As Pair = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path)
-		    If blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
-		      "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
-		      ResponseMain1.Log("Alert: The request is prohibited by the website's robots.txt file!" + EndOfLine.Windows, -1)
-		      CancelRequest()
-		      Return True
-		    ElseIf blocked <> Nil Then
-		      ResponseMain1.Log("Alert: Proceeding with request in defiance of the website's robots.txt file!" + EndOfLine.Windows, -1)
-		    Else
-		      'ResponseMain1.Log("Alert: robots.txt does not prohibit this request, proceeding normally." + EndOfLine.Windows, -1)
-		    End If
-
+		  
+		  
+		  
+		  
+		  Dim blocked As Pair
+		  If HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path, blocked) And _
+		    MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
+		    "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
+		    ResponseMain1.Log("Alert: The request is prohibited by the website's robots.txt file!" + EndOfLine.Windows, -1)
+		    CancelRequest()
+		    Return True
+		  ElseIf blocked <> Nil Then
+		    ResponseMain1.Log("Alert: Proceeding with request in defiance of the website's robots.txt file!" + EndOfLine.Windows, -1)
+		  Else
+		    'ResponseMain1.Log("Alert: robots.txt does not prohibit this request, proceeding normally." + EndOfLine.Windows, -1)
+		  End If
+		  
 		End Function
 	#tag EndMethod
 
