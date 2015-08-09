@@ -37,7 +37,7 @@
     },
     {
         "method": "HEAD",
-        "description": "This method is identical to <link=GET>GET</link> except that the <link=web server>server</link> <link=rfc2119#section-2><link=MUST NOT>MUST NOT</link></link> send a message body in the response (i.e., the response terminates at the end of the header block).",
+        "description": "This method is identical to <link=GET>GET</link> except that the <link=web server>server</link> <link=MUST NOT>MUST NOT</link> send a message body in the response (i.e., the response terminates at the end of the header block).",
         "safe": true,
         "idempotent": true,
         "cacheable": true,

@@ -84,7 +84,7 @@
 
 	{
         "word": "safe",
-        "description": "<link=Request method>Request methods</link> are considered \"safe\" if their defined semantics are essentially read-only; i.e., the <link=client>client</link> does not request, and does not expect, any state change on the origin <link=web server>server</link> as a result of applying a safe method to a target resource.  Likewise, reasonable use of a safe method is not expected to cause any harm, loss of property, or unusual burden on the origin server. All safe methods are also <link=idempotent>idempotent</link>, however not all idempotent methods are safe (e.g. <link=DELETE>DELETE</link>).",
+        "description": "<link=Request method>Request methods</link> are considered \"safe\" if their defined semantics are essentially read-only; i.e., the <link=client>client</link> does not request, and does not expect, any state change on the <link=origin server>origin server</link> as a result of applying a safe method to a target resource.  Likewise, reasonable use of a safe method is not expected to cause any harm, loss of property, or unusual burden on the origin server. All safe methods are also <link=idempotent>idempotent</link>, however not all idempotent methods are safe (e.g. <link=DELETE>DELETE</link>).",
 		"spec_title": "RFC7231#4.2.1",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-4.2.1"
     },
@@ -109,7 +109,7 @@
     },
 	{
         "word": "SHOULD",
-        "description": "Indicates a suggested but non-mandatory requirement of the specfication.",
+        "description": "Indicates a suggested but non-mandatory requirement of the specification.",
 		"spec_title": "RFC2119#3",
         "spec_href": "http://tools.ietf.org/html/rfc2119#section-3"
     },
