@@ -736,6 +736,8 @@ End
 		  Dim js As JSONItem = SearchIndex(SearchFor)
 		  If js = Nil And SearchFor <> "" Then
 		    Call MsgBox("No specification found for: " + SearchFor, 48, "Index entry not found")
+		    ReDim History(-1)
+		    DisplayItem(Nil)
 		  Else
 		    ReDim History(-1)
 		    DisplayItem(js)
