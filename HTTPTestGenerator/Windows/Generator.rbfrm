@@ -441,7 +441,15 @@ End
 		Sub Connected()
 		  mLastServerIP = Me.RemoteAddress
 		  ConnectOK = True
-		  ResponseMain1.Log("Connected to '" + mLastServerIP + "' on port " + Format(CurrentRequest.Path.Port, "#####0") + EndOfLine, 1)
+		  Dim prt As Integer = CurrentRequest.Path.Port
+		  If prt = -1 Then
+		    If CurrentRequest.Path.Scheme = "" Then
+		       prt = HTTP.SchemeToPort("http")
+		    Else
+		       prt = HTTP.SchemeToPort(CurrentRequest.Path.Scheme)
+		    End If
+		  End If
+		  ResponseMain1.Log("Connected to '" + mLastServerIP + "' on port " + Format(prt, "#####0") + EndOfLine, 1)
 		  TimeOut.Reset
 		  ResponseBuffer = ""
 		  Self.Title = "HTTP Request Generator - connected to: " + Me.RemoteAddress
