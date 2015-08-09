@@ -664,7 +664,7 @@ Protected Module HTTP
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function IsRobotBlocked(robotstxt As String, UserAgent As String, Path As String) As Pair
+		Protected Function IsRobotBlocked(robotstxt As String, UserAgent As String, Path As String, ByRef RetValue As Pair) As Boolean
 		  'Parses a robots.txt file and returns a Pair containing the UserAgent:Path in the robots.txt that matches the UserAgent and Path, if any.
 		  'If not disallowed (i.e. allowed) then returns NIL.
 		  
@@ -701,7 +701,7 @@ Protected Module HTTP
 		        #If DebugBuild Then
 		          Break 'invalid robots.txt data!
 		        #endif
-		        Return Nil
+		        Return False
 		        
 		      End Select
 		    Next
@@ -714,18 +714,16 @@ Protected Module HTTP
 		            Dim l, r As String
 		            l = NthField(URL, AllBots, 1)
 		            r = NthField(URL, AllBots, 2)
-		            If Left(path, l.Len) = l And Right(path, r.Len) = r Then
-		              Return Agent:URL 'We're blocked!
-		            End If
+		            If Left(path, l.Len) = l And Right(path, r.Len) = r Then RetValue = Agent:URL 'We're blocked!
 		          Else ' URL = NthField(URL, AllBots, 1) 'wildcard. we don't support complex patterns, just the *
-		            If Left(path, URL.Len) = URL Then
-		              Return Agent:URL 'We're blocked!
-		            End If
+		            If Left(path, URL.Len) = URL Then RetValue = Agent:URL 'We're blocked!
 		          End If
+		          If RetValue <> Nil Then Return True
 		        Next
 		      End If
 		    Next
 		  Next
+		  Return True
 		End Function
 	#tag EndMethod
 

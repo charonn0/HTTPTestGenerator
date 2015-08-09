@@ -228,42 +228,49 @@ End
 
 	#tag Method, Flags = &h21
 		Private Function CheckRobots(NewRequest As HTTP.Request) As Boolean
-		  If RequestMain1.HonorRobots.Value Then
-		    If mRobots = Nil Then mRobots = New Dictionary
-		    Dim rbt As String
-		    If mRobots.HasKey(NewRequest.Path.Host) Then
-		      rbt = mRobots.Value(NewRequest.Path.Host)
+		  If Not RequestMain1.HonorRobots.Value Then Return False
+		  
+		  If mRobots = Nil Then mRobots = New Dictionary
+		  Dim rbt As String
+		  If mRobots.HasKey(NewRequest.Path.Host) Then
+		    rbt = mRobots.Value(NewRequest.Path.Host)
+		  Else
+		    Dim rurl As New HTTP.URI(NewRequest.Path)
+		    rurl.Path = "/robots.txt"
+		    If rurl.Scheme = "https" Then
+		      Dim sck As New HTTPSecureSocket
+		      sck.Secure = True
+		      sck.ConnectionType = SSLSocket.TLSv1
+		      rbt = sck.Get(rurl.ToString, 5)
 		    Else
-		      Dim rurl As New HTTP.URI(NewRequest.Path)
-		      rurl.Path = "/robots.txt"
-		      If rurl.Scheme = "https" Then
-		        Dim sck As New HTTPSecureSocket
-		        sck.Secure = True
-		        sck.ConnectionType = SSLSocket.TLSv1
-		        rbt = sck.Get(rurl.ToString, 5)
-		      Else
-		        Dim sck As New HTTPSocket
-		        rbt = sck.Get(rurl.ToString, 5)
-		      End If
-		      
-		      If rbt.Trim <> "" Then mRobots.Value(rurl.Host) = rbt
+		      Dim sck As New HTTPSocket
+		      rbt = sck.Get(rurl.ToString, 5)
 		    End If
 		    
-		    
-		    
-		    
-		    Dim blocked As Pair = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path)
-		    If blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
-		      "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
+		    If rbt.Trim <> "" Then mRobots.Value(rurl.Host) = rbt
+		  End If
+		  
+		  
+		  Dim blocked As Pair
+		  Dim isvalid As Boolean = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path, blocked)
+		  Select Case True
+		  Case isvalid And blocked <> Nil
+		    If MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + "' on '" + NewRequest.Path.Host + _
+		      "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
 		      ResponseMain1.Log("The request has been aborted to abide by the website's robots.txt file!" + EndOfLine.Windows, -1)
 		      CancelRequest()
 		      Return True
-		    ElseIf blocked <> Nil Then
+		    ElseIf isvalid Then
 		      ResponseMain1.Log("Proceeding with request in defiance of the website's robots.txt file!" + EndOfLine.Windows, -1)
-		    Else
-		      ResponseMain1.Log("robots.txt does not prohibit this request, proceeding normally." + EndOfLine.Windows, -1)
 		    End If
-		  End If
+		    
+		  Case isvalid And blocked = Nil
+		    ResponseMain1.Log("robots.txt does not prohibit this request, proceeding normally." + EndOfLine.Windows, -1)
+		  Case Not isvalid
+		    ResponseMain1.Log("robots.txt was not found, proceeding normally." + EndOfLine.Windows, -1)
+		    mRobots.Value(NewRequest.Path.Host) = ""
+		  End Select
+		  
 		End Function
 	#tag EndMethod
 
