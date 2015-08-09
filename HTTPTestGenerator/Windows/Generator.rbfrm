@@ -235,42 +235,52 @@ End
 		  If mRobots.HasKey(NewRequest.Path.Host) Then
 		    rbt = mRobots.Value(NewRequest.Path.Host)
 		  Else
-		    Dim rurl As New HTTP.URI(NewRequest.Path)
+			Dim rurl As New HTTP.URI(NewRequest.Path)
 		    rurl.Path = "/robots.txt"
+		    Dim file As FolderItem = GetTemporaryFolderItem
+		    Dim sck As SocketCore
 		    If rurl.Scheme = "https" Then
-		      Dim sck As New HTTPSecureSocket
-		      sck.Secure = True
-		      sck.ConnectionType = SSLSocket.TLSv1
-		      rbt = sck.Get(rurl.ToString, 5)
+		      sck = New HTTPSecureSocket
+		      HTTPSecureSocket(sck).Secure = True
+		      HTTPSecureSocket(sck).ConnectionType = SSLSocket.TLSv1
+		      HTTPSecureSocket(sck).Get(rurl.ToString, file)
 		    Else
-		      Dim sck As New HTTPSocket
-		      rbt = sck.Get(rurl.ToString, 5)
+		      sck = New HTTPSocket
+		      HTTPSocket(sck).Get(rurl.ToString, file)
 		    End If
-		    
+		    While Not sck.IsConnected And sck.LastErrorCode = 0
+		      sck.Poll
+		      App.DoEvents
+		    Wend
+		    While sck.IsConnected And sck.LastErrorCode = 0
+		      sck.Poll
+		      App.DoEvents
+		    Wend
+		    If file.Exists And file.Length > 0 Then
+		      Dim bs As BinaryStream = BinaryStream.Open(file)
+		      rbt = bs.Read(bs.Length)
+		      bs.Close
+		    Else
+		      ResponseMain1.Log("Alert: robots.txt was not found." + EndOfLine.Windows, -1)
+		    End If
 		    If rbt.Trim <> "" Then mRobots.Value(rurl.Host) = rbt
 		  End If
-		  
-		  
-		  Dim blocked As Pair
-		  Dim isvalid As Boolean = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path, blocked)
-		  Select Case True
-		  Case isvalid And blocked <> Nil
-		    If MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + "' on '" + NewRequest.Path.Host + _
-		      "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
-		      ResponseMain1.Log("The request has been aborted to abide by the website's robots.txt file!" + EndOfLine.Windows, -1)
+		    
+		    
+		    
+		    
+		    Dim blocked As Pair = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path)
+		    If blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
+		      "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
+		      ResponseMain1.Log("Alert: The request is prohibited by the website's robots.txt file!" + EndOfLine.Windows, -1)
 		      CancelRequest()
 		      Return True
-		    ElseIf isvalid Then
-		      ResponseMain1.Log("Proceeding with request in defiance of the website's robots.txt file!" + EndOfLine.Windows, -1)
+		    ElseIf blocked <> Nil Then
+		      ResponseMain1.Log("Alert: Proceeding with request in defiance of the website's robots.txt file!" + EndOfLine.Windows, -1)
+		    Else
+		      'ResponseMain1.Log("Alert: robots.txt does not prohibit this request, proceeding normally." + EndOfLine.Windows, -1)
 		    End If
-		    
-		  Case isvalid And blocked = Nil
-		    ResponseMain1.Log("robots.txt does not prohibit this request, proceeding normally." + EndOfLine.Windows, -1)
-		  Case Not isvalid
-		    ResponseMain1.Log("robots.txt was not found, proceeding normally." + EndOfLine.Windows, -1)
-		    mRobots.Value(NewRequest.Path.Host) = ""
-		  End Select
-		  
+
 		End Function
 	#tag EndMethod
 
@@ -452,6 +462,9 @@ End
 		  RequestMain1.ProgressBar1.Visible = False
 		  RequestMain1.StopButton.Visible = False
 		  ConnectOK = False
+		  If Me.LastErrorCode <> 102 Then
+		    ResponseMain1.Log(HTTP.FormatSocketError(Me.LastErrorCode), -1)
+		  End If
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -523,7 +536,7 @@ End
 		  Select Case Sock.LastErrorCode
 		  Case 102
 		    If Not ConnectOK And Sock.Secure And RequestMain1.Security > 0 Then ' might be a problem with our ciphersuite
-		      ResponseMain1.Log("Secure connection failed.", -1)
+		      ResponseMain1.Log("Error: Secure connection failed.", -1)
 		      ResponseMain1.Log("This may be due to an incompatible SSL/TLS version, in which case setting the connection security to ""Automatic"" might resolve the error." + EndOfLine, 1)
 		    Else
 		      ResponseMain1.Log(FormatSocketError(Sock.LastErrorCode) + EndOfLine, 1)
@@ -584,7 +597,7 @@ End
 		    Me.Reset
 		  Else
 		    Sock.Disconnect
-		    ResponseMain1.Log("Timed out.", -1)
+		    ResponseMain1.Log("Error: Timed out.", -1)
 		    RequestMain1.Sender.Enabled = True
 		    RequestMain1.Sender.Caption = "Send Request"
 		    RequestMain1.ProgressBar1.Visible = False

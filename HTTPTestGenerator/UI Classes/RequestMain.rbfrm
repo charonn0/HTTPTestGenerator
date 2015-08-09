@@ -512,7 +512,11 @@ End
 		  Next
 		  
 		  If Not NextRequest.HasHeader("Host") And NextRequest.ProtocolVersion >= 1.1 Then
-		    NextRequest.Header("Host") = u.Host
+		    If (u.Port <> 80 And u.Scheme = "http") Or (u.Port <> 443 And u.Scheme = "https") Then
+		      NextRequest.Header("Host") = u.Host + ":" + Format(u.Port, "####0")
+		    Else
+		      NextRequest.Header("Host") = u.Host
+		    End If
 		  End If
 		  
 		  If Not NextRequest.HasHeader("Connection") And NextRequest.ProtocolVersion >= 1.1 Then
