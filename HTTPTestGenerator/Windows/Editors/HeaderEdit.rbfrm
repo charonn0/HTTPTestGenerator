@@ -497,7 +497,7 @@ End
 		  Case "Content-Encoding"
 		    HeaderValue.Text = "Identity"
 		  Case "Expires", "If-Modified-Since", "If-Unmodified-Since"
-		    Dim d As Date = DatePicker.GetDate(New Date)
+		    Dim d As Date = DatePicker.GetDate(HTTP.DateString(HeaderValue.Text))
 		    If d = Nil Then d = New Date
 		    HeaderValue.Text = HTTP.DateString(d)
 		    IsADate = True
