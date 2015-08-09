@@ -526,7 +526,7 @@ End
 		  If HeaderName.Text = "User-Agent" Then
 		    Select Case Me.ListIndex
 		    Case 0
-		      HeaderValue.Text = "BSHTTP\1.0"
+		      HeaderValue.Text = Me.Text
 		    Case 1
 		      HeaderValue.Text = BROWSER_CHROME_WIN64
 		    Case 2
@@ -542,6 +542,11 @@ End
 		    HeaderValue.Text = "BSHTTP\1.0"
 		  End If
 		  
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub TextChanged()
+		  HeaderValue.Text = Me.Text
 		End Sub
 	#tag EndEvent
 #tag EndEvents
