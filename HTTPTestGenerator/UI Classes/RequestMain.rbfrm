@@ -651,6 +651,7 @@ End
 		Function ConstructContextualMenu(base As MenuItem, x As Integer, y As Integer) As Boolean
 		  base.Append(New MenuItem("Clear all cookies"))
 		  base.Append(New MenuItem("Load headers from file"))
+		  base.Append(New MenuItem("Load cookies from file"))
 		  If Me.ListCount > 0 Then base.Append(New MenuItem("Save headers to a file"))
 		  Dim row As Integer = Me.RowFromXY(X, Y)
 		  If row > -1 Then
@@ -692,6 +693,18 @@ End
 		      Next
 		      bs.Close
 		    End If
+		    
+		  Case "Load cookies from file"
+		    Dim f As FolderItem = GetOpenFolderItem(FileTypes1.NetscapeCookieJar)
+		    If f <> Nil Then
+		      Dim cj As HTTP.CookieJar = HTTP.CookieJar.LoadFromFile(f)
+		      For i As Integer = 0 To cj.Count - 1
+		        Dim c As Cookie = cj.Item(i)
+		        RequestHeaders.AddRow("Cookie", c.Name + "=" + c.Value, "")
+		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
+		      Next
+		    End If
+		    
 		  Case "Save headers to a file"
 		    Dim f As FolderItem = GetSaveFolderItem(FileTypes1.HTTPHeaderFile, "HTTP_Headers")
 		    If f <> Nil And Not f.Directory Then
@@ -790,14 +803,15 @@ End
 	#tag Event
 		Sub Action()
 		  Dim mnu As New MenuItem("EditRawMenu")
-		  mnu.Append(New MenuItem("HTML form output"))
-		  mnu.Append(New MenuItem("Edit raw"))
+		  mnu.Append(New MenuItem("Set HTML form..."))
+		  mnu.Append(New MenuItem("Set file..."))
+		  mnu.Append(New MenuItem("Edit raw..."))
 		  mnu.Append(New MenuItem("Clear all"))
 		  Dim res As MenuItem = mnu.PopUp
 		  If res <> Nil Then
 		    'RaiseEvent Generate()
 		    Select Case res.Text
-		    Case "HTML form output"
+		    Case "Set HTML form..."
 		      Dim formgen As New FormGenerator
 		      Dim formraw As Variant
 		      If Not Formtype Then
@@ -847,7 +861,26 @@ End
 		        
 		      End If
 		      
-		    Case "Edit raw"
+		    Case "Set file..."
+		      Dim f As FolderItem = GetOpenFolderItem("")
+		      If f <> Nil Then
+		        Dim bs As BinaryStream = BinaryStream.Open(f)
+		        NextRequest.MessageBody = bs.Read(bs.Length)
+		        bs.Close
+		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		          If RequestHeaders.Cell(i, 0) = "Content-Type" Then RequestHeaders.RemoveRow(i)
+		        Next
+		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		          If RequestHeaders.Cell(i, 0) = "Content-Length" Then RequestHeaders.RemoveRow(i)
+		        Next
+		        Dim type As HTTP.ContentType = HTTP.MIMEType(f)
+		        RequestHeaders.AddRow("Content-Type", type.ToString, "")
+		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Type":type
+		        RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
+		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
+		      End If
+		      
+		    Case "Edit raw..."
 		      Dim raw As String = RawEditor.EditRaw(NextRequest.MessageBody)
 		      If raw.Trim = "" Then Return
 		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
