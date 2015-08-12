@@ -444,9 +444,9 @@ End
 		  Dim prt As Integer = CurrentRequest.Path.Port
 		  If prt = -1 Then
 		    If CurrentRequest.Path.Scheme = "" Then
-		       prt = HTTP.SchemeToPort("http")
+		      prt = HTTP.SchemeToPort("http")
 		    Else
-		       prt = HTTP.SchemeToPort(CurrentRequest.Path.Scheme)
+		      prt = HTTP.SchemeToPort(CurrentRequest.Path.Scheme)
 		    End If
 		  End If
 		  ResponseMain1.Log("Connected to '" + mLastServerIP + "' on port " + Format(prt, "#####0") + EndOfLine, 1)
@@ -507,6 +507,10 @@ End
 #tag Events DataReceivedTimer
 	#tag Event
 		Sub Action()
+		  If Sock.IsConnected Then
+		    Me.Reset
+		    Return
+		  End If
 		  If CurrentResponse <> Nil Then OldResponses.Append(CurrentResponse)
 		  CurrentResponse = ResponseBuffer'ReadNextResponse
 		  If CurrentResponse = Nil Then Return
