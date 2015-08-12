@@ -755,6 +755,18 @@ Protected Module HTTP
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Function MimeType(File As FolderItem) As String
+		  Return MimeType(NthField(File.Name, ".", CountFields(File.Name, ".")))
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function MimeType(FileExtension As String) As String
+		  Return MIMETypes.Lookup(FileExtension, "application/octet-stream")
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function SchemeToPort(Scheme As String) As Integer
 		  Static mPorts As Dictionary
 		  If mPorts = Nil Then
@@ -784,8 +796,9 @@ Protected Module HTTP
 	#tag ComputedProperty, Flags = &h1
 		#tag Getter
 			Get
-			  If mMIMETypes = Nil Then
-			    mMIMETypes = New Dictionary( _
+			  Static MIME As Dictionary
+			  If MIME = Nil Then
+			    MIME = New Dictionary( _
 			    "ez":"application/andrew-inset", _
 			    "aw":"application/applixware", _
 			    "atom":"application/atom+xml", _
@@ -1570,20 +1583,11 @@ Protected Module HTTP
 			    "movie":"video/x-sgi-movie", _
 			    "ice":"x-conference/x-cooltalk")
 			  End If
-			  return mMIMETypes
+			  Return MIME
 			End Get
 		#tag EndGetter
-		#tag Setter
-			Set
-			  mMIMETypes = value
-			End Set
-		#tag EndSetter
 		Protected MIMETypes As Dictionary
 	#tag EndComputedProperty
-
-	#tag Property, Flags = &h21
-		Private mMIMETypes As Dictionary
-	#tag EndProperty
 
 
 	#tag Constant, Name = BlankErrorPage, Type = String, Dynamic = False, Default = \"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\r<html xmlns\x3D\"http://www.w3.org/1999/xhtml\">\r<head>\r<meta http-equiv\x3D\"Content-Type\" content\x3D\"text/html; charset\x3Diso-8859-1\" />\r<title>%HTTPERROR%</title>\r<style type\x3D\"text/css\">\r<!--\ra:link {\r\tcolor: #0000FF;\r\ttext-decoration: none;\r}\ra:visited {\r\ttext-decoration: none;\r\tcolor: #990000;\r}\ra:hover {\r\ttext-decoration: underline;\r\tcolor: #009966;\r}\ra:active {\r\ttext-decoration: none;\r\tcolor: #FF0000;\r}\r-->\r</style></head>\r\r<body>\r<h1>%HTTPERROR%</h1>\r<p>%DOCUMENT%</p>\r<hr />\r<p>%SIGNATURE%</p>\r</body>\r</html>", Scope = Protected

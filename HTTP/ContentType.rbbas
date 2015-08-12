@@ -110,7 +110,10 @@ Class ContentType
 		  ' Pass a folderitem to construct a ContentType object based on the file name extension. The FolderItem need not exist.
 		  
 		  Dim t As String = "application/octet-stream"
-		  If FromFile <> Nil Then t = MIMETypes.Lookup(NthField(FromFile.Name, ".", CountFields(FromFile.Name, ".")), t)
+		  If FromFile <> Nil Then
+		    Dim ext As String = NthField(FromFile.Name, ".", CountFields(FromFile.Name, "."))
+		    t = MIMEType(ext)
+		  End If
 		  Me.Constructor(t)
 		End Sub
 	#tag EndMethod
