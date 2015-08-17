@@ -34,6 +34,10 @@ Inherits TextArea
 		Sub Open()
 		  Me.Styled = True
 		  Me.ReadOnly = True
+		  mScrollTimer = New Timer
+		  mScrollTimer.Period = 1
+		  mScrollTimer.Mode = Timer.ModeOff
+		  AddHandler mScrollTimer.Action, WeakAddressOf ScrollTimerHandler
 		  RaiseEvent Open()
 		End Sub
 	#tag EndEvent
@@ -168,8 +172,10 @@ Inherits TextArea
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub ScrollToEnd()
+	#tag Method, Flags = &h21
+		Private Sub ScrollTimerHandler(Sender As Timer)
+		  #pragma Unused Sender
+		  
 		  If Me.SelLength <= 0 Then Me.SelStart = Me.Text.Len
 		  #If TargetWin32 Then
 		    Declare Function SendMessageW Lib "User32" (HWND As Integer, Msg As Integer, WParam As Integer, LParam As Ptr) As Integer
@@ -179,6 +185,12 @@ Inherits TextArea
 		  #Else
 		    Me.ScrollPosition = Me.LineNumAtCharPos(Me.Text.Len)
 		  #endif
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ScrollToEnd()
+		  'mScrollTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndMethod
 
@@ -210,6 +222,10 @@ Inherits TextArea
 
 	#tag Property, Flags = &h21
 		Private Links() As Variant
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mScrollTimer As Timer
 	#tag EndProperty
 
 
