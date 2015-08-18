@@ -42,6 +42,7 @@ Begin Window RawViewer
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   0
       Value           =   0
       Visible         =   True
@@ -124,9 +125,9 @@ End
 	#tag MenuHandler
 		Function SaveMenu() As Boolean Handles SaveMenu.Action
 			Dim data As MemoryBlock = CurrentMessage.MessageBody
-			If AutoDecompress And MsgBox("Would you like to decompress the message body before saving?", 4 + 32, "Compression was applied to this message.") = 6 Then
-			data = HTTP.GZipDecompress(data)
-			End If
+			'If AutoDecompress And MsgBox("Would you like to decompress the message body before saving?", 4 + 32, "Compression was applied to this message.") = 6 Then
+			'data = HTTP.GZipDecompress(data)
+			'End If
 			
 			Dim nm As String = CurrentMessage.Path.Path
 			If CountFields(nm, "/") > 0 Then
@@ -160,7 +161,7 @@ End
 	#tag Method, Flags = &h1
 		Protected Sub SetMessage(Message As MemoryBlock)
 		  Dim data As MemoryBlock = Message
-		  If AutoDecompress Then data = HTTP.GZipDecompress(data)
+		  'If AutoDecompress Then data = HTTP.GZipDecompress(data)
 		  CurrentView.ViewRaw(data, CurrentMessage.ContentType)
 		End Sub
 	#tag EndMethod
@@ -196,16 +197,13 @@ End
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As HTTP.Message)
 		  Self.Title = "Message body - " + Message.ContentType.ToString
-		  If HTTP.GZipAvailable And Message.Header("Content-Encoding") = "gzip" And _
-		    MsgBox("Would you like to decompress the message body?", 4 + 32, "Compression was applied to this message.") = 6 Then
-		    AutoDecompress = True
+		  If HTTP.GZipAvailable And Message.Header("Content-Encoding") = "gzip" Then
+		    Self.Title = "Message body - " + Message.ContentType.ToString + " (decompressed)"
+		  Else
+		    Self.Title = "Message body - " + Message.ContentType.ToString
 		  End If
 		  CurrentMessage = Message
-		  If Message.Header("Content-Encoding") = "gzip" And Not AutoDecompress Then
-		    SetViewer("application/octet-stream")
-		  Else
-		    SetViewer(Message.ContentType)
-		  End If
+		  SetViewer(Message.ContentType)
 		  Try
 		    SetMessage(Message.MessageBody)
 		  Catch
@@ -217,10 +215,6 @@ End
 		End Sub
 	#tag EndMethod
 
-
-	#tag Property, Flags = &h21
-		Private AutoDecompress As Boolean
-	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private CurrentMessage As HTTP.Message

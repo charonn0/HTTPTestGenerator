@@ -599,23 +599,20 @@ Protected Module HTTP
 	#tag Method, Flags = &h1
 		Protected Function GZipCompress(Data As MemoryBlock) As MemoryBlock
 		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
-		  #If GZipAvailable And TargetHasGUI Then
-		    Dim compressed As String = GZip.Compress(Data)
-		    If GZip.Error <> 0 Then Raise New RuntimeException
-		    Dim output As New MemoryBlock(0)
-		    Dim stream As New BinaryStream(output)
-		    stream.WriteByte(&h1F) 'magic
-		    stream.WriteByte(&h8B) 'magic
-		    stream.WriteByte(&h08) 'use deflate
-		    stream.Position = 8
-		    stream.Write(compressed)
-		    stream.Position = stream.Position + 4
-		    stream.WriteUInt32(Data.Size)
-		    stream.Close
-		    Return output
+		  #If GZipAvailable Then
+		    If Not zlib.IsAvailable Then Return Data
+		    Dim tmp As FolderItem = GetTemporaryFolderItem()
+		    Dim gz As zlib.GZStream = zlib.GZStream.Create(tmp)
+		    gz.Write(Data)
+		    gz.Close
+		    Dim bs As BinaryStream = BinaryStream.Open(tmp)
+		    Data = bs.Read(bs.Length)
+		    bs.Close
+		    Return Data
+		    
 		  #Else
-		    'GZIPAvailable must be set to True and the GZip plugin must be installed.
-		    #pragma Warning "GZip is disabled."
+		    'GZIPAvailable must be set to True and the zlib shared library must be installed.
+		    #pragma Warning "zlib is disabled."
 		    Return Data
 		  #EndIf
 		End Function
@@ -624,40 +621,25 @@ Protected Module HTTP
 	#tag Method, Flags = &h1
 		Protected Function GZipDecompress(Data As MemoryBlock) As MemoryBlock
 		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
-		  #If GZipAvailable And TargetHasGUI Then
-		    Dim input As New BinaryStream(Data)
-		    If input.ReadByte <> &h1F Then Return Data 'bad magic
-		    If input.ReadByte <> &h8B Then Return Data 'bad magic
-		    If input.ReadByte <> &h08 Then Raise New UnsupportedFormatException 'not using deflate
-		    input.Position = input.Length - 4
-		    Dim sz As UInt32 = input.ReadUInt32
-		    Dim decompressed As String = GZip.Uncompress(Data.StringValue(8, Data.Len - 12), sz)
-		    If GZip.Error <> 0 Then
-		      #If DebugBuild Then
-		        Dim msg As String
-		        Select Case GZip.Error
-		        Case GZip.Z_BUF_ERROR
-		          msg = "GZip error: Output buffer too small."
-		        Case GZip.Z_ERRNO
-		          msg = "GZip error: " + Str(GZip.Error)
-		        Case GZip.Z_MEM_ERROR
-		          msg = "GZip error: Out of memory."
-		        Case GZip.Z_STREAM_ERROR
-		          msg = "GZip error: invalid stream."
-		        Case GZip.Z_DATA_ERROR
-		          msg = "GZip error: invalid input."
-		        Else
-		          msg = "GZip error: " + Str(GZip.Error)
-		        End Select
-		        Call MsgBox(msg, 16, "GZip Error")
-		      #endif
-		      
-		      Return Data
-		    End If
-		    Return decompressed
+		  #If GZipAvailable Then
+		    If Not zlib.IsAvailable Then Return Data
+		    Dim tmp As FolderItem = GetTemporaryFolderItem
+		    Dim bs As BinaryStream = BinaryStream.Create(tmp, True)
+		    bs.Write(Data)
+		    bs.Close
+		    Dim gz As zlib.GZStream = zlib.GZStream.Open(tmp)
+		    Dim out As New MemoryBlock(0)
+		    bs = New BinaryStream(out)
+		    While Not gz.EOF
+		      bs.Write(gz.Read(1024))
+		    Wend
+		    bs.Close
+		    gz.Close
+		    Return out
+		    
 		  #Else
-		    'GZIPAvailable must be set to True and the GZip plugin must be installed.
-		    #pragma Warning "GZip is disabled."
+		    'GZIPAvailable must be set to True and the zlib shared library must be installed.
+		    #pragma Warning "zlib is disabled."
 		    Return Data
 		  #EndIf
 		End Function
@@ -1599,7 +1581,7 @@ Protected Module HTTP
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"BoredomServe/1.0 (GNU/Linux)"
 	#tag EndConstant
 
-	#tag Constant, Name = GZipAvailable, Type = Boolean, Dynamic = False, Default = \"False", Scope = Protected
+	#tag Constant, Name = GZipAvailable, Type = Boolean, Dynamic = False, Default = \"True", Scope = Protected
 	#tag EndConstant
 
 
