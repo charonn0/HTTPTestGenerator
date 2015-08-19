@@ -630,6 +630,7 @@ Protected Module HTTP
 		    Wend
 		    bs.Close
 		    gz.Close
+		    Return out
 		  End If
 		  Return Data
 		End Function

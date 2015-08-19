@@ -75,7 +75,15 @@ End
 	#tag MenuHandler
 		Function BinMenu() As Boolean Handles BinMenu.Action
 			Dim type As ContentType = "application/octet-stream"
+			Dim suffix As String
+			Select Case True
+			Case AutoDecompress
+			Self.Title = "Message body - " + Type.ToString + "(decompressed)"
+			Case Not AutoDecompress And CurrentMessage.IsCompressed
+			Self.Title = "Message body - " + Type.ToString + "(compressed)"
+			Else
 			Self.Title = "Message body - " + Type.ToString
+			End Select
 			SetViewer(type)
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
@@ -93,7 +101,16 @@ End
 			MsgBox("Invalid form type.")
 			Return True
 			End If
+			
+			Select Case True
+			Case AutoDecompress
+			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString + "(decompressed)"
+			Case Not AutoDecompress And CurrentMessage.IsCompressed
+			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString + "(compressed)"
+			Else
 			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString
+			End Select
+			
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
 			
@@ -103,7 +120,14 @@ End
 	#tag MenuHandler
 		Function HTMLMenu() As Boolean Handles HTMLMenu.Action
 			Dim type As ContentType = "text/html"
+			Select Case True
+			Case AutoDecompress
+			Self.Title = "Message body - " + Type.ToString + "(decompressed)"
+			Case Not AutoDecompress And CurrentMessage.IsCompressed
+			Self.Title = "Message body - " + Type.ToString + "(compressed)"
+			Else
 			Self.Title = "Message body - " + Type.ToString
+			End Select
 			SetViewer(type)
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
@@ -114,7 +138,14 @@ End
 	#tag MenuHandler
 		Function PlainTextMenu() As Boolean Handles PlainTextMenu.Action
 			Dim type As ContentType = "text/plain"
+			Select Case True
+			Case AutoDecompress
+			Self.Title = "Message body - " + Type.ToString + "(decompressed)"
+			Case Not AutoDecompress And CurrentMessage.IsCompressed
+			Self.Title = "Message body - " + Type.ToString + "(compressed)"
+			Else
 			Self.Title = "Message body - " + Type.ToString
+			End Select
 			SetViewer(type)
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
@@ -149,7 +180,14 @@ End
 	#tag MenuHandler
 		Function ViewPictureMenu() As Boolean Handles ViewPictureMenu.Action
 			Dim type As ContentType = "image/*"
+			Select Case True
+			Case AutoDecompress
+			Self.Title = "Message body - " + Type.ToString + "(decompressed)"
+			Case Not AutoDecompress And CurrentMessage.IsCompressed
+			Self.Title = "Message body - " + Type.ToString + "(compressed)"
+			Else
 			Self.Title = "Message body - " + Type.ToString
+			End Select
 			SetViewer(type)
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
@@ -161,7 +199,8 @@ End
 	#tag Method, Flags = &h1
 		Protected Sub SetMessage(Message As MemoryBlock)
 		  Dim data As MemoryBlock = Message
-		  'If AutoDecompress Then data = HTTP.GZipDecompress(data)
+		  If AutoDecompress Then data = HTTP.GZipDecompress(data)
+		  If CurrentMessage.IsChunked Then data = HTTP.DecodeChunkedData(data)
 		  CurrentView.ViewRaw(data, CurrentMessage.ContentType)
 		End Sub
 	#tag EndMethod
@@ -197,13 +236,24 @@ End
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As HTTP.Message)
 		  Self.Title = "Message body - " + Message.ContentType.ToString
-		  If HTTP.zlib.IsAvailable And Message.Header("Content-Encoding") = "gzip" Then
-		    Self.Title = "Message body - " + Message.ContentType.ToString + " (decompressed)"
+		  If HTTP.zlib.IsAvailable And Message.IsCompressed Then
+		    AutoDecompress = (MsgBox("Would you like to decompress the message body before viewing?", 4 + 32, "Compression was applied to this message.") = 6)
+		    If AutoDecompress Then
+		      Self.Title = "Message body - " + Message.ContentType.ToString + " (decompressed)"
+		    Else
+		      Self.Title = "Message body - " + Message.ContentType.ToString + " (compressed)"
+		    End If
 		  Else
 		    Self.Title = "Message body - " + Message.ContentType.ToString
 		  End If
 		  CurrentMessage = Message
-		  SetViewer(Message.ContentType)
+		  
+		  If Message.IsCompressed And Not AutoDecompress Then
+		    SetViewer("application/octet-stream")
+		  Else
+		    SetViewer(Message.ContentType)
+		  End If
+		  
 		  Try
 		    SetMessage(Message.MessageBody)
 		  Catch
@@ -215,6 +265,10 @@ End
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h21
+		Private AutoDecompress As Boolean
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private CurrentMessage As HTTP.Message

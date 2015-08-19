@@ -15,9 +15,10 @@ Inherits HTTP.Message
 		  Dim d As Double = CDbl(Replace(NthField(line, " ", 1).Trim, "HTTP/", ""))
 		  If d > 0 Then Me.ProtocolVersion = d
 		  Me.StatusCode = Val(NthField(line, " ", 2))
-		  If Me.IsCompressed Then Me.MessageBody = HTTP.GZipDecompress(Me.MessageBody)
-		  If Me.IsChunked Then Me.MessageBody = HTTP.DecodeChunkedData(Me.MessageBody)
-		  If Me.ContentType.CharSet <> Nil Then MessageBody = DefineEncoding(MessageBody, Me.ContentType.CharSet)
+		  If Not Me.IsCompressed Then
+		    If Me.IsChunked Then Me.MessageBody = HTTP.DecodeChunkedData(Me.MessageBody)
+		    If Me.ContentType.CharSet <> Nil Then MessageBody = DefineEncoding(MessageBody, Me.ContentType.CharSet)
+		  End If
 		End Sub
 	#tag EndMethod
 
