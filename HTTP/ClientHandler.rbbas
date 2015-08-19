@@ -153,7 +153,7 @@ Inherits SSLSocket
 		    End If
 		    
 		    
-		    If UseGZip Then
+		    If zlib.IsAvailable Then
 		      Dim types() As String = Split(ClientRequest.Header("Accept-Encoding"), ",")
 		      For i As Integer = 0 To UBound(types)
 		        If types(i).Trim <> "gzip" Then Continue
@@ -240,10 +240,6 @@ Inherits SSLSocket
 
 	#tag Property, Flags = &h0
 		EnforceContentType As Boolean = True
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		UseGZip As Boolean = GZipAvailable
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

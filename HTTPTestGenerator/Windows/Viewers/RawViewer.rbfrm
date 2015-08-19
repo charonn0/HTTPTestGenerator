@@ -124,7 +124,7 @@ End
 
 	#tag MenuHandler
 		Function SaveMenu() As Boolean Handles SaveMenu.Action
-			Dim data As MemoryBlock = CurrentMessage.MessageBody
+			'Dim data As MemoryBlock = CurrentMessage.MessageBody
 			'If AutoDecompress And MsgBox("Would you like to decompress the message body before saving?", 4 + 32, "Compression was applied to this message.") = 6 Then
 			'data = HTTP.GZipDecompress(data)
 			'End If
@@ -197,7 +197,7 @@ End
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As HTTP.Message)
 		  Self.Title = "Message body - " + Message.ContentType.ToString
-		  If HTTP.GZipAvailable And Message.Header("Content-Encoding") = "gzip" Then
+		  If HTTP.zlib.IsAvailable And Message.Header("Content-Encoding") = "gzip" Then
 		    Self.Title = "Message body - " + Message.ContentType.ToString + " (decompressed)"
 		  Else
 		    Self.Title = "Message body - " + Message.ContentType.ToString

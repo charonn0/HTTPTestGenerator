@@ -599,7 +599,7 @@ Protected Module HTTP
 	#tag Method, Flags = &h1
 		Protected Function GZipCompress(Data As MemoryBlock) As MemoryBlock
 		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
-		  #If GZipAvailable Then
+		  If zlib.IsAvailable Then
 		    If Not zlib.IsAvailable Then Return Data
 		    Dim tmp As FolderItem = GetTemporaryFolderItem()
 		    Dim gz As zlib.GZStream = zlib.GZStream.Create(tmp)
@@ -608,20 +608,15 @@ Protected Module HTTP
 		    Dim bs As BinaryStream = BinaryStream.Open(tmp)
 		    Data = bs.Read(bs.Length)
 		    bs.Close
-		    Return Data
-		    
-		  #Else
-		    'GZIPAvailable must be set to True and the zlib shared library must be installed.
-		    #pragma Warning "zlib is disabled."
-		    Return Data
-		  #EndIf
+		  End If
+		  Return Data
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
 		Protected Function GZipDecompress(Data As MemoryBlock) As MemoryBlock
 		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
-		  #If GZipAvailable Then
+		  If zlib.IsAvailable Then
 		    If Not zlib.IsAvailable Then Return Data
 		    Dim tmp As FolderItem = GetTemporaryFolderItem
 		    Dim bs As BinaryStream = BinaryStream.Create(tmp, True)
@@ -635,13 +630,8 @@ Protected Module HTTP
 		    Wend
 		    bs.Close
 		    gz.Close
-		    Return out
-		    
-		  #Else
-		    'GZIPAvailable must be set to True and the zlib shared library must be installed.
-		    #pragma Warning "zlib is disabled."
-		    Return Data
-		  #EndIf
+		  End If
+		  Return Data
 		End Function
 	#tag EndMethod
 
@@ -1579,9 +1569,6 @@ Protected Module HTTP
 		#Tag Instance, Platform = Mac OS, Language = Default, Definition  = \"BoredomServe/1.0 (Mac OS X)"
 		#Tag Instance, Platform = Windows, Language = Default, Definition  = \"BoredomServe/1.0 (Win32)"
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"BoredomServe/1.0 (GNU/Linux)"
-	#tag EndConstant
-
-	#tag Constant, Name = GZipAvailable, Type = Boolean, Dynamic = False, Default = \"True", Scope = Protected
 	#tag EndConstant
 
 
