@@ -29,22 +29,17 @@ Begin Window Generator
       CertificatePassword=   ""
       CertificateRejectionFile=   ""
       ConnectionType  =   2
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
       LockedInPosition=   False
       Scope           =   0
       Secure          =   ""
-      TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   35
-      Visible         =   True
       Width           =   32
    End
    Begin Timer DataReceivedTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -52,11 +47,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   200
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   79
-      Visible         =   True
       Width           =   32
    End
    Begin RequestMain RequestMain1
@@ -70,7 +62,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   -1
       LockBottom      =   True
@@ -126,7 +117,6 @@ Begin Window Generator
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   377
       LockBottom      =   True
@@ -144,7 +134,6 @@ Begin Window Generator
       Width           =   561
    End
    Begin Timer TimeOut
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   1000
@@ -152,11 +141,8 @@ Begin Window Generator
       Mode            =   0
       Period          =   10000
       Scope           =   0
-      TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   123
-      Visible         =   True
       Width           =   32
    End
 End
@@ -188,8 +174,46 @@ End
 	#tag EndMenuHandler
 
 	#tag MenuHandler
+		Function LoadRequest() As Boolean Handles LoadRequest.Action
+			Dim f As FolderItem = GetOpenFolderItem(FileTypes1.HTTPMessageFile + FileTypes1.HTTPHeaderFile + FileTypes1.HierarchicalContainerFile)
+			If f <> Nil And NthField(f.Name, ".", CountFields(f.Name, ".")) = "hcf" Then
+			MsgBox("Not Implemented: HCF")
+			Return True
+			ElseIf f = Nil Then
+			Return True
+			End If
+			
+			Dim data As MemoryBlock
+			Dim bs As BinaryStream = BinaryStream.Open(f)
+			data = bs.Read(bs.Length)
+			bs.Close
+			RequestMain1.SetNextRequest(data)
+			
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
 		Function QuitMenu() As Boolean Handles QuitMenu.Action
 			Quit()
+			Return True
+			
+		End Function
+	#tag EndMenuHandler
+
+	#tag MenuHandler
+		Function SaveRequest() As Boolean Handles SaveRequest.Action
+			Dim r As HTTP.Request = RequestMain1.DumpCurrent
+			If r <> Nil And r.ToString(True).Trim <> "" Then
+			Dim nm As String = r.MethodName + "_" + r.Path.Host
+			Dim f As FolderItem = GetSaveFolderItem(FileTypes1.HTTPMessageFile , nm)
+			If f <> Nil Then
+			Dim bs As BinaryStream = BinaryStream.Create(f, True)
+			bs.Write(r.ToString)
+			bs.Close
+			End If
+			End If
 			Return True
 			
 		End Function
@@ -500,6 +524,7 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub SendComplete(UserAborted As Boolean)
+		  #pragma Unused UserAborted
 		  ResponseMain1.Log("Sending data (" + FormatBytes(BytesSentLast) + ")...", 2)
 		End Sub
 	#tag EndEvent

@@ -46,6 +46,12 @@ Inherits HTTP.Message
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function Headers() As HTTP.Headers
+		  Return mHeaders
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function IsModifiedSince(SinceWhen As Date) As Boolean
 		  If SinceWhen = Nil Then Return False
 		  If HasHeader("If-Modified-Since") Then

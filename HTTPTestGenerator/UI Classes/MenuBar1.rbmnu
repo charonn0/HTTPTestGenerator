@@ -5,15 +5,27 @@ Begin Menu MenuBar1
       Text = "File"
       Index = -2147483648
       AutoEnable = True
+      Begin MenuItem SaveRequest
+         SpecialMenu = 0
+         Text = "&Save current request"
+         Index = -2147483648
+         AutoEnable = True
+      End
+      Begin MenuItem LoadRequest
+         SpecialMenu = 0
+         Text = "L&oad saved request"
+         Index = -2147483648
+         AutoEnable = True
+      End
       Begin MenuItem WebServerMenu
          SpecialMenu = 0
-         Text = "Local webserver..."
+         Text = "&Local webserver..."
          Index = -2147483648
          AutoEnable = True
       End
       Begin MenuItem SpecIndexMenu
          SpecialMenu = 0
-         Text = "Specification index..."
+         Text = "Specification &index..."
          Index = -2147483648
          AutoEnable = True
       End
@@ -25,7 +37,7 @@ Begin Menu MenuBar1
       End
       Begin MenuItem QuitMenu
          SpecialMenu = 0
-         Text = "Exit"
+         Text = "E&xit"
          Index = -2147483648
          AutoEnable = True
       End

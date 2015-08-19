@@ -474,56 +474,61 @@ End
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Sub Generate()
-		  Dim oldbody As String
-		  If NextRequest <> Nil Then oldbody = NextRequest.MessageBody
-		  NextRequest = ""
-		  NextRequest.MessageBody = oldbody
-		  NextRequest.Method = HTTP.Method(RequestMethod.Text)
-		  If NextRequest.Method = HTTP.RequestMethod.InvalidMethod Then NextRequest.MethodName = RequestMethod.Text
-		  NextRequest.ProtocolVersion = CDbl(NthField(ProtocolVer.Text, "/", 2))
+	#tag Method, Flags = &h0
+		Function DumpCurrent() As HTTP.Request
+		  Dim TmpRequest As HTTP.Request = ""
+		  TmpRequest.MessageBody = NextRequest.MessageBody
+		  TmpRequest.Method = HTTP.Method(RequestMethod.Text)
+		  If TmpRequest.Method = HTTP.RequestMethod.InvalidMethod Then TmpRequest.MethodName = RequestMethod.Text
+		  TmpRequest.ProtocolVersion = CDbl(NthField(ProtocolVer.Text, "/", 2))
 		  
 		  
 		  Dim u As HTTP.URI = URL.Text
 		  If u.Username <> "" Or u.Password <> "" Then
-		    If MsgBox("Auto-set HTTP Authorization header?", 4 + 32, "User credentials detected in URL") = 6 Then
-		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		        If RequestHeaders.Cell(i, 0) = "Authorization" Then
-		          RequestHeaders.RemoveRow(i)
-		          Exit For
-		        End If
-		      Next
-		      RequestHeaders.AddRow("Authorization", "Basic " + EncodeBase64(u.Username + ":" + u.Password))
-		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Authorization":"Basic " + EncodeBase64(u.Username + ":" + u.Password)
-		      u.Username = ""
-		      u.Password = ""
-		      URL.Text = u.ToString
-		    End If
+		    For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		      If RequestHeaders.Cell(i, 0) = "Authorization" Then
+		        RequestHeaders.RemoveRow(i)
+		        Exit For
+		      End If
+		    Next
+		    RequestHeaders.AddRow("Authorization", "Basic " + EncodeBase64(u.Username + ":" + u.Password))
+		    RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Authorization":"Basic " + EncodeBase64(u.Username + ":" + u.Password)
+		    u.Username = ""
+		    u.Password = ""
+		    URL.Text = u.ToString
 		  End If
 		  
-		  NextRequest.Path = u
-		  NextRequest.Path.Fragment = ""
-		  If NextRequest.path.Path = "" Then NextRequest.path.Path = "/"
+		  TmpRequest.Path = u
+		  TmpRequest.Path.Fragment = ""
+		  If TmpRequest.path.Path = "" Then TmpRequest.path.Path = "/"
 		  
 		  
 		  For i As Integer = 0 To RequestHeaders.ListCount - 1
-		    NextRequest.Header(RequestHeaders.Cell(i, 0), True) = RequestHeaders.Cell(i, 1)
+		    TmpRequest.Header(RequestHeaders.Cell(i, 0), True) = RequestHeaders.Cell(i, 1)
 		  Next
 		  
-		  If Not NextRequest.HasHeader("Host") And NextRequest.ProtocolVersion >= 1.1 Then
+		  If Not TmpRequest.HasHeader("Host") And TmpRequest.ProtocolVersion >= 1.1 Then
 		    If (u.Port <> 80 And u.Scheme = "http") Or (u.Port <> 443 And u.Scheme = "https") Then
-		      NextRequest.Header("Host") = u.Host + ":" + Format(u.Port, "####0")
+		      TmpRequest.Header("Host") = u.Host + ":" + Format(u.Port, "####0")
 		    Else
-		      NextRequest.Header("Host") = u.Host
+		      TmpRequest.Header("Host") = u.Host
 		    End If
 		  End If
 		  
-		  If Not NextRequest.HasHeader("Connection") And NextRequest.ProtocolVersion >= 1.1 Then
-		    NextRequest.Header("Connection") = "close"
+		  If Not TmpRequest.HasHeader("Connection") And TmpRequest.ProtocolVersion >= 1.1 Then
+		    TmpRequest.Header("Connection") = "close"
 		  End If
 		  
-		  
+		  Return TmpRequest
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub Generate()
+		  Dim oldbody As String
+		  If NextRequest <> Nil Then oldbody = NextRequest.MessageBody
+		  NextRequest = DumpCurrent()
+		  NextRequest.MessageBody = oldbody
 		End Sub
 	#tag EndMethod
 
@@ -558,6 +563,31 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub SetNextRequest(r As HTTP.Request)
+		  NextRequest = r
+		  RequestMethod.Text = r.MethodName
+		  ProtocolVer.Text = "HTTP/" + Format(r.ProtocolVersion, "#.0")
+		  RequestHeaders.DeleteAllRows
+		  
+		  Dim h As HTTP.Headers = r.Headers
+		  For i As Integer = 0 To h.Count - 1
+		    Select Case h.Name(i)
+		    Case "Cookie"
+		      RequestHeaders.AddRow(h.Name(i), h.Value(i))
+		      Dim c As New HTTP.Cookie(h.Value(i))
+		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
+		    Case "Host"
+		      NextRequest.Path.Host = h.Value(i)
+		    Else
+		      RequestHeaders.AddRow(h.Name(i), h.Value(i))
+		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = h.Name(i):h.Value(i)
+		    End Select
+		  Next
+		  URL.Text = NextRequest.Path.ToString
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub SetProgress(Percent As Integer)
 		  ProgressBar1.Maximum = 100
 		  If Percent >= 0 Then
@@ -585,7 +615,7 @@ End
 	#tag Method, Flags = &h1
 		Protected Sub WriteHeader(PendingHeaderName As String, Value As String)
 		  For i As Integer = 0 To RequestHeaders.ListCount - 1
-		    If RequestHeaders.Cell(i, 0) = PendingHeaderName Then 
+		    If RequestHeaders.Cell(i, 0) = PendingHeaderName Then
 		      RequestHeaders.Cell(i, 1) = Value
 		      RequestHeaders.RowTag(i) = PendingHeaderName:Value
 		      Return

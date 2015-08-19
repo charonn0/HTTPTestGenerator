@@ -26,4 +26,13 @@
 		Name=HTTP Header File
 	#tag EndFileType
 
+	#tag FileType
+		CodeName=HTTPMessageFile
+		Extension=.http
+		Flags=&h0
+		MacCreator=
+		MacType=
+		Name=HTTP Message File
+	#tag EndFileType
+
 #tag EndFileTypeSet
