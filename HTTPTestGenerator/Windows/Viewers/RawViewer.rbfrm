@@ -199,7 +199,13 @@ End
 	#tag Method, Flags = &h1
 		Protected Sub SetMessage(Message As MemoryBlock)
 		  Dim data As MemoryBlock = Message
-		  If AutoDecompress Then data = HTTP.GZipDecompress(data)
+		  If AutoDecompress Then 
+		    If CurrentMessage.Header("Content-Encoding") = "gzip" Then
+		      data = HTTP.GZipDecompress(data)
+		    ElseIf CurrentMessage.Header("Content-Encoding") = "deflate" Then
+		      data = HTTP.Inflate(data)
+		    End If
+		  End If
 		  If CurrentMessage.IsChunked Then data = HTTP.DecodeChunkedData(data)
 		  CurrentView.ViewRaw(data, CurrentMessage.ContentType)
 		End Sub

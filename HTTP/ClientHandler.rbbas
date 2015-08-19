@@ -156,13 +156,26 @@ Inherits SSLSocket
 		    If zlib.IsAvailable Then
 		      Dim types() As String = Split(ClientRequest.Header("Accept-Encoding"), ",")
 		      For i As Integer = 0 To UBound(types)
-		        If types(i).Trim <> "gzip" Then Continue
-		        Dim compressed As String = HTTP.GZipCompress(doc.MessageBody)
-		        If compressed.LenB = clientrequest.MessageBody.LenB Then Exit For
-		        doc.Header("Content-Encoding") = "gzip"
-		        doc.MessageBody = compressed
-		        RaiseEvent HTTPDebug("Compressed response with gzip.", 1)
-		        Exit For
+		        Dim ty As String = types(i).Trim
+		        Select Case ty
+		        Case "deflate"
+		          Dim compressed As String = HTTP.Deflate(doc.MessageBody)
+		          If compressed.LenB = clientrequest.MessageBody.LenB Then Exit For
+		          doc.Header("Content-Encoding") = "deflate"
+		          doc.MessageBody = compressed
+		          RaiseEvent HTTPDebug("Compressed response with deflate.", 1)
+		          Exit For
+		          
+		        Case "gzip"
+		          Dim compressed As String = HTTP.GZipCompress(doc.MessageBody)
+		          If compressed.LenB = clientrequest.MessageBody.LenB Then Exit For
+		          doc.Header("Content-Encoding") = "gzip"
+		          doc.MessageBody = compressed
+		          RaiseEvent HTTPDebug("Compressed response with gzip.", 1)
+		          Exit For
+		        Else
+		          Continue
+		        End Select
 		      Next
 		    End If
 		    
@@ -333,12 +346,6 @@ Inherits SSLSocket
 			Group="Position"
 			Type="Integer"
 			InheritedFrom="SSLSocket"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="UseGZip"
-			Group="Behavior"
-			InitialValue="GZipAvailable"
-			Type="Boolean"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

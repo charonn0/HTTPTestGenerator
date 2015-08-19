@@ -66,6 +66,7 @@ Protected Class Message
 
 	#tag Method, Flags = &h0
 		Function IsCompressed() As Boolean
+		  If Me.Header("Content-Encoding") = "deflate" Then Return True
 		  If Me.Header("Content-Encoding") = "gzip" Then Return True
 		  If LeftB(MessageBody, 2) = Chr(&h1F) + Chr(&h8B) Then Return True
 		End Function

@@ -354,6 +354,13 @@ Protected Module HTTP
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Function Deflate(Data As MemoryBlock) As MemoryBlock
+		  If zlib.IsAvailable Then Return zlib.Compress(Data)
+		  Return Data
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function ErrorPage(ErrorNumber As Integer, RedirectLink As String = "") As HTTP.Response
 		  Static ErrorPages As Dictionary
 		  If ErrorPages = Nil Then
@@ -632,6 +639,13 @@ Protected Module HTTP
 		    gz.Close
 		    Return out
 		  End If
+		  Return Data
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function Inflate(Data As MemoryBlock) As MemoryBlock
+		  If zlib.IsAvailable Then Return zlib.Uncompress(Data)
 		  Return Data
 		End Function
 	#tag EndMethod
