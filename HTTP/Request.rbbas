@@ -1,6 +1,13 @@
 #tag Class
 Protected Class Request
 Inherits HTTP.Message
+	#tag Event
+		Sub HTTPDebug(Message As String, Level As Integer)
+		  RaiseEvent HTTPDebug(Message, Level)
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h0
 		Function Accepts(Type As ContentType) As Boolean
 		  If Me.HasHeader("Accept") Then
@@ -121,17 +128,18 @@ Inherits HTTP.Message
 		  p.Scheme = ""
 		  p.Host = ""
 		  Dim data As String = MethodName + " " + p.ToString + " " + "HTTP/" + Format(ProtocolVersion, "#.0") + CRLF
-		  'If Me.MultiPart <> Nil Then
-		  'Me.SetHeader("Content-Type") = "multipart/form-data; boundary=" + Me.MultiPart.Boundary
-		  'Me.MessageBody = Me.MultiPart.ToString
-		  'Me.SetHeader("Content-Length") = Str(Me.MessageBody.LenB)
-		  'End If
+		  If mHeaders.Count <= 0 And mHeaders.CookieCount <= 0 And HeadersOnly Then RaiseEvent HTTPDebug("WARN: This request contains no headers.", -1)
 		  data = data + Super.ToString(HeadersOnly)
 		  
 		  Return data
 		  
 		End Function
 	#tag EndMethod
+
+
+	#tag Hook, Flags = &h0
+		Event HTTPDebug(Message As String, Level As Integer)
+	#tag EndHook
 
 
 	#tag ComputedProperty, Flags = &h0

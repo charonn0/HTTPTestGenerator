@@ -772,6 +772,7 @@ Protected Module HTTP
 			  Static MIME As Dictionary
 			  If MIME = Nil Then
 			    MIME = New Dictionary( _
+			    "http":"message/http", _
 			    "ez":"application/andrew-inset", _
 			    "aw":"application/applixware", _
 			    "atom":"application/atom+xml", _

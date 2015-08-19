@@ -190,7 +190,11 @@ Inherits TextArea
 
 	#tag Method, Flags = &h0
 		Sub ScrollToEnd()
-		  'mScrollTimer.Mode = Timer.ModeSingle
+		  If App.CurrentThread = Nil Then
+		    ScrollTimerHandler(mScrollTimer)
+		  Else
+		    mScrollTimer.Mode = Timer.ModeSingle
+		  End If
 		End Sub
 	#tag EndMethod
 

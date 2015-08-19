@@ -78,9 +78,9 @@ End
 			Dim suffix As String
 			Select Case True
 			Case AutoDecompress
-			Self.Title = "Message body - " + Type.ToString + "(decompressed)"
+			Self.Title = "Message body - " + Type.ToString + " (decompressed)"
 			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + Type.ToString + "(compressed)"
+			Self.Title = "Message body - " + Type.ToString + " (compressed)"
 			Else
 			Self.Title = "Message body - " + Type.ToString
 			End Select
@@ -104,9 +104,9 @@ End
 			
 			Select Case True
 			Case AutoDecompress
-			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString + "(decompressed)"
+			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString + " (decompressed)"
 			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString + "(compressed)"
+			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString + " (compressed)"
 			Else
 			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString
 			End Select
@@ -122,9 +122,9 @@ End
 			Dim type As ContentType = "text/html"
 			Select Case True
 			Case AutoDecompress
-			Self.Title = "Message body - " + Type.ToString + "(decompressed)"
+			Self.Title = "Message body - " + Type.ToString + " (decompressed)"
 			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + Type.ToString + "(compressed)"
+			Self.Title = "Message body - " + Type.ToString + " (compressed)"
 			Else
 			Self.Title = "Message body - " + Type.ToString
 			End Select
@@ -140,9 +140,9 @@ End
 			Dim type As ContentType = "text/plain"
 			Select Case True
 			Case AutoDecompress
-			Self.Title = "Message body - " + Type.ToString + "(decompressed)"
+			Self.Title = "Message body - " + Type.ToString + " (decompressed)"
 			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + Type.ToString + "(compressed)"
+			Self.Title = "Message body - " + Type.ToString + " (compressed)"
 			Else
 			Self.Title = "Message body - " + Type.ToString
 			End Select
@@ -182,9 +182,9 @@ End
 			Dim type As ContentType = "image/*"
 			Select Case True
 			Case AutoDecompress
-			Self.Title = "Message body - " + Type.ToString + "(decompressed)"
+			Self.Title = "Message body - " + Type.ToString + " (decompressed)"
 			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + Type.ToString + "(compressed)"
+			Self.Title = "Message body - " + Type.ToString + " (compressed)"
 			Else
 			Self.Title = "Message body - " + Type.ToString
 			End Select
@@ -236,8 +236,9 @@ End
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As HTTP.Message)
 		  Self.Title = "Message body - " + Message.ContentType.ToString
-		  If HTTP.zlib.IsAvailable And Message.IsCompressed Then
-		    AutoDecompress = (MsgBox("Would you like to decompress the message body before viewing?", 4 + 32, "Compression was applied to this message.") = 6)
+		  If Message.IsCompressed Then
+		    AutoDecompress = zlib.IsAvailable And _
+		    (MsgBox("Would you like to decompress the message body before viewing?", 4 + 32, "Compression was applied to this message.") = 6)
 		    If AutoDecompress Then
 		      Self.Title = "Message body - " + Message.ContentType.ToString + " (decompressed)"
 		    Else

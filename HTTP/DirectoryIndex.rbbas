@@ -178,7 +178,7 @@ Inherits HTTP.Response
 		  pagedata = Replace(pagedata, "%DAEMONVERSION%", HTTP.DaemonVersion)
 		  timestop = Microseconds
 		  timestart = timestop - timestart
-		  Dim timestamp As String = "This page was generated in " + Format(timestart / 1000, "###,##0.0#") + "ms."
+		  Dim timestamp As String = Format(timestart / 1000, "###,##0.0#") + "ms"
 		  pagedata = Replace(pagedata, "%TIME%", timestamp)
 		  
 		  Me.MessageBody = PageData

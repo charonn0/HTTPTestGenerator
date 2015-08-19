@@ -51,7 +51,6 @@ Begin ContainerControl PictureView Implements Viewer
       Width           =   614
    End
    Begin Timer Timer1
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   637
@@ -59,11 +58,8 @@ Begin ContainerControl PictureView Implements Viewer
       Mode            =   0
       Period          =   1
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   14
-      Visible         =   True
       Width           =   32
    End
 End
@@ -139,7 +135,6 @@ End
 		Sub Paint(g As Graphics)
 		  If Not App.UseGDIPlus Then App.UseGDIPlus = True
 		  If g.Width <= 0 Or g.Height <= 0 Then Return
-		  Dim buffer As New Picture(g.Width, g.Height)
 		  If Image <> Nil Then
 		    If Pic = Nil Then
 		      mratio = 1.0
@@ -158,29 +153,35 @@ End
 		        g.DrawPicture(p, i, j)
 		      Next
 		    Next
-		    Buffer.Graphics.DrawPicture(Pic, (g.Width - Pic.Width) / 2, (g.Height - Pic.Height) / 2)
+		    g.DrawPicture(Pic, (g.Width - Pic.Width) / 2, (g.Height - Pic.Height) / 2)
 		  Else
 		    Dim s As String = "Unknown image format."
-		    Dim gg As Graphics = buffer.Graphics
-		    gg.ForeColor = &cC0C0C000
-		    gg.FillRect(0, 0, g.Width, g.Height)
-		    gg.ForeColor = &c00000000
-		    gg.TextSize = 15
+		    'Dim gg As Graphics = buffer.Graphics
+		    g.ForeColor = &cC0C0C000
+		    g.FillRect(0, 0, g.Width, g.Height)
+		    g.ForeColor = &c00000000
+		    g.TextSize = 15
 		    Dim w, h As Integer
 		    w = g.StringWidth(s)
 		    h = g.StringHeight(s, w)
 		    w = (g.Width - w) / 2
 		    h = (g.Height - h) / 2
-		    gg.DrawString(s, w, h)
+		    g.DrawString(s, w, h)
 		  End If
-		  g.DrawPicture(Buffer, 0, 0)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events Timer1
 	#tag Event
 		Sub Action()
-		  Self.Window.Title = "Message body - " + MIMEType.ToString + " (" + Format(mratio * 100, "##0.0#") + "%)"
+		  Dim s As String = "Message body - " + MIMEType.ToString + " (" + Format(mratio * 100, "##0.0#") + "%)"
+		  If InStr(Self.Window.Title, " (compressed)") > 0 Then
+		    s = s + " (compressed)"
+		  ElseIf InStr(Self.Window.Title, " (decompressed)") > 0 Then
+		    s = s + " (decompressed)"
+		  End If
+		  Self.Window.Title = s
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

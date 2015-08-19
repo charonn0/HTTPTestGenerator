@@ -16,13 +16,6 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Function MouseDown(X As Integer, Y As Integer) As Boolean
-		  'Me.SelectionStart = OffsetFromXY(X, Y)
-		  'Return Me.SelectionStart > 0
-		End Function
-	#tag EndEvent
-
-	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
 		  Me.SelectionEnd = OffsetFromXY(X, Y)
 		End Sub

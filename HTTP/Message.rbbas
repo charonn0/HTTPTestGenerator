@@ -11,6 +11,7 @@ Protected Class Message
 		  Me.ProtocolVersion = CopyFrom.ProtocolVersion
 		  Me.Path = CopyFrom.Path
 		  
+		  If Me.ProtocolVersion > 1.11 Or Me.ProtocolVersion < 1.0 Then RaiseEvent HTTPDebug("WARN: Unknown HTTP version.", -1)
 		End Sub
 	#tag EndMethod
 
@@ -73,14 +74,10 @@ Protected Class Message
 	#tag Method, Flags = &h1
 		Protected Function ToString(HeadersOnly As Boolean) As String
 		  Dim data As String
-		  If mHeaders.Count > 0 Then
-		    If Me IsA HTTP.Request Then
-		      data = mHeaders.Source + CRLF + CRLF
-		    Else
-		      data = mHeaders.Source(True) + CRLF + CRLF
-		    End If
+		  If Me IsA HTTP.Request Then
+		    data = mHeaders.Source + CRLF + CRLF
 		  Else
-		    RaiseEvent HTTPDebug("WARN: This message contains no headers.", -1)
+		    data = mHeaders.Source(True) + CRLF + CRLF
 		  End If
 		  If Not HeadersOnly Then data = data + Me.MessageBody
 		  Return data

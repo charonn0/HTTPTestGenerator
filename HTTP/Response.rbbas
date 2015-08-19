@@ -1,6 +1,13 @@
 #tag Class
 Protected Class Response
 Inherits HTTP.Message
+	#tag Event
+		Sub HTTPDebug(Message As String, Level As Integer)
+		  RaiseEvent HTTPDebug(Message, Level)
+		End Sub
+	#tag EndEvent
+
+
 	#tag Method, Flags = &h1001
 		Protected Sub Constructor(Raw As String)
 		  Dim body As Integer = InStr(raw, CRLF + CRLF) + 3
@@ -40,11 +47,17 @@ Inherits HTTP.Message
 		  If Not Me.HasHeader("Date") Then Me.Header("Date") = HTTP.DateString(New Date)
 		  Dim msg As String = CodeToMessage(Me.StatusCode)
 		  Dim p As String = "HTTP/"
-		  If Me.StatusCode = 418 Then p = "HTCPCP/"
+		  If Me.StatusCode = 418 Then p = "HTCPCP/" ' This breaks browsers
+		  If mHeaders.Count > 0 Then RaiseEvent HTTPDebug("WARN: This response contains no headers.", -1)
 		  Return p + Format(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF + Super.ToString(HeadersOnly)'
 		  
 		End Function
 	#tag EndMethod
+
+
+	#tag Hook, Flags = &h0
+		Event HTTPDebug(Message As String, Level As Integer)
+	#tag EndHook
 
 
 	#tag Property, Flags = &h0

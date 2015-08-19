@@ -351,12 +351,25 @@ End
 		      ResponseDocument = cache.Value(ClientRequest.Path.Path)
 		      If ResponseDocument.HasHeader("Date") And ClientRequest.HasHeader("If-Modified-Since") Then
 		        Dim pagedate As Date = HTTP.DateString(ResponseDocument.Header("Date"))
-		        Dim requestdate As Date = HTTP.DateString(ClientRequest.Header("If-Modified-Since")) 
+		        Dim requestdate As Date = HTTP.DateString(ClientRequest.Header("If-Modified-Since"))
 		        If pagedate.TotalSeconds > requestdate.TotalSeconds Then ResponseDocument = HTTP.ErrorPage(304)
 		        Return True
 		      End If
 		    End If
 		  End If
+		  
+		  'If ClientRequest.Path.Path = "/CGI/test.rbbas" Then
+		  'Dim script As New ScriptPage(TestScript)
+		  'Dim h As New HTTP.Headers
+		  'Dim mb As MemoryBlock = script.Run(ClientRequest, Sender, h)
+		  'ResponseDocument = "HTTP/1.1 200 OK" + HTTP.CRLF + h.Source.Trim + HTTP.CRLF + HTTP.CRLF
+		  'If mb.Size > 0 Then
+		  'ResponseDocument.MessageBody = mb
+		  'ResponseDocument.Header("Content-Length") = Str(mb.Size, "###############0")
+		  'End If
+		  'Break
+		  'Return True
+		  'End If
 		  
 		  Select Case ClientRequest.Method
 		  Case RequestMethod.GET, RequestMethod.HEAD
@@ -409,7 +422,7 @@ End
 		      Str(ClientRequest.RangeStart) + "-" + Str(ClientRequest.RangeEnd) + "/" + Str(ResponseDocument.MessageBody.LenB)
 		      ResponseDocument.MessageBody = Mid(ResponseDocument.MessageBody, ClientRequest.RangeStart, ClientRequest.RangeEnd - ClientRequest.RangeStart + 1)
 		    End Select
-		    If sessid = "" Then 
+		    If sessid = "" Then
 		      sessid = Format(Microseconds, "######0000000")
 		      ResponseDocument.Headers.SetCookie("SessionID":sessid)
 		    End If
@@ -521,6 +534,10 @@ End
 	#tag Property, Flags = &h21
 		Private Socks() As WeakRef
 	#tag EndProperty
+
+
+	#tag Constant, Name = TestScript, Type = String, Dynamic = False, Default = \"SetHeader(\"X-Hello\"\x2C \"From-a-script!\")\rPrint(\"HELLO FROM A SCRIPT!\")\rSetHeader(\"Content-Type\"\x2C \"text/plain\")", Scope = Private
+	#tag EndConstant
 
 
 #tag EndWindowCode
