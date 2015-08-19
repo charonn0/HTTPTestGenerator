@@ -544,8 +544,8 @@ End
 		  
 		  Self.Title = "HTTP Request Generator - Viewing '" + CurrentRequest.Path.ToString + "'"
 		  ResponseMain1.Log(CurrentResponse, 0)
-		  
-		  Select Case CurrentResponse.StatusCode
+		  Dim code As Integer = CurrentResponse.StatusCode
+		  Select Case code
 		  Case 301, 302, 307, 308
 		    Dim redir As String = CurrentResponse.Header("Location")
 		    Dim u As HTTP.URI = redir
@@ -553,8 +553,9 @@ End
 		      u = CurrentRequest.Path
 		      u.Path = redir
 		    End If
-		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, "HTTP Redirect") = 6 Then
-		      If CurrentRequest.MethodName <> "GET" And (CurrentResponse.StatusCode = 301 Or CurrentResponse.StatusCode = 302) Then
+		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, _
+		      "HTTP redirect (" + Str(code, "000") + " " + HTTP.CodeToMessage(code) + ")") = 6 Then
+		      If CurrentRequest.MethodName <> "GET" And (code = 301 Or code = 302) Then
 		        Dim msg As String = "Would you like to convert the request method from '" + CurrentRequest.MethodName + "' to 'GET'?"
 		        If MsgBox(msg, 4 + 32, "Client behavior compatibility option") = 6 Then RequestMain1.RequestMethod.ListIndex = 0
 		      End If
