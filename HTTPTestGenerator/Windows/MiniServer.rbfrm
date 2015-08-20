@@ -352,8 +352,10 @@ End
 		      If ResponseDocument.HasHeader("Date") And ClientRequest.HasHeader("If-Modified-Since") Then
 		        Dim pagedate As Date = HTTP.DateString(ResponseDocument.Header("Date"))
 		        Dim requestdate As Date = HTTP.DateString(ClientRequest.Header("If-Modified-Since"))
-		        If pagedate.TotalSeconds > requestdate.TotalSeconds Then ResponseDocument = HTTP.ErrorPage(304)
-		        Return True
+		        If pagedate.TotalSeconds > requestdate.TotalSeconds Then 
+		          ResponseDocument = HTTP.ErrorPage(304)
+		          Return True
+		        End If
 		      End If
 		    End If
 		  End If
