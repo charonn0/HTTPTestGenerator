@@ -23,7 +23,7 @@ Inherits HTTP.Message
 		  If d > 0 Then Me.ProtocolVersion = d
 		  Me.StatusCode = Val(NthField(line, " ", 2))
 		  If Not Me.IsCompressed Then
-		    If Me.IsChunked Then Me.MessageBody = HTTP.DecodeChunkedData(Me.MessageBody)
+		    'If Me.IsChunked Then Me.MessageBody = HTTP.DecodeChunkedData(Me.MessageBody)
 		    If Me.ContentType.CharSet <> Nil Then MessageBody = DefineEncoding(MessageBody, Me.ContentType.CharSet)
 		  End If
 		End Sub
