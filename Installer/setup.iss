@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "HTTP Request Generator"
-#define MyAppVersion "0.08"
+#define MyAppVersion "0.09"
 #define MyAppPublisher "Andrew Lambert"
 #define MyAppURL "http://www.boredomsoft.org/http-request-generator.bs"
 #define MyAppExeName "httpreq.exe"
@@ -37,6 +37,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 [Files]
 Source: "..\Builds - HTTP Request Generator.rbvcp\Windows\httpreq\httpreq.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Builds - HTTP Request Generator.rbvcp\Windows\httpreq\httpreq Libs\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
