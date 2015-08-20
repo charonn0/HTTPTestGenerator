@@ -381,13 +381,17 @@ End
 		    Select Case True
 		    Case item = Nil
 		      ResponseDocument = HTTP.ErrorPage(404) ' Not Found
+		      HTTPDebugHandler(Sender, "The requested item was not found.", -1)
 		      
 		    Case item.Directory
 		      If Not Me.DirectoryBrowsing Then
 		        ResponseDocument = HTTP.ErrorPage(403) ' Forbidden
+		        HTTPDebugHandler(Sender, "The request is unauthorized.", -1)
+		        
 		      Else
 		        ResponseDocument = New HTTP.DirectoryIndex(item, ClientRequest.Path.ToString)
 		        ResponseDocument.StatusCode = 200
+		        HTTPDebugHandler(Sender, "Generating directory index for '" + item.AbsolutePath + "'", 1)
 		        HTTP.DirectoryIndex(ResponseDocument).Populate
 		      End If
 		      
@@ -399,6 +403,7 @@ End
 		        location = "https://" + Sender.LocalAddress + ":" + Format(Sender.Port, "######") + "/" + Item.Name
 		      End If
 		      ResponseDocument = HTTP.ErrorPage(302, Location) ' Found
+		      HTTPDebugHandler(Sender, "Redirecting to '" + item.Name + "'", 1)
 		      
 		    Else
 		      Dim bs As BinaryStream = BinaryStream.Open(item)
@@ -440,8 +445,8 @@ End
 	#tag Method, Flags = &h21
 		Private Sub HTTPDebugHandler(Sender As HTTP.ClientHandler, Message As String, Level As Integer)
 		  #pragma Unused Sender
-		  'msgs.Append(Level:Message.Trim + HTTP.CRLF)
-		  'LogTimer.Mode = Timer.ModeSingle
+		  msgs.Append(Level:Message.Trim + HTTP.CRLF)
+		  LogTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndMethod
 
@@ -453,6 +458,66 @@ End
 		  Next
 		  ReDim Socks(-1)
 		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Log(Message As Variant, Level As Integer)
+		  If HTTPLog.Text.Len > 50 * 1024 Then
+		    HTTPLog.Clear
+		    Self.Log("Log truncated. " + Str(mCount), -1)
+		    mCount = 0
+		  End If
+		  If Level <= LogLevel Then
+		    Select Case VarType(Message)
+		    Case Variant.TypeString
+		      Dim sr As New StyleRun
+		      sr.Text = Message
+		      Select Case Level
+		      Case 1 ' Socketry
+		        sr.TextColor = &c00408000
+		      Case 2 ' debug
+		        sr.TextColor = &c80808000
+		      Case -1 ' error
+		        If InStr(Message.StringValue, "error:") > 0 Then ' Error: details
+		          Dim l, r As String
+		          r = NthField(Message.StringValue, ": ", 2)
+		          l = NthField(Message.StringValue, ": ", 1)
+		          sr.TextColor = &c80000000
+		          sr.Bold = True
+		          sr.Text = l
+		          HTTPLog.PrintOther(sr)
+		          sr.Bold = False
+		          sr.Text = ": " + r '+ CRLF
+		        ElseIf InStr(Message.StringValue, "alert:") > 0 Then ' Alert: Info
+		          Dim l, r As String
+		          r = NthField(Message.StringValue, ": ", 2)
+		          l = NthField(Message.StringValue, ": ", 1)
+		          sr.TextColor = &cFF800000
+		          sr.Bold = True
+		          sr.Text = l
+		          HTTPLog.PrintOther(sr)
+		          sr.Bold = False
+		          sr.Text = ": " + r '+ CRLF
+		        Else
+		          sr.TextColor = &cFF000000
+		        End If
+		      End Select
+		      HTTPLog.PrintOther(sr)
+		      sr.Bold = Not sr.Bold
+		      sr.Text = CRLF
+		      HTTPLog.PrintOther(sr)
+		    Else
+		      If Message IsA HTTP.Request Then
+		        mCount = mCount + 1
+		        HTTPLog.PrintRequest(Message)
+		      ElseIf Message IsA HTTP.Response Then
+		        mCount = mCount + 1
+		        HTTPLog.PrintResponse(Message)
+		      End If
+		    End Select
+		    HTTPLog.ScrollToEnd()
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -519,6 +584,10 @@ End
 
 	#tag Property, Flags = &h0
 		LogLevel As Integer = 0
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mCount As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -746,24 +815,18 @@ End
 		    Dim p As Variant = msgs(0)
 		    msgs.Remove(0)
 		    Select Case p
-		    Case IsA HTTP.Request
-		      HTTPLog.PrintRequest(p)
-		    Case IsA HTTP.Response
-		      HTTPLog.PrintResponse(p)
+		    Case IsA HTTP.Request, IsA HTTP.Response
+		      Self.Log(p, 0)
 		    Case IsA Pair
 		      Dim pp As Pair = p
 		      If pp.Left <= LogLevel Then
-		        Dim sr As New StyleRun
-		        sr.Font = App.FixedWidthFont
-		        sr.Text = pp.Right
-		        sr.TextColor = &c00000000
-		        HTTPLog.PrintOther(sr)
+		        Self.Log(pp.Right, pp.Left)
 		      End If
 		    Else
 		      Break
 		    End Select
 		  Wend
-		  HTTPLog.ScrollToEnd()
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -786,7 +849,6 @@ End
 		    HTTPLog.PrintOther(sr)
 		    Socket.Listen
 		    Me.Mode = Timer.ModeOff
-		    HTTPLog.ScrollToEnd()
 		  End If
 		End Sub
 	#tag EndEvent
