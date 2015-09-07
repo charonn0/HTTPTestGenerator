@@ -35,7 +35,7 @@ Begin ContainerControl TextView Implements Viewer
       DataSource      =   ""
       Enabled         =   True
       Format          =   ""
-      Height          =   457
+      Height          =   430
       HelpTag         =   ""
       HideSelection   =   True
       Index           =   -2147483648
@@ -62,11 +62,76 @@ Begin ContainerControl TextView Implements Viewer
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
-      Top             =   0
+      Top             =   27
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   614
+   End
+   Begin PopupMenu EncodingList
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      InitialValue    =   ""
+      Italic          =   ""
+      Left            =   90
+      ListIndex       =   0
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   1
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   3
+      Underline       =   ""
+      Visible         =   True
+      Width           =   176
+   End
+   Begin Label Label1
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   7
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Multiline       =   ""
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   2
+      TabPanelIndex   =   0
+      Text            =   "Encoding:"
+      TextAlign       =   2
+      TextColor       =   &h000000
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   4
+      Transparent     =   False
+      Underline       =   ""
+      Visible         =   True
+      Width           =   71
    End
 End
 #tag EndWindow
@@ -75,10 +140,53 @@ End
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType)
 		  PlainText.Text = Message
-		  Self.Title = "Message body - " + Type.ToString
+		  mRaw = Message
+		  mType = Type
+		  Self.Window.Title = "Message body - " + Type.ToString
 		End Sub
 	#tag EndMethod
 
 
+	#tag Property, Flags = &h21
+		Private mRaw As MemoryBlock
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mType As HTTP.ContentType
+	#tag EndProperty
+
+
 #tag EndWindowCode
 
+#tag Events EncodingList
+	#tag Event
+		Sub Open()
+		  Dim en() As String
+		  Dim ec() As TextEncoding
+		  For i As Integer = 0 To Encodings.Count - 1
+		    Dim t As TextEncoding = Encodings.Item(i)
+		    en.Append(t.internetName)
+		    ec.Append(t)
+		  Next
+		  en.SortWith(ec)
+		  For i As Integer = 0 To UBound(en)
+		    Me.AddRow(en(i))
+		    Me.RowTag(Me.ListCount - 1) = ec(i)
+		  Next
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub Change()
+		  Dim tx As TextEncoding = Me.RowTag(Me.ListIndex)
+		  Dim data As String = DefineEncoding(mRaw, tx)
+		  PlainText.Text = ConvertEncoding(data, Encodings.UTF8)
+		  Dim t As HTTP.ContentType = mType.ToString
+		  t.CharSet = tx
+		  Self.Window.Title = "Message body - " + t.ToString
+		  
+		Exception Err As OutOfBoundsException
+		  Self.Window.Title = "Message body - " + mType.ToString
+		  PlainText.Text = mRaw
+		End Sub
+	#tag EndEvent
+#tag EndEvents
