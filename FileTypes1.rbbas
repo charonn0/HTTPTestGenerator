@@ -35,4 +35,22 @@
 		Name=HTTP Message File
 	#tag EndFileType
 
+	#tag FileType
+		CodeName=MultipartForm
+		Extension=.mime
+		Flags=&h0
+		MacCreator=
+		MacType=
+		Name=Multipart-Form
+	#tag EndFileType
+
+	#tag FileType
+		CodeName=URLEncodedForm
+		Extension=.urlform
+		Flags=&h0
+		MacCreator=
+		MacType=
+		Name=URLEncoded-Form
+	#tag EndFileType
+
 #tag EndFileTypeSet

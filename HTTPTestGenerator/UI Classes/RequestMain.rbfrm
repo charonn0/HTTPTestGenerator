@@ -836,6 +836,8 @@ End
 		  mnu.Append(New MenuItem("Set HTML form..."))
 		  mnu.Append(New MenuItem("Set file..."))
 		  mnu.Append(New MenuItem("Edit raw..."))
+		  mnu.Append(New MenuItem("Save..."))
+		  mnu.Append(New MenuItem("Load..."))
 		  mnu.Append(New MenuItem("Clear all"))
 		  Dim res As MenuItem = mnu.PopUp
 		  If res <> Nil Then
@@ -888,7 +890,7 @@ End
 		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Type":type
 		        RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
 		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
-		        
+		        NextRequest.ContentType = Type
 		      End If
 		      
 		    Case "Set file..."
@@ -921,6 +923,31 @@ End
 		      NextRequest.MessageBody = raw
 		      RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
 		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
+		      
+		    Case "Save..."
+		      If Formtype Then
+		        Dim f As FolderItem = GetSaveFolderItem(FileTypes1.MultipartForm, NextRequest.MethodName)
+		        If f <> Nil Then
+		          Dim bs As BinaryStream = BinaryStream.Create(f, True)
+		          bs.Write("Content-Type: " + NextRequest.ContentType.ToString + HTTP.CRLF + HTTP.CRLF)
+		          bs.Write(NextRequest.MessageBody)
+		          bs.Close
+		        End If
+		        
+		        
+		      Else'If NextRequest.ContentType.Accepts("application/x-www-form-urlencoded") Then
+		        Dim f As FolderItem = GetSaveFolderItem(FileTypes1.URLEncodedForm, NextRequest.MethodName)
+		        If f <> Nil Then
+		          Dim bs As BinaryStream = BinaryStream.Create(f, True)
+		          bs.Write(NextRequest.MessageBody)
+		          bs.Close
+		        End If
+		        
+		        'Else
+		        'Call MsgBox("Unknown form type: " + NextRequest.ContentType.ToString, 16, "Not an HTTP form")
+		      End If
+		      
+		    Case "Load..."
 		      
 		    Case "Clear all"
 		      NextRequest.MessageBody = ""

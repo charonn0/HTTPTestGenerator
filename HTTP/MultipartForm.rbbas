@@ -94,7 +94,7 @@ Implements FormInterface
 	#tag Method, Flags = &h0
 		Function ToString() As String
 		  If Boundary.Trim = "" Then
-		    Boundary = "0x" + Left(EncodeHex(MD5(Format(Microseconds, "############.##########"))) + "00000000000000000000000000000000", 32) + "bOuNdArY"
+		    Boundary = "--" + Right(EncodeHex(MD5(Str(Microseconds))), 24) + "-bOuNdArY"
 		  End If
 		  
 		  Dim data As New MemoryBlock(0)

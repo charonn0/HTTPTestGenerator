@@ -26,11 +26,7 @@ Implements FormInterface
 
 	#tag Method, Flags = &h0
 		Sub Element(Name As String, Assigns Value As Variant)
-		  If Value = "" Then
-		    Form.Remove(Name)
-		  Else
-		    Form.Value(Name) = Value
-		  End If
+		  Form.Value(Name) = Value
 		End Sub
 	#tag EndMethod
 
@@ -45,6 +41,12 @@ Implements FormInterface
 		  Dim s() As Variant = Form.Keys
 		  Return s(Index).StringValue
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub RemoveElement(Name As String)
+		  If Form.HasKey(Name) Then Form.Remove(Name)
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
