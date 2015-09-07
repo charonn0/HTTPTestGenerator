@@ -13,10 +13,11 @@ Class ContentType
 		Function Accepts(OtherType As ContentType) As Boolean
 		  ' Returns True if the OtherType is compatible with the current type. Use the Acceptance method to
 		  ' determine which ContentType is preferred if more than one is accepted.
-		  ' Only the SuperType and SubType are compared; optional parts like CharSet are not considered.
+		  ' Only the SuperType, SubType, and (if present in both) the Suffix are compared; optional parts like CharSet are not considered.
 		  
 		  If OtherType.SuperType <> Me.SuperType And OtherType.SuperType <> "*" And Me.SuperType <> "*" Then Return False
 		  If OtherType.SubType <> Me.SubType And OtherType.SubType <> "*" And Me.SubType <> "*" Then Return False
+		  If OtherType.Suffix <> Me.Suffix And Me.Suffix <> "" And OtherType.Suffix <> "" Then Return False
 		  Return True
 		End Function
 	#tag EndMethod
@@ -84,10 +85,10 @@ Class ContentType
 		    
 		  End If
 		  If InStr(SubType, "+") > 0 Then
-		    ExtendedType = NthField(SubType, "+", 1)
-		    SubType = NthField(SubType, "+", 2)
+		    Suffix = NthField(SubType, "+", 2)
+		    SubType = NthField(SubType, "+", 1)
 		  Else
-		    ExtendedType = ""
+		    Suffix = ""
 		  End If
 		End Sub
 	#tag EndMethod
@@ -152,11 +153,9 @@ Class ContentType
 		  'serializes the object
 		  
 		  Dim data As String = SuperType + "/"
-		  If ExtendedType.Trim <> "" Then
-		    data = data + ExtendedType + "+" + SubType
-		  Else
-		    data = data + SubType
-		  End If
+		  data = data + SubType
+		  If Suffix.Trim <> "" Then data = data + "+" + Suffix
+		  
 		  If Me.Weight < 1 Then
 		    data = data + "; q=" + Format(Me.Weight, ".##")
 		  End If
@@ -188,10 +187,6 @@ Class ContentType
 		CharSet As TextEncoding
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		ExtendedType As String
-	#tag EndProperty
-
 	#tag ComputedProperty, Flags = &h0
 		#tag Getter
 			Get
@@ -216,6 +211,10 @@ Class ContentType
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
+		Suffix As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h0
 		SuperType As String
 	#tag EndProperty
 
@@ -233,6 +232,11 @@ Class ContentType
 			Group="Behavior"
 			Type="String"
 			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ExtendedType"
+			Group="Behavior"
+			Type="String"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
