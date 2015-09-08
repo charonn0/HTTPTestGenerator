@@ -47,7 +47,9 @@ Inherits HTTP.Message
 		  If Not Me.HasHeader("Date") Then Me.Header("Date") = HTTP.DateString(New Date)
 		  Dim msg As String = CodeToMessage(Me.StatusCode)
 		  Dim p As String = "HTTP/"
-		  If Me.StatusCode = 418 Then p = "HTCPCP/" ' This breaks browsers
+		  #If EnableHTCPCP Then
+		    If Me.StatusCode = 418 Then p = "HTCPCP/" ' This breaks browsers
+		  #endif
 		  If mHeaders.Count > 0 Then RaiseEvent HTTPDebug("WARN: This response contains no headers.", -1)
 		  Return p + Format(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF + Super.ToString(HeadersOnly)'
 		  
@@ -72,6 +74,10 @@ Inherits HTTP.Message
 		#tag EndGetter
 		StatusMessage As String
 	#tag EndComputedProperty
+
+
+	#tag Constant, Name = EnableHTCPCP, Type = Boolean, Dynamic = False, Default = \"False", Scope = Public
+	#tag EndConstant
 
 
 	#tag ViewBehavior
