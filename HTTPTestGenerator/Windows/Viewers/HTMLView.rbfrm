@@ -202,7 +202,11 @@ End
 		  Call Definition.LoadFromXml(HTMLSyntaxDef)
 		  SyntaxHilightContainer1.SetText(Message, Definition)
 		  RawData = Message
-		  MIMEType = Type
+		  mType = Type
+		  If mType.CharSet <> Nil Then
+		    Dim i As Integer = mEncodings.IndexOf(mType.CharSet.internetName)
+		    If i > -1 Then EncodingList.ListIndex = i
+		  End If
 		End Sub
 	#tag EndMethod
 
@@ -216,7 +220,11 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected MIMEType As ContentType
+		Protected mEncodings() As String
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mType As ContentType
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -260,16 +268,24 @@ End
 #tag Events EncodingList
 	#tag Event
 		Sub Open()
-		  Dim en() As String
 		  Dim ec() As TextEncoding
+		  Dim namecount As New Dictionary
 		  For i As Integer = 0 To Encodings.Count - 1
 		    Dim t As TextEncoding = Encodings.Item(i)
-		    en.Append(t.internetName)
+		    Dim c As Integer = namecount.Lookup(t.internetName, 0)
+		    namecount.Value(t.internetName) = c + 1
+		    Dim nm As String
+		    If c > 0 Then
+		      nm = t.internetName + " (Alternate)"
+		    Else
+		      nm = t.internetName
+		    End If
+		    mEncodings.Append(nm)
 		    ec.Append(t)
 		  Next
-		  en.SortWith(ec)
-		  For i As Integer = 0 To UBound(en)
-		    Me.AddRow(en(i))
+		  mEncodings.SortWith(ec)
+		  For i As Integer = 0 To UBound(mEncodings)
+		    Me.AddRow(mEncodings(i))
 		    Me.RowTag(Me.ListCount - 1) = ec(i)
 		  Next
 		End Sub
@@ -279,13 +295,13 @@ End
 		  Dim tx As TextEncoding = Me.RowTag(Me.ListIndex)
 		  Dim data As String = DefineEncoding(RawData, tx)
 		  SyntaxHilightContainer1.SetText(ConvertEncoding(data, Encodings.UTF8), Definition)
-		  Dim t As HTTP.ContentType = MIMEType.ToString
+		  Dim t As HTTP.ContentType = mType.ToString
 		  t.CharSet = tx
 		  Self.Window.Title = "Message body - " + t.ToString
 		  
 		Exception Err As OutOfBoundsException
-		  Self.Window.Title = "Message body - " + MIMEType.ToString
-		  SyntaxHilightContainer1.SetText(RawData, Definition)
+		  Self.Window.Title = "Message body - " + mType.ToString
+		  SyntaxHilightContainer1.SetText(data, Definition)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

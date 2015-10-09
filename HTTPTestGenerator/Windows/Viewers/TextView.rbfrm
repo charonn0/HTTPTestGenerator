@@ -143,9 +143,17 @@ End
 		  mRaw = Message
 		  mType = Type
 		  Self.Window.Title = "Message body - " + Type.ToString
+		  If Type.CharSet <> Nil Then
+		    Dim i As Integer = mEncodings.IndexOf(Type.CharSet.internetName)
+		    If i > -1 Then EncodingList.ListIndex = i
+		  End If
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h1
+		Protected mEncodings() As String
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mRaw As MemoryBlock
@@ -161,16 +169,24 @@ End
 #tag Events EncodingList
 	#tag Event
 		Sub Open()
-		  Dim en() As String
 		  Dim ec() As TextEncoding
+		  Dim namecount As New Dictionary
 		  For i As Integer = 0 To Encodings.Count - 1
 		    Dim t As TextEncoding = Encodings.Item(i)
-		    en.Append(t.internetName)
+		    Dim c As Integer = namecount.Lookup(t.internetName, 0)
+		    namecount.Value(t.internetName) = c + 1
+		    Dim nm As String
+		    If c > 0 Then
+		      nm = t.internetName + " (Alternate)"
+		    Else
+		      nm = t.internetName
+		    End If
+		    mEncodings.Append(nm)
 		    ec.Append(t)
 		  Next
-		  en.SortWith(ec)
-		  For i As Integer = 0 To UBound(en)
-		    Me.AddRow(en(i))
+		  mEncodings.SortWith(ec)
+		  For i As Integer = 0 To UBound(mEncodings)
+		    Me.AddRow(mEncodings(i))
 		    Me.RowTag(Me.ListCount - 1) = ec(i)
 		  Next
 		End Sub
