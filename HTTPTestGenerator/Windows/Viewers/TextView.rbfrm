@@ -68,7 +68,8 @@ Begin ContainerControl TextView Implements Viewer
       Visible         =   True
       Width           =   614
    End
-   Begin PopupMenu EncodingList
+   Begin ComboBox EncodingList
+      AutoComplete    =   False
       AutoDeactivate  =   True
       Bold            =   ""
       DataField       =   ""
@@ -96,6 +97,7 @@ Begin ContainerControl TextView Implements Viewer
       TextUnit        =   0
       Top             =   3
       Underline       =   ""
+      UseFocusRing    =   True
       Visible         =   True
       Width           =   176
    End
@@ -133,12 +135,46 @@ Begin ContainerControl TextView Implements Viewer
       Visible         =   True
       Width           =   71
    End
+   Begin Label Incompatible
+      AutoDeactivate  =   True
+      Bold            =   True
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   272
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   True
+      Multiline       =   ""
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   3
+      TabPanelIndex   =   0
+      Text            =   "Incompatible encoding"
+      TextAlign       =   0
+      TextColor       =   &h000000
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   4
+      Transparent     =   True
+      Underline       =   ""
+      Visible         =   False
+      Width           =   342
+   End
 End
 #tag EndWindow
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType)
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
 		  PlainText.Text = Message
 		  mRaw = Message
 		  mType = Type
@@ -194,7 +230,13 @@ End
 	#tag Event
 		Sub Change()
 		  Dim tx As TextEncoding = Me.RowTag(Me.ListIndex)
-		  Dim data As String = DefineEncoding(mRaw, tx)
+		  Dim data As String
+		  If tx.IsValidData(mRaw) Then
+		    data = DefineEncoding(mRaw, tx)
+		    Incompatible.Visible = False
+		  Else
+		    Incompatible.Visible = True
+		  End If
 		  PlainText.Text = ConvertEncoding(data, Encodings.UTF8)
 		  Dim t As HTTP.ContentType = mType.ToString
 		  t.CharSet = tx
