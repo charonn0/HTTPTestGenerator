@@ -77,7 +77,7 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType)
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
 		  // Part of the Viewer interface.
 		  Me.Form = Nil
 		  HTTPForm.DeleteAllRows

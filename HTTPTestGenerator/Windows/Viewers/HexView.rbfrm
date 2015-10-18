@@ -113,7 +113,7 @@ End
 
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType)
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
 		  // Part of the Viewer interface.
 		  Self.Title = "Message body - " + Type.ToString
 		  Dim bs As New BinaryStream(Message)

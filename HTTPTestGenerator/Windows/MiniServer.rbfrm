@@ -352,7 +352,7 @@ End
 		      If ResponseDocument.HasHeader("Date") And ClientRequest.HasHeader("If-Modified-Since") Then
 		        Dim pagedate As Date = HTTP.DateString(ResponseDocument.Header("Date"))
 		        Dim requestdate As Date = HTTP.DateString(ClientRequest.Header("If-Modified-Since"))
-		        If pagedate.TotalSeconds > requestdate.TotalSeconds Then 
+		        If pagedate.TotalSeconds > requestdate.TotalSeconds Then
 		          ResponseDocument = HTTP.ErrorPage(304)
 		          Return True
 		        End If
@@ -664,8 +664,16 @@ End
 		      HTTPLog.PrintOther(sr)
 		      Socket.Listen
 		      ListenTimer.Mode = Timer.ModeMultiple
+		      nic.Enabled = False
+		      port.Enabled = False
+		      SecurityLevel.Enabled = False
+		      AuthRequired.Enabled = False
 		    End If
 		  Else
+		    nic.Enabled = True
+		    port.Enabled = True
+		    SecurityLevel.Enabled = True
+		    AuthRequired.Enabled = True
 		    Me.Caption = "Listen"
 		    Socket.StopListening
 		    KillAllClients()

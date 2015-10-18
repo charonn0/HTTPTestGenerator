@@ -42,7 +42,6 @@ Begin Window RawViewer
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   0
       Value           =   0
       Visible         =   True
@@ -75,15 +74,7 @@ End
 	#tag MenuHandler
 		Function BinMenu() As Boolean Handles BinMenu.Action
 			Dim type As ContentType = "application/octet-stream"
-			Dim suffix As String
-			Select Case True
-			Case AutoDecompress
-			Self.Title = "Message body - " + Type.ToString + " (decompressed)"
-			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + Type.ToString + " (compressed)"
-			Else
-			Self.Title = "Message body - " + Type.ToString
-			End Select
+			SetTitle(type, CurrentMessage.MessageBody.LenB)
 			SetViewer(type)
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
@@ -93,24 +84,17 @@ End
 
 	#tag MenuHandler
 		Function FormMenu() As Boolean Handles FormMenu.Action
+			Dim type As HTTP.ContentType
 			If CurrentMessage.ContentType.Accepts("multipart/form-data") Then
-			SetViewer("multipart/form-data")
+			type = "multipart/form-data"
 			ElseIf CurrentMessage.ContentType.Accepts("application/x-www-form-urlencoded") Then
-			SetViewer("application/x-www-form-urlencoded")
+			type = "application/x-www-form-urlencoded"
 			Else
 			MsgBox("Invalid form type.")
 			Return True
 			End If
-			
-			Select Case True
-			Case AutoDecompress
-			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString + " (decompressed)"
-			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString + " (compressed)"
-			Else
-			Self.Title = "Message body - " + CurrentMessage.ContentType.ToString
-			End Select
-			
+			SetViewer(type)
+			SetTitle(type, CurrentMessage.MessageBody.LenB)
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
 			
@@ -120,14 +104,7 @@ End
 	#tag MenuHandler
 		Function HTMLMenu() As Boolean Handles HTMLMenu.Action
 			Dim type As ContentType = "text/html"
-			Select Case True
-			Case AutoDecompress
-			Self.Title = "Message body - " + Type.ToString + " (decompressed)"
-			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + Type.ToString + " (compressed)"
-			Else
-			Self.Title = "Message body - " + Type.ToString
-			End Select
+			SetTitle(type, CurrentMessage.MessageBody.LenB)
 			SetViewer(type)
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
@@ -138,14 +115,7 @@ End
 	#tag MenuHandler
 		Function PlainTextMenu() As Boolean Handles PlainTextMenu.Action
 			Dim type As ContentType = "text/plain"
-			Select Case True
-			Case AutoDecompress
-			Self.Title = "Message body - " + Type.ToString + " (decompressed)"
-			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + Type.ToString + " (compressed)"
-			Else
-			Self.Title = "Message body - " + Type.ToString
-			End Select
+			SetTitle(type, CurrentMessage.MessageBody.LenB)
 			SetViewer(type)
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
@@ -180,14 +150,7 @@ End
 	#tag MenuHandler
 		Function ViewPictureMenu() As Boolean Handles ViewPictureMenu.Action
 			Dim type As ContentType = "image/*"
-			Select Case True
-			Case AutoDecompress
-			Self.Title = "Message body - " + Type.ToString + " (decompressed)"
-			Case Not AutoDecompress And CurrentMessage.IsCompressed
-			Self.Title = "Message body - " + Type.ToString + " (compressed)"
-			Else
-			Self.Title = "Message body - " + Type.ToString
-			End Select
+			SetTitle(type, CurrentMessage.MessageBody.LenB)
 			SetViewer(type)
 			SetMessage(CurrentMessage.MessageBody)
 			Return True
@@ -199,15 +162,30 @@ End
 	#tag Method, Flags = &h1
 		Protected Sub SetMessage(Message As MemoryBlock)
 		  Dim data As MemoryBlock = Message
-		  If AutoDecompress Then 
+		  contentlen = data.Size
+		  If AutoDecompress Then
 		    If CurrentMessage.Header("Content-Encoding") = "gzip" Then
 		      data = HTTP.GZipDecompress(data)
 		    ElseIf CurrentMessage.Header("Content-Encoding") = "deflate" Then
 		      data = HTTP.Inflate(data)
 		    End If
 		  End If
+		  
 		  If CurrentMessage.IsChunked Then data = HTTP.DecodeChunkedData(data)
-		  CurrentView.ViewRaw(data, CurrentMessage.ContentType)
+		  CurrentView.ViewRaw(data, CurrentMessage.ContentType, contentlen)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub SetTitle(Type As HTTP.ContentType, Length As Integer)
+		  Select Case True
+		  Case AutoDecompress
+		    Self.Title = "Message body - " + Type.ToString + " (decompressed, " + FormatBytes(Length) + ")"
+		  Case Not AutoDecompress And CurrentMessage.IsCompressed
+		    Self.Title = "Message body - " + Type.ToString + " (compressed, " + FormatBytes(Length) + ")"
+		  Else
+		    Self.Title = "Message body - " + Type.ToString + " (" + FormatBytes(Length) + ")"
+		  End Select
 		End Sub
 	#tag EndMethod
 
@@ -275,6 +253,10 @@ End
 
 	#tag Property, Flags = &h21
 		Private AutoDecompress As Boolean
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private ContentLen As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

@@ -23,55 +23,6 @@ Begin ContainerControl HTMLView Implements Viewer
    UseFocusRing    =   ""
    Visible         =   True
    Width           =   614
-   Begin Listbox LinkList
-      AutoDeactivate  =   True
-      AutoHideScrollbars=   True
-      Bold            =   ""
-      Border          =   True
-      ColumnCount     =   2
-      ColumnsResizable=   True
-      ColumnWidths    =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      DefaultRowHeight=   -1
-      Enabled         =   True
-      EnableDrag      =   ""
-      EnableDragReorder=   ""
-      GridLinesHorizontal=   0
-      GridLinesVertical=   0
-      HasHeading      =   True
-      HeadingIndex    =   -1
-      Height          =   159
-      HelpTag         =   ""
-      Hierarchical    =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      InitialValue    =   "Link Text	Link Value"
-      Italic          =   ""
-      Left            =   626
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   False
-      RequiresSelection=   ""
-      Scope           =   0
-      ScrollbarHorizontal=   ""
-      ScrollBarVertical=   True
-      SelectionType   =   0
-      TabIndex        =   0
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   0
-      Top             =   67
-      Underline       =   ""
-      UseFocusRing    =   True
-      Visible         =   False
-      Width           =   614
-      _ScrollWidth    =   -1
-   End
    Begin SyntaxHilightContainer SyntaxHilightContainer1
       AcceptFocus     =   ""
       AcceptTabs      =   True
@@ -99,7 +50,8 @@ Begin ContainerControl HTMLView Implements Viewer
       Visible         =   True
       Width           =   614
    End
-   Begin PopupMenu EncodingList
+   Begin ComboBox EncodingList
+      AutoComplete    =   False
       AutoDeactivate  =   True
       Bold            =   ""
       DataField       =   ""
@@ -127,6 +79,7 @@ Begin ContainerControl HTMLView Implements Viewer
       TextUnit        =   0
       Top             =   3
       Underline       =   ""
+      UseFocusRing    =   True
       Visible         =   True
       Width           =   176
    End
@@ -164,6 +117,40 @@ Begin ContainerControl HTMLView Implements Viewer
       Visible         =   True
       Width           =   71
    End
+   Begin Label Incompatible
+      AutoDeactivate  =   True
+      Bold            =   True
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   ""
+      Left            =   272
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   True
+      Multiline       =   ""
+      Scope           =   0
+      Selectable      =   False
+      TabIndex        =   4
+      TabPanelIndex   =   0
+      Text            =   "Incompatible encoding"
+      TextAlign       =   0
+      TextColor       =   &h000000
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   3
+      Transparent     =   True
+      Underline       =   ""
+      Visible         =   False
+      Width           =   342
+   End
 End
 #tag EndWindow
 
@@ -186,8 +173,25 @@ End
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Sub SetTitle(encoding As TextEncoding)
+		  Dim t As ContentType = mType.ToString
+		  t.CharSet = encoding
+		  Dim ttl As String
+		  Select Case True
+		  Case mContentLength < RawData.Size
+		    ttl = "Message body - " + t.ToString + " (decompressed, " + FormatBytes(RawData.Size) + ")"
+		  Case mContentLength > RawData.Size
+		    ttl = "Message body - " + t.ToString + " (compressed, " + FormatBytes(RawData.Size) + ")"
+		  Else
+		    ttl = "Message body - " + t.ToString + " (" + FormatBytes(RawData.Size) + ")"
+		  End Select
+		  Self.Window.Title = ttl
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType)
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
 		  'LinkList.DeleteAllRows
 		  'Dim p() As Pair = ExtractLinks(Message, "")
 		  'For i As Integer = 0 To UBound(p)
@@ -197,7 +201,7 @@ End
 		  'LinkList.RowTag(LinkList.LastIndex) = u
 		  'Next
 		  'BaseURL = Message.Path.Host
-		  Self.Title = "Message body - " + Type.ToString
+		  'Self.Title = "Message body - " + Type.ToString
 		  Definition = New HighlightDefinition
 		  Call Definition.LoadFromXml(HTMLSyntaxDef)
 		  SyntaxHilightContainer1.SetText(Message, Definition)
@@ -207,6 +211,7 @@ End
 		    Dim i As Integer = mEncodings.IndexOf(mType.CharSet.internetName)
 		    If i > -1 Then EncodingList.ListIndex = i
 		  End If
+		  mContentLength = ContentLen
 		End Sub
 	#tag EndMethod
 
@@ -217,6 +222,10 @@ End
 
 	#tag Property, Flags = &h1
 		Protected Definition As HighlightDefinition
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mContentLength As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -238,33 +247,6 @@ End
 
 #tag EndWindowCode
 
-#tag Events LinkList
-	#tag Event
-		Function CellClick(row as Integer, column as Integer, x as Integer, y as Integer) As Boolean
-		  #pragma Unused x
-		  #pragma Unused y
-		  If row < Me.ListCount And column = 1 Then
-		    Dim u As HTTP.URI = Me.Cell(row, column)
-		    If u.Host = "" Then u.Host = BaseURL
-		    If u.Scheme = "" Then u.Scheme = "http"
-		    Generator.RequestMain1.Perform()
-		    Return True
-		  End If
-		  
-		End Function
-	#tag EndEvent
-	#tag Event
-		Function CellTextPaint(g As Graphics, row As Integer, column As Integer, x as Integer, y as Integer) As Boolean
-		  #pragma Unused x
-		  #pragma Unused y
-		  If row < Me.ListCount And column = 1 Then
-		    g.ForeColor = &c0000FF00
-		    g.Underline = True
-		  End If
-		  
-		End Function
-	#tag EndEvent
-#tag EndEvents
 #tag Events EncodingList
 	#tag Event
 		Sub Open()
@@ -293,11 +275,15 @@ End
 	#tag Event
 		Sub Change()
 		  Dim tx As TextEncoding = Me.RowTag(Me.ListIndex)
-		  Dim data As String = DefineEncoding(RawData, tx)
+		  Dim data As String
+		  If tx.IsValidData(RawData) Then
+		    data = DefineEncoding(RawData, tx)
+		    Incompatible.Visible = False
+		  Else
+		    Incompatible.Visible = True
+		  End If
 		  SyntaxHilightContainer1.SetText(ConvertEncoding(data, Encodings.UTF8), Definition)
-		  Dim t As HTTP.ContentType = mType.ToString
-		  t.CharSet = tx
-		  Self.Window.Title = "Message body - " + t.ToString
+		  SetTitle(tx)
 		  
 		Exception Err As OutOfBoundsException
 		  Self.Window.Title = "Message body - " + mType.ToString
