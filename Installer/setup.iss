@@ -29,24 +29,24 @@ Compression=lzma
 SolidCompression=yes
 
 [Languages]
-Name: "english"; MessagesFile: "compiler:Default.isl"
+Name: english; MessagesFile: compiler:Default.isl
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: "..\Builds - HTTP Request Generator.rbvcp\Windows\httpreq\httpreq.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Builds - HTTP Request Generator.rbvcp\Windows\httpreq\httpreq Libs\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: ..\Builds - HTTP Request Generator.rbvcp\Windows\httpreq\httpreq.exe; DestDir: {app}; Flags: ignoreversion
+Source: ..\Builds - HTTP Request Generator.rbvcp\Windows\httpreq\httpreq Libs\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: zlib1.dll; DestDir: {app}; Flags: ignoreversion
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: {group}\{#MyAppName}; Filename: {app}\{#MyAppExeName}
+Name: {commondesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}; Flags: nowait postinstall skipifsilent
 
 [InstallDelete]
 Name: {app}\bsgzip.dll; Type: files; Tasks: ; Languages: 
