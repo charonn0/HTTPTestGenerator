@@ -30,8 +30,13 @@ Implements FormInterface
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function FromString(FormData As String, Boundary As String) As MultipartForm
+		 Shared Function FromString(FormData As String, Boundary As String = "") As MultipartForm
 		  Dim form As New MultipartForm
+		  If Boundary = "" Then
+		    Boundary = NthField(FormData, EndOfLine.Windows, 1)
+		    If Left(Boundary, Len("Content-Type:")) <> "Content-Type:" Then Raise New UnsupportedFormatException
+		    Boundary = NthField(Boundary, "boundary=", 2).Trim
+		  End If
 		  Dim elements() As String = Split(FormData, "--" + Boundary)' + CRLF)
 		  form.Boundary = Boundary
 		  
