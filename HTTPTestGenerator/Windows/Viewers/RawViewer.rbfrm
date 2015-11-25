@@ -139,7 +139,11 @@ End
 			Dim f As FolderItem = GetSaveFolderItem("", nm)
 			If f <> Nil Then
 			Dim bs As BinaryStream = BinaryStream.Create(f, True)
+			If CurrentMessage.IsChunked Then
+			bs.Write(HTTP.DecodeChunkedData(CurrentMessage.MessageBody))
+			Else
 			bs.Write(CurrentMessage.MessageBody)
+			End If
 			bs.Close
 			End If
 			Return True
