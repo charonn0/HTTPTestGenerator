@@ -173,6 +173,15 @@ End
 #tag EndWindow
 
 #tag WindowCode
+	#tag Method, Flags = &h1
+		Protected Sub SetTitle(encoding As TextEncoding)
+		  Dim t As ContentType = mType.ToString
+		  t.CharSet = encoding
+		  RawViewer(Self.Window).SetTitle(t, mContentLength)
+		  
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
 		  PlainText.Text = Message
@@ -183,9 +192,14 @@ End
 		    Dim i As Integer = mEncodings.IndexOf(Type.CharSet.internetName)
 		    If i > -1 Then EncodingList.ListIndex = i
 		  End If
+		  mContentLength = ContentLen
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h1
+		Protected mContentLength As Integer
+	#tag EndProperty
 
 	#tag Property, Flags = &h1
 		Protected mEncodings() As String
@@ -237,14 +251,11 @@ End
 		  Else
 		    Incompatible.Visible = True
 		  End If
-		  PlainText.Text = ConvertEncoding(data, Encodings.UTF8)
-		  Dim t As HTTP.ContentType = mType.ToString
-		  t.CharSet = tx
-		  Self.Window.Title = "Message body - " + t.ToString
+		  PlainText.Text = data
+		  SetTitle(tx)
 		  
 		Exception Err As OutOfBoundsException
 		  Self.Window.Title = "Message body - " + mType.ToString
-		  PlainText.Text = mRaw
 		End Sub
 	#tag EndEvent
 #tag EndEvents

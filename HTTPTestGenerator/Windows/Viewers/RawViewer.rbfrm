@@ -177,11 +177,12 @@ End
 		  
 		  If CurrentMessage.IsChunked Then data = HTTP.DecodeChunkedData(data)
 		  CurrentView.ViewRaw(data, CurrentMessage.ContentType, contentlen)
+		  SetTitle(CurrentMessage.ContentType, ContentLen)
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Sub SetTitle(Type As HTTP.ContentType, Length As Integer)
+	#tag Method, Flags = &h0
+		Sub SetTitle(Type As HTTP.ContentType, Length As Integer)
 		  Select Case True
 		  Case AutoDecompress
 		    Self.Title = "Message body - " + Type.ToString + " (decompressed, " + FormatBytes(Length) + ")"
@@ -227,13 +228,6 @@ End
 		  If Message.IsCompressed Then
 		    AutoDecompress = zlib.IsAvailable And _
 		    (MsgBox("Would you like to decompress the message body before viewing?", 4 + 32, "Compression was applied to this message.") = 6)
-		    If AutoDecompress Then
-		      Self.Title = "Message body - " + Message.ContentType.ToString + " (decompressed)"
-		    Else
-		      Self.Title = "Message body - " + Message.ContentType.ToString + " (compressed)"
-		    End If
-		  Else
-		    Self.Title = "Message body - " + Message.ContentType.ToString
 		  End If
 		  CurrentMessage = Message
 		  

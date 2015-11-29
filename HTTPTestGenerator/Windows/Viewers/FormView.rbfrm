@@ -109,12 +109,17 @@ End
 		    HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
 		    HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
 		  Next
+		  mContentLength = ContentLen
 		End Sub
 	#tag EndMethod
 
 
 	#tag Property, Flags = &h1
 		Protected Form As HTTP.FormInterface
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mContentLength As Integer
 	#tag EndProperty
 
 

@@ -51,7 +51,6 @@ Begin ContainerControl PictureView Implements Viewer
       Width           =   614
    End
    Begin Timer Timer1
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   637
@@ -59,11 +58,8 @@ Begin ContainerControl PictureView Implements Viewer
       Mode            =   0
       Period          =   1
       Scope           =   0
-      TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   14
-      Visible         =   True
       Width           =   32
    End
 End
@@ -106,25 +102,37 @@ End
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
 		  // Part of the Viewer interface.
-		  MIMEType = Type
-		  Image = Picture.FromData(Message)
+		  mType = Type
+		  mRaw = Message
+		  mContentLength = ContentLen
 		  ImageView.Refresh(False)
-		  
-		  
 		End Sub
 	#tag EndMethod
 
 
-	#tag Property, Flags = &h1
-		Protected Image As Picture
-	#tag EndProperty
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  return Picture.FromData(mRaw)
+			End Get
+		#tag EndGetter
+		Image As Picture
+	#tag EndComputedProperty
 
 	#tag Property, Flags = &h1
-		Protected MIMEType As ContentType
+		Protected mContentLength As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mratio As Double
+		Private mRatio As Double
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mRaw As MemoryBlock
+	#tag EndProperty
+
+	#tag Property, Flags = &h1
+		Protected mType As ContentType
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -178,13 +186,9 @@ End
 #tag Events Timer1
 	#tag Event
 		Sub Action()
-		  Dim s As String = "Message body - " + MIMEType.ToString + " (" + Format(mratio * 100, "##0.0#") + "%)"
-		  If InStr(Self.Window.Title, " (compressed)") > 0 Then
-		    s = s + " (compressed)"
-		  ElseIf InStr(Self.Window.Title, " (decompressed)") > 0 Then
-		    s = s + " (decompressed)"
-		  End If
-		  Self.Window.Title = s
+		  Dim s As String = " (" + Format(mratio * 100, "##0.0#") + "%)"
+		  RawViewer(Self.Window).SetTitle(mType, mContentLength)
+		  Self.Window.Title = Self.Window.Title + s
 		  
 		End Sub
 	#tag EndEvent

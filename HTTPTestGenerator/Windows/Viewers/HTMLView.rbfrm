@@ -177,35 +177,17 @@ End
 		Protected Sub SetTitle(encoding As TextEncoding)
 		  Dim t As ContentType = mType.ToString
 		  t.CharSet = encoding
-		  Dim ttl As String
-		  Select Case True
-		  Case mContentLength < RawData.Size
-		    ttl = "Message body - " + t.ToString + " (decompressed, " + FormatBytes(RawData.Size) + ")"
-		  Case mContentLength > RawData.Size
-		    ttl = "Message body - " + t.ToString + " (compressed, " + FormatBytes(RawData.Size) + ")"
-		  Else
-		    ttl = "Message body - " + t.ToString + " (" + FormatBytes(RawData.Size) + ")"
-		  End Select
-		  Self.Window.Title = ttl
+		  RawViewer(Self.Window).SetTitle(t, mContentLength)
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
-		  'LinkList.DeleteAllRows
-		  'Dim p() As Pair = ExtractLinks(Message, "")
-		  'For i As Integer = 0 To UBound(p)
-		  'Dim u As HTTP.URI = p(i).Left
-		  'Dim t As String = p(i).Right
-		  'LinkList.AddRow(t, u.ToString)
-		  'LinkList.RowTag(LinkList.LastIndex) = u
-		  'Next
-		  'BaseURL = Message.Path.Host
-		  'Self.Title = "Message body - " + Type.ToString
 		  Definition = New HighlightDefinition
 		  Call Definition.LoadFromXml(HTMLSyntaxDef)
 		  SyntaxHilightContainer1.SetText(Message, Definition)
-		  RawData = Message
+		  mRaw = Message
 		  mType = Type
 		  If mType.CharSet <> Nil Then
 		    Dim i As Integer = mEncodings.IndexOf(mType.CharSet.internetName)
@@ -233,11 +215,11 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private mType As ContentType
+		Private mRaw As MemoryBlock
 	#tag EndProperty
 
-	#tag Property, Flags = &h1
-		Protected RawData As MemoryBlock
+	#tag Property, Flags = &h21
+		Private mType As ContentType
 	#tag EndProperty
 
 
@@ -276,8 +258,8 @@ End
 		Sub Change()
 		  Dim tx As TextEncoding = Me.RowTag(Me.ListIndex)
 		  Dim data As String
-		  If tx.IsValidData(RawData) Then
-		    data = DefineEncoding(RawData, tx)
+		  If tx.IsValidData(mRaw) Then
+		    data = DefineEncoding(mRaw, tx)
 		    Incompatible.Visible = False
 		  Else
 		    Incompatible.Visible = True
