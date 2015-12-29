@@ -104,48 +104,6 @@ Begin ContainerControl RequestMain
       Visible         =   True
       Width           =   72
    End
-   Begin TextField URL
-      AcceptTabs      =   False
-      Alignment       =   0
-      AutoDeactivate  =   True
-      AutomaticallyCheckSpelling=   False
-      BackColor       =   "&cFFFFFF00"
-      Bold            =   False
-      Border          =   True
-      CueText         =   "Request URL"
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Format          =   ""
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      Italic          =   False
-      Left            =   82
-      LimitText       =   0
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   True
-      Mask            =   ""
-      Password        =   False
-      ReadOnly        =   False
-      Scope           =   0
-      TabIndex        =   1
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   ""
-      TextColor       =   "&c00000000"
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   8
-      Underline       =   False
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   188
-   End
    Begin ComboBox ProtocolVer
       AutoComplete    =   False
       AutoDeactivate  =   True
@@ -438,6 +396,38 @@ Begin ContainerControl RequestMain
       Visible         =   True
       Width           =   100
    End
+   Begin ComboBox URL
+      AutoComplete    =   True
+      AutoDeactivate  =   True
+      Bold            =   ""
+      DataField       =   ""
+      DataSource      =   ""
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialValue    =   ""
+      Italic          =   ""
+      Left            =   77
+      ListIndex       =   0
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   ""
+      LockTop         =   True
+      Scope           =   0
+      TabIndex        =   10
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0
+      TextUnit        =   0
+      Top             =   7
+      Underline       =   ""
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   195
+   End
 End
 #tag EndWindow
 
@@ -462,7 +452,14 @@ End
 	#tag Method, Flags = &h0
 		Sub AddHistoryItem(URL As HTTP.URI)
 		  If History = Nil Then History = New Dictionary
-		  History.Value(URL.ToString) = URL
+		  Dim u As String = URL.ToString
+		  If Not History.HasKey(u) Then
+		    History.Value(u) = URL
+		    Self.URL.AddRow(u)
+		    Self.URL.RowTag(Self.URL.ListCount - 1) = URL
+		    History.Value(u) = URL
+		  End If
+		  
 		End Sub
 	#tag EndMethod
 
@@ -548,21 +545,6 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function SearchHistory(Search As String) As HTTP.URI()
-		  If History = Nil Then History = New Dictionary
-		  Dim res() As HTTP.URI
-		  
-		  For Each u As String In History.Keys
-		    If InStr(u, Search) > 0 Or Search = "" Then
-		      res.Append(History.Value(u))
-		    End If
-		  Next
-		  
-		  Return res
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Sub SetNextRequest(r As HTTP.Request)
 		  NextRequest = r
 		  RequestMethod.Text = r.MethodName
@@ -636,8 +618,8 @@ End
 		Private Formtype As Boolean
 	#tag EndProperty
 
-	#tag Property, Flags = &h1
-		Protected History As Dictionary
+	#tag Property, Flags = &h21
+		Private History As Dictionary
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -762,50 +744,6 @@ End
 	#tag Event
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events URL
-	#tag Event
-		Function KeyDown(Key As String) As Boolean
-		  If Asc(key) = &h0D Or Asc(key) = &h03 And Not Keyboard.AsyncControlKey Then
-		    Self.Perform()
-		    Return True
-		  End If
-		End Function
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  Me.TextFont = App.FixedWidthFont
-		  Me.AcceptTextDrop
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub DropObject(Obj As DragItem, action As Integer)
-		  #pragma Unused action
-		  If Obj.TextAvailable Then
-		    Dim u As HTTP.URI = Obj.Text
-		    Me.Text = u.ToString
-		  End If
-		End Sub
-	#tag EndEvent
-	#tag Event
-		Sub KeyUp(Key As String)
-		  If Asc(Key) = &h1F Then  //Down arrow
-		    Dim res() As HTTP.URI = SearchHistory(Me.Text)
-		    If UBound(res) > -1 Then
-		      Dim mnu As New MenuItem("History")
-		      For Each item As HTTP.URI In res
-		        Dim mnuitem As New MenuItem(item.ToString)
-		        mnuitem.Tag = item
-		        mnu.Append(mnuitem)
-		      Next
-		      Dim choice As MenuItem = mnu.PopUp(TrueWindow.Left + Me.Left, TrueWindow.Top + Me.Top + Me.Height)
-		      If choice <> Nil Then
-		        Me.Text = choice.Text
-		      End If
-		    End If
-		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -1069,6 +1007,35 @@ End
 		    End Select
 		  End If
 		  
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events URL
+	#tag Event
+		Function KeyDown(Key As String) As Boolean
+		  If Asc(key) = &h0D Or Asc(key) = &h03 And Not Keyboard.AsyncControlKey Then
+		    Self.Perform()
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub Open()
+		  Me.TextFont = App.FixedWidthFont
+		  Me.AcceptTextDrop
+		  Dim u As HTTP.URI = "http://www.example.net/"
+		  AddHistoryItem(u)
+		  URL.RowTag(0) = u
+		  URL.ListIndex = 0
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub DropObject(obj As DragItem, action As Integer)
+		  #pragma Unused action
+		  If Obj.TextAvailable Then
+		    Dim u As HTTP.URI = Obj.Text
+		    Me.Text = u.ToString
+		  End If
 		End Sub
 	#tag EndEvent
 #tag EndEvents
