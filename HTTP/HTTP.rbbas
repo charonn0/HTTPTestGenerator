@@ -166,6 +166,9 @@ Protected Module HTTP
 		  Case 451
 		    Return "Unavailable For Legal Reasons" 'Draft, https://tools.ietf.org/html/draft-tbray-http-legally-restricted-status-00
 		    
+		  Case 463
+		    Return "Restricted Client" ' non-standard, used by CDNs
+		    
 		  Case 494
 		    Return "Request Header Too Large" 'nginx
 		    
