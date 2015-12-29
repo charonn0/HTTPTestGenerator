@@ -346,17 +346,7 @@ End
 		      Case 2 ' debug
 		        sr.TextColor = &c80808000
 		      Case -1 ' error
-		        If InStr(Message.StringValue, "error:") > 0 Then ' Error: details
-		          Dim l, r As String
-		          r = NthField(Message.StringValue, ": ", 2)
-		          l = NthField(Message.StringValue, ": ", 1)
-		          sr.TextColor = &c80000000
-		          sr.Bold = True
-		          sr.Text = l
-		          OutputLog.PrintOther(sr)
-		          sr.Bold = False
-		          sr.Text = ": " + r '+ CRLF
-		        ElseIf InStr(Message.StringValue, "alert:") > 0 Then ' Alert: Info
+		        If InStr(Message.StringValue, "alert:") > 0 Then ' Alert: Info
 		          Dim l, r As String
 		          r = NthField(Message.StringValue, ": ", 2)
 		          l = NthField(Message.StringValue, ": ", 1)
@@ -366,6 +356,18 @@ End
 		          OutputLog.PrintOther(sr)
 		          sr.Bold = False
 		          sr.Text = ": " + r '+ CRLF
+		          
+		        ElseIf InStr(Message.StringValue, "warn:") > 0 Or InStr(Message.StringValue, "error:") > 0 Then ' warnings and errors
+		          Dim l, r As String
+		          r = NthField(Message.StringValue, ": ", 2)
+		          l = NthField(Message.StringValue, ": ", 1)
+		          sr.TextColor = &cA6000000
+		          sr.Bold = True
+		          sr.Text = l
+		          OutputLog.PrintOther(sr)
+		          sr.Bold = False
+		          sr.Text = ": " + r '+ CRLF
+		          
 		        Else
 		          sr.TextColor = &cFF000000
 		        End If

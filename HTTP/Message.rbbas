@@ -11,7 +11,7 @@ Protected Class Message
 		  Me.ProtocolVersion = CopyFrom.ProtocolVersion
 		  Me.Path = CopyFrom.Path
 		  
-		  If Me.ProtocolVersion > 1.11 Or Me.ProtocolVersion < 1.0 Then RaiseEvent HTTPDebug("WARN: Unknown HTTP version.", -1)
+		  If Me.ProtocolVersion > 1.11 Or Me.ProtocolVersion < 1.0 Then RaiseEvent HTTPDebug("Warn: Unknown HTTP version.", -1)
 		End Sub
 	#tag EndMethod
 
@@ -101,7 +101,7 @@ Protected Class Message
 			      c = Me.Header("Content-Type")
 			    Else
 			      c = "unspecified/unspecified"
-			      RaiseEvent HTTPDebug("WARN: Content-Type is empty.", -1)
+			      RaiseEvent HTTPDebug("Warn: Content-Type is empty.", -1)
 			    End If
 			  ElseIf Me.Path <> Nil Then
 			    Dim s As String = NthField(Me.Path.Path, "/", CountFields(Me.Path.Path, "/"))

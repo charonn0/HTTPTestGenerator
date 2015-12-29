@@ -50,7 +50,7 @@ Inherits HTTP.Message
 		  #If EnableHTCPCP Then
 		    If Me.StatusCode = 418 Then p = "HTCPCP/" ' This breaks browsers
 		  #endif
-		  If mHeaders.Count > 0 Then RaiseEvent HTTPDebug("WARN: This response contains no headers.", -1)
+		  If mHeaders.Count > 0 Then RaiseEvent HTTPDebug("Warn: This response contains no headers.", -1)
 		  Return p + Format(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF + Super.ToString(HeadersOnly)'
 		  
 		End Function
