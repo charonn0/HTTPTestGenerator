@@ -413,7 +413,7 @@ Begin ContainerControl RequestMain
       LockBottom      =   ""
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   True
       LockTop         =   True
       Scope           =   0
       TabIndex        =   10
