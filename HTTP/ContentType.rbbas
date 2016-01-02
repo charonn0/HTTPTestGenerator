@@ -142,7 +142,7 @@ Class ContentType
 		  Dim types() As ContentType
 		  Dim fcount As Integer = Ubound(fields)
 		  For i As Integer = 0 To fcount
-		    types.Append(New ContentType(fields(i)))
+		    types.Append(fields(i))
 		  Next
 		  Return types
 		End Function
