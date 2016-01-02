@@ -942,6 +942,7 @@ End
 		  #pragma Unused X
 		  #pragma Unused Y
 		  Return Me.Text <> ""
+		  Return Me.Text <> "" And Me.Text <> "Non-standard"
 		End Function
 	#tag EndEvent
 	#tag Event
