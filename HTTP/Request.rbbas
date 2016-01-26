@@ -128,7 +128,10 @@ Inherits HTTP.Message
 		  p.Scheme = ""
 		  p.Host = ""
 		  Dim data As String = MethodName + " " + p.ToString + " " + "HTTP/" + Format(ProtocolVersion, "#.0") + CRLF
-		  If mHeaders.Count <= 0 And mHeaders.CookieCount <= 0 And HeadersOnly Then RaiseEvent HTTPDebug("Warn: This request contains no headers.", -1)
+		  If HeadersOnly Then
+		    If mHeaders.Count <= 0 And mHeaders.CookieCount <= 0 Then RaiseEvent HTTPDebug("Warning: This request contains no headers.", -1)
+		    If Me.MethodName = "HEAD" And Me.MessageBody.Len > 0 Then RaiseEvent HTTPDebug("Warning: HEAD requests may not include a message body.", -1)
+		  End If
 		  data = data + Super.ToString(HeadersOnly)
 		  
 		  Return data

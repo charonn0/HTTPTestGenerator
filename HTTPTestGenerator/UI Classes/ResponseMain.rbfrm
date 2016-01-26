@@ -45,6 +45,7 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Status:"
       TextAlign       =   2
       TextColor       =   "&c00000000"
@@ -79,6 +80,7 @@ Begin ContainerControl ResponseMain
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "000 No Error Code"
       TextAlign       =   0
       TextColor       =   "&cFF000000"
@@ -357,7 +359,7 @@ End
 		          sr.Bold = False
 		          sr.Text = ": " + r '+ CRLF
 		          
-		        ElseIf InStr(Message.StringValue, "warn:") > 0 Or InStr(Message.StringValue, "error:") > 0 Then ' warnings and errors
+		        ElseIf InStr(Message.StringValue, "warning:") > 0 Or InStr(Message.StringValue, "error:") > 0 Then ' warnings and errors
 		          Dim l, r As String
 		          r = NthField(Message.StringValue, ": ", 2)
 		          l = NthField(Message.StringValue, ": ", 1)
@@ -373,7 +375,7 @@ End
 		        End If
 		      End Select
 		      OutputLog.PrintOther(sr)
-		      sr.Bold = Not sr.Bold
+		      sr.TextColor = &cFFFFFF00
 		      sr.Text = CRLF
 		      OutputLog.PrintOther(sr)
 		    Else
