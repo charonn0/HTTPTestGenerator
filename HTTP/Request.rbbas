@@ -129,8 +129,38 @@ Inherits HTTP.Message
 		  p.Host = ""
 		  Dim data As String = MethodName + " " + p.ToString + " " + "HTTP/" + Format(ProtocolVersion, "#.0") + CRLF
 		  If HeadersOnly Then
+		    Dim msgsz As Integer = Me.MessageBody.LenB
 		    If mHeaders.Count <= 0 And mHeaders.CookieCount <= 0 Then RaiseEvent HTTPDebug("Warning: This request contains no headers.", -1)
-		    If Me.MethodName = "HEAD" And Me.MessageBody.Len > 0 Then RaiseEvent HTTPDebug("Warning: HEAD requests may not include a message body.", -1)
+		    
+		    If msgsz > 0 And Not Me.HasHeader("Content-Length") Then RaiseEvent HTTPDebug("Alert: No length specified for the message body.", -1)
+		    If msgsz = 0 And Me.Header("Expect") = "100-Continue" Then 
+		      'http://tools.ietf.org/html/rfc7231#section-5.1.1
+		      RaiseEvent HTTPDebug("Warning: The 'Expect: 100-Continue' header is illegal if the request does not include a message body.", -1)
+		    End If
+		    
+		    Select Case Me.MethodName
+		    Case "HEAD"
+		      'http://tools.ietf.org/html/rfc7231#section-4.3.2
+		      If msgsz > 0 Then RaiseEvent HTTPDebug("Warning: HEAD requests may not include a message body.", -1)
+		      
+		    Case "TRACE"
+		      'http://tools.ietf.org/html/rfc7231#section-4.3.8
+		      If msgsz > 0 Then RaiseEvent HTTPDebug("Warning: TRACE requests may not include a message body.", -1)
+		      If Me.HasHeader("Authorization") Then RaiseEvent HTTPDebug("Warning: TRACE requests should not include 'Authorization' headers.", -1)
+		      If Me.HasHeader("Cookie") Then RaiseEvent HTTPDebug("Alert: TRACE requests should not include 'Cookie' headers.", -1)
+		      
+		    Case "POST"
+		      If msgsz = 0 Then RaiseEvent HTTPDebug("Alert: This POST request does not contain a message body.", -1)
+		      If Not Me.HasHeader("Content-Type") Then RaiseEvent HTTPDebug("Alert: This POST request does not specify the Content-Type of the message body..", -1)
+		      
+		    End Select
+		    
+		    If Me.ProtocolVersion > 1.0 And Me.ProtocolVersion < 1.2 Then
+		      If Not Me.HasHeader("Connection") Then RaiseEvent HTTPDebug("Warning: This HTTP/1.1 request does not include a 'Connection' header.", -1)
+		      If Not Me.HasHeader("Host") Then RaiseEvent HTTPDebug("Warning: This HTTP/1.1 request does not include a 'Host' header.", -1)
+		    End If
+		    
+		    
 		  End If
 		  data = data + Super.ToString(HeadersOnly)
 		  
