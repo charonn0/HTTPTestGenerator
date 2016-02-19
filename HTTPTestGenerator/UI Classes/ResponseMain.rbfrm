@@ -350,8 +350,9 @@ End
 		      Case -1 ' error
 		        If InStr(Message.StringValue, "alert:") > 0 Then ' Alert: Info
 		          Dim l, r As String
-		          r = NthField(Message.StringValue, ": ", 2)
-		          l = NthField(Message.StringValue, ": ", 1)
+		          r = Message.StringValue
+		          l = NthField(r, ": ", 1)
+		          r = Replace(r, l + ":", "")
 		          sr.TextColor = &cFF800000
 		          sr.Bold = True
 		          sr.Text = l
@@ -361,8 +362,9 @@ End
 		          
 		        ElseIf InStr(Message.StringValue, "warning:") > 0 Or InStr(Message.StringValue, "error:") > 0 Then ' warnings and errors
 		          Dim l, r As String
-		          r = NthField(Message.StringValue, ": ", 2)
-		          l = NthField(Message.StringValue, ": ", 1)
+		          r = Message.StringValue
+		          l = NthField(r, ":", 1)
+		          r = Replace(r, l + ":", "")
 		          sr.TextColor = &cA6000000
 		          sr.Bold = True
 		          sr.Text = l
