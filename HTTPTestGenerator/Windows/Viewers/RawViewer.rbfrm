@@ -42,6 +42,7 @@ Begin Window RawViewer
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   0
       Value           =   0
       Visible         =   True
@@ -130,7 +131,7 @@ End
 			'data = HTTP.GZipDecompress(data)
 			'End If
 			
-			Dim nm As String = CurrentMessage.Path.Path
+			Dim nm As String = CurrentMessage.Path.Path.ToString
 			If CountFields(nm, "/") > 0 Then
 			nm = NthField(nm, "/", CountFields(nm, "/"))
 			Else

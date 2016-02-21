@@ -450,7 +450,7 @@ End
 
 
 	#tag Method, Flags = &h0
-		Sub AddHistoryItem(URL As HTTP.URI)
+		Sub AddHistoryItem(URL As URIHelpers.URI)
 		  If History = Nil Then History = New Dictionary
 		  Dim u As String = URL.ToString
 		  If Not History.HasKey(u) Then
@@ -480,7 +480,7 @@ End
 		  TmpRequest.ProtocolVersion = CDbl(NthField(ProtocolVer.Text, "/", 2))
 		  
 		  
-		  Dim u As HTTP.URI = URL.Text
+		  Dim u As URIHelpers.URI = URL.Text
 		  If u.Username <> "" Or u.Password <> "" Then
 		    For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
 		      If RequestHeaders.Cell(i, 0) = "Authorization" Then
@@ -497,7 +497,7 @@ End
 		  
 		  TmpRequest.Path = u
 		  TmpRequest.Path.Fragment = ""
-		  If TmpRequest.path.Path = "" Then TmpRequest.path.Path = "/"
+		  If TmpRequest.Path.Path.ToString = "" Then TmpRequest.Path.Path = "/"
 		  
 		  
 		  For i As Integer = 0 To RequestHeaders.ListCount - 1
@@ -506,9 +506,9 @@ End
 		  
 		  If Not TmpRequest.HasHeader("Host") And TmpRequest.ProtocolVersion >= 1.1 Then
 		    If (u.Port <> 80 And u.Scheme = "http") Or (u.Port <> 443 And u.Scheme = "https") Then
-		      TmpRequest.Header("Host") = u.Host + ":" + Format(u.Port, "####0")
+		      TmpRequest.Header("Host") = u.Host.ToString + ":" + Format(u.Port, "####0")
 		    Else
-		      TmpRequest.Header("Host") = u.Host
+		      TmpRequest.Header("Host") = u.Host.ToString
 		    End If
 		  End If
 		  
@@ -1023,7 +1023,7 @@ End
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
 		  Me.AcceptTextDrop
-		  Dim u As HTTP.URI = "http://www.example.net/"
+		  Dim u As URIHelpers.URI = "http://www.example.net/"
 		  AddHistoryItem(u)
 		  URL.RowTag(0) = u
 		  URL.ListIndex = 0
@@ -1033,7 +1033,7 @@ End
 		Sub DropObject(obj As DragItem, action As Integer)
 		  #pragma Unused action
 		  If Obj.TextAvailable Then
-		    Dim u As HTTP.URI = Obj.Text
+		    Dim u As URIHelpers.URI = Obj.Text
 		    Me.Text = u.ToString
 		  End If
 		End Sub
