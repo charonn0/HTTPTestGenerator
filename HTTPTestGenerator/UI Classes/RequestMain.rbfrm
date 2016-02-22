@@ -426,7 +426,51 @@ Begin ContainerControl RequestMain
       Underline       =   ""
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   195
+      Width           =   174
+   End
+   Begin BevelButton EditURIBtn
+      AcceptFocus     =   True
+      AutoDeactivate  =   True
+      BackColor       =   "&c00000000"
+      Bevel           =   0
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   "Advanced URI Editor"
+      Icon            =   1644476415
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   251
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
+      Top             =   8
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
    End
 End
 #tag EndWindow
@@ -547,19 +591,25 @@ End
 	#tag Method, Flags = &h0
 		Sub SetNextRequest(r As HTTP.Request)
 		  NextRequest = r
+		  If NextRequest.Path.Scheme = "" Then
+		    If NextRequest.Path.Port = 443 Then
+		      NextRequest.Path.Scheme = "https"
+		    Else
+		      NextRequest.Path.Scheme = "http"
+		    End If
+		  End If
 		  RequestMethod.Text = r.MethodName
-		  ProtocolVer.Text = "HTTP/" + Format(r.ProtocolVersion, "#.0")
+		  ProtocolVer.Text = "HTTP/" + Format(NextRequest.ProtocolVersion, "#.0")
 		  RequestHeaders.DeleteAllRows
 		  
-		  Dim h As HTTP.Headers = r.Headers
+		  Dim h As HTTP.Headers = NextRequest.Headers
 		  For i As Integer = 0 To h.Count - 1
 		    Select Case h.Name(i)
 		    Case "Cookie"
 		      RequestHeaders.AddRow(h.Name(i), h.Value(i))
 		      Dim c As New HTTP.Cookie(h.Value(i))
 		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
-		    Case "Host"
-		      NextRequest.Path.Host = h.Value(i)
+		      
 		    Else
 		      RequestHeaders.AddRow(h.Name(i), h.Value(i))
 		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = h.Name(i):h.Value(i)
@@ -1036,6 +1086,15 @@ End
 		    Dim u As URIHelpers.URI = Obj.Text
 		    Me.Text = u.ToString
 		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EditURIBtn
+	#tag Event
+		Sub Action()
+		  Dim u As URI = URL.Text
+		  u = URIEditor.ShowURI(u)
+		  If u <> Nil Then URL.Text = u.ToString
 		End Sub
 	#tag EndEvent
 #tag EndEvents
