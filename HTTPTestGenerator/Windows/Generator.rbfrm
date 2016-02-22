@@ -187,7 +187,16 @@ End
 			Dim bs As BinaryStream = BinaryStream.Open(f)
 			data = bs.Read(bs.Length)
 			bs.Close
-			RequestMain1.SetNextRequest(data)
+			Dim r As HTTP.Request = data
+			If r.HasHeader("Host") Then
+			Dim u As URI = r.Header("Host") 
+			r.Path.Host = u.Host
+			r.Path.Port = u.Port
+			Else
+			r.Path.Host = "www.example.com"
+			End If
+			
+			RequestMain1.SetNextRequest(r)
 			
 			Return True
 			
