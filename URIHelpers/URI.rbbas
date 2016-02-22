@@ -58,11 +58,11 @@ Class URI
 		      Dim tmp As String = NthField(URL, "?", 1)
 		      Path = tmp  //    /foo/bar.php
 		      URL = URL.Replace(tmp + "?", "")
-		      Me.Arguments = New URIHelpers.Arguments(URL)
+		      Me.Arguments = URL
 		    Else
 		      Path = URL.Trim
 		      URL = Replace(URL, Me.Path.ToString, "")
-		      Me.Arguments = New URIHelpers.Arguments("")
+		      Me.Arguments = ""
 		    End If
 		    
 		  Else
@@ -73,7 +73,7 @@ Class URI
 		    
 		    If InStr(URL, "?") > 0 Then
 		      Me.Host = NthField(URL, "?", 1)
-		      Me.Arguments = New URIHelpers.Arguments(NthField(URL, "?", 2))
+		      Me.Arguments = NthField(URL, "?", 2)
 		    Else
 		      Me.Host = URL
 		    End If

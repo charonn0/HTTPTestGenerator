@@ -7,19 +7,6 @@ Protected Class Arguments
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Constructor(Arguments As String)
-		  Dim a() As String = Split(Arguments, "&")
-		  For i As Integer = 0 To UBound(a)
-		    Dim l, r As String
-		    l = NthField(a(i), "=", 1)
-		    r = Right(a(i), a(i).Len - (l.Len + 1)).Trim
-		    l = l.Trim
-		    mArgs.Append(l:r)
-		  Next
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Function Count() As Integer
 		  Return mArgs.Ubound + 1
 		End Function
@@ -53,6 +40,19 @@ Protected Class Arguments
 	#tag Method, Flags = &h0
 		Sub Name(Index As Integer, Assigns NewName As String)
 		  mArgs(Index) = NewName:mArgs(Index).Right
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub Operator_Convert(Arguments As String)
+		  Dim a() As String = Split(Arguments, "&")
+		  For i As Integer = 0 To UBound(a)
+		    Dim l, r As String
+		    l = NthField(a(i), "=", 1)
+		    r = Right(a(i), a(i).Len - (l.Len + 1)).Trim
+		    l = l.Trim
+		    mArgs.Append(l:r)
+		  Next
 		End Sub
 	#tag EndMethod
 
