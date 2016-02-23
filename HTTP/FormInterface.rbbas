@@ -31,6 +31,12 @@ Protected Interface FormInterface
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub Operator_Convert(FromForm As HTTP.FormInterface)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ToString() As String
 		  
 		End Function

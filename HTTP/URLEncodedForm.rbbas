@@ -44,6 +44,18 @@ Implements FormInterface
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub Operator_Convert(FromForm As HTTP.FormInterface)
+		  Me.Constructor("")
+		  Dim c As Integer = FromForm.Count
+		  For i As Integer = 0 To c - 1
+		    Dim n As String = FromForm.Name(i)
+		    If VarType(FromForm.Element(n)) <> Variant.TypeString Then Raise New UnsupportedFormatException
+		    Me.Element(n) = FromForm.Element(n)
+		  Next
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub RemoveElement(Name As String)
 		  If Form.HasKey(Name) Then Form.Remove(Name)
 		End Sub

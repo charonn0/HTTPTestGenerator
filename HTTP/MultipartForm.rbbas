@@ -97,6 +97,17 @@ Implements FormInterface
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub Operator_Convert(FromForm As HTTP.FormInterface)
+		  Me.Constructor()
+		  Dim c As Integer = FromForm.Count
+		  For i As Integer = 0 To c - 1
+		    Dim n As String = FromForm.Name(i)
+		    Me.Element(n) = FromForm.Element(n)
+		  Next
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function ToString() As String
 		  If Boundary.Trim = "" Then
 		    Boundary = "--" + Right(EncodeHex(MD5(Str(Microseconds))), 24) + "-bOuNdArY"
