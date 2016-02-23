@@ -187,7 +187,16 @@ End
 			Dim bs As BinaryStream = BinaryStream.Open(f)
 			data = bs.Read(bs.Length)
 			bs.Close
-			RequestMain1.SetNextRequest(data)
+			Dim r As HTTP.Request = data
+			If r.HasHeader("Host") Then
+			Dim u As URI = r.Header("Host") 
+			r.Path.Host = u.Host
+			r.Path.Port = u.Port
+			Else
+			r.Path.Host = "www.example.com"
+			End If
+			
+			RequestMain1.SetNextRequest(r)
 			
 			Return True
 			
@@ -206,7 +215,7 @@ End
 		Function SaveRequest() As Boolean Handles SaveRequest.Action
 			Dim r As HTTP.Request = RequestMain1.DumpCurrent
 			If r <> Nil And r.ToString(True).Trim <> "" Then
-			Dim nm As String = r.MethodName + "_" + r.Path.Host
+			Dim nm As String = r.MethodName + "_" + r.Path.Host.ToString
 			Dim f As FolderItem = GetSaveFolderItem(FileTypes1.HTTPMessageFile , nm)
 			If f <> Nil Then
 			Dim bs As BinaryStream = BinaryStream.Create(f, True)
@@ -259,7 +268,7 @@ End
 		  If mRobots.HasKey(NewRequest.Path.Host) Then
 		    rbt = mRobots.Value(NewRequest.Path.Host)
 		  Else
-		    Dim rurl As New HTTP.URI(NewRequest.Path)
+		    Dim rurl As URI = NewRequest.Path
 		    rurl.Path = "/robots.txt"
 		    Dim file As FolderItem = GetTemporaryFolderItem
 		    Dim sck As SocketCore
@@ -294,9 +303,9 @@ End
 		  
 		  
 		  Dim blocked As Pair
-		  Dim isvalid As Boolean = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path, blocked)
+		  Dim isvalid As Boolean = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path.ToString, blocked)
 		  If isvalid And blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
-		    "' on '" + NewRequest.Path.Host + "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
+		    "' on '" + NewRequest.Path.Host.ToString + "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
 		    ResponseMain1.Log("Alert: The request is prohibited by the website's robots.txt file!" + EndOfLine.Windows, -1)
 		    CancelRequest()
 		    Return True
@@ -325,7 +334,7 @@ End
 		  AddHandler CurrentRequest.HTTPDebug, WeakAddressOf HTTPDebugHandler
 		  TimeOut.Mode = Timer.ModeSingle
 		  Sock.Close
-		  Sock.Address = CurrentRequest.Path.Host
+		  Sock.Address = CurrentRequest.Path.Host.ToString
 		  Select Case RequestMain1.Security
 		  Case 1 ' SSL2 only
 		    sock.Secure = True
@@ -360,9 +369,9 @@ End
 		  End If
 		  Sock.Port = p
 		  If sock.Secure Then
-		    ResponseMain1.Log("Attempting a secure connection to '" + CurrentRequest.Path.Host + "' on port " + Format(p, "#####0") + EndOfLine, 1)
+		    ResponseMain1.Log("Attempting a secure connection to '" + CurrentRequest.Path.Host.ToString + "' on port " + Format(p, "#####0") + EndOfLine, 1)
 		  Else
-		    ResponseMain1.Log("Attempting a connection to '" + CurrentRequest.Path.Host + "' on port " + Format(p, "#####0") + EndOfLine, 1)
+		    ResponseMain1.Log("Attempting a connection to '" + CurrentRequest.Path.Host.ToString + "' on port " + Format(p, "#####0") + EndOfLine, 1)
 		  End If
 		  Sock.Connect()
 		  
@@ -539,7 +548,7 @@ End
 		  If CurrentResponse <> Nil Then OldResponses.Append(CurrentResponse)
 		  CurrentResponse = ResponseBuffer'ReadNextResponse
 		  If CurrentResponse = Nil Then Return
-		  CurrentResponse.Path = New HTTP.URI(CurrentRequest.Path)
+		  CurrentResponse.Path = CurrentRequest.Path.ToString
 		  ResponseMain1.ViewResponse(CurrentResponse)
 		  
 		  Self.Title = "HTTP Request Generator - Viewing '" + CurrentRequest.Path.ToString + "'"
@@ -548,7 +557,7 @@ End
 		  Select Case code
 		  Case 301, 302, 307, 308
 		    Dim redir As String = CurrentResponse.Header("Location")
-		    Dim u As HTTP.URI = redir
+		    Dim u As URIHelpers.URI = redir
 		    If u.Host = "" Then
 		      u = CurrentRequest.Path
 		      u.Path = redir
@@ -564,7 +573,7 @@ End
 		    End If
 		  Case 401
 		    Dim r As String = NthField(CurrentResponse.Header("WWW-Authenticate"), "=", 2)
-		    Dim p As Pair = Authenticator.Authenticate(r, Sock.Secure, CurrentRequest.Path.Host, mLastServerIP)
+		    Dim p As Pair = Authenticator.Authenticate(r, Sock.Secure, CurrentRequest.Path.Host.ToString, mLastServerIP)
 		    If p <> Nil Then
 		      Dim s As String = "Basic " + EncodeBase64(p.Left + ":" + p.Right)
 		      RequestMain1.DeleteRequestHeader("Authorization")

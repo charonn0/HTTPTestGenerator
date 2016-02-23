@@ -120,6 +120,7 @@ Begin Window MiniServer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -164,6 +165,7 @@ Begin Window MiniServer
       Width           =   80
    End
    Begin ServerSocket Socket
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -172,8 +174,11 @@ Begin Window MiniServer
       MinimumSocketsAvailable=   2
       Port            =   0
       Scope           =   0
+      TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   0
+      Visible         =   True
       Width           =   32
    End
    Begin HREFArea HTTPLog
@@ -223,6 +228,7 @@ Begin Window MiniServer
       Width           =   583
    End
    Begin Timer LogTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -230,11 +236,15 @@ Begin Window MiniServer
       Mode            =   0
       Period          =   1
       Scope           =   0
+      TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   34
+      Visible         =   True
       Width           =   32
    End
    Begin Timer ListenTimer
+      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -242,8 +252,11 @@ Begin Window MiniServer
       Mode            =   0
       Period          =   1
       Scope           =   0
+      TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Top             =   67
+      Visible         =   True
       Width           =   32
    End
    Begin ComboBox SecurityLevel
@@ -375,7 +388,7 @@ End
 		  
 		  Select Case ClientRequest.Method
 		  Case RequestMethod.GET, RequestMethod.HEAD
-		    Dim item As FolderItem = HTTP.FindFile(Me.DocumentRoot, ClientRequest.Path.Path)
+		    Dim item As FolderItem = HTTP.FindFile(Me.DocumentRoot, ClientRequest.Path.Path.ToString)
 		    If item <> Nil And Not item.Exists Then item = Nil
 		    
 		    Select Case True
@@ -395,7 +408,7 @@ End
 		        HTTP.DirectoryIndex(ResponseDocument).Populate
 		      End If
 		      
-		    Case ClientRequest.Path.Path = "/" And Not item.Directory
+		    Case ClientRequest.Path.Path.ToString = "/" And Not item.Directory
 		      Dim location As String
 		      If Not Sender.Secure Then
 		        location = "http://" + Sender.LocalAddress + ":" + Format(Sender.Port, "######") + "/" + Item.Name
@@ -755,8 +768,8 @@ End
 		  Case LinkValue IsA HTTP.Response
 		    RawViewer.ViewRaw(HTTP.Response(LinkValue))
 		    
-		  Case LinkValue IsA HTTP.URI
-		    Dim u As HTTP.URI = HTTP.URI(LinkValue)
+		  Case LinkValue IsA URIHelpers.URI
+		    Dim u As URIHelpers.URI = URIHelpers.URI(LinkValue)
 		    If u.Scheme = "" Then u.Scheme = "http"
 		    If u.Scheme = "https" Then ' client doesn't work with https ATM
 		      ShowURL(u.ToString)
@@ -850,7 +863,7 @@ End
 		    sr.Bold = False
 		    sr.Text = Socket.NetworkInterface.IPAddress + ":" + Format(Socket.Port, "####0")
 		    sr.Underline = True
-		    Dim u As HTTP.URI = sr.Text
+		    Dim u As URIHelpers.URI = sr.Text
 		    HTTPLog.PrintOther(sr, u)
 		    sr.Underline = False
 		    sr.Text = CRLF + CRLF

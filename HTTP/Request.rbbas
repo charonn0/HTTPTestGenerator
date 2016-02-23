@@ -124,7 +124,7 @@ Inherits HTTP.Message
 
 	#tag Method, Flags = &h0
 		Function ToString(HeadersOnly As Boolean = false) As String
-		  Dim p As New HTTP.URI(Path)
+		  Dim p As URI = Path.ToString
 		  p.Scheme = ""
 		  p.Host = ""
 		  Dim data As String = MethodName + " " + p.ToString + " " + "HTTP/" + Format(ProtocolVersion, "#.0") + CRLF

@@ -662,11 +662,11 @@ End
 	#tag Method, Flags = &h21
 		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
 		  #pragma Unused Sender
-		  If ClientRequest.Path.Path = "" Then 'Or Not IsNumeric(ClientRequest.Path.Path) Then
+		  If ClientRequest.Path.Path.ToString = "" Then 'Or Not IsNumeric(ClientRequest.Path.Path) Then
 		    ResponseDocument = HTTP.ErrorPage(403)
 		    Return True
 		  End If
-		  Dim err As Integer = Val(Replace(ClientRequest.Path.Path, "/", ""))
+		  Dim err As Integer = Val(Replace(ClientRequest.Path.Path.ToString, "/", ""))
 		  If err <= 99 Or err >= 600 Then
 		    ResponseDocument = HTTP.ErrorPage(404)
 		    Return True
@@ -960,7 +960,7 @@ End
 		Sub ClickLink(LinkValue As Variant, LinkText As String)
 		  #pragma Unused LinkText
 		  If Left(LinkValue, 3) = "rfc" Then ' spec URL
-		    Dim u As HTTP.URI = "http://tools.ietf.org/html/" + LinkValue
+		    Dim u As URIHelpers.URI = "http://tools.ietf.org/html/" + LinkValue
 		    ShowURL(u.ToString)
 		  ElseIf Left(LinkValue, 4) = "http" Then ' web URL
 		    ShowURL(LinkValue)

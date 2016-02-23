@@ -93,12 +93,13 @@ Inherits HTTP.Response
 		  timestart = Microseconds
 		  Dim Items() As FolderItem
 		  Dim dir As Integer
-		  If Me.RequestPath.Arguments.IndexOf("dir=1") > -1 Then dir = 1
-		  Dim aCount As Integer = UBound(RequestPath.Arguments)
+		  Dim ai As Integer = Me.RequestPath.Arguments.IndexOf("dir")
+		  If ai > -1 Then dir = Val(Me.RequestPath.Arguments.Value(ai))
+		  Dim aCount As Integer = RequestPath.Arguments.Count - 1
 		  For i As Integer = 0 To aCount
 		    Dim k, v As String
-		    k = NthField(RequestPath.Arguments(i), "=", 1)
-		    v = NthField(RequestPath.Arguments(i), "=", 2)
+		    k = RequestPath.Arguments.Name(i)
+		    v = RequestPath.Arguments.Value(i)
 		    Select Case k
 		    Case "Sort"
 		      Select Case v
@@ -125,7 +126,7 @@ Inherits HTTP.Response
 		    Dim line As String = TableRow
 		    Dim name, href, icon As String
 		    name = item.Name
-		    href = ReplaceAll(RequestPath.Path + "/" + name, "//", "/")
+		    href = ReplaceAll(RequestPath.Path.ToString + "/" + name, "//", "/")
 		    
 		    While Name.len > 40
 		      Dim start As Integer
@@ -155,8 +156,8 @@ Inherits HTTP.Response
 		    line = ReplaceAll(line, "%FILEDATE%", item.ModificationDate.ShortDate + " " + item.ModificationDate.ShortTime)
 		    lines.Append(line)
 		  Next
-		  If RequestPath.Path <> "/" Then
-		    Dim s As String = RequestPath.Parent.Path
+		  If RequestPath.Path.ToString <> "/" Then
+		    Dim s As String = RequestPath.Path.ToString
 		    PageData = ReplaceAll(PageData, "%UPLINK%", "<a href=""" + s + """>Parent Directory</a>")
 		  Else
 		    PageData = ReplaceAll(PageData, "%UPLINK%", "")
@@ -168,7 +169,7 @@ Inherits HTTP.Response
 		    head = ReplaceAll(head, "%DIRECTION%", "&amp;dir=0")
 		  End If
 		  pagedata = Replace(pagedata, "%TABLE%", head + Join(lines, EndOfLine))
-		  pagedata = ReplaceAll(pagedata, "%PAGETITLE%", "Index of " + DecodeURLComponent(RequestPath.Path))
+		  pagedata = ReplaceAll(pagedata, "%PAGETITLE%", "Index of " + DecodeURLComponent(RequestPath.Path.ToString))
 		  If Ubound(Items) + 1 = 1 Then
 		    pagedata = Replace(pagedata, "%ITEMCOUNT%", "1 item.")
 		  Else
@@ -192,7 +193,7 @@ Inherits HTTP.Response
 
 
 	#tag Property, Flags = &h21
-		Private RequestPath As HTTP.URI
+		Private RequestPath As URIHelpers.URI
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

@@ -34,6 +34,7 @@ Begin ContainerControl HTMLView Implements Viewer
       HasBackColor    =   False
       Height          =   430
       HelpTag         =   ""
+      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -105,6 +106,7 @@ Begin ContainerControl HTMLView Implements Viewer
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Encoding:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -139,6 +141,7 @@ Begin ContainerControl HTMLView Implements Viewer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Incompatible encoding"
       TextAlign       =   0
       TextColor       =   &h000000
@@ -157,14 +160,14 @@ End
 #tag WindowCode
 	#tag Method, Flags = &h1
 		Protected Function ExtractLinks(HTML As String, BaseURL As String) As Pair()
-		  Dim base As HTTP.URI = BaseURL
+		  Dim base As URIHelpers.URI = BaseURL
 		  Dim hrefRegex As New Regex
 		  hrefRegex.SearchPattern = "<A[^>]*?HREF\s*=\s*""([^""]+)""[^>]*?>([\s\S]*?)<\/A>"
 		  hrefRegex.Options.CaseSensitive = False
 		  Dim output() As Pair
 		  dim r As RegExMatch = hrefRegex.Search(HTML)
 		  Do Until r = Nil
-		    Dim u As HTTP.URI = r.SubExpressionString(1)
+		    Dim u As URIHelpers.URI = r.SubExpressionString(1)
 		    If u.Host = "" Then u.Host = base.Host
 		    output.Append(u:r.SubExpressionString(2))
 		    r = hrefRegex.Search
