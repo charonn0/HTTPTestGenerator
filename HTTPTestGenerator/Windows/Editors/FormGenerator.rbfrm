@@ -1,27 +1,26 @@
 #tag Window
-Begin Window FormGenerator
+Begin ContainerControl FormGenerator
+   AcceptFocus     =   ""
+   AcceptTabs      =   True
+   AutoDeactivate  =   True
    BackColor       =   -256
    Backdrop        =   0
-   CloseButton     =   True
-   Composite       =   False
-   Frame           =   1
-   FullScreen      =   False
+   Enabled         =   True
+   EraseBackground =   True
    HasBackColor    =   False
    Height          =   270
-   ImplicitInstance=   False
-   LiveResize      =   True
-   MacProcID       =   0
-   MaxHeight       =   32000
-   MaximizeButton  =   False
-   MaxWidth        =   32000
-   MenuBar         =   0
-   MenuBarVisible  =   True
-   MinHeight       =   64
-   MinimizeButton  =   True
-   MinWidth        =   64
-   Placement       =   1
-   Resizeable      =   False
-   Title           =   "Edit HTTP Form"
+   HelpTag         =   ""
+   InitialParent   =   ""
+   Left            =   ""
+   LockBottom      =   True
+   LockLeft        =   True
+   LockRight       =   True
+   LockTop         =   True
+   TabIndex        =   0
+   TabPanelIndex   =   0
+   TabStop         =   True
+   Top             =   ""
+   UseFocusRing    =   ""
    Visible         =   True
    Width           =   561
    Begin PushButton PushButton2
@@ -38,11 +37,11 @@ Begin Window FormGenerator
       InitialParent   =   ""
       Italic          =   False
       Left            =   27
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
@@ -69,11 +68,11 @@ Begin Window FormGenerator
       InitialParent   =   ""
       Italic          =   False
       Left            =   6
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
@@ -85,68 +84,6 @@ Begin Window FormGenerator
       Underline       =   False
       Visible         =   True
       Width           =   20
-   End
-   Begin PushButton PushButton3
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   0
-      Cancel          =   False
-      Caption         =   "OK"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   283
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   244
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin PushButton PushButton4
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   0
-      Cancel          =   False
-      Caption         =   "Cancel"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   199
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   4
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   244
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
    End
    Begin Listbox HTTPForm
       AutoDeactivate  =   True
@@ -174,10 +111,10 @@ Begin Window FormGenerator
       InitialValue    =   "Form Element	Value"
       Italic          =   False
       Left            =   1
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   False
+      LockRight       =   True
       LockTop         =   True
       RequiresSelection=   False
       Scope           =   0
@@ -208,11 +145,11 @@ Begin Window FormGenerator
       InitialParent   =   ""
       Italic          =   ""
       Left            =   463
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
-      LockTop         =   True
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   6
       TabPanelIndex   =   0
@@ -237,11 +174,11 @@ Begin Window FormGenerator
       InitialParent   =   ""
       Italic          =   ""
       Left            =   463
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   ""
-      LockTop         =   True
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   7
       TabPanelIndex   =   0
@@ -269,11 +206,11 @@ Begin Window FormGenerator
       InitialParent   =   ""
       Italic          =   False
       Left            =   49
-      LockBottom      =   False
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   8
       TabPanelIndex   =   0
@@ -290,16 +227,52 @@ End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Event
-		Sub Open()
-		  Me.Left = Window(1).Left + (Window(1).Width - Me.Width) / 2
-		  Me.Top = Window(1).Top + (Window(1).Height - Me.Height) / 2
+	#tag Method, Flags = &h1
+		Protected Sub Generate()
+		  If FormType1.Value Then
+		    Form = New HTTP.URLEncodedForm("")
+		  Else
+		    Form = New MultipartForm
+		  End If
+		  For i As Integer = 0 To HTTPForm.ListCount - 1
+		    If HTTPForm.RowTag(i) <> Nil And HTTPForm.RowTag(i) IsA FolderItem Then
+		      Dim f As FolderItem = HTTPForm.RowTag(i)
+		      If Form IsA MultipartForm Then
+		        Form.Element(HTTPForm.Cell(i, 0)) = f
+		      Else
+		        Form.Element(HTTPForm.Cell(i, 0)) = f.AbsolutePath
+		        MsgBox("This form encoding cannot encode files. Form element '" + f.AbsolutePath + "' has been truncated.")
+		      End If
+		    Else
+		      Form.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
+		    End If
+		  Next
+		  Call Form.ToString
+		  RaiseEvent FormGenerated(Form, Form.Type)
 		End Sub
-	#tag EndEvent
+	#tag EndMethod
 
+	#tag Method, Flags = &h21
+		Private Function PurgeForm(Source As HTTP.FormInterface) As HTTP.URLEncodedForm
+		  Dim f As New HTTP.URLEncodedForm("")
+		  Dim c As Integer = Source.Count - 1
+		  
+		  For i As Integer = 0 To c
+		    Dim name As String = Source.Name(i)
+		    Dim v As Variant = Source.Element(name)
+		    If v IsA FolderItem Then
+		      f.Element(name) = FolderItem(v).AbsolutePath
+		    Else
+		      f.Element(name) = v
+		    End If
+		  Next
+		  
+		  Return f
+		End Function
+	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function SetFormData(OldForm As HTTP.FormInterface) As HTTP.FormInterface
+		Sub SetFormData(OldForm As HTTP.FormInterface)
 		  Me.Form = Nil
 		  HTTPForm.DeleteAllRows
 		  If OldForm <> Nil Then
@@ -326,11 +299,13 @@ End
 		      HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
 		    Next
 		  End If
-		  
-		  Self.ShowModal()
-		  Return Form
-		End Function
+		End Sub
 	#tag EndMethod
+
+
+	#tag Hook, Flags = &h0
+		Event FormGenerated(Form As HTTP.FormInterface, FormType As HTTP.ContentType)
+	#tag EndHook
 
 
 	#tag Property, Flags = &h1
@@ -345,6 +320,7 @@ End
 		Sub Action()
 		  If HTTPForm.ListIndex > -1 And MsgBox("Remove this form element?", 4 + 48, "Confirm removal") = 6 Then
 		    HTTPForm.RemoveRow(HTTPForm.ListIndex)
+		    Generate()
 		  End If
 		End Sub
 	#tag EndEvent
@@ -352,43 +328,19 @@ End
 #tag Events PushButton1
 	#tag Event
 		Sub Action()
-		  HTTPForm.AddRow("New-Form-Element", "New-Form-Value", "")
+		  Dim i As Integer = 1
+		  Dim nm As String = "New-Form-Element"
+		  Dim name As String = nm
+		  If Form <> Nil Then
+		    Do Until Not Form.HasElement(name)
+		      name = nm + Str(i)
+		      i = i + 1
+		    Loop
+		  End If
+		  HTTPForm.AddRow(name, "New-Form-Value", "")
 		  HTTPForm.CellType(HTTPForm.LastIndex, 0) = Listbox.TypeEditable
 		  HTTPForm.EditCell(HTTPForm.LastIndex, 0)
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButton3
-	#tag Event
-		Sub Action()
-		  If FormType1.Value Then
-		    Form = New HTTP.URLEncodedForm("")
-		  Else
-		    Form = New MultipartForm
-		  End If
-		  For i As Integer = 0 To HTTPForm.ListCount - 1
-		    If HTTPForm.RowTag(i) <> Nil And HTTPForm.RowTag(i) IsA FolderItem Then
-		      Dim f As FolderItem = HTTPForm.RowTag(i)
-		      If Form IsA MultipartForm Then
-		        Form.Element(HTTPForm.Cell(i, 0)) = f
-		      Else
-		        Form.Element(HTTPForm.Cell(i, 0)) = f.AbsolutePath
-		        MsgBox("This form encoding cannot encode files. Form element '" + f.AbsolutePath + "' has been truncated.")
-		      End If
-		    Else
-		      Form.Element(HTTPForm.Cell(i, 0)) = HTTPForm.Cell(i, 1)
-		    End If
-		  Next
-		  
-		  Self.Close
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButton4
-	#tag Event
-		Sub Action()
-		  Form = Nil
-		  Self.Close
+		  Generate()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -400,18 +352,77 @@ End
 		  Me.EditCell(row, column)
 		End Function
 	#tag EndEvent
+	#tag Event
+		Sub CellAction(row As Integer, column As Integer)
+		  Generate()
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  If Me.ListCount > 0 Then
+		    base.Append(New MenuItem("Reset form"))
+		    Return True
+		  End If
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ContextualMenuAction(hitItem as MenuItem) As Boolean
+		  Select Case hitItem.Text
+		  Case "Reset form"
+		    SetFormData(Nil)
+		    Generate()
+		  End Select
+		  
+		  Return True
+		End Function
+	#tag EndEvent
 #tag EndEvents
 #tag Events FormType
 	#tag Event
 		Sub Action()
-		  Form = New MultipartForm
+		  If Form <> Nil Then
+		    If Form IsA HTTP.MultipartForm Then
+		      Form = Form
+		    ElseIf Form IsA HTTP.URLEncodedForm Then
+		      Dim f As HTTP.MultipartForm = Form
+		      Form = f
+		    End If
+		  Else
+		    Form = New HTTP.MultipartForm
+		  End If
+		  SetFormData(Form)
+		  Generate()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events FormType1
 	#tag Event
 		Sub Action()
-		  Form = New HTTP.URLEncodedForm("")
+		  If Form <> Nil Then
+		    If Form IsA HTTP.URLEncodedForm Then
+		      Form = Form
+		    ElseIf Form IsA HTTP.MultipartForm Then
+		      Dim f As HTTP.URLEncodedForm
+		      Try
+		        f = Form
+		      Catch Err As UnsupportedFormatException
+		        f = New HTTP.URLEncodedForm("")
+		        If MsgBox( _
+		          "Warning: converting this form to '" + f.Type.ToString + _
+		          "' will cause data loss. Are you sure you want to continue?", 48 + 4, "Incompatible form value") = 6 Then
+		          f = PurgeForm(Form)
+		        Else
+		          FormType.Value = True
+		          Return
+		        End If
+		      End Try
+		      Form = f
+		    End If
+		  Else
+		    Form = New HTTP.URLEncodedForm("")
+		  End If
+		  SetFormData(Form)
+		  Generate()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -430,6 +441,7 @@ End
 		    HTTPForm.AddRow(f.Name, f.AbsolutePath, "")
 		    HTTPForm.RowTag(HTTPForm.LastIndex) = f
 		  End If
+		  Generate()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
