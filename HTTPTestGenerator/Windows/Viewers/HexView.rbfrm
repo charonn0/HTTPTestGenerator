@@ -113,12 +113,19 @@ End
 
 
 	#tag Method, Flags = &h0
+		Sub ViewRaw(Message As BinaryStream, Type As HTTP.ContentType, ContentLen As Integer)
+		  // Part of the Viewer interface.
+		  HexViewer1.ShowData(Message)
+		  mContentLength = ContentLen
+		  mType = Type
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
 		  // Part of the Viewer interface.
 		  Dim bs As New BinaryStream(Message)
-		  HexViewer1.ShowData(bs)
-		  mContentLength = ContentLen
-		  mType = Type
+		  Me.ViewRaw(bs, Type, ContentLen)
 		End Sub
 	#tag EndMethod
 
