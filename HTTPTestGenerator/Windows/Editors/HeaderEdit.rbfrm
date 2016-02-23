@@ -356,6 +356,10 @@ End
 		    If OldHeader.Right IsA Date Then
 		      HeaderValue.Text = HTTP.DateString(OldHeader.Right.DateValue)
 		      IsADate = True
+		      
+		    ElseIf OldHeader.Right IsA ContentType Then
+		      Dim c As ContentType = OldHeader.Right
+		      HeaderValue.Text = c.ToString
 		    Else
 		      HeaderValue.Text = OldHeader.Right
 		    End If
