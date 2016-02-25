@@ -1359,6 +1359,15 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag Events EditURIBtn
+	#tag Event
+		Sub Action()
+		  Dim u As URI = URL.Text
+		  u = URIEditor.ShowURI(u)
+		  If u <> Nil Then URL.Text = u.ToString
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events NoBodyView
 	#tag Event
 		Sub Paint(g As Graphics)
@@ -1490,15 +1499,6 @@ End
 	#tag Event
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events EditURIBtn
-	#tag Event
-		Sub Action()
-		  Dim u As URI = URL.Text
-		  u = URIEditor.ShowURI(u)
-		  If u <> Nil Then URL.Text = u.ToString
 		End Sub
 	#tag EndEvent
 #tag EndEvents

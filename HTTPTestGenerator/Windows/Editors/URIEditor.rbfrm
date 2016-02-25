@@ -20,7 +20,7 @@ Begin Window URIEditor
    MinimizeButton  =   False
    MinWidth        =   64
    Placement       =   1
-   Resizeable      =   False
+   Resizeable      =   True
    Title           =   "URI Editor"
    Visible         =   True
    Width           =   4.92e+2
@@ -86,7 +86,7 @@ Begin Window URIEditor
       HeadingIndex    =   -1
       Height          =   128
       HelpTag         =   ""
-      Hierarchical    =   ""
+      Hierarchical    =   True
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   "URI Part	Value"
@@ -129,11 +129,11 @@ Begin Window URIEditor
       InitialParent   =   ""
       Italic          =   ""
       Left            =   252
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
-      LockTop         =   True
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   1
       TabPanelIndex   =   0
@@ -160,11 +160,11 @@ Begin Window URIEditor
       InitialParent   =   ""
       Italic          =   ""
       Left            =   175
-      LockBottom      =   ""
+      LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   True
+      LockLeft        =   True
+      LockRight       =   False
+      LockTop         =   False
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
@@ -184,23 +184,23 @@ End
 	#tag Method, Flags = &h1
 		Protected Sub Parse(URL As String)
 		  Listbox1.DeleteAllRows
-		  If URL.Trim = "" Then 
+		  If URL.Trim = "" Then
 		    mResult = Nil
 		    Return
 		  End If
 		  
 		  mResult = URL
-		  If mResult.Scheme <> "" Then 
+		  If mResult.Scheme <> "" Then
 		    Listbox1.AddRow("Scheme", mResult.Scheme)
 		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
 		  End If
 		  
-		  If mResult.Username <> "" Then 
+		  If mResult.Username <> "" Then
 		    Listbox1.AddRow("Username", mResult.Username)
 		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
 		  End If
 		  
-		  If mResult.Password <> "" Then 
+		  If mResult.Password <> "" Then
 		    Listbox1.AddRow("Password", mResult.Password)
 		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
 		  End If
@@ -214,22 +214,26 @@ End
 		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
 		  End If
 		  
-		  If mResult.Port > 0 Then 
+		  If mResult.Port > 0 Then
 		    Listbox1.AddRow("Port", Format(mResult.Port, "######"))
-		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
+		  ElseIf mResult.Scheme <> "" And URIHelpers.SchemeToPort(mResult.Scheme) > 0 Then
+		    Listbox1.AddRow("Port", Format(URIHelpers.SchemeToPort(mResult.Scheme), "######"))
+		  Else
+		    Listbox1.AddRow("Port", "")
 		  End If
+		  Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
 		  
-		  If mResult.Path <> Nil Then 
+		  If mResult.Path <> Nil Then
 		    Listbox1.AddRow("Path", mResult.Path.ToString(False))
 		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
 		  End If
 		  
 		  If mResult.Arguments <> Nil Then
-		    Listbox1.AddRow("Arguments", mResult.Arguments.ToString)
-		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
+		    Listbox1.AddFolder("Arguments")
+		    Listbox1.RowTag(Listbox1.LastIndex) = mResult.Arguments
 		  End If
 		  
-		  If mResult.Fragment <> "" Then 
+		  If mResult.Fragment <> "" Then
 		    Listbox1.AddRow("Fragment", mResult.Fragment)
 		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
 		  End If
@@ -328,7 +332,11 @@ End
 		    Case "IP", "Host"
 		      u.Host = Me.Cell(row, column)
 		    Case "Port"
-		      u.Port = Val(Me.Cell(row, column))
+		      If Me.Cell(row, column).Trim = "" Then
+		        u.Port = -1
+		      Else
+		        u.Port = Val(Me.Cell(row, column))
+		      End If
 		    Case "Path"
 		      u.Path = Me.Cell(row, column)
 		    Case "Arguments"
@@ -338,6 +346,26 @@ End
 		    End Select
 		    TextField1.Text = u.ToString
 		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub ExpandRow(row As Integer)
+		  Select Case Me.Cell(row, 0)
+		  Case "Arguments"
+		    Dim a As URIHelpers.Arguments = Me.RowTag(row)
+		    If a = Nil Then Return
+		    Dim c As Integer = a.Count - 1
+		    For i As Integer = c DownTo 0
+		      Dim n, v As String
+		      n = a.Name(i)
+		      v = a.Value(i)
+		      Me.InsertRow(row, n, 1)
+		      Me.CellType(Me.LastIndex, 0) = Listbox.TypeEditable
+		      If v.Trim <> "" Then Me.Cell(Me.LastIndex, 1) = v
+		      Me.CellType(Me.LastIndex, 1) = Listbox.TypeEditable
+		      
+		    Next
+		  End Select
 		End Sub
 	#tag EndEvent
 #tag EndEvents
