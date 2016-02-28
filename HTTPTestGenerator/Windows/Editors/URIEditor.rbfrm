@@ -359,7 +359,7 @@ End
 		      Dim n, v As String
 		      n = a.Name(i)
 		      v = a.Value(i)
-		      Me.InsertRow(row, n, 1)
+		      Me.InsertRow(row + 1, n, 1)
 		      Me.CellType(Me.LastIndex, 0) = Listbox.TypeEditable
 		      If v.Trim <> "" Then Me.Cell(Me.LastIndex, 1) = v
 		      Me.CellType(Me.LastIndex, 1) = Listbox.TypeEditable
