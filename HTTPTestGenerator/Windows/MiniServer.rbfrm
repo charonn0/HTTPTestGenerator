@@ -463,6 +463,14 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h21
+		Private Sub HTTPMessageDebugHandler(Sender As HTTP.Message, Message As String, Level As Integer)
+		  #pragma Unused Sender
+		  msgs.Append(Level:Message.Trim + HTTP.CRLF)
+		  LogTimer.Mode = Timer.ModeSingle
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h1
 		Protected Sub KillAllClients()
 		  For i As Integer = 0 To UBound(Socks)
@@ -538,6 +546,7 @@ End
 		Private Sub MessageSentHandler(Sender As HTTP.ClientHandler, Message As HTTP.Response)
 		  #pragma Unused Sender
 		  msgs.Append(Message)
+		  AddHandler Message.HTTPDebug, WeakAddressOf HTTPMessageDebugHandler
 		  LogTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndMethod
