@@ -29,17 +29,13 @@ Protected Class Arguments
 
 	#tag Method, Flags = &h0
 		Function Name(Index As Integer) As String
-		  If EncodeArguments Then
-		    Return EncodeURLComponent(mArgs(Index).Left)
-		  Else
-		    Return mArgs(Index).Left
-		  End If
+		  Return mArgs(Index).Left
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub Name(Index As Integer, Assigns NewName As String)
-		  mArgs(Index) = NewName:mArgs(Index).Right
+		  mArgs(Index) = DecodeURLComponent(NewName):mArgs(Index).Right
 		End Sub
 	#tag EndMethod
 
@@ -51,7 +47,7 @@ Protected Class Arguments
 		    l = NthField(a(i), "=", 1)
 		    r = Right(a(i), a(i).Len - (l.Len + 1)).Trim
 		    l = l.Trim
-		    mArgs.Append(l:r)
+		    mArgs.Append(DecodeURLComponent(l):DecodeURLComponent(r))
 		  Next
 		End Sub
 	#tag EndMethod
@@ -81,8 +77,8 @@ Protected Class Arguments
 		    Dim acount As Integer = Me.Count
 		    For i As Integer = 0 To acount - 1
 		      If i > 0 Then args = args + "&"
-		      args = args + Me.Name(i)
-		      If Me.Value(i) <> "" Then args = args + "=" + Me.Value(i)
+		      args = args + EncodeURLComponent(Me.Name(i))
+		      If Me.Value(i) <> "" Then args = args + "=" + EncodeURLComponent(Me.Value(i))
 		    Next
 		    Return args
 		  End If
@@ -91,24 +87,16 @@ Protected Class Arguments
 
 	#tag Method, Flags = &h0
 		Function Value(Index As Integer) As String
-		  If EncodeArguments Then
-		    Return EncodeURLComponent(mArgs(Index).Right)
-		  Else
-		    Return mArgs(Index).Right
-		  End If
+		  Return mArgs(Index).Right
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Sub Value(Index As Integer, Assigns NewValue As String)
-		  mArgs(Index) = mArgs(Index).Left:NewValue
+		  mArgs(Index) = mArgs(Index).Left:DecodeURLComponent(NewValue)
 		End Sub
 	#tag EndMethod
 
-
-	#tag Property, Flags = &h0
-		EncodeArguments As Boolean = False
-	#tag EndProperty
 
 	#tag Property, Flags = &h1
 		Protected mArgs() As Pair
