@@ -878,6 +878,7 @@ End
 		    End Select
 		  Next
 		  URL.Text = NextRequest.Path.ToString
+		  Formtype = NextRequest.ContentType.Accepts("multipart/form-data")
 		End Sub
 	#tag EndMethod
 
