@@ -134,9 +134,26 @@ Protected Class Message
 		Protected mHeaders As Headers
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		Path As URIHelpers.URI
+	#tag Property, Flags = &h21
+		Private mPath As URIHelpers.URI
 	#tag EndProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  If mPath = Nil Then 
+			    mPath = ""
+			  End If
+			  return mPath
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mPath = value
+			End Set
+		#tag EndSetter
+		Path As URIHelpers.URI
+	#tag EndComputedProperty
 
 	#tag Property, Flags = &h0
 		ProtocolVersion As Single = 1.1
