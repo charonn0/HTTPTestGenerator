@@ -51,16 +51,12 @@ Inherits HTTP.Message
 		    If Me.StatusCode = 418 Then p = "HTCPCP/" ' This breaks browsers
 		  #endif
 		  If HeadersOnly Then
-		    If mHeaders.Count > 0 Then RaiseEvent HTTPDebug("Warn: This response contains no headers.", -1)
+		    If mHeaders.Count <= 0 Then RaiseEvent HTTPDebug("Warn: This response contains no headers.", -1)
 		    If Me.HasHeader("Transfer-Encoding") And (Me.StatusCode < 200 Or Me.StatusCode = 204) Then
 		      'http://tools.ietf.org/html/rfc7230#section-3.3.1
 		      RaiseEvent HTTPDebug("Warning: The 'Transfer-Encoding' header is illegal in this context.", -1)
 		    End If
 		  End If
-		  RaiseEvent HTTPDebug("Warn: This is a test.", -1)
-		  RaiseEvent HTTPDebug("Warning: This is a test.", -1)
-		  RaiseEvent HTTPDebug("Alert: This is a test.", -1)
-		  RaiseEvent HTTPDebug("Information: This is a test.", -1)
 		  Return p + Format(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF + Super.ToString(HeadersOnly)'
 		  
 		End Function
