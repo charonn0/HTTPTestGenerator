@@ -120,7 +120,6 @@ Begin Window MiniServer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
       TextColor       =   "&c00000000"
@@ -165,7 +164,6 @@ Begin Window MiniServer
       Width           =   80
    End
    Begin ServerSocket Socket
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -174,11 +172,8 @@ Begin Window MiniServer
       MinimumSocketsAvailable=   2
       Port            =   0
       Scope           =   0
-      TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   0
-      Visible         =   True
       Width           =   32
    End
    Begin HREFArea HTTPLog
@@ -228,7 +223,6 @@ Begin Window MiniServer
       Width           =   583
    End
    Begin Timer LogTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -236,15 +230,11 @@ Begin Window MiniServer
       Mode            =   0
       Period          =   1
       Scope           =   0
-      TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   34
-      Visible         =   True
       Width           =   32
    End
    Begin Timer ListenTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   619
@@ -252,11 +242,8 @@ Begin Window MiniServer
       Mode            =   0
       Period          =   1
       Scope           =   0
-      TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   67
-      Visible         =   True
       Width           =   32
    End
    Begin ComboBox SecurityLevel
@@ -323,6 +310,33 @@ Begin Window MiniServer
       Visible         =   True
       Width           =   98
    End
+   Begin Canvas Activity
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      DoubleBuffer    =   True
+      Enabled         =   True
+      EraseBackground =   False
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   476
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   False
+      Scope           =   0
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   301
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   20
+   End
 End
 #tag EndWindow
 
@@ -356,7 +370,15 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
+		Private Sub DoActivity()
+		  Active = True
+		  Activity.Invalidate(False)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
 		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
+		  DoActivity()
 		  Dim sessid As String = ClientRequest.Cookie("SessionID")
 		  If sessid <> "" Then
 		    Dim cache As Dictionary = mSessionCache.Lookup(sessid, New Dictionary)
@@ -545,6 +567,7 @@ End
 	#tag Method, Flags = &h21
 		Private Sub MessageSentHandler(Sender As HTTP.ClientHandler, Message As HTTP.Response)
 		  #pragma Unused Sender
+		  DoActivity()
 		  msgs.Append(Message)
 		  AddHandler Message.HTTPDebug, WeakAddressOf HTTPMessageDebugHandler
 		  LogTimer.Mode = Timer.ModeSingle
@@ -559,6 +582,10 @@ End
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h21
+		Private Active As Boolean
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		AuthenticationPass As String
@@ -705,6 +732,7 @@ End
 		    sr.Text = "Server stopped." + CRLF + CRLF
 		    HTTPLog.PrintOther(sr)
 		  End If
+		  DoActivity()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -726,6 +754,7 @@ End
 		  sr.Text = ": " + r + CRLF + CRLF
 		  HTTPLog.PrintOther(sr)
 		  KillAllClients()
+		  DoActivity()
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -758,6 +787,8 @@ End
 		  sock.AuthenticationRealm = AuthenticationRealm
 		  sock.EnforceContentType = EnforceContentType
 		  socks.Append(New WeakRef(sock))
+		  Active = False
+		  Activity.Invalidate(False)
 		  Return sock
 		End Function
 	#tag EndEvent
@@ -856,7 +887,8 @@ End
 		      Break
 		    End Select
 		  Wend
-		  
+		  Active = False
+		  Activity.Invalidate(False)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -880,6 +912,7 @@ End
 		    Socket.Listen
 		    Me.Mode = Timer.ModeOff
 		  End If
+		  DoActivity()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -916,6 +949,23 @@ End
 		  Else
 		    AuthenticationRequired = False
 		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Activity
+	#tag Event
+		Sub Paint(g As Graphics)
+		  Dim p As Picture
+		  Select Case True
+		  Case Active
+		    p = greenledonmd
+		  Case Socket.IsListening
+		    p = greenledoffmd
+		  Else
+		    p = greenledoffdisabledmd
+		  End Select
+		  g.DrawPicture(p, 0, 0)
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents
