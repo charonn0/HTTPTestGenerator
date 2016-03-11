@@ -230,6 +230,8 @@ End
 		  
 		  If mResult.Arguments <> Nil Then
 		    Listbox1.AddFolder("Arguments")
+		    Listbox1.Cell(Listbox1.LastIndex, 1) = mResult.Arguments.ToString
+		    Listbox1.CellType(Listbox1.LastIndex, 1) = Listbox.TypeEditable
 		    Listbox1.RowTag(Listbox1.LastIndex) = mResult.Arguments
 		  End If
 		  
@@ -340,7 +342,9 @@ End
 		    Case "Path"
 		      u.Path = Me.Cell(row, column)
 		    Case "Arguments"
-		      u.Arguments = Me.Cell(row, column)
+		      Dim args As String = Me.Cell(row, column)
+		      If Left(args, 1) = "?" Then args = Replace(args, "?", "")
+		      u.Arguments = args
 		    Case "Fragment"
 		      u.Fragment = Me.Cell(row, column)
 		    End Select
