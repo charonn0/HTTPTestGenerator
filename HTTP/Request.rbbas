@@ -124,15 +124,30 @@ Inherits HTTP.Message
 
 	#tag Method, Flags = &h0
 		Function ToString(HeadersOnly As Boolean = false) As String
-		  Dim p As New HTTP.URI(Path)
+		  Dim p As URI = Path.ToString
 		  p.Scheme = ""
 		  p.Host = ""
 		  Dim data As String = MethodName + " " + p.ToString + " " + "HTTP/" + Format(ProtocolVersion, "#.0") + CRLF
 		  If HeadersOnly Then
 		    Dim msgsz As Integer = Me.MessageBody.LenB
 		    If mHeaders.Count <= 0 And mHeaders.CookieCount <= 0 Then RaiseEvent HTTPDebug("Warning: This request contains no headers.", -1)
+		    If Me.HasHeader("Content-Length") Then
+		      If Val(Me.Header("Content-Length")) <> msgsz Then 
+		        RaiseEvent HTTPDebug("Warning: The 'Content-Length' header does not match the message body's length.", -1)
+		      End If
+		    ElseIf msgsz > 0 Then
+		      RaiseEvent HTTPDebug("Alert: No length specified for the message body.", -1)
+		    End If
 		    
-		    If msgsz > 0 And Not Me.HasHeader("Content-Length") Then RaiseEvent HTTPDebug("Alert: No length specified for the message body.", -1)
+		    For Each h As String In Array("Location", "Host", "Referer")
+		      If Not Me.HasHeader(h) Then Continue
+		      Dim target As URI = Me.Header(h)
+		      If target.Username <> "" Or target.Password <> "" Then
+		        'http://tools.ietf.org/html/rfc7230#section-2.7.1
+		        RaiseEvent HTTPDebug("Warning: The URL specified by a '" + h + "' header must not include the username or password components.", -1)
+		      End If
+		    Next
+		    
 		    If msgsz = 0 And Me.Header("Expect") = "100-Continue" Then
 		      'http://tools.ietf.org/html/rfc7231#section-5.1.1
 		      RaiseEvent HTTPDebug("Warning: The 'Expect: 100-Continue' header is illegal if the request does not include a message body.", -1)
@@ -155,7 +170,7 @@ Inherits HTTP.Message
 		      
 		    Case "POST"
 		      If msgsz = 0 Then RaiseEvent HTTPDebug("Alert: This POST request does not contain a message body.", -1)
-		      If Not Me.HasHeader("Content-Type") Then RaiseEvent HTTPDebug("Alert: This POST request does not specify the Content-Type of the message body..", -1)
+		      If Not Me.HasHeader("Content-Type") Then RaiseEvent HTTPDebug("Alert: This POST request does not specify the Content-Type of the message body.", -1)
 		      
 		    End Select
 		    

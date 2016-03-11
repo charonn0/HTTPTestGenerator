@@ -310,6 +310,33 @@ Begin Window MiniServer
       Visible         =   True
       Width           =   98
    End
+   Begin Canvas Activity
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      DoubleBuffer    =   True
+      Enabled         =   True
+      EraseBackground =   False
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   476
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   False
+      Scope           =   0
+      TabIndex        =   14
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   301
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   20
+   End
 End
 #tag EndWindow
 
@@ -343,7 +370,15 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
+		Private Sub DoActivity()
+		  Active = True
+		  Activity.Invalidate(False)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
 		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
+		  DoActivity()
 		  Dim sessid As String = ClientRequest.Cookie("SessionID")
 		  If sessid <> "" Then
 		    Dim cache As Dictionary = mSessionCache.Lookup(sessid, New Dictionary)
@@ -375,7 +410,7 @@ End
 		  
 		  Select Case ClientRequest.Method
 		  Case RequestMethod.GET, RequestMethod.HEAD
-		    Dim item As FolderItem = HTTP.FindFile(Me.DocumentRoot, ClientRequest.Path.Path)
+		    Dim item As FolderItem = HTTP.FindFile(Me.DocumentRoot, ClientRequest.Path.Path.ToString)
 		    If item <> Nil And Not item.Exists Then item = Nil
 		    
 		    Select Case True
@@ -395,7 +430,7 @@ End
 		        HTTP.DirectoryIndex(ResponseDocument).Populate
 		      End If
 		      
-		    Case ClientRequest.Path.Path = "/" And Not item.Directory
+		    Case ClientRequest.Path.Path.ToString = "/" And Not item.Directory
 		      Dim location As String
 		      If Not Sender.Secure Then
 		        location = "http://" + Sender.LocalAddress + ":" + Format(Sender.Port, "######") + "/" + Item.Name
@@ -444,6 +479,14 @@ End
 
 	#tag Method, Flags = &h21
 		Private Sub HTTPDebugHandler(Sender As HTTP.ClientHandler, Message As String, Level As Integer)
+		  #pragma Unused Sender
+		  msgs.Append(Level:Message.Trim + HTTP.CRLF)
+		  LogTimer.Mode = Timer.ModeSingle
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub HTTPMessageDebugHandler(Sender As HTTP.Message, Message As String, Level As Integer)
 		  #pragma Unused Sender
 		  msgs.Append(Level:Message.Trim + HTTP.CRLF)
 		  LogTimer.Mode = Timer.ModeSingle
@@ -524,7 +567,9 @@ End
 	#tag Method, Flags = &h21
 		Private Sub MessageSentHandler(Sender As HTTP.ClientHandler, Message As HTTP.Response)
 		  #pragma Unused Sender
+		  DoActivity()
 		  msgs.Append(Message)
+		  AddHandler Message.HTTPDebug, WeakAddressOf HTTPMessageDebugHandler
 		  LogTimer.Mode = Timer.ModeSingle
 		End Sub
 	#tag EndMethod
@@ -537,6 +582,10 @@ End
 		End Sub
 	#tag EndMethod
 
+
+	#tag Property, Flags = &h21
+		Private Active As Boolean
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		AuthenticationPass As String
@@ -683,6 +732,7 @@ End
 		    sr.Text = "Server stopped." + CRLF + CRLF
 		    HTTPLog.PrintOther(sr)
 		  End If
+		  DoActivity()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -704,6 +754,7 @@ End
 		  sr.Text = ": " + r + CRLF + CRLF
 		  HTTPLog.PrintOther(sr)
 		  KillAllClients()
+		  DoActivity()
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -736,6 +787,8 @@ End
 		  sock.AuthenticationRealm = AuthenticationRealm
 		  sock.EnforceContentType = EnforceContentType
 		  socks.Append(New WeakRef(sock))
+		  Active = False
+		  Activity.Invalidate(False)
 		  Return sock
 		End Function
 	#tag EndEvent
@@ -755,8 +808,8 @@ End
 		  Case LinkValue IsA HTTP.Response
 		    RawViewer.ViewRaw(HTTP.Response(LinkValue))
 		    
-		  Case LinkValue IsA HTTP.URI
-		    Dim u As HTTP.URI = HTTP.URI(LinkValue)
+		  Case LinkValue IsA URIHelpers.URI
+		    Dim u As URIHelpers.URI = URIHelpers.URI(LinkValue)
 		    If u.Scheme = "" Then u.Scheme = "http"
 		    If u.Scheme = "https" Then ' client doesn't work with https ATM
 		      ShowURL(u.ToString)
@@ -834,7 +887,8 @@ End
 		      Break
 		    End Select
 		  Wend
-		  
+		  Active = False
+		  Activity.Invalidate(False)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -850,7 +904,7 @@ End
 		    sr.Bold = False
 		    sr.Text = Socket.NetworkInterface.IPAddress + ":" + Format(Socket.Port, "####0")
 		    sr.Underline = True
-		    Dim u As HTTP.URI = sr.Text
+		    Dim u As URIHelpers.URI = sr.Text
 		    HTTPLog.PrintOther(sr, u)
 		    sr.Underline = False
 		    sr.Text = CRLF + CRLF
@@ -858,6 +912,7 @@ End
 		    Socket.Listen
 		    Me.Mode = Timer.ModeOff
 		  End If
+		  DoActivity()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -894,6 +949,23 @@ End
 		  Else
 		    AuthenticationRequired = False
 		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events Activity
+	#tag Event
+		Sub Paint(g As Graphics)
+		  Dim p As Picture
+		  Select Case True
+		  Case Active
+		    p = greenledonmd
+		  Case Socket.IsListening
+		    p = greenledoffmd
+		  Else
+		    p = greenledoffdisabledmd
+		  End Select
+		  g.DrawPicture(p, 0, 0)
+		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

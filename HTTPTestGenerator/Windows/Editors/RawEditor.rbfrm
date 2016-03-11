@@ -1,27 +1,26 @@
 #tag Window
-Begin Window RawEditor
+Begin ContainerControl RawEditor
+   AcceptFocus     =   ""
+   AcceptTabs      =   True
+   AutoDeactivate  =   True
    BackColor       =   &h00FFFFFF
    Backdrop        =   0
-   CloseButton     =   False
-   Composite       =   False
-   Frame           =   1
-   FullScreen      =   False
+   Enabled         =   True
+   EraseBackground =   True
    HasBackColor    =   False
    Height          =   400
-   ImplicitInstance=   True
-   LiveResize      =   True
-   MacProcID       =   0
-   MaxHeight       =   32000
-   MaximizeButton  =   False
-   MaxWidth        =   32000
-   MenuBar         =   0
-   MenuBarVisible  =   True
-   MinHeight       =   64
-   MinimizeButton  =   False
-   MinWidth        =   64
-   Placement       =   1
-   Resizeable      =   False
-   Title           =   "Raw Edit"
+   HelpTag         =   ""
+   InitialParent   =   ""
+   Left            =   ""
+   LockBottom      =   ""
+   LockLeft        =   ""
+   LockRight       =   ""
+   LockTop         =   ""
+   TabIndex        =   0
+   TabPanelIndex   =   0
+   TabStop         =   True
+   Top             =   ""
+   UseFocusRing    =   ""
    Visible         =   True
    Width           =   600
    Begin TextArea TextArea1
@@ -36,7 +35,7 @@ Begin Window RawEditor
       DataSource      =   ""
       Enabled         =   True
       Format          =   ""
-      Height          =   370
+      Height          =   400
       HelpTag         =   ""
       HideSelection   =   True
       Index           =   -2147483648
@@ -69,110 +68,28 @@ Begin Window RawEditor
       Visible         =   True
       Width           =   600
    End
-   Begin PushButton PushButton2
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   0
-      Cancel          =   True
-      Caption         =   "Cancel"
-      Default         =   False
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   214
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   2
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   371
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
-   Begin PushButton PushButton1
-      AutoDeactivate  =   True
-      Bold            =   False
-      ButtonStyle     =   0
-      Cancel          =   False
-      Caption         =   "OK"
-      Default         =   True
-      Enabled         =   True
-      Height          =   22
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   False
-      Left            =   306
-      LockBottom      =   False
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   False
-      LockTop         =   True
-      Scope           =   0
-      TabIndex        =   3
-      TabPanelIndex   =   0
-      TabStop         =   True
-      TextFont        =   "System"
-      TextSize        =   0.0
-      TextUnit        =   0
-      Top             =   371
-      Underline       =   False
-      Visible         =   True
-      Width           =   80
-   End
 End
 #tag EndWindow
 
 #tag WindowCode
-	#tag Event
-		Sub Open()
-		  Me.Left = Window(1).Left + (Window(1).Width - Me.Width) / 2
-		  Me.Top = Window(1).Top + (Window(1).Height - Me.Height) / 2
-		End Sub
-	#tag EndEvent
-
-
 	#tag Method, Flags = &h0
-		Function EditRaw(Message As String) As String
-		  NewRaw = Message
-		  TextArea1.Text = NewRaw
-		  Me.ShowModal
-		  Return NewRaw
-		End Function
+		Sub EditRaw(Message As String)
+		  TextArea1.Text = Message
+		End Sub
 	#tag EndMethod
 
 
-	#tag Property, Flags = &h21
-		Private NewRaw As String
-	#tag EndProperty
+	#tag Hook, Flags = &h0
+		Event BodyChanged(RawData As MemoryBlock)
+	#tag EndHook
 
 
 #tag EndWindowCode
 
-#tag Events PushButton2
+#tag Events TextArea1
 	#tag Event
-		Sub Action()
-		  NewRaw = ""
-		  Self.Close
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events PushButton1
-	#tag Event
-		Sub Action()
-		  NewRaw = ReplaceLineEndings(TextArea1.Text, CRLF)
-		  Self.Close
+		Sub TextChange()
+		  RaiseEvent BodyChanged(Me.Text)
 		End Sub
 	#tag EndEvent
 #tag EndEvents

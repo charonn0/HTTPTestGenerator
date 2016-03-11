@@ -41,7 +41,7 @@ Begin ContainerControl RequestMain
       GridLinesVertical=   0
       HasHeading      =   True
       HeadingIndex    =   -1
-      Height          =   355
+      Height          =   141
       HelpTag         =   ""
       Hierarchical    =   False
       Index           =   -2147483648
@@ -211,7 +211,7 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   317
+      Left            =   457
       LockBottom      =   ""
       LockedInPosition=   False
       LockLeft        =   False
@@ -226,7 +226,7 @@ Begin ContainerControl RequestMain
       TextFont        =   "System"
       TextSize        =   ""
       TextUnit        =   0
-      Top             =   42
+      Top             =   303
       Underline       =   False
       Value           =   False
       Visible         =   True
@@ -343,7 +343,7 @@ Begin ContainerControl RequestMain
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   False
-      Left            =   295
+      Left            =   316
       LockBottom      =   ""
       LockedInPosition=   False
       LockLeft        =   False
@@ -426,7 +426,105 @@ Begin ContainerControl RequestMain
       Underline       =   ""
       UseFocusRing    =   True
       Visible         =   True
-      Width           =   195
+      Width           =   174
+   End
+   Begin BevelButton EditURIBtn
+      AcceptFocus     =   True
+      AutoDeactivate  =   True
+      BackColor       =   "&c00000000"
+      Bevel           =   0
+      Bold            =   False
+      ButtonType      =   0
+      Caption         =   ""
+      CaptionAlign    =   3
+      CaptionDelta    =   0
+      CaptionPlacement=   1
+      Enabled         =   True
+      HasBackColor    =   False
+      HasMenu         =   0
+      Height          =   22
+      HelpTag         =   "Advanced URI Editor"
+      Icon            =   1644476415
+      IconAlign       =   1
+      IconDX          =   0
+      IconDY          =   0
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   251
+      LockBottom      =   ""
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   True
+      MenuValue       =   0
+      Scope           =   0
+      TabIndex        =   11
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextColor       =   "&c00000000"
+      TextFont        =   "System"
+      TextSize        =   ""
+      TextUnit        =   0
+      Top             =   8
+      Underline       =   False
+      Value           =   False
+      Visible         =   True
+      Width           =   22
+   End
+   Begin MessageBody MessageBody1
+      AcceptFocus     =   ""
+      AcceptTabs      =   True
+      AutoDeactivate  =   True
+      BackColor       =   &hFFFFFF
+      Backdrop        =   ""
+      Enabled         =   True
+      EraseBackground =   True
+      HasBackColor    =   False
+      Height          =   206
+      HelpTag         =   ""
+      InitialParent   =   ""
+      Left            =   5
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   False
+      Scope           =   0
+      TabIndex        =   12
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   219
+      UseFocusRing    =   ""
+      Visible         =   True
+      Width           =   354
+   End
+   Begin Splitter Splitter1
+      AcceptFocus     =   ""
+      AcceptTabs      =   ""
+      AutoDeactivate  =   True
+      Backdrop        =   ""
+      DoubleBuffer    =   True
+      Enabled         =   True
+      EraseBackground =   False
+      Height          =   8
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Left            =   0
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   True
+      LockRight       =   True
+      LockTop         =   False
+      Scope           =   0
+      TabIndex        =   13
+      TabPanelIndex   =   0
+      TabStop         =   True
+      Top             =   210
+      UseFocusRing    =   True
+      Visible         =   True
+      Width           =   365
    End
 End
 #tag EndWindow
@@ -450,7 +548,7 @@ End
 
 
 	#tag Method, Flags = &h0
-		Sub AddHistoryItem(URL As HTTP.URI)
+		Sub AddHistoryItem(URL As URIHelpers.URI)
 		  If History = Nil Then History = New Dictionary
 		  Dim u As String = URL.ToString
 		  If Not History.HasKey(u) Then
@@ -480,7 +578,7 @@ End
 		  TmpRequest.ProtocolVersion = CDbl(NthField(ProtocolVer.Text, "/", 2))
 		  
 		  
-		  Dim u As HTTP.URI = URL.Text
+		  Dim u As URIHelpers.URI = URL.Text
 		  If u.Username <> "" Or u.Password <> "" Then
 		    For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
 		      If RequestHeaders.Cell(i, 0) = "Authorization" Then
@@ -497,7 +595,7 @@ End
 		  
 		  TmpRequest.Path = u
 		  TmpRequest.Path.Fragment = ""
-		  If TmpRequest.path.Path = "" Then TmpRequest.path.Path = "/"
+		  If TmpRequest.Path.Path.ToString = "" Then TmpRequest.Path.Path = "/"
 		  
 		  
 		  For i As Integer = 0 To RequestHeaders.ListCount - 1
@@ -506,9 +604,9 @@ End
 		  
 		  If Not TmpRequest.HasHeader("Host") And TmpRequest.ProtocolVersion >= 1.1 Then
 		    If (u.Port <> 80 And u.Scheme = "http") Or (u.Port <> 443 And u.Scheme = "https") Then
-		      TmpRequest.Header("Host") = u.Host + ":" + Format(u.Port, "####0")
+		      TmpRequest.Header("Host") = u.Host.ToString + ":" + Format(u.Port, "####0")
 		    Else
-		      TmpRequest.Header("Host") = u.Host
+		      TmpRequest.Header("Host") = u.Host.ToString
 		    End If
 		  End If
 		  
@@ -547,25 +645,32 @@ End
 	#tag Method, Flags = &h0
 		Sub SetNextRequest(r As HTTP.Request)
 		  NextRequest = r
+		  If NextRequest.Path.Scheme = "" Then
+		    If NextRequest.Path.Port = 443 Then
+		      NextRequest.Path.Scheme = "https"
+		    Else
+		      NextRequest.Path.Scheme = "http"
+		    End If
+		  End If
 		  RequestMethod.Text = r.MethodName
-		  ProtocolVer.Text = "HTTP/" + Format(r.ProtocolVersion, "#.0")
+		  ProtocolVer.Text = "HTTP/" + Format(NextRequest.ProtocolVersion, "#.0")
 		  RequestHeaders.DeleteAllRows
 		  
-		  Dim h As HTTP.Headers = r.Headers
+		  Dim h As HTTP.Headers = NextRequest.Headers
 		  For i As Integer = 0 To h.Count - 1
 		    Select Case h.Name(i)
 		    Case "Cookie"
 		      RequestHeaders.AddRow(h.Name(i), h.Value(i))
 		      Dim c As New HTTP.Cookie(h.Value(i))
 		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = c
-		    Case "Host"
-		      NextRequest.Path.Host = h.Value(i)
+		      
 		    Else
 		      RequestHeaders.AddRow(h.Name(i), h.Value(i))
 		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = h.Name(i):h.Value(i)
 		    End Select
 		  Next
 		  URL.Text = NextRequest.Path.ToString
+		  Formtype = NextRequest.ContentType.Accepts("multipart/form-data")
 		End Sub
 	#tag EndMethod
 
@@ -620,6 +725,14 @@ End
 
 	#tag Property, Flags = &h21
 		Private History As Dictionary
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private MessageBodyDescription As String = "No message body defined"
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private MessageBodyFile As FolderItem
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
@@ -770,137 +883,137 @@ End
 #tag Events EditRaw
 	#tag Event
 		Sub Action()
-		  Dim mnu As New MenuItem("EditRawMenu")
-		  mnu.Append(New MenuItem("Set HTML form..."))
-		  mnu.Append(New MenuItem("Set file..."))
-		  mnu.Append(New MenuItem("Edit raw..."))
-		  mnu.Append(New MenuItem("Save..."))
-		  mnu.Append(New MenuItem("Load..."))
-		  mnu.Append(New MenuItem("Clear all"))
-		  Dim res As MenuItem = mnu.PopUp
-		  If res <> Nil Then
-		    'RaiseEvent Generate()
-		    Select Case res.Text
-		    Case "Set HTML form..."
-		      Dim formgen As New FormGenerator
-		      Dim formraw As Variant
-		      If Not Formtype Then
-		        Dim olddata As HTTP.URLEncodedForm
-		        If NextRequest.MessageBody <> "" Then olddata = New HTTP.URLEncodedForm(NextRequest.MessageBody)
-		        formraw = formgen.SetFormData(olddata)
-		      Else
-		        Try
-		          Dim typ As ContentType = ReadHeader("Content-Type")
-		          formraw = formgen.SetFormData(MultipartForm.FromString(NextRequest.MessageBody, typ.Boundary))
-		        Catch UnsupportedFormatException
-		          formraw = formgen.SetFormData(Nil)
-		        End Try
-		      End If
-		      If formraw IsA MultipartForm Then
-		        Formtype = True
-		      Else
-		        Formtype = False
-		      End If
-		      Dim Type As String
-		      If formraw <> Nil Then
-		        If formraw IsA HTTP.URLEncodedForm Then
-		          If HTTP.URLEncodedForm(formraw).Count = 0 Then Return
-		          NextRequest.MessageBody = HTTP.URLEncodedForm(formraw).ToString
-		          Type = "application/x-www-form-urlencoded"
-		        Else
-		          Dim m As MultipartForm = formraw
-		          If m.Count = 0 Then Return
-		          NextRequest.MessageBody = m.ToString
-		          Type = "multipart/form-data; boundary=" + m.Boundary
-		        End If
-		        
-		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		          If RequestHeaders.Cell(i, 0) = "Content-Type" Then
-		            RequestHeaders.RemoveRow(i)
-		          End If
-		        Next
-		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		          If RequestHeaders.Cell(i, 0) = "Content-Length" Then
-		            RequestHeaders.RemoveRow(i)
-		          End If
-		        Next
-		        RequestHeaders.AddRow("Content-Type", type, "")
-		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Type":type
-		        RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
-		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
-		        NextRequest.ContentType = Type
-		      End If
-		      
-		    Case "Set file..."
-		      Dim f As FolderItem = GetOpenFolderItem("")
-		      If f <> Nil Then
-		        Dim bs As BinaryStream = BinaryStream.Open(f)
-		        NextRequest.MessageBody = bs.Read(bs.Length)
-		        bs.Close
-		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		          If RequestHeaders.Cell(i, 0) = "Content-Type" Then RequestHeaders.RemoveRow(i)
-		        Next
-		        For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		          If RequestHeaders.Cell(i, 0) = "Content-Length" Then RequestHeaders.RemoveRow(i)
-		        Next
-		        Dim type As HTTP.ContentType = HTTP.MIMEType(f)
-		        RequestHeaders.AddRow("Content-Type", type.ToString, "")
-		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Type":type
-		        RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
-		        RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
-		      End If
-		      
-		    Case "Edit raw..."
-		      Dim raw As String = RawEditor.EditRaw(NextRequest.MessageBody)
-		      If raw.Trim = "" Then Return
-		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
-		          RequestHeaders.RemoveRow(i)
-		        End If
-		      Next
-		      NextRequest.MessageBody = raw
-		      RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
-		      RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
-		      
-		    Case "Save..."
-		      If Formtype Then
-		        Dim f As FolderItem = GetSaveFolderItem(FileTypes1.MultipartForm, NextRequest.MethodName)
-		        If f <> Nil Then
-		          Dim bs As BinaryStream = BinaryStream.Create(f, True)
-		          bs.Write("Content-Type: " + NextRequest.ContentType.ToString + HTTP.CRLF + HTTP.CRLF)
-		          bs.Write(NextRequest.MessageBody)
-		          bs.Close
-		        End If
-		        
-		        
-		      Else'If NextRequest.ContentType.Accepts("application/x-www-form-urlencoded") Then
-		        Dim f As FolderItem = GetSaveFolderItem(FileTypes1.URLEncodedForm, NextRequest.MethodName)
-		        If f <> Nil Then
-		          Dim bs As BinaryStream = BinaryStream.Create(f, True)
-		          bs.Write(NextRequest.MessageBody)
-		          bs.Close
-		        End If
-		        
-		        'Else
-		        'Call MsgBox("Unknown form type: " + NextRequest.ContentType.ToString, 16, "Not an HTTP form")
-		      End If
-		      
-		    Case "Load..."
-		      
-		    Case "Clear all"
-		      NextRequest.MessageBody = ""
-		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
-		          RequestHeaders.RemoveRow(i)
-		        End If
-		      Next
-		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		        If RequestHeaders.Cell(i, 0) = "Content-Type" Then
-		          RequestHeaders.RemoveRow(i)
-		        End If
-		      Next
-		    End Select
-		  End If
+		  'Dim mnu As New MenuItem("EditRawMenu")
+		  'mnu.Append(New MenuItem("Set HTML form..."))
+		  'mnu.Append(New MenuItem("Set file..."))
+		  'mnu.Append(New MenuItem("Edit raw..."))
+		  'mnu.Append(New MenuItem("Save..."))
+		  'mnu.Append(New MenuItem("Load..."))
+		  'mnu.Append(New MenuItem("Clear all"))
+		  'Dim res As MenuItem = mnu.PopUp
+		  'If res <> Nil Then
+		  ''RaiseEvent Generate()
+		  'Select Case res.Text
+		  'Case "Set HTML form..."
+		  'Dim formgen As New FormGenerator
+		  'Dim formraw As Variant
+		  'If Not Formtype Then
+		  'Dim olddata As HTTP.URLEncodedForm
+		  'If NextRequest.MessageBody <> "" Then olddata = New HTTP.URLEncodedForm(NextRequest.MessageBody)
+		  'formraw = formgen.SetFormData(olddata)
+		  'Else
+		  'Try
+		  'Dim typ As ContentType = ReadHeader("Content-Type")
+		  'formraw = formgen.SetFormData(MultipartForm.FromString(NextRequest.MessageBody, typ.Boundary))
+		  'Catch UnsupportedFormatException
+		  'formraw = formgen.SetFormData(Nil)
+		  'End Try
+		  'End If
+		  'If formraw IsA MultipartForm Then
+		  'Formtype = True
+		  'Else
+		  'Formtype = False
+		  'End If
+		  'Dim Type As String
+		  'If formraw <> Nil Then
+		  'If formraw IsA HTTP.URLEncodedForm Then
+		  'If HTTP.URLEncodedForm(formraw).Count = 0 Then Return
+		  'NextRequest.MessageBody = HTTP.URLEncodedForm(formraw).ToString
+		  'Type = "application/x-www-form-urlencoded"
+		  'Else
+		  'Dim m As MultipartForm = formraw
+		  'If m.Count = 0 Then Return
+		  'NextRequest.MessageBody = m.ToString
+		  'Type = "multipart/form-data; boundary=" + m.Boundary
+		  'End If
+		  '
+		  'For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		  'If RequestHeaders.Cell(i, 0) = "Content-Type" Then
+		  'RequestHeaders.RemoveRow(i)
+		  'End If
+		  'Next
+		  'For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		  'If RequestHeaders.Cell(i, 0) = "Content-Length" Then
+		  'RequestHeaders.RemoveRow(i)
+		  'End If
+		  'Next
+		  'RequestHeaders.AddRow("Content-Type", type, "")
+		  'RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Type":type
+		  'RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
+		  'RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
+		  'NextRequest.ContentType = Type
+		  'End If
+		  '
+		  'Case "Set file..."
+		  'Dim f As FolderItem = GetOpenFolderItem("")
+		  'If f <> Nil Then
+		  'Dim bs As BinaryStream = BinaryStream.Open(f)
+		  'NextRequest.MessageBody = bs.Read(bs.Length)
+		  'bs.Close
+		  'For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		  'If RequestHeaders.Cell(i, 0) = "Content-Type" Then RequestHeaders.RemoveRow(i)
+		  'Next
+		  'For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		  'If RequestHeaders.Cell(i, 0) = "Content-Length" Then RequestHeaders.RemoveRow(i)
+		  'Next
+		  'Dim type As HTTP.ContentType = HTTP.MIMEType(f)
+		  'RequestHeaders.AddRow("Content-Type", type.ToString, "")
+		  'RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Type":type
+		  'RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
+		  'RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
+		  'End If
+		  '
+		  'Case "Edit raw..."
+		  'Dim raw As String = RawEditor.EditRaw(NextRequest.MessageBody)
+		  'If raw.Trim = "" Then Return
+		  'For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		  'If RequestHeaders.Cell(i, 0) = "Content-Length" Then
+		  'RequestHeaders.RemoveRow(i)
+		  'End If
+		  'Next
+		  'NextRequest.MessageBody = raw
+		  'RequestHeaders.AddRow("Content-Length", Str(LenB(NextRequest.MessageBody)), "")
+		  'RequestHeaders.RowTag(RequestHeaders.LastIndex) = "Content-Length":Str(LenB(NextRequest.MessageBody))
+		  '
+		  'Case "Save..."
+		  'If Formtype Then
+		  'Dim f As FolderItem = GetSaveFolderItem(FileTypes1.MultipartForm, NextRequest.MethodName)
+		  'If f <> Nil Then
+		  'Dim bs As BinaryStream = BinaryStream.Create(f, True)
+		  'bs.Write("Content-Type: " + NextRequest.ContentType.ToString + HTTP.CRLF + HTTP.CRLF)
+		  'bs.Write(NextRequest.MessageBody)
+		  'bs.Close
+		  'End If
+		  '
+		  '
+		  'Else'If NextRequest.ContentType.Accepts("application/x-www-form-urlencoded") Then
+		  'Dim f As FolderItem = GetSaveFolderItem(FileTypes1.URLEncodedForm, NextRequest.MethodName)
+		  'If f <> Nil Then
+		  'Dim bs As BinaryStream = BinaryStream.Create(f, True)
+		  'bs.Write(NextRequest.MessageBody)
+		  'bs.Close
+		  'End If
+		  '
+		  ''Else
+		  ''Call MsgBox("Unknown form type: " + NextRequest.ContentType.ToString, 16, "Not an HTTP form")
+		  'End If
+		  '
+		  'Case "Load..."
+		  '
+		  'Case "Clear all"
+		  'NextRequest.MessageBody = ""
+		  'For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		  'If RequestHeaders.Cell(i, 0) = "Content-Length" Then
+		  'RequestHeaders.RemoveRow(i)
+		  'End If
+		  'Next
+		  'For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		  'If RequestHeaders.Cell(i, 0) = "Content-Type" Then
+		  'RequestHeaders.RemoveRow(i)
+		  'End If
+		  'Next
+		  'End Select
+		  'End If
 		  
 		End Sub
 	#tag EndEvent
@@ -1023,7 +1136,7 @@ End
 		Sub Open()
 		  Me.TextFont = App.FixedWidthFont
 		  Me.AcceptTextDrop
-		  Dim u As HTTP.URI = "http://www.example.net/"
+		  Dim u As URIHelpers.URI = "http://www.example.net/"
 		  AddHistoryItem(u)
 		  URL.RowTag(0) = u
 		  URL.ListIndex = 0
@@ -1033,9 +1146,47 @@ End
 		Sub DropObject(obj As DragItem, action As Integer)
 		  #pragma Unused action
 		  If Obj.TextAvailable Then
-		    Dim u As HTTP.URI = Obj.Text
+		    Dim u As URIHelpers.URI = Obj.Text
 		    Me.Text = u.ToString
 		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events EditURIBtn
+	#tag Event
+		Sub Action()
+		  Dim u As URI = URL.Text
+		  u = URIEditor.ShowURI(u)
+		  If u <> Nil Then URL.Text = u.ToString
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events MessageBody1
+	#tag Event
+		Function NextRequest() As HTTP.Request
+		  Return NextRequest
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function ReadHeader(PendingHeaderName As String) As String
+		  Return ReadHeader(PendingHeaderName)
+		End Function
+	#tag EndEvent
+	#tag Event
+		Function RequestHeaders() As HeaderList
+		  Return RequestHeaders
+		End Function
+	#tag EndEvent
+#tag EndEvents
+#tag Events Splitter1
+	#tag Event
+		Sub Moved(DeltaX As Integer, DeltaY As Integer)
+		  #pragma Unused DeltaX
+		  #pragma Unused DeltaY
+		  
+		  RequestHeaders.Height = Me.Top - RequestHeaders.Top - 1
+		  MessageBody1.Top = Me.Top + Me.Height + 1
+		  MessageBody1.Height = Me.Window.Height - MessageBody1.Top - 5
 		End Sub
 	#tag EndEvent
 #tag EndEvents

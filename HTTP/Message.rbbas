@@ -104,7 +104,7 @@ Protected Class Message
 			      RaiseEvent HTTPDebug("Warn: Content-Type is empty.", -1)
 			    End If
 			  ElseIf Me.Path <> Nil Then
-			    Dim s As String = NthField(Me.Path.Path, "/", CountFields(Me.Path.Path, "/"))
+			    Dim s As String = NthField(Me.Path.Path.ToString, "/", CountFields(Me.Path.Path.ToString, "/"))
 			    c = SpecialFolder.Temporary.Child(s)
 			  Else
 			    c = "application/octet-stream"
@@ -134,9 +134,26 @@ Protected Class Message
 		Protected mHeaders As Headers
 	#tag EndProperty
 
-	#tag Property, Flags = &h0
-		Path As HTTP.URI
+	#tag Property, Flags = &h21
+		Private mPath As URIHelpers.URI
 	#tag EndProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  If mPath = Nil Then 
+			    mPath = ""
+			  End If
+			  return mPath
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  mPath = value
+			End Set
+		#tag EndSetter
+		Path As URIHelpers.URI
+	#tag EndComputedProperty
 
 	#tag Property, Flags = &h0
 		ProtocolVersion As Single = 1.1
