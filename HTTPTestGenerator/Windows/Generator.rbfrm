@@ -268,7 +268,7 @@ End
 		  If mRobots.HasKey(NewRequest.Path.Host) Then
 		    rbt = mRobots.Value(NewRequest.Path.Host)
 		  Else
-		    Dim rurl As URI = NewRequest.Path
+		    Dim rurl As URI = NewRequest.Path.ToString
 		    rurl.Path = "/robots.txt"
 		    Dim file As FolderItem = GetTemporaryFolderItem
 		    Dim sck As SocketCore
