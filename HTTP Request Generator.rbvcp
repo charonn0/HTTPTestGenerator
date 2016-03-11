@@ -9,6 +9,7 @@ Folder=Windows;HTTPTestGenerator/Windows;&hEA397FF;&h1A6627FF;false
 Window=AboutWindow;HTTPTestGenerator/Windows/AboutWindow.rbfrm;&h545BA7FF;&hEA397FF;false
 Window=ErrorHandler;HTTPTestGenerator/Windows/ErrorHandler.rbfrm;&h13A1B7FF;&hEA397FF;false
 Folder=UI Classes;HTTPTestGenerator/UI Classes;&h4FD2FFFF;&h1A6627FF;false
+Window=MessageBody;HTTPTestGenerator/UI Classes/MessageBody.rbfrm;&h532E77FF;&h4FD2FFFF;false
 Folder=Controls;HTTPTestGenerator/UI Classes/Controls;&h33E51FFF;&h4FD2FFFF;false
 Class=AddRemoveList;HTTPTestGenerator/UI Classes/Controls/AddRemoveList.rbbas;&h728297FF;&h33E51FFF;false
 Window=DatePicker;HTTPTestGenerator/UI Classes/Controls/DatePicker.rbfrm;&h1E2AFFF;&h33E51FFF;false
