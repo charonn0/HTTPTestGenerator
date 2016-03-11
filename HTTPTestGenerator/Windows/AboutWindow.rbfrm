@@ -140,7 +140,7 @@ Begin Window AboutWindow
       TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "Copyright ©2014-15 Andrew Lambert, All Rights Reserved."
+      Text            =   "Copyright ©2014-16 Andrew Lambert, All Rights Reserved."
       TextAlign       =   0
       TextColor       =   0
       TextFont        =   "System"
