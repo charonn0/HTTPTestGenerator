@@ -11,7 +11,7 @@ Begin ContainerControl MessageBody
    Height          =   206
    HelpTag         =   ""
    InitialParent   =   ""
-   Left            =   3.2e+1
+   Left            =   32
    LockBottom      =   True
    LockLeft        =   True
    LockRight       =   True
@@ -19,7 +19,7 @@ Begin ContainerControl MessageBody
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True
-   Top             =   3.2e+1
+   Top             =   32
    UseFocusRing    =   ""
    Visible         =   True
    Width           =   354
@@ -42,6 +42,7 @@ Begin ContainerControl MessageBody
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
@@ -67,6 +68,7 @@ Begin ContainerControl MessageBody
          Scope           =   0
          TabIndex        =   0
          TabPanelIndex   =   0
+         TabStop         =   True
          Top             =   46
          Value           =   0
          Visible         =   True
@@ -164,6 +166,7 @@ Begin ContainerControl MessageBody
             Selectable      =   True
             TabIndex        =   1
             TabPanelIndex   =   2
+            TabStop         =   True
             Text            =   "X:\\Foo\\bar.bat"
             TextAlign       =   0
             TextColor       =   &h000000
@@ -232,6 +235,7 @@ Begin ContainerControl MessageBody
          Selectable      =   False
          TabIndex        =   2
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "0.0 KB"
          TextAlign       =   2
          TextColor       =   &h00000000
@@ -308,7 +312,7 @@ End
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
-		Private MessageBodyDescription As String = """No message body defined"""
+		Private MessageBodyDescription As String = "No message body defined"
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
@@ -342,6 +346,8 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub DropObject(obj As DragItem, action As Integer)
+		  #pragma Unused action
+		  
 		  MessageBodyFile = Nil
 		  If obj.Text <> "" Then
 		    NextRequest.MessageBody = obj.Text
