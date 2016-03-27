@@ -523,7 +523,7 @@ End
 		    Select Case VarType(Message)
 		    Case Variant.TypeString
 		      Dim sr As New StyleRun
-		      sr.Text = Message
+		      sr.Text = Message.StringValue.Trim
 		      Select Case Level
 		      Case 1 ' Socketry
 		        sr.TextColor = &c00408000
