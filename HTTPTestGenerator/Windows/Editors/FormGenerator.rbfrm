@@ -354,11 +354,17 @@ End
 	#tag EndEvent
 	#tag Event
 		Sub CellAction(row As Integer, column As Integer)
+		  #pragma Unused row
+		  #pragma Unused column
+		  
 		  Generate()
 		End Sub
 	#tag EndEvent
 	#tag Event
 		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
+		  #pragma Unused x
+		  #pragma Unused y
+		  
 		  If Me.ListCount > 0 Then
 		    base.Append(New MenuItem("Reset form"))
 		    Return True
