@@ -156,6 +156,7 @@ Inherits TextArea
 		  Else
 		    sr.Text = remain
 		  End If
+		  If sr.Text.Trim = "" Then sr.Text = " "
 		  Me.PrintOther(sr)
 		  
 		  If Message.MessageBody.Trim.LenB > 0 Then
