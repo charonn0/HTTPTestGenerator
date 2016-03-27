@@ -43,21 +43,27 @@ Inherits HTTP.Message
 
 	#tag Method, Flags = &h0
 		Function ToString(HeadersOnly As Boolean = False) As String
-		  Me.Header("Content-Type") = Me.ContentType.ToString
-		  If Not Me.HasHeader("Date") Then Me.Header("Date") = HTTP.DateString(New Date)
+		  If Me.MessageBody.LenB > 0 Then Me.Header("Content-Type") = Me.ContentType.ToString
+		  If IncludeDateHeader Then 
+		    If Not Me.HasHeader("Date") Then Me.Header("Date") = HTTP.DateString(New Date)
+		  End If
 		  Dim msg As String = CodeToMessage(Me.StatusCode)
 		  Dim p As String = "HTTP/"
 		  #If EnableHTCPCP Then
 		    If Me.StatusCode = 418 Then p = "HTCPCP/" ' This breaks browsers
 		  #endif
 		  If HeadersOnly Then
-		    If mHeaders.Count <= 0 Then RaiseEvent HTTPDebug("Warn: This response contains no headers.", -1)
+		    If mHeaders.Count <= 0 And Me.StatusCode <> 100 Then RaiseEvent HTTPDebug("Warn: This response contains no headers.", -1)
 		    If Me.HasHeader("Transfer-Encoding") And (Me.StatusCode < 200 Or Me.StatusCode = 204) Then
 		      'http://tools.ietf.org/html/rfc7230#section-3.3.1
 		      RaiseEvent HTTPDebug("Warning: The 'Transfer-Encoding' header is illegal in this context.", -1)
 		    End If
 		  End If
-		  Return p + Format(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF + Super.ToString(HeadersOnly)'
+		  
+		  Dim data As String = p + Format(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF
+		  Dim h As String = Super.ToString(HeadersOnly)
+		  If h.Trim = "" Then h = CRLF
+		  Return data + h
 		  
 		End Function
 	#tag EndMethod
@@ -67,6 +73,10 @@ Inherits HTTP.Message
 		Event HTTPDebug(Message As String, Level As Integer)
 	#tag EndHook
 
+
+	#tag Property, Flags = &h0
+		IncludeDateHeader As Boolean = True
+	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		StatusCode As Integer
