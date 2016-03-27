@@ -39,6 +39,15 @@ Inherits SSLSocket
 		  RaiseEvent HTTPDebug("Processing next request.", 2)
 		  If NthField(Me.Lookahead, CRLF + CRLF, 1).Trim = "" Then Return Nil
 		  Dim clientrequest As HTTP.Request = Me.Read(InStr(Me.Lookahead, CRLF + CRLF) + 3)
+		  
+		  If clientrequest.Header("Expect") = "100-Continue" And RaiseEvent ContinueExpected(clientrequest) Then
+		    Dim cont As HTTP.Response = ErrorPage(100)
+		    cont.Headers.DeleteAllHeaders
+		    cont.MessageBody = ""
+		    cont.IncludeDateHeader = False
+		    Me.SendMessage(cont)
+		  End If
+		  
 		  If clientrequest.HasHeader("Content-Length") Then
 		    Dim cl As Integer = Val(clientrequest.Header("Content-Length"))
 		    If cl + 3 <= Me.Lookahead.LenB Then
@@ -49,8 +58,10 @@ Inherits SSLSocket
 		      Dim entity As New BinaryStream(d)
 		      Do
 		        Dim data As MemoryBlock = Me.ReadAll
-		        RaiseEvent HTTPDebug("Read " + Str(data.Size) + " bytes", 1)
-		        entity.Write(data)
+		        If data.Size > 0 Then 
+		          RaiseEvent HTTPDebug("Read " + Str(data.Size) + " bytes", 1)
+		          entity.Write(data)
+		        End If
 		        App.YieldToNextThread
 		      Loop Until entity.Length >= cl
 		      clientrequest.MessageBody = d
@@ -220,6 +231,10 @@ Inherits SSLSocket
 
 	#tag Hook, Flags = &h0
 		Event Authenticate(ClientRequest As HTTP.Request, Username As String, Password As String, Realm As String) As Boolean
+	#tag EndHook
+
+	#tag Hook, Flags = &h0
+		Event ContinueExpected(ClientHeaders As HTTP.Request) As Boolean
 	#tag EndHook
 
 	#tag Hook, Flags = &h0

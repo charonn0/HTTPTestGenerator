@@ -370,6 +370,14 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
+		Private Function ContinueExpectedHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request) As Boolean
+		  DoActivity()
+		  HTTPDebugHandler(Sender, "'100 Continue' is expected.", 1)
+		  Return True
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
 		Private Sub DoActivity()
 		  Active = True
 		  Activity.Invalidate(False)
@@ -767,6 +775,7 @@ End
 		  AddHandler sock.Connected, WeakAddressOf ConnectedHandler
 		  AddHandler sock.Authenticate, WeakAddressOf AuthenticateHandler
 		  AddHandler sock.HTTPDebug, WeakAddressOf HTTPDebugHandler
+		  AddHandler sock.ContinueExpected, WeakAddressOf ContinueExpectedHandler
 		  If SecurityLevel.Text <> "No security" Then
 		    sock.Secure = True
 		    sock.CertificatePassword = CertificatePassword
