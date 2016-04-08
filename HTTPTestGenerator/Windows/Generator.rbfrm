@@ -327,6 +327,11 @@ End
 
 	#tag Method, Flags = &h0
 		Sub Perform(NewRequest As HTTP.Request)
+		  If NewRequest.Path.Scheme <> "http" And NewRequest.Path.Scheme <> "https" And NewRequest.Path.Scheme <> "" Then
+		    Call MsgBox("'" + NewRequest.Path.Scheme + "' is not a recognized protocol scheme.", 16, "Unsupported protocol")
+		    CancelRequest()
+		    Return
+		  End If
 		  If CurrentRequest <> Nil Then OldRequests.Append(CurrentRequest)
 		  If CheckRobots(NewRequest) Then Return
 		  
