@@ -172,6 +172,11 @@ Inherits HTTP.Message
 		      If msgsz = 0 Then RaiseEvent HTTPDebug("Alert: This POST request does not contain a message body.", -1)
 		      If Not Me.HasHeader("Content-Type") Then RaiseEvent HTTPDebug("Alert: This POST request does not specify the Content-Type of the message body.", -1)
 		      
+		    Case "PUT"
+		      If msgsz = 0 Then RaiseEvent HTTPDebug("Alert: This PUT request does not contain a message body.", -1)
+		      'http://tools.ietf.org/html/rfc7231#section-4.3.4
+		      If Me.HasHeader("Content-Range") Then RaiseEvent HTTPDebug("Alert: This PUT request specifies the Content-Range header, which should be rejected by compliant web servers.", -1)
+		      
 		    End Select
 		    
 		    If Me.ProtocolVersion > 1.0 Then
