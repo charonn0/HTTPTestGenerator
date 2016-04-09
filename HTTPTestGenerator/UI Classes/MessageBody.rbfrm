@@ -372,12 +372,13 @@ End
 #tag Events MessageBodyType
 	#tag Event
 		Sub Change()
-		  If PagePanel1.Value > 0 Then
-		    PagePanel1.Remove(PagePanel1.Value)
-		    PagePanel1.Value = 0
+		  Static lasttext As String
+		  If lasttext = Me.Text Then Return
+		  If NextRequest.MessageBody <> "" And MsgBox("Message body will be lost. Proceed?", 32 + 4, "Clear message body data?") <> 6 Then 
+		    Me.Text = lasttext
+		    Return
 		  End If
-		  MessageBodyDescription = "No message body defined"
-		  MessageBodySize.Text = "0 bytes"
+		  lasttext = Me.Text
 		  Select Case Me.Text
 		  Case "HTML form"
 		    Dim formgen As New FormGenerator
@@ -434,19 +435,23 @@ End
 		    MessageBodyFile = Nil
 		    
 		  Case "No body"
-		    If NextRequest.MessageBody = "" Or MsgBox("Message body will be lost. Proceed?", 32 + 4, "Clear message body data?") = 6 Then
-		      NextRequest.MessageBody = ""
-		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		        If RequestHeaders.Cell(i, 0) = "Content-Length" Then
-		          RequestHeaders.RemoveRow(i)
-		        End If
-		      Next
-		      For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
-		        If RequestHeaders.Cell(i, 0) = "Content-Type" Then
-		          RequestHeaders.RemoveRow(i)
-		        End If
-		      Next
+		    NextRequest.MessageBody = ""
+		    For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		      If RequestHeaders.Cell(i, 0) = "Content-Length" Then
+		        RequestHeaders.RemoveRow(i)
+		      End If
+		    Next
+		    For i As Integer = RequestHeaders.ListCount - 1 DownTo 0
+		      If RequestHeaders.Cell(i, 0) = "Content-Type" Then
+		        RequestHeaders.RemoveRow(i)
+		      End If
+		    Next
+		    If PagePanel1.Value > 0 Then
+		      PagePanel1.Remove(PagePanel1.Value)
+		      PagePanel1.Value = 0
 		    End If
+		    MessageBodyDescription = "No message body defined"
+		    MessageBodySize.Text = "0 bytes"
 		    MessageBodyFile = Nil
 		  End Select
 		  NoBodyView.Invalidate(False)
