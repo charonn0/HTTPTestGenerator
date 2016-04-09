@@ -422,7 +422,11 @@ End
 		    Dim n, v As String
 		    n = resp.Headers.Name(i)
 		    v = resp.Headers.Value(n)
-		    
+		    Select Case n
+		    Case "Content-Length"
+		      Dim sz As Integer = Val(v)
+		      v = v + " (" + HTTP.FormatBytes(sz) + ")"
+		    End Select
 		    ResponseHeaders.AddRow(n, v)
 		    ResponseHeaders.RowTag(ResponseHeaders.LastIndex) = n:v
 		  Next
