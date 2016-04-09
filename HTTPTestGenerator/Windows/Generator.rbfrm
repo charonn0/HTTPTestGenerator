@@ -215,7 +215,7 @@ End
 		Function SaveRequest() As Boolean Handles SaveRequest.Action
 			Dim r As HTTP.Request = RequestMain1.DumpCurrent
 			If r <> Nil And r.ToString(True).Trim <> "" Then
-			Dim nm As String = r.MethodName + "_" + r.Path.Host.ToString
+			Dim nm As String = r.MethodName + "_" + r.Path.Host.ToString + FileTypes1.HTTPMessageFile.Extensions
 			Dim f As FolderItem = GetSaveFolderItem(FileTypes1.HTTPMessageFile , nm)
 			If f <> Nil Then
 			Dim bs As BinaryStream = BinaryStream.Create(f, True)
