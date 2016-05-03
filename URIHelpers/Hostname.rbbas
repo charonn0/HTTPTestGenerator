@@ -68,6 +68,19 @@ Protected Class Hostname
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function TailMatch(OtherHost As URIHelpers.Hostname, BinaryCompare As Boolean = True) As Boolean
+		  Dim count As Integer = Min(OtherHost.SubDomainCount - 1, Me.SubDomainCount - 1)
+		  Dim mode As Integer
+		  If Not BinaryCompare Then mode = 1
+		  For i As Integer = 0 To count
+		    If StrComp(OtherHost.SubDomain(i), Me.SubDomain(i), mode) <> 0 Then Return False
+		  Next
+		  Return True
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function TLD() As String
 		  Return mSubdomains(0)
 		End Function
@@ -100,6 +113,22 @@ Protected Class Hostname
 		  Return s
 		End Function
 	#tag EndMethod
+
+
+	#tag Note, Name = Subdomain order
+		A internet domain name is read from right to left, with the leftmost name part being the zeroth subdomain and then
+		rightmost part being at SubDomainCount-1
+		
+		For example, the domain name "sub2.sub1.domain.tld" would be represented as:
+		
+		SubDomain(0) = "tld"
+		SubDomain(1) = "domain"
+		SubDomain(2) = "sub1"
+		SubDomain(3) = "sub2"
+		
+		This class can also handle IPv4 and IPv6 address literals. When doing so, the IP literal is stored entirely at SubDomain(0).
+		
+	#tag EndNote
 
 
 	#tag Property, Flags = &h1
