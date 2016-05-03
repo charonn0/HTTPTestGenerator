@@ -85,7 +85,7 @@ Begin ContainerControl FormGenerator
       Visible         =   True
       Width           =   20
    End
-   Begin Listbox HTTPForm
+   Begin PrettyListBox HTTPForm
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
       Bold            =   False
