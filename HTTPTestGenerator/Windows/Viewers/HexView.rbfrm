@@ -59,15 +59,15 @@ Begin ContainerControl HexView Implements Viewer
       Bold            =   ""
       Border          =   True
       BorderColor     =   &h00808080
-      ByteBackgroundColor=   "&cFFFFFF00"
-      ByteBackgroundColorAlt=   "&cC0C0C000"
+      ByteBackgroundColor=   &h00E9E9E9
+      ByteBackgroundColorAlt=   "&cE9E9E900"
       ByteColor       =   "&c0000FF00"
       BytesLittleEndian=   True
       DoubleBuffer    =   True
       Enabled         =   True
       EraseBackground =   False
-      GutterColor     =   "&cFFFFFF00"
-      GutterColorAlt  =   "&cC0C0C000"
+      GutterColor     =   "&cE9E9E900"
+      GutterColorAlt  =   "&cE9E9E900"
       Height          =   457
       HelpTag         =   ""
       Hilight         =   ""
@@ -76,19 +76,19 @@ Begin ContainerControl HexView Implements Viewer
       Italic          =   ""
       Left            =   0
       LineNumbersColor=   "&c80000000"
-      LineNumbersLittleEndian=   ""
+      LineNumbersLittleEndian=   True
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
       Scope           =   0
-      ShowOffsets     =   False
+      ShowOffsets     =   True
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
-      TextBackGroundColor=   "&cFFFFFF00"
-      TextBackGroundColorAlt=   "&cC0C0C000"
+      TextBackGroundColor=   "&cE9E9E900"
+      TextBackGroundColorAlt=   "&cE9E9E900"
       TextFont        =   "System"
       TextSize        =   ""
       Top             =   0
@@ -115,7 +115,7 @@ End
 	#tag Method, Flags = &h0
 		Sub ViewRaw(Message As BinaryStream, Type As HTTP.ContentType, ContentLen As Integer)
 		  // Part of the Viewer interface.
-		  HexViewer1.ShowData(Message)
+		  HexViewer1.ShowData(Message, ContentLen)
 		  mContentLength = ContentLen
 		  mType = Type
 		End Sub
@@ -156,10 +156,5 @@ End
 		  ScrollBar1.Value = ScrollBar1.Value + LinesDelta
 		  Return True ' Since we're updating the offset in ScrollBar1.ValueChanged, we return true to prevent the HexViewer from updating it too.
 		End Function
-	#tag EndEvent
-	#tag Event
-		Sub Open()
-		  Me.TextFont = App.FixedWidthFont
-		End Sub
 	#tag EndEvent
 #tag EndEvents
