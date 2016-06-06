@@ -36,6 +36,8 @@ Implements FormInterface
 		    Boundary = NthField(FormData, EndOfLine.Windows, 1)
 		    If Left(Boundary, Len("Content-Type:")) <> "Content-Type:" Then Raise New UnsupportedFormatException
 		    Boundary = NthField(Boundary, "boundary=", 2).Trim
+		    If Left(Boundary, 1) = """" Then Boundary = Right(Boundary, Boundary.Len - 1)
+		    If Right(Boundary, 1) = """" Then Boundary = Left(Boundary, Boundary.Len - 1)
 		  End If
 		  Dim elements() As String = Split(FormData, "--" + Boundary)' + CRLF)
 		  form.Boundary = Boundary
@@ -59,6 +61,7 @@ Implements FormInterface
 		      Dim filename As String = NthField(line, ";", 3)
 		      filename = NthField(filename, "=", 2)
 		      filename = ReplaceAll(filename, """", "")
+		      If filename.Trim = "" Then filename = name
 		      Dim tmp As FolderItem = SpecialFolder.Temporary.Child(filename)
 		      Dim bs As BinaryStream = BinaryStream.Create(tmp, True)
 		      Dim filedata As MemoryBlock = elements(i)
