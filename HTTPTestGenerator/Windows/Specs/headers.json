@@ -605,6 +605,12 @@
         "spec_title": "RFC4918",
         "spec_href": "http://tools.ietf.org/html/rfc4918"
     },
+	{
+        "header": "Upgrade",
+        "description": "This header specifies the parameters for an optional or mandatory alternate protocol (e.g. https, websockets.)",
+        "spec_title": "RFC2817#3",
+        "spec_href": "https://tools.ietf.org/html/rfc2817#section-3"
+    },
     {
         "header": "Variant-Vary",
         "description": "This header can be used in a choice response to record any vary information which applies to the variant data (the entity body combined with some of the entity headers) contained in the response, rather than to the response as a whole.",

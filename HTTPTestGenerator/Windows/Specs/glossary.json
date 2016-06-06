@@ -77,7 +77,7 @@
 
 	{
         "word": "idempotent",
-        "description": "A request method is considered idempotent if the intended effect on the <link=web server>server</link> of multiple identical requests with that method is the same as the effect for a single such request. Of the request methods defined by this specification, <link=PUT>PUT</link>, <link=DELETE>DELETE</link>, and <link=safe>safe</link> request methods are idempotent.",
+        "description": "A <link=request method>request method</link> is considered idempotent if the intended effect on the <link=web server>server</link> of multiple identical requests with that method is the same as the effect for a single such request. Of the request methods defined by this specification, <link=PUT>PUT</link>, <link=DELETE>DELETE</link>, and <link=safe>safe</link> request methods are idempotent.",
 		"spec_title": "RFC7231#4.2.2",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-4.2.2"
     },
