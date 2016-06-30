@@ -474,9 +474,9 @@
 	"code": "451",
 	"deprecated": false,
 	"phrase": "Unavailable For Legal Reasons",
-	"description": "This status code indicates that the <link=web server>server</link> is denying access to the resource in response to a legal demand.",
-	"spec_title": "draft-tbray-http-legally-restricted-status",
-	"spec_href": "http://tools.ietf.org/html/draft-tbray-http-legally-restricted-status"
+	"description": "This status code indicates that the <link=web server>server</link> is denying access to the resource in response to a legal demand. This status code does not imply that the request would succeed in absence of the legal demand.",
+	"spec_title": "RFC7725",
+	"spec_href": "https://tools.ietf.org/html/rfc7725"
 },
 {
 	"code": "506",
