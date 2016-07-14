@@ -653,7 +653,7 @@ End
 		    End If
 		  End If
 		  RequestMethod.Text = r.MethodName
-		  ProtocolVer.Text = "HTTP/" + Format(NextRequest.ProtocolVersion, "#.0")
+		  ProtocolVer.Text = "HTTP/" + Str(NextRequest.ProtocolVersion, "#.0")
 		  RequestHeaders.DeleteAllRows
 		  
 		  Dim h As HTTP.Headers = NextRequest.Headers
