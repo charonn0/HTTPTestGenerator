@@ -157,7 +157,7 @@ Inherits HTTP.Response
 		    lines.Append(line)
 		  Next
 		  If RequestPath.Path.ToString <> "/" Then
-		    Dim s As String = RequestPath.Path.ToString
+		    Dim s As String = RequestPath.Path.Parent.ToString
 		    PageData = ReplaceAll(PageData, "%UPLINK%", "<a href=""" + s + """>Parent Directory</a>")
 		  Else
 		    PageData = ReplaceAll(PageData, "%UPLINK%", "")
@@ -227,6 +227,13 @@ Inherits HTTP.Response
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="IncludeDateHeader"
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			InheritedFrom="HTTP.Response"
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true
