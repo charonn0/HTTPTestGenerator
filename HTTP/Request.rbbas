@@ -156,7 +156,7 @@ Inherits HTTP.Message
 		    Select Case Me.MethodName
 		    Case "GET"
 		      ' http://tools.ietf.org/html/rfc7231#section-4.3.1
-		      If msgsz > 0 Then RaiseEvent HTTPDebug("Alert: The semantics of a message body in a GET request are undefined, and might be rejected by some servers.", -1)
+		      If msgsz > 0 Then RaiseEvent HTTPDebug("Alert: The semantics of the message body in a GET request are undefined, and might be rejected by some servers.", -1)
 		      
 		    Case "HEAD"
 		      'http://tools.ietf.org/html/rfc7231#section-4.3.2

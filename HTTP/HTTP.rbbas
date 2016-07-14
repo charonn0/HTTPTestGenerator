@@ -608,7 +608,6 @@ Protected Module HTTP
 
 	#tag Method, Flags = &h1
 		Protected Function GZipCompress(Data As MemoryBlock) As MemoryBlock
-		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
 		  If zlib.IsAvailable Then
 		    If Not zlib.IsAvailable Then Return Data
 		    Dim tmp As FolderItem = GetTemporaryFolderItem()
@@ -625,7 +624,6 @@ Protected Module HTTP
 
 	#tag Method, Flags = &h1
 		Protected Function GZipDecompress(Data As MemoryBlock) As MemoryBlock
-		  'This function requires the GZip plugin available at http://sourceforge.net/projects/realbasicgzip/
 		  If zlib.IsAvailable Then
 		    If Not zlib.IsAvailable Then Return Data
 		    Dim tmp As FolderItem = GetTemporaryFolderItem
