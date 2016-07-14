@@ -60,6 +60,8 @@ Protected Class RemotePath
 		  If p.NameCount > 1 Then
 		    p.Remove(p.NameCount - 1)
 		    Return p
+		  ElseIf p.NameCount = 1 Then
+		    Return "/"
 		  End If
 		End Function
 	#tag EndMethod
