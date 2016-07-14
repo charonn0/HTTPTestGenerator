@@ -107,6 +107,7 @@ Begin ContainerControl MessageBody
             Backdrop        =   ""
             Bold            =   ""
             Border          =   ""
+            BorderColor     =   "&c000000"
             ByteBackgroundColor=   "&cFFFFFF00"
             ByteBackgroundColorAlt=   "&cC0C0C000"
             ByteColor       =   "&c0000FF00"

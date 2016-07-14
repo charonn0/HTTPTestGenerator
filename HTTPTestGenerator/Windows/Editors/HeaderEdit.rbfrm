@@ -512,7 +512,7 @@ End
 		    tmp = NthField(HeaderValue.Text, " ", 2)
 		    If Left(HeaderValue.Text, 6) = "Basic " Then
 		      tmp = DecodeBase64(tmp)
-		      If InStr(DecodeBase64(tmp), ":") > 0 Then
+		      If InStr(tmp, ":") > 0 Then
 		        u = NthField(tmp, ":", 1)
 		        p = NthField(tmp, ":", 2)
 		      End If

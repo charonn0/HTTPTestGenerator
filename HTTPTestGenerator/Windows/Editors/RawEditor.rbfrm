@@ -12,10 +12,10 @@ Begin ContainerControl RawEditor
    HelpTag         =   ""
    InitialParent   =   ""
    Left            =   ""
-   LockBottom      =   ""
-   LockLeft        =   ""
-   LockRight       =   ""
-   LockTop         =   ""
+   LockBottom      =   True
+   LockLeft        =   True
+   LockRight       =   True
+   LockTop         =   True
    TabIndex        =   0
    TabPanelIndex   =   0
    TabStop         =   True

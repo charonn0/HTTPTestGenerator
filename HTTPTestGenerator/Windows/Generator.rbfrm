@@ -189,7 +189,7 @@ End
 			bs.Close
 			Dim r As HTTP.Request = data
 			If r.HasHeader("Host") Then
-			Dim u As URI = r.Header("Host") 
+			Dim u As URI = r.Header("Host")
 			r.Path.Host = u.Host
 			r.Path.Port = u.Port
 			Else
@@ -325,6 +325,16 @@ End
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Sub Lock(HWND As Integer)
+		  #If TargetWin32 Then
+		    Soft Declare Function SendMessageA Lib "User32" (HWND As Integer, Message As Integer, WParam As Integer, LParam As Ptr) As Integer
+		    Const WM_SETREDRAW = &h000B
+		    Call SendMessageA(HWND, WM_SETREDRAW, 0, Nil)
+		  #endif
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h0
 		Sub Perform(NewRequest As HTTP.Request)
 		  If NewRequest.Path.Scheme <> "http" And NewRequest.Path.Scheme <> "https" And NewRequest.Path.Scheme <> "" Then
@@ -408,6 +418,16 @@ End
 		  w.Close
 		  Return data
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Sub Unlock(HWND As Integer)
+		  #If TargetWin32 Then
+		    Soft Declare Function SendMessageA Lib "User32" (HWND As Integer, Message As Integer, WParam As Integer, LParam As Ptr) As Integer
+		    Const WM_SETREDRAW = &h000B
+		    Call SendMessageA(HWND, WM_SETREDRAW, 1, Nil)
+		  #endif
+		End Sub
 	#tag EndMethod
 
 
@@ -626,10 +646,14 @@ End
 		  #pragma Unused DeltaX
 		  #pragma Unused DeltaY
 		  'If Sign(DeltaX) = -1 Then Break
+		  Lock(ResponseMain1.Handle)
+		  Lock(RequestMain1.Handle)
 		  ResponseMain1.Left = Me.Left + Me.Width + 1
 		  ResponseMain1.Width = Self.Width - ResponseMain1.Left
 		  RequestMain1.Width = Me.Left
-		  Me.Invalidate
+		  Unlock(ResponseMain1.Handle)
+		  Unlock(RequestMain1.Handle)
+		  'Me.Invalidate
 		End Sub
 	#tag EndEvent
 #tag EndEvents

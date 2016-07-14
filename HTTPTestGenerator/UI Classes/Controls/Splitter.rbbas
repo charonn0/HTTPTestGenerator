@@ -15,11 +15,14 @@ Inherits Canvas
 		Sub MouseDrag(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
+		  
 		  If Me.Width > Me.Height Then 'horizontal
 		    Me.Top = Me.Window.MouseY
 		  Else
 		    Me.Left = Me.Window.MouseX
 		  End If
+		  
+		  RaiseEvent Moved(Me.Left - mLastX, Me.Top - mLastY)
 		End Sub
 	#tag EndEvent
 
@@ -44,6 +47,7 @@ Inherits Canvas
 		Sub MouseUp(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
+		  
 		  RaiseEvent Moved(Me.Left - mLastX, Me.Top - mLastY)
 		End Sub
 	#tag EndEvent
