@@ -225,7 +225,7 @@ Begin Window Authenticator
       DataSource      =   ""
       Enabled         =   True
       Height          =   20
-      HelpTag         =   ""
+      HelpTag         =   "Click to reveal"
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   ""
@@ -242,7 +242,7 @@ Begin Window Authenticator
       TabPanelIndex   =   0
       Text            =   "Password:"
       TextAlign       =   2
-      TextColor       =   &h000000
+      TextColor       =   &h00000080
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
@@ -579,6 +579,39 @@ End
 
 #tag EndWindowCode
 
+#tag Events Label3
+	#tag Event
+		Sub MouseEnter()
+		  If PassField.Password Then
+		    Me.MouseCursor = System.Cursors.MagnifyLarger
+		  Else
+		    Me.MouseCursor = System.Cursors.MagnifySmaller
+		  End If
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Sub MouseExit()
+		  Me.MouseCursor = System.Cursors.StandardPointer
+		End Sub
+	#tag EndEvent
+	#tag Event
+		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  Return True
+		End Function
+	#tag EndEvent
+	#tag Event
+		Sub MouseUp(X As Integer, Y As Integer)
+		  PassField.Password = Not PassField.Password
+		  If PassField.Password Then
+		    Me.MouseCursor = System.Cursors.MagnifyLarger
+		    Me.HelpTag = "Click to reveal"
+		  Else
+		    Me.MouseCursor = System.Cursors.MagnifySmaller
+		    Me.HelpTag = "Click to conceal"
+		  End If
+		End Sub
+	#tag EndEvent
+#tag EndEvents
 #tag Events PushButton1
 	#tag Event
 		Sub Action()
