@@ -418,7 +418,7 @@
 	"code": "308",
 	"deprecated": false,
 	"phrase": "Permanent Redirect",
-	"description": "The target resource has been assigned a new permanent URI and any future references to this resource <link=SHOULD>SHOULD</link> use one of the returned URIs. [...] This status code is similar to <link=301>301 Moved Permanently</link>, except that it does not allow rewriting the request method from <link=POST>POST</link> to <link=GET>GET</link>.",
+	"description": "The target resource has been assigned a new permanent URI and any future references to this resource <link=SHOULD>SHOULD</link> use one of the <link=Location>returned URIs</link>. [...] This status code is similar to <link=301>301 Moved Permanently</link>, except that it does not allow rewriting the request method from <link=POST>POST</link> to <link=GET>GET</link>.",
 	"spec_title": "RFC7238",
 	"spec_href": "http://tools.ietf.org/html/rfc7238"
 },
