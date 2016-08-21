@@ -589,9 +589,16 @@ End
 		    End If
 		    If MsgBox("Response redirects to: " + u.ToString + ". Follow redirection?", 4 + 32, _
 		      "HTTP redirect (" + Str(code, "000") + " " + HTTP.CodeToMessage(code) + ")") = 6 Then
-		      If CurrentRequest.MethodName <> "GET" And (code = 301 Or code = 302) Then
+		      If CurrentRequest.MethodName <> "GET" Then
 		        Dim msg As String = "Would you like to convert the request method from '" + CurrentRequest.MethodName + "' to 'GET'?"
-		        If MsgBox(msg, 4 + 32, "Client behavior compatibility option") = 6 Then RequestMain1.RequestMethod.ListIndex = 0
+		        If code = 308 Or code = 308 Then msg = msg + " (" + Str(code) + " explicitly forbids this!)"
+		        If MsgBox(msg, 4 + 32, "Client behavior compatibility option") = 6 Then 
+		          ResponseMain1.Log("Alert: The request method has been changed to 'GET'.", -1)
+		          If CurrentResponse.StatusCode = 308 Or CurrentResponse.StatusCode = 307 Then
+		            ResponseMain1.Log("Warning: Modifying the request method upon receiving a 308 redirect response is prohibited by the specification.", -1)
+		          End If
+		          RequestMain1.RequestMethod.ListIndex = 0
+		        End If
 		      End If
 		      RequestMain1.URL.Text = u.ToString
 		      RequestMain1.Perform()
