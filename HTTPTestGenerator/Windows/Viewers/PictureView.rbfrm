@@ -100,12 +100,13 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer, DebugOutput As HTTP.DebugMessage = Nil)
 		  // Part of the Viewer interface.
 		  mType = Type
 		  mRaw = Message
 		  mContentLength = ContentLen
 		  ImageView.Refresh(False)
+		  mDebugOutput = DebugOutput
 		End Sub
 	#tag EndMethod
 
@@ -121,6 +122,10 @@ End
 
 	#tag Property, Flags = &h1
 		Protected mContentLength As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mDebugOutput As HTTP.DebugMessage
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

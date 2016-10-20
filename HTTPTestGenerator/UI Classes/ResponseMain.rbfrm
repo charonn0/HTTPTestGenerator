@@ -749,11 +749,11 @@ End
 		  Select Case True
 		  Case LinkValue IsA HTTP.Request
 		    Dim h As HTTP.Request = LinkValue
-		    RawViewer.ViewRaw(h)
+		    RawViewer.ViewRaw(h, WeakAddressOf Self.Log)
 		    
 		  Case LinkValue IsA HTTP.Response
 		    Dim h As HTTP.Response = LinkValue
-		    RawViewer.ViewRaw(h)
+		    RawViewer.ViewRaw(h, WeakAddressOf Self.Log)
 		    
 		  Else
 		    SpecIndex.ShowItem(LinkText)

@@ -77,7 +77,7 @@ End
 
 #tag WindowCode
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer, DebugOutput As HTTP.DebugMessage = Nil)
 		  // Part of the Viewer interface.
 		  Me.Form = Nil
 		  HTTPForm.DeleteAllRows
@@ -110,6 +110,7 @@ End
 		    HTTPForm.CellType(HTTPForm.LastIndex, 1) = Listbox.TypeEditable
 		  Next
 		  mContentLength = ContentLen
+		  mDebugOutput = DebugOutput
 		End Sub
 	#tag EndMethod
 
@@ -120,6 +121,10 @@ End
 
 	#tag Property, Flags = &h1
 		Protected mContentLength As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mDebugOutput As HTTP.DebugMessage
 	#tag EndProperty
 
 

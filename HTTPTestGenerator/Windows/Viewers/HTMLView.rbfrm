@@ -186,7 +186,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer)
+		Sub ViewRaw(Message As MemoryBlock, Type As HTTP.ContentType, ContentLen As Integer, DebugOutput As HTTP.DebugMessage = Nil)
 		  Definition = New HighlightDefinition
 		  Call Definition.LoadFromXml(HTMLSyntaxDef)
 		  SyntaxHilightContainer1.SetText(Message, Definition)
@@ -197,6 +197,7 @@ End
 		    If i > -1 Then EncodingList.ListIndex = i
 		  End If
 		  mContentLength = ContentLen
+		  mDebugOutput = DebugOutput
 		End Sub
 	#tag EndMethod
 
@@ -211,6 +212,10 @@ End
 
 	#tag Property, Flags = &h1
 		Protected mContentLength As Integer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mDebugOutput As HTTP.DebugMessage
 	#tag EndProperty
 
 	#tag Property, Flags = &h1

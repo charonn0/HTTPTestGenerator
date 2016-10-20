@@ -342,6 +342,10 @@ Protected Module HTTP
 		End Function
 	#tag EndMethod
 
+	#tag DelegateDeclaration, Flags = &h1
+		Protected Delegate Sub DebugMessage(Message As Variant, Level As Integer)
+	#tag EndDelegateDeclaration
+
 	#tag Method, Flags = &h1
 		Protected Function DecodeChunkedData(Data As MemoryBlock) As MemoryBlock
 		  Dim instream As Readable = New BinaryStream(Data)

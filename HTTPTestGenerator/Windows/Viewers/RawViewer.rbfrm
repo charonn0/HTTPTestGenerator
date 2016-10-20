@@ -224,7 +224,8 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ViewRaw(Message As HTTP.Message)
+		Sub ViewRaw(Message As HTTP.Message, DebugOutput As HTTP.DebugMessage = Nil)
+		  mDebugOutput = DebugOutput
 		  Self.Title = "Message body - " + Message.ContentType.ToString
 		  If Message.IsCompressed Then
 		    AutoDecompress = zlib.IsAvailable And _
@@ -264,6 +265,10 @@ End
 
 	#tag Property, Flags = &h21
 		Private CurrentView As Viewer
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mDebugOutput As HTTP.DebugMessage
 	#tag EndProperty
 
 
