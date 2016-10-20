@@ -361,9 +361,43 @@ Protected Module HTTP
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function Deflate(Data As MemoryBlock) As MemoryBlock
-		  If zlib.IsAvailable Then Return zlib.Compress(Data)
-		  Return Data
+		Protected Function DecompressData(Data As MemoryBlock, AllegedType As String, DebugOutput As HTTP.DebugMessage = Nil) As MemoryBlock
+		  Dim out As MemoryBlock
+		  #pragma BreakOnExceptions Off
+		  Try
+		    out = zlib.GUnZip(Data)
+		    If DebugOutput <> Nil Then DebugOutput.Invoke("The message was gunzipped successfully.", 2)
+		  Catch
+		  End Try
+		  If out = Nil Then
+		    Try
+		      out = zlib.Inflate(Data)
+		      If DebugOutput <> Nil Then DebugOutput.Invoke("The message was inflated successfully.", 2)
+		    Catch
+		    End Try
+		  End If
+		  If out = Nil Then
+		    Try
+		      out = zlib.Inflate(Data, Nil, zlib.RAW_ENCODING)
+		      If DebugOutput <> Nil Then DebugOutput.Invoke("Alert: The message is a raw deflate stream. Inflation was successful anyway, but this is non-standard.", -1)
+		    Catch
+		    End Try
+		  End If
+		  
+		  If out = Nil And InStrB(Left(Data, 11), CRLF) > 0 Then
+		    ' decompression failed, maybe it's chunked
+		    out = DecompressData(DecodeChunkedData(Data), AllegedType, DebugOutput)
+		  ElseIf out = Nil And DebugOutput <> Nil Then
+		    If AllegedType = "deflate" Then
+		      DebugOutput.Invoke("Alert: The message claims to be deflated but it does not appear to contain valid deflate data.", -1)
+		    ElseIf AllegedType = "gzip" Then
+		      DebugOutput.Invoke("Alert: The message claims to be gzipped but it does not appear to contain valid gzip data.", -1)
+		    Else
+		      DebugOutput.Invoke("Warning: The message claims to be compressed using an unknown, non-standard encoding ('" + AllegedType + "').", -1)
+		    End If
+		  End If
+		  
+		  Return out
 		End Function
 	#tag EndMethod
 
@@ -607,51 +641,6 @@ Protected Module HTTP
 		  End Select
 		  
 		  Return err
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function GZipCompress(Data As MemoryBlock) As MemoryBlock
-		  If zlib.IsAvailable Then
-		    If Not zlib.IsAvailable Then Return Data
-		    Dim tmp As FolderItem = GetTemporaryFolderItem()
-		    Dim gz As zlib.GZStream = zlib.GZStream.Create(tmp)
-		    gz.Write(Data)
-		    gz.Close
-		    Dim bs As BinaryStream = BinaryStream.Open(tmp)
-		    Data = bs.Read(bs.Length)
-		    bs.Close
-		  End If
-		  Return Data
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function GZipDecompress(Data As MemoryBlock) As MemoryBlock
-		  If zlib.IsAvailable Then
-		    If Not zlib.IsAvailable Then Return Data
-		    Dim tmp As FolderItem = GetTemporaryFolderItem
-		    Dim bs As BinaryStream = BinaryStream.Create(tmp, True)
-		    bs.Write(Data)
-		    bs.Close
-		    Dim gz As zlib.GZStream = zlib.GZStream.Open(tmp)
-		    Dim out As New MemoryBlock(0)
-		    bs = New BinaryStream(out)
-		    While Not gz.EOF
-		      bs.Write(gz.Read(1024))
-		    Wend
-		    bs.Close
-		    gz.Close
-		    Return out
-		  End If
-		  Return Data
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function Inflate(Data As MemoryBlock) As MemoryBlock
-		  If zlib.IsAvailable Then Return zlib.Uncompress(Data)
-		  Return Data
 		End Function
 	#tag EndMethod
 

@@ -2,8 +2,28 @@
 Protected Class GZStream
 Implements Readable,Writeable
 	#tag Method, Flags = &h0
+		Sub ClearError()
+		  ' Clears the last error and EOF
+		  zlib.gzclearerr(gzFile)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub Close()
-		  If gzFile <> Nil Then mLastError = zlib.gzclose(gzFile)
+		  If gzFile <> Nil Then
+		    mLastError = zlib.gzclose(gzFile)
+		    If mLastError = Z_ERRNO Then
+		      #If TargetWin32 Then
+		        If Not _get_errno(mLastError) Then
+		          Raise New IOException
+		        Else
+		          Raise New zlibException(mLastError)
+		        End If
+		      #Else
+		        Raise New IOException
+		      #EndIf
+		    End If
+		  End If
 		  gzFile = Nil
 		End Sub
 	#tag EndMethod
@@ -18,7 +38,7 @@ Implements Readable,Writeable
 
 	#tag Method, Flags = &h0
 		 Shared Function Create(OutputFile As FolderItem, Append As Boolean = False, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, CompressionStrategy As Integer = zlib.Z_DEFAULT_STRATEGY) As zlib.GZStream
-		  ' Creates an empty gzip stream
+		  ' Creates an empty gzip stream, or opens an existing stream for appending
 		  If OutputFile = Nil Or OutputFile.Directory Then Raise New IOException
 		  Dim mode As String = "wb"
 		  If Append Then mode = "ab"
@@ -38,7 +58,7 @@ Implements Readable,Writeable
 
 	#tag Method, Flags = &h21
 		Private Sub Destructor()
-		  Me.Close
+		  If gzFile <> Nil Then Me.Close
 		End Sub
 	#tag EndMethod
 
@@ -59,8 +79,8 @@ Implements Readable,Writeable
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h0
-		Sub Flush()
+	#tag Method, Flags = &h21
+		Private Sub Flush() Implements Writeable.Flush
 		  // Part of the Writeable interface.
 		  ' Z_PARTIAL_FLUSH: All pending output is flushed to the output buffer, but the output is not aligned to a byte boundary.
 		  ' This completes the current deflate block and follows it with an empty fixed codes block that is 10 bits long.
@@ -69,12 +89,12 @@ Implements Readable,Writeable
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Function Flush(Flushing As Integer) As Boolean
+	#tag Method, Flags = &h0
+		Function Flush(Flushing As Integer) As Boolean
 		  If Not mIsWriteable Then Raise New IOException ' opened for reading!
 		  If gzFile = Nil Then Raise New NilObjectException
 		  mLastError = zlib.gzflush(gzFile, Flushing)
-		  Return mLastError <> Z_OK
+		  Return mLastError = Z_OK
 		End Function
 	#tag EndMethod
 
@@ -123,28 +143,8 @@ Implements Readable,Writeable
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function Level() As Integer
-		  Return mLevel
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Level(Assigns NewLevel As Integer)
-		  If Not mIsWriteable Then Raise New IOException ' opened for reading!
-		  If gzFile = Nil Then Raise New NilObjectException
-		  mLastError = zlib.gzsetparams(gzFile, NewLevel, mStrategy)
-		  If mLastError = Z_OK Then
-		    mLevel = NewLevel
-		  Else
-		    Raise New zlibException(mLastError)
-		  End If
-		  
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		 Shared Function Open(GzipFile As FolderItem) As zlib.GZStream
-		  ' Opens an existing gzip stream
+		  ' Opens an existing gzip stream for reading only
 		  If GzipFile = Nil Or GzipFile.Directory Or Not GzipFile.Exists Then Raise New IOException
 		  Return gzOpen(GzipFile, "rb")
 		End Function
@@ -154,7 +154,6 @@ Implements Readable,Writeable
 		Function Read(Count As Integer, encoding As TextEncoding = Nil) As String
 		  // Part of the Readable interface.
 		  ' Reads the requested number of DEcompressed bytes from the compressed stream.
-		  ' zlib will pad the data with NULLs if there is not enough bytes to read.
 		  
 		  If mIsWriteable Then Raise New IOException ' opened for writing!
 		  If gzFile = Nil Then Raise New NilObjectException
@@ -172,25 +171,6 @@ Implements Readable,Writeable
 		  // Part of the Readable interface.
 		  Return mLastError <> Z_OK
 		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function Strategy() As Integer
-		  Return mStrategy
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub Strategy(Assigns NewStrategy As Integer)
-		  If Not mIsWriteable Or gzFile = Nil Then Raise New IOException
-		  mLastError = zlib.gzsetparams(gzFile, mLevel, NewStrategy)
-		  If mLastError = Z_OK Then
-		    mStrategy = NewStrategy
-		  Else
-		    Raise New zlibException(mLastError)
-		  End If
-		  
-		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -222,6 +202,28 @@ Implements Readable,Writeable
 		Protected gzFile As Ptr
 	#tag EndProperty
 
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  Return mLevel
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  If Not mIsWriteable Then Raise New IOException ' opened for reading!
+			  If gzFile = Nil Then Raise New NilObjectException
+			  mLastError = zlib.gzsetparams(gzFile, value, mStrategy)
+			  If mLastError = Z_OK Then
+			    mLevel = value
+			  Else
+			    Raise New zlibException(mLastError)
+			  End If
+			  
+			End Set
+		#tag EndSetter
+		Level As Integer
+	#tag EndComputedProperty
+
 	#tag Property, Flags = &h21
 		Private mIsWriteable As Boolean
 	#tag EndProperty
@@ -242,6 +244,46 @@ Implements Readable,Writeable
 		Private mStrategy As Integer = Z_DEFAULT_STRATEGY
 	#tag EndProperty
 
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  Const SEEK_CUR = 1
+			  Return gzseek(gzFile, 0, SEEK_CUR)
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  Const SEEK_SET = 0
+			  If gzseek(gzFile, value, SEEK_SET) <> value Then
+			    gzError() ' set LastError
+			    Raise New zlibException(mLastError)
+			  End If
+			End Set
+		#tag EndSetter
+		Position As Integer
+	#tag EndComputedProperty
+
+	#tag ComputedProperty, Flags = &h0
+		#tag Getter
+			Get
+			  Return mStrategy
+			End Get
+		#tag EndGetter
+		#tag Setter
+			Set
+			  If Not mIsWriteable Or gzFile = Nil Then Raise New IOException
+			  mLastError = zlib.gzsetparams(gzFile, mLevel, value)
+			  If mLastError = Z_OK Then
+			    mStrategy = value
+			  Else
+			    Raise New zlibException(mLastError)
+			  End If
+			  
+			End Set
+		#tag EndSetter
+		Strategy As Integer
+	#tag EndComputedProperty
+
 
 	#tag ViewBehavior
 		#tag ViewProperty
@@ -259,10 +301,25 @@ Implements Readable,Writeable
 			InheritedFrom="Object"
 		#tag EndViewProperty
 		#tag ViewProperty
+			Name="Level"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
 			InheritedFrom="Object"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Position"
+			Group="Behavior"
+			Type="Integer"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Strategy"
+			Group="Behavior"
+			Type="Integer"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"

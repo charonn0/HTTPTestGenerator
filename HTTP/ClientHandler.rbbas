@@ -170,7 +170,7 @@ Inherits SSLSocket
 		        Dim ty As String = types(i).Trim
 		        Select Case ty
 		        Case "deflate"
-		          Dim compressed As String = HTTP.Deflate(doc.MessageBody)
+		          Dim compressed As String = zlib.Deflate(doc.MessageBody)
 		          If compressed.LenB = clientrequest.MessageBody.LenB Then Exit For
 		          doc.Header("Content-Encoding") = "deflate"
 		          doc.MessageBody = compressed
@@ -178,7 +178,7 @@ Inherits SSLSocket
 		          Exit For
 		          
 		        Case "gzip"
-		          Dim compressed As String = HTTP.GZipCompress(doc.MessageBody)
+		          Dim compressed As String = zlib.GZip(doc.MessageBody)
 		          If compressed.LenB = clientrequest.MessageBody.LenB Then Exit For
 		          doc.Header("Content-Encoding") = "gzip"
 		          doc.MessageBody = compressed
