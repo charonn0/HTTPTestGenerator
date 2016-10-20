@@ -689,6 +689,7 @@ End
 
 	#tag Method, Flags = &h1
 		Protected Sub ProcessLinks(Text As String)
+		  Text = ReplaceAll(Text, "#EOL@", EndOfLine + EndOfLine)
 		  Dim lines() As String = Split(Text, "</link>")
 		  Dim sr As New StyleRun
 		  For i As Integer = 0 To UBound(lines)

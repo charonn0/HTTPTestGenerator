@@ -178,7 +178,7 @@
 	"code": "401",
 	"deprecated": false,
 	"phrase": "Unauthorized",
-	"description": "Indicates that the request has not been applied because it lacks valid authentication credentials for the target resource.",
+	"description": "Indicates that the request has not been applied because it lacks valid <link=Authorization>authentication credentials</link> for the target resource. The server generating a 401 response <link=MUST>MUST</link> send a <link=WWW-Authenticate>WWW-Authenticate</link> header field containing at least one challenge applicable to the target resource.#EOL@If the request included authentication credentials, then the 401 response indicates that authorization has been refused for those credentials.",
 	"spec_title": "RFC7235#6.3.1",
 	"spec_href": "http://tools.ietf.org/html/rfc7235#section-3.1"
 },
