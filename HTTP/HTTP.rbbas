@@ -366,13 +366,13 @@ Protected Module HTTP
 		  #pragma BreakOnExceptions Off
 		  Try
 		    out = zlib.GUnZip(Data)
-		    If DebugOutput <> Nil Then DebugOutput.Invoke("The message was gunzipped successfully.", 2)
+		    'If DebugOutput <> Nil Then DebugOutput.Invoke("The message was gunzipped successfully.", 2)
 		  Catch
 		  End Try
 		  If out = Nil Then
 		    Try
 		      out = zlib.Inflate(Data)
-		      If DebugOutput <> Nil Then DebugOutput.Invoke("The message was inflated successfully.", 2)
+		      'If DebugOutput <> Nil Then DebugOutput.Invoke("The message was inflated successfully.", 2)
 		    Catch
 		    End Try
 		  End If
