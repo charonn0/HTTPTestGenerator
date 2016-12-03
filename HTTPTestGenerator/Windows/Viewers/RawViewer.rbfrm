@@ -168,9 +168,9 @@ End
 		Protected Sub SetMessage(Message As MemoryBlock)
 		  Dim data As MemoryBlock = Message
 		  contentlen = data.Size
-		  If AutoDecompress And CurrentMessage.Header("Content-Encoding") = "gzip" Or CurrentMessage.Header("Content-Encoding") = "deflate" Then
+		  If AutoDecompress And (CurrentMessage.Header("Content-Encoding") = "gzip" Or CurrentMessage.Header("Content-Encoding") = "deflate") Then
 		    data = HTTP.DecompressData(data, CurrentMessage.Header("Content-Encoding"), mDebugOutput)
-		  ElseIf CurrentMessage.IsChunked Then 
+		  ElseIf CurrentMessage.IsChunked Then
 		    data = HTTP.DecodeChunkedData(data)
 		  End If
 		  If data = Nil Then data = Message
