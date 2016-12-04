@@ -154,6 +154,7 @@ End
 		  #If DebugBuild Then
 		    'RequestMain1.URL.Text = "https://www.google.com/"
 		  #endif
+		  mDebugOutput = WeakAddressOf Me.Log
 		End Sub
 	#tag EndEvent
 
@@ -300,10 +301,8 @@ End
 		  End If
 		  
 		  
-		  
-		  
 		  Dim blocked As Pair
-		  Dim isvalid As Boolean = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path.ToString, blocked)
+		  Dim isvalid As Boolean = HTTP.IsRobotBlocked(rbt, NewRequest.Header("User-Agent"), NewRequest.Path.Path.ToString, blocked, mDebugOutput)
 		  If isvalid And blocked <> Nil And MsgBox("The User-Agent '" + blocked.Left + "' is not allowed to access '" + blocked.Right + _
 		    "' on '" + NewRequest.Path.Host.ToString + "'. Would you like to continue anyway?", 48 + 4, "Prohibited by robots.txt") <> 6 Then
 		    ResponseMain1.Log("Alert: The request is prohibited by the website's robots.txt file!" + EndOfLine.Windows, -1)
@@ -332,6 +331,12 @@ End
 		    Const WM_SETREDRAW = &h000B
 		    Call SendMessageA(HWND, WM_SETREDRAW, 0, Nil)
 		  #endif
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub Log(Message As Variant, Level As Integer)
+		  ResponseMain1.Log(Message, Level)
 		End Sub
 	#tag EndMethod
 
@@ -457,6 +462,10 @@ End
 
 	#tag Property, Flags = &h0
 		CurrentResponse As HTTP.Response
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mDebugOutput As HTTP.DebugMessage
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

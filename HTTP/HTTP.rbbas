@@ -645,7 +645,7 @@ Protected Module HTTP
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function IsRobotBlocked(robotstxt As String, UserAgent As String, Path As String, ByRef RetValue As Pair) As Boolean
+		Protected Function IsRobotBlocked(robotstxt As String, UserAgent As String, Path As String, ByRef RetValue As Pair, DebugOutput As HTTP.DebugMessage) As Boolean
 		  'Parses a robots.txt file and returns a Pair containing the UserAgent:Path in the robots.txt that matches the UserAgent and Path, if any.
 		  'If not disallowed (i.e. allowed) then returns NIL.
 		  
@@ -679,9 +679,7 @@ Protected Module HTTP
 		        Continue 'Sometimes used (not an error), but not interesting to us
 		        
 		      Else
-		        #If DebugBuild Then
-		          Break 'invalid robots.txt data!
-		        #endif
+		        If DebugOutput <> Nil Then DebugOutput.Invoke("Alert: This website does not have a valid robots.txt file (probably got an error page.)", -1)
 		        Return False
 		        
 		      End Select
