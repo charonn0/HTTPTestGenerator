@@ -113,7 +113,7 @@ Begin Window Generator
       BackColor       =   16777215
       Backdrop        =   ""
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   False
       HasBackColor    =   False
       Height          =   574
       HelpTag         =   ""

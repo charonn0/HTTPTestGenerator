@@ -54,17 +54,22 @@ Inherits Canvas
 
 	#tag Event
 		Sub Paint(g As Graphics)
-		  g.ForeColor = &cC0C0C000
-		  g.DrawRect(0, 0, g.Width, g.Height)
-		  
-		  g.ForeColor = &c80808000
-		  If g.Width > g.Height Then 'horizontal
-		    g.DrawLine(0.25 * g.Width, 0.25 * g.Height, 0.75 * g.Width, 0.25 * g.Height)
-		    g.DrawLine(0.25 * g.Width, 0.75 * g.Height, 0.75 * g.Width, 0.75 * g.Height)
-		  Else
-		    g.DrawLine(g.Width * 0.25, 0.25 * g.Height, g.Width * 0.25, 0.75 * g.Height)
-		    g.DrawLine(g.Width * 0.75, 0.25 * g.Height, g.Width * 0.75, 0.75 * g.Height)
+		  If mBuffer = Nil Or mBuffer.Width <> g.Width Or mBuffer.Height <> g.Height Then
+		    mBuffer = New Picture(g.Width,g.Height, 32)
+		    Dim gg As Graphics = mBuffer.Graphics
+		    gg.ForeColor = &cC0C0C000
+		    gg.DrawRect(0, 0, gg.Width, gg.Height)
+		    
+		    gg.ForeColor = &c80808000
+		    If gg.Width > gg.Height Then 'horizontal
+		      gg.DrawLine(0.25 * gg.Width, 0.25 * gg.Height, 0.75 * gg.Width, 0.25 * gg.Height)
+		      gg.DrawLine(0.25 * gg.Width, 0.75 * gg.Height, 0.75 * gg.Width, 0.75 * gg.Height)
+		    Else
+		      gg.DrawLine(gg.Width * 0.25, 0.25 * gg.Height, gg.Width * 0.25, 0.75 * gg.Height)
+		      gg.DrawLine(gg.Width * 0.75, 0.25 * gg.Height, gg.Width * 0.75, 0.75 * gg.Height)
+		    End If
 		  End If
+		  g.DrawPicture(mBuffer, 0, 0, g.Width, g.Height)
 		End Sub
 	#tag EndEvent
 
@@ -73,6 +78,10 @@ Inherits Canvas
 		Event Moved(DeltaX As Integer, DeltaY As Integer)
 	#tag EndHook
 
+
+	#tag Property, Flags = &h21
+		Private mBuffer As Picture
+	#tag EndProperty
 
 	#tag Property, Flags = &h21
 		Private mLastX As Integer

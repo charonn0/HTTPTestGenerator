@@ -6,7 +6,7 @@ Begin ContainerControl FormView Implements Viewer
    BackColor       =   -256
    Backdrop        =   0
    Enabled         =   True
-   EraseBackground =   True
+   EraseBackground =   False
    HasBackColor    =   False
    Height          =   270
    HelpTag         =   ""

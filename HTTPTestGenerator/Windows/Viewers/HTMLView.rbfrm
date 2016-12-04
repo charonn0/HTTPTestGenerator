@@ -6,7 +6,7 @@ Begin ContainerControl HTMLView Implements Viewer
    BackColor       =   16777215
    Backdrop        =   ""
    Enabled         =   True
-   EraseBackground =   True
+   EraseBackground =   False
    HasBackColor    =   False
    Height          =   457
    HelpTag         =   ""
@@ -34,7 +34,6 @@ Begin ContainerControl HTMLView Implements Viewer
       HasBackColor    =   False
       Height          =   430
       HelpTag         =   ""
-      Index           =   -2147483648
       InitialParent   =   ""
       Left            =   0
       LockBottom      =   True
@@ -106,7 +105,6 @@ Begin ContainerControl HTMLView Implements Viewer
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Encoding:"
       TextAlign       =   2
       TextColor       =   &h000000
@@ -141,7 +139,6 @@ Begin ContainerControl HTMLView Implements Viewer
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Incompatible encoding"
       TextAlign       =   0
       TextColor       =   &h000000

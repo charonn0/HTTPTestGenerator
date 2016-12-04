@@ -6,7 +6,7 @@ Begin ContainerControl RawEditor
    BackColor       =   &h00FFFFFF
    Backdrop        =   0
    Enabled         =   True
-   EraseBackground =   True
+   EraseBackground =   False
    HasBackColor    =   False
    Height          =   400
    HelpTag         =   ""

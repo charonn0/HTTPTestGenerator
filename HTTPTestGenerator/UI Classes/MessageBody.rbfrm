@@ -42,7 +42,6 @@ Begin ContainerControl MessageBody
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
       TextFont        =   "System"
       TextSize        =   0
       TextUnit        =   0
@@ -68,7 +67,6 @@ Begin ContainerControl MessageBody
          Scope           =   0
          TabIndex        =   0
          TabPanelIndex   =   0
-         TabStop         =   True
          Top             =   46
          Value           =   0
          Visible         =   True
@@ -78,9 +76,9 @@ Begin ContainerControl MessageBody
             AcceptTabs      =   ""
             AutoDeactivate  =   True
             Backdrop        =   ""
-            DoubleBuffer    =   False
+            DoubleBuffer    =   True
             Enabled         =   True
-            EraseBackground =   True
+            EraseBackground =   False
             Height          =   151
             HelpTag         =   ""
             Index           =   -2147483648
@@ -167,7 +165,6 @@ Begin ContainerControl MessageBody
             Selectable      =   True
             TabIndex        =   1
             TabPanelIndex   =   2
-            TabStop         =   True
             Text            =   "X:\\Foo\\bar.bat"
             TextAlign       =   0
             TextColor       =   &h000000
@@ -236,7 +233,6 @@ Begin ContainerControl MessageBody
          Selectable      =   False
          TabIndex        =   2
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "0.0 KB"
          TextAlign       =   2
          TextColor       =   &h00000000
@@ -327,22 +323,29 @@ End
 	#tag Event
 		Sub Paint(g As Graphics)
 		  If g.Width <= 0 Or g.Height <= 0 Then Return
-		  g.ForeColor = &cC0C0C000
-		  g.FillRect(0, 0, g.Width, g.Height)
-		  g.ForeColor = &c00000000
-		  g.TextSize = 15
-		  Dim w, h As Integer
-		  Dim s As String
-		  If MessageBodyFile = Nil Then
-		    s = MessageBodyDescription
-		  Else
-		    s = MessageBodyFile.AbsolutePath
+		  Static mBuffer As Picture
+		  
+		  If mBuffer = Nil Or mBuffer.Width <> g.Width Or mBuffer.Height <> g.Height Then
+		    mBuffer = New Picture(g.Width,g.Height, 32)
+		    Dim gg As Graphics = mBuffer.Graphics
+		    gg.ForeColor = &cC0C0C000
+		    gg.FillRect(0, 0, gg.Width, gg.Height)
+		    gg.ForeColor = &c00000000
+		    gg.TextSize = 15
+		    Dim w, h As Integer
+		    Dim s As String
+		    If MessageBodyFile = Nil Then
+		      s = MessageBodyDescription
+		    Else
+		      s = MessageBodyFile.AbsolutePath
+		    End If
+		    w = gg.StringWidth(s)
+		    h = gg.StringHeight(s, w)
+		    w = (gg.Width - w) / 2
+		    h = (gg.Height - h) / 2
+		    gg.DrawString(s, w, h)
 		  End If
-		  w = g.StringWidth(s)
-		  h = g.StringHeight(s, w)
-		  w = (g.Width - w) / 2
-		  h = (g.Height - h) / 2
-		  g.DrawString(s, w, h)
+		  g.DrawPicture(mBuffer, 0, 0, g.Width, g.Height)
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -375,7 +378,7 @@ End
 		Sub Change()
 		  Static lasttext As String
 		  If lasttext = Me.Text Then Return
-		  If NextRequest.MessageBody <> "" And MsgBox("Message body will be lost. Proceed?", 32 + 4, "Clear message body data?") <> 6 Then 
+		  If NextRequest.MessageBody <> "" And MsgBox("Message body will be lost. Proceed?", 32 + 4, "Clear message body data?") <> 6 Then
 		    Me.Text = lasttext
 		    Return
 		  End If

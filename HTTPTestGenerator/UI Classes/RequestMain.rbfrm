@@ -479,7 +479,7 @@ Begin ContainerControl RequestMain
       BackColor       =   &hFFFFFF
       Backdrop        =   ""
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   False
       HasBackColor    =   False
       Height          =   206
       HelpTag         =   ""

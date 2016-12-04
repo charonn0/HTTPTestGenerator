@@ -29,9 +29,9 @@ Begin Window SpecIndex
       AcceptTabs      =   ""
       AutoDeactivate  =   True
       Backdrop        =   ""
-      DoubleBuffer    =   False
+      DoubleBuffer    =   True
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   False
       Height          =   321
       HelpTag         =   ""
       Index           =   -2147483648
@@ -132,7 +132,6 @@ Begin Window SpecIndex
       _ScrollWidth    =   -1
    End
    Begin Timer HistoryTimer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       InitialParent   =   ""
@@ -141,11 +140,8 @@ Begin Window SpecIndex
       Mode            =   2
       Period          =   150
       Scope           =   0
-      TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   350
-      Visible         =   True
       Width           =   32
    End
    Begin Rectangle Rectangle1
@@ -167,7 +163,6 @@ Begin Window SpecIndex
       Scope           =   0
       TabIndex        =   15
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   0
       TopLeftColor    =   &h000000
       Visible         =   True
@@ -194,7 +189,6 @@ Begin Window SpecIndex
          Selectable      =   True
          TabIndex        =   1
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "No Selection"
          TextAlign       =   0
          TextColor       =   &h000000FF
@@ -275,7 +269,6 @@ Begin Window SpecIndex
          Selectable      =   False
          TabIndex        =   4
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "Abstract:"
          TextAlign       =   2
          TextColor       =   &h000000
@@ -310,7 +303,6 @@ Begin Window SpecIndex
          Selectable      =   False
          TabIndex        =   5
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "Specification:"
          TextAlign       =   2
          TextColor       =   &h000000
@@ -345,7 +337,6 @@ Begin Window SpecIndex
          Selectable      =   False
          TabIndex        =   6
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "No Selection:"
          TextAlign       =   2
          TextColor       =   &h000000
@@ -442,7 +433,6 @@ Begin Window SpecIndex
          Selectable      =   True
          TabIndex        =   9
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "No Selection"
          TextAlign       =   0
          TextColor       =   &h00000000
@@ -477,7 +467,6 @@ Begin Window SpecIndex
          Selectable      =   True
          TabIndex        =   10
          TabPanelIndex   =   0
-         TabStop         =   True
          Text            =   "Run Error Server"
          TextAlign       =   2
          TextColor       =   &h000000FF
@@ -513,7 +502,6 @@ Begin Window SpecIndex
       Selectable      =   False
       TabIndex        =   16
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "HTTP://WWW.GOOGLE.COM"
       TextAlign       =   2
       TextColor       =   &h00808080
@@ -527,7 +515,6 @@ Begin Window SpecIndex
       Width           =   342
    End
    Begin ServerSocket ErrorPageServer
-      Enabled         =   True
       Height          =   32
       Index           =   -2147483648
       Left            =   659
@@ -536,11 +523,8 @@ Begin Window SpecIndex
       MinimumSocketsAvailable=   2
       Port            =   64535
       Scope           =   0
-      TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
       Top             =   0
-      Visible         =   True
       Width           =   32
    End
 End

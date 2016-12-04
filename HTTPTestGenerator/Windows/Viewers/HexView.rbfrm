@@ -6,7 +6,7 @@ Begin ContainerControl HexView Implements Viewer
    BackColor       =   &hFFFFFF
    Backdrop        =   ""
    Enabled         =   True
-   EraseBackground =   True
+   EraseBackground =   False
    HasBackColor    =   False
    Height          =   457
    HelpTag         =   ""
