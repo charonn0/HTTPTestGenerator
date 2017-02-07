@@ -15,14 +15,17 @@ Inherits Canvas
 		Sub MouseDrag(X As Integer, Y As Integer)
 		  #pragma Unused X
 		  #pragma Unused Y
-		  
-		  If Me.Width > Me.Height Then 'horizontal
-		    Me.Top = Me.Window.MouseY
-		  Else
-		    Me.Left = Me.Window.MouseX
+		  Dim now As Integer = Ticks
+		  If now - mLastTick > 2 Then
+		    mLastTick = now
+		    If Me.Width > Me.Height Then 'horizontal
+		      Me.Top = Me.Window.MouseY
+		    Else
+		      Me.Left = Me.Window.MouseX
+		    End If
+		    
+		    RaiseEvent Moved(Me.Left - mLastX, Me.Top - mLastY)
 		  End If
-		  
-		  RaiseEvent Moved(Me.Left - mLastX, Me.Top - mLastY)
 		End Sub
 	#tag EndEvent
 
@@ -81,6 +84,10 @@ Inherits Canvas
 
 	#tag Property, Flags = &h21
 		Private mBuffer As Picture
+	#tag EndProperty
+
+	#tag Property, Flags = &h21
+		Private mLastTick As Integer
 	#tag EndProperty
 
 	#tag Property, Flags = &h21

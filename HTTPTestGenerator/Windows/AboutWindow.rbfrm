@@ -23,7 +23,7 @@ Begin Window AboutWindow
    Resizeable      =   False
    Title           =   "About HTTP Test Generator"
    Visible         =   True
-   Width           =   3.36e+2
+   Width           =   3.64e+2
    Begin Canvas Canvas1
       AcceptFocus     =   ""
       AcceptTabs      =   ""
@@ -64,7 +64,7 @@ Begin Window AboutWindow
       Index           =   -2147483648
       InitialParent   =   ""
       Italic          =   ""
-      Left            =   275
+      Left            =   303
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   False
@@ -104,8 +104,7 @@ Begin Window AboutWindow
       Selectable      =   False
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
-      Text            =   "HTTP Test Generator"
+      Text            =   "HTTP Request Generator"
       TextAlign       =   0
       TextColor       =   &h000000
       TextFont        =   "System"
@@ -115,7 +114,7 @@ Begin Window AboutWindow
       Transparent     =   False
       Underline       =   ""
       Visible         =   True
-      Width           =   269
+      Width           =   293
    End
    Begin Label StaticText2
       AutoDeactivate  =   True
@@ -139,7 +138,6 @@ Begin Window AboutWindow
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "Copyright ©2014-16 Andrew Lambert, All Rights Reserved."
       TextAlign       =   0
       TextColor       =   0
@@ -150,7 +148,7 @@ Begin Window AboutWindow
       Transparent     =   True
       Underline       =   ""
       Visible         =   True
-      Width           =   305
+      Width           =   293
    End
    Begin Label Label2
       AutoDeactivate  =   True
@@ -174,7 +172,6 @@ Begin Window AboutWindow
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       Text            =   "www.boredomsoft.org"
       TextAlign       =   1
       TextColor       =   &h000000FF
