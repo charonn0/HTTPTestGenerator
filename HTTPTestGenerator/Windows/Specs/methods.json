@@ -10,7 +10,7 @@
     },
     {
         "method": "CONNECT",
-        "description": "Requests that the recipient establish a tunnel to the destination  <link=origin server>origin server</link> identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the connection is closed.",
+        "description": "Requests that the recipient establish a tunnel to the destination <link=origin server>origin server</link> identified by the request-target and, if successful, thereafter restrict its behavior to blind forwarding of packets, in both directions, until the connection is closed.",
         "safe": true,
         "idempotent": true,
         "cacheable": false,
@@ -19,7 +19,7 @@
     },
     {
         "method": "DELETE",
-        "description": "Requests that the  <link=origin server>origin server</link> remove the association between the target resource and its current functionality.",
+        "description": "Requests that the <link=origin server>origin server</link> remove the association between the target resource and its current functionality.",
         "safe": false,
         "idempotent": true,
         "cacheable": false,
@@ -181,7 +181,7 @@
     },
     {
         "method": "MKCALENDAR",
-        "description": "Creates a new calendar  <link=collection resource>collection resource</link> .",
+        "description": "Creates a new calendar <link=collection resource>collection resource</link> .",
         "safe": false,
         "idempotent": true,
         "cacheable": "",
@@ -190,7 +190,7 @@
     },
     {
         "method": "MKCOL",
-        "description": "Creates a new  <link=collection resource>collection resource</link>  at the location specified by the <link=Request-URI>Request-URI</link>.",
+        "description": "Creates a new <link=collection resource>collection resource</link>  at the location specified by the <link=Request-URI>Request-URI</link>.",
         "safe": false,
         "idempotent": true,
         "cacheable": "",

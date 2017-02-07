@@ -55,7 +55,7 @@
     },
     {
         "header": "Host",
-        "description": "This header provides the host and port information from the target URI, enabling the  <link=origin server>origin server</link> to distinguish among resources while servicing requests for multiple host names on a single IP address.",
+        "description": "This header provides the host and port information from the target URI, enabling the <link=origin server>origin server</link> to distinguish among resources while servicing requests for multiple host names on a single IP address.",
         "spec_title": "RFC7230#5.4",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-5.4"
     },
@@ -109,7 +109,7 @@
     },
     {
         "header": "If-Unmodified-Since",
-        "description": "This header can be used to make a request method conditional by modification date: if the selected representation has been modified since the time specified in this field, then the <link=web server>server</link> <link=rfc2119#section-2><link=MUST NOT>MUST NOT</link></link> perform the requested operation and <link=MUST>MUST</link> instead respond with the <link=412>412 Precondition Failed</link> status code.",
+        "description": "This header can be used to make a request method conditional by modification date: if the selected representation has been modified since the time specified in this field, then the <link=web server>server</link> <link=MUST NOT>MUST NOT</link> perform the requested operation and <link=MUST>MUST</link> instead respond with the <link=412>412 Precondition Failed</link> status code.",
         "spec_title": "RFC7232#3.4",
         "spec_href": "http://tools.ietf.org/html/rfc7232#section-3.4"
     },
@@ -175,7 +175,7 @@
     },
     {
         "header": "Age",
-        "description": "This header conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the  <link=origin server>origin server</link>.",
+        "description": "This header conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the <link=origin server>origin server</link>.",
         "spec_title": "RFC7234#5.1",
         "spec_href": "http://tools.ietf.org/html/rfc7234#section-5.1"
     },
@@ -217,7 +217,7 @@
     },
     {
         "header": "Vary",
-        "description": "Describes what parts of a request message, aside from the method and request target, might influence the  <link=origin server>origin server</link>'s process for selecting and representing the response.",
+        "description": "Describes what parts of a request message, aside from the method and request target, might influence the <link=origin server>origin server</link>'s process for selecting and representing the response.",
         "spec_title": "RFC7231#7.1.4",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.1.4"
     },
@@ -235,7 +235,7 @@
     },
     {
         "header": "Last-Modified",
-        "description": "This header provides a timestamp indicating the date and time at which the  <link=origin server>origin server</link> believes the selected representation was last modified, as determined at the conclusion of handling the request.",
+        "description": "This header provides a timestamp indicating the date and time at which the <link=origin server>origin server</link> believes the selected representation was last modified, as determined at the conclusion of handling the request.",
         "spec_title": "RFC7232#2.2",
         "spec_href": "http://tools.ietf.org/html/rfc7232#section-2.2"
     },
@@ -265,7 +265,7 @@
     },
     {
         "header": "Server",
-        "description": "This header contains information about the software used by the  <link=origin server>origin server</link> to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular <link=web server>server</link> limitations, and for analytics regarding <link=web server>server</link> or operating system use.",
+        "description": "This header contains information about the software used by the <link=origin server>origin server</link> to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular <link=web server>server</link> limitations, and for analytics regarding <link=web server>server</link> or operating system use.",
         "spec_title": "RFC7231#7.4.2",
         "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.4.2"
     },
@@ -331,7 +331,7 @@
     },
     {
         "header": "Content-Disposition",
-        "description": "a means for the  <link=origin server>origin server</link> to suggest a default filename if the user requests that the content is saved to a file. This usage is derived from the definition of Content-Disposition in <link=rfc1806>RFC 1806</link>",
+        "description": "a means for the <link=origin server>origin server</link> to suggest a default filename if the user requests that the content is saved to a file. This usage is derived from the definition of Content-Disposition in <link=rfc1806>RFC 1806</link>",
         "spec_title": "RFC6266",
         "spec_href": "http://tools.ietf.org/html/rfc6266"
     },
@@ -469,7 +469,7 @@
     },
     {
         "header": "Depth",
-        "description": "The Depth header may be used with the <link=LOCK>LOCK</link> method. Values other than 0 or infinity <link=rfc2119#section-2><link=MUST NOT>MUST NOT</link></link> be used with the Depth header on a LOCK method. All resources that support the LOCK method <link=MUST>MUST</link> support the Depth header.\r\nA Depth header of value 0 means to just lock the resource specified by the <link=Request-URI>Request-URI</link>.",
+        "description": "The Depth header may be used with the <link=LOCK>LOCK</link> method. Values other than 0 or infinity <link=MUST NOT>MUST NOT</link> be used with the Depth header on a LOCK method. All resources that support the LOCK method <link=MUST>MUST</link> support the Depth header.\r\nA Depth header of value 0 means to just lock the resource specified by the <link=Request-URI>Request-URI</link>.",
         "spec_title": "RFC4918",
         "spec_href": "http://tools.ietf.org/html/rfc4918"
     },

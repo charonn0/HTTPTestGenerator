@@ -2,7 +2,7 @@
 	"code": "1xx",
 	"deprecated": false,
 	"phrase": "Informational",
-	"description": "Indicates an interim response for communicating connection status or request progress prior to completing the requested action and sending a final response.",
+	"description": "Status codes between 100 and 199 indicate an interim response for communicating connection status or request progress prior to completing the requested action and sending a final response.",
 	"spec_title": "RFC7231#6.2",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.2"
 },
@@ -26,7 +26,7 @@
 	"code": "2xx",
 	"deprecated": false,
 	"phrase": "Successful",
-	"description": "Indicates that the client's request was successfully received, understood, and accepted.",
+	"description": "Status codes between 200 and 299 indicate that the client's request was successfully received, understood, and accepted.",
 	"spec_title": "RFC7231#6.3",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3"
 },
@@ -58,7 +58,7 @@
 	"code": "203",
 	"deprecated": false,
 	"phrase": "Non-Authoritative Information",
-	"description": "Indicates that the request was successful but the enclosed payload has been modified from that of the  <link=origin server>origin server</link>'s <link=200>200 OK</link> response by a transforming proxy.",
+	"description": "Indicates that the request was successful but the enclosed payload has been modified from that of the <link=origin server>origin server</link>'s <link=200>200 OK</link> response by a transforming proxy.",
 	"spec_title": "RFC7231#6.3.4",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.4"
 },
@@ -74,7 +74,7 @@
 	"code": "205",
 	"deprecated": false,
 	"phrase": "Reset Content",
-	"description": "Indicates that the <link=web server>server</link> has fulfilled the request and desires that the <link=user agent>user agent</link> reset the \"document view\", which caused the request to be sent, to its original state as received from the  <link=origin server>origin server</link>.",
+	"description": "Indicates that the <link=web server>server</link> has fulfilled the request and desires that the <link=user agent>user agent</link> reset the \"document view\", which caused the request to be sent, to its original state as received from the <link=origin server>origin server</link>.",
 	"spec_title": "RFC7231#6.3.6",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.6"
 },
@@ -98,7 +98,7 @@
 	"code": "300",
 	"deprecated": false,
 	"phrase": "Multiple Choices",
-	"description": "Indicates that the target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or <link=user agent>user agent</link>) can select a preferred representation by redirecting its request to one or more of those identifiers.",
+	"description": "Status codes between 300 and 399 indicate that the target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or <link=user agent>user agent</link>) can select a preferred representation by redirecting its request to one or more of those identifiers (i.e. in the <link=Link>Link header(s)</link>).",
 	"spec_title": "RFC7231#6.4.1",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.1"
 },
@@ -162,7 +162,7 @@
 	"code": "4xx",
 	"deprecated": false,
 	"phrase": "Client Error",
-	"description": "Indicates that the <link=user agent>client</link> seems to have erred.",
+	"description": "Status codes between 400 and 499 indicate that the <link=user agent>client</link> seems to have erred.",
 	"spec_title": "RFC7231#6.5",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5"
 },
@@ -202,7 +202,7 @@
 	"code": "404",
 	"deprecated": false,
 	"phrase": "Not Found",
-	"description": "Indicates that the  <link=origin server>origin server</link> did not find a current representation for the target resource or is not willing to disclose that one exists.",
+	"description": "Indicates that the <link=origin server>origin server</link> did not find a current representation for the target resource or is not willing to disclose that one exists.",
 	"spec_title": "RFC7231#6.5.4",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.4"
 },
@@ -210,7 +210,7 @@
 	"code": "405",
 	"deprecated": false,
 	"phrase": "Method Not Allowed",
-	"description": "Indicates that the method specified in the request-line is known by the  <link=origin server>origin server</link> but not supported by the target resource.",
+	"description": "Indicates that the method specified in the request-line is known by the <link=origin server>origin server</link> but not supported by the target resource.",
 	"spec_title": "RFC7231#6.5.5",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.5"
 },
@@ -218,7 +218,7 @@
 	"code": "406",
 	"deprecated": false,
 	"phrase": "Not Acceptable",
-	"description": "Indicates that the target resource does not have a current representation that would be acceptable to the <link=user agent>user agent</link>, according to the proactive negotiation header fields received in the request (e.g. the <link=Accept>Accept</link> header), and the <link=web server>server</link> is unwilling to supply a default representation.",
+	"description": "Indicates that the target resource does not have a current representation that would be acceptable to the <link=user agent>user agent</link>, according to the proactive negotiation header fields received in the request (e.g. the <link=Accept>Accept</link> header; see <link=rfc7231#section-6.5.6>RFC7231#6.5.6</link>), and the <link=web server>server</link> is unwilling to supply a default representation.",
 	"spec_title": "RFC7231#6.5.6",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.6"
 },
@@ -250,7 +250,7 @@
 	"code": "410",
 	"deprecated": false,
 	"phrase": "Gone",
-	"description": "Indicates that access to the target resource is no longer available at the  <link=origin server>origin server</link> and that this condition is likely to be permanent.",
+	"description": "Indicates that access to the target resource is no longer available at the <link=origin server>origin server</link> and that this condition is likely to be permanent.",
 	"spec_title": "RFC7231#6.5.9",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.9"
 },
@@ -290,7 +290,7 @@
 	"code": "415",
 	"deprecated": false,
 	"phrase": "Unsupported Media Type",
-	"description": "Indicates that the  <link=origin server>origin server</link> is refusing to service the request because the payload is in a format not supported by the target resource for this method.",
+	"description": "Indicates that the <link=origin server>origin server</link> is refusing to service the request because the payload is in a format not supported by the target resource for this method.",
 	"spec_title": "RFC7231#6.5.13",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.13"
 },
@@ -338,7 +338,7 @@
 	"code": "5xx",
 	"deprecated": false,
 	"phrase": "Server Error",
-	"description": "Indicates that the <link=web server>server</link> is aware that it has erred or is incapable of performing the requested method.",
+	"description": "Status codes between 500 and 599 indicate that the <link=web server>server</link> is aware that it has erred or is incapable of performing the requested method.",
 	"spec_title": "RFC7231#6.6",
 	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6"
 },
@@ -442,7 +442,7 @@
 	"code": "424",
 	"deprecated": false,
 	"phrase": "Failed Dependency",
-	"description": "This status means that the method could not be performed on the resource because the requested action depended on another action and that action failed.",
+	"description": "This status means that the <link=Request Method>method</link> could not be performed on the resource because the requested action depended on another action, and that action failed.",
 	"spec_title": "RFC5218#10.5",
 	"spec_href": "http://tools.ietf.org/html/rfc2518#section-10.5"
 },
@@ -450,7 +450,7 @@
 	"code": "428",
 	"deprecated": false,
 	"phrase": "Precondition Required",
-	"description": "Indicates that the  <link=origin server>origin server</link> requires the request to be conditional.",
+	"description": "Indicates that the <link=origin server>origin server</link> requires the request to be conditional, e.g. by including one or more of the request headers defined in <link=rfc7232#section-3>RFC7232#3</link>.",
 	"spec_title": "RFC6585#3",
 	"spec_href": "http://tools.ietf.org/html/rfc6585#section-3"
 },
