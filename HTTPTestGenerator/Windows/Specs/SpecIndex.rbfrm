@@ -935,7 +935,7 @@ End
 		  #pragma Unused X
 		  #pragma Unused Y
 		  If CurrentItem <> Nil Then
-		    ShowURL(CurrentItem.Value("spec_href"))
+		    If Me.Text <> "Non-standard" Then ShowURL(CurrentItem.Value("spec_href"))
 		  End If
 		End Sub
 	#tag EndEvent
