@@ -60,7 +60,7 @@ Inherits HTTP.Message
 		    End If
 		  End If
 		  
-		  Dim data As String = p + Str(Me.ProtocolVersion, "##0.0##") + " " + Str(Me.StatusCode) + " " + msg + CRLF
+		  Dim data As String = p + Str(Me.ProtocolVersion + 0.001, "#0.0#") + " " + Str(Me.StatusCode) + " " + msg + CRLF
 		  Dim h As String = Super.ToString(HeadersOnly)
 		  If h.Trim = "" Then h = CRLF
 		  Return data + h
