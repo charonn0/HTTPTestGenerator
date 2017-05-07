@@ -11,7 +11,7 @@ Protected Class Hostname
 		  If Not URIHelpers.IsLiteral(Hostname) Then
 		    Dim s() As String = Split(Hostname, ".")
 		    For i As Integer = 0 To UBound(s)
-		      mSubdomains.Insert(0, DecodeURLComponent(s(i)))
+		      mSubdomains.Insert(0, URLDecode(s(i)))
 		    Next
 		  Else
 		    mSubdomains = Array(Hostname)
@@ -27,7 +27,7 @@ Protected Class Hostname
 
 	#tag Method, Flags = &h0
 		Function IsLiteral() As Boolean
-		  Return URIHelpers.IsLiteral(Join(mSubdomains, ""))
+		  Return UBound(mSubdomains) = 0 And URIHelpers.IsLiteral(mSubdomains(0))
 		End Function
 	#tag EndMethod
 
@@ -57,7 +57,7 @@ Protected Class Hostname
 
 	#tag Method, Flags = &h0
 		Sub SubDomain(Index As Integer, Assigns NewSubDomain As String)
-		  mSubdomains(Index) = DecodeURLComponent(NewSubDomain)
+		  mSubdomains(Index) = URLDecode(NewSubDomain)
 		End Sub
 	#tag EndMethod
 
@@ -88,7 +88,7 @@ Protected Class Hostname
 
 	#tag Method, Flags = &h0
 		Sub TLD(Assigns NewTLD As String)
-		  mSubdomains(0) = DecodeURLComponent(NewTLD)
+		  mSubdomains(0) = URLDecode(NewTLD)
 		End Sub
 	#tag EndMethod
 
@@ -116,8 +116,8 @@ Protected Class Hostname
 
 
 	#tag Note, Name = Subdomain order
-		A internet domain name is read from right to left, with the leftmost name part being the zeroth subdomain and then
-		rightmost part being at SubDomainCount-1
+		A internet domain name is read from right to left, with the rightmost name part being the zeroth subdomain and then
+		leftmost part being at SubDomainCount-1
 		
 		For example, the domain name "sub2.sub1.domain.tld" would be represented as:
 		
