@@ -26,6 +26,12 @@ Protected Class Hostname
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Function IsInternationalDomain() As Boolean
+		  Return UBound(mSubdomains) > -1 And IsInternationalDomain(mSubdomains(mSubdomains.Ubound))
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function IsLiteral() As Boolean
 		  Return UBound(mSubdomains) = 0 And URIHelpers.IsLiteral(mSubdomains(0))
 		End Function
@@ -75,7 +81,7 @@ Protected Class Hostname
 		  For i As Integer = 0 To count
 		    If StrComp(OtherHost.SubDomain(i), Me.SubDomain(i), mode) <> 0 Then Return False
 		  Next
-		  Return True
+		  Return count > -1
 		  
 		End Function
 	#tag EndMethod

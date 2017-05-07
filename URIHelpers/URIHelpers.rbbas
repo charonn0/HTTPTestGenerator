@@ -22,6 +22,11 @@ Protected Module URIHelpers
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Function IsInternationalDomain(DomainName As String) As Boolean
+		  Return DomainName.Left(4) = "xn--"
+		End Function
+	#tag EndMethod
+
 		Protected Function IsLiteral(Hostname As String) As Boolean
 		  Return IsLiteralV4(Hostname) Or IsLiteralV6(Hostname)
 		End Function

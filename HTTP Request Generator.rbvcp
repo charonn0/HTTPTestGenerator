@@ -155,6 +155,7 @@ Class=zlibException;zlib/zlibException.rbbas;&h39C48FFF;&h4C216FFF;false
 Class=TapeArchive;zlib/TapeArchive.rbbas;&h2FC347FF;&h4C216FFF;false
 Class=ZStream;zlib/ZStream.rbbas;&h2D14CFFF;&h4C216FFF;false
 Class=EMailAddress;URIHelpers/EMailAddress.rbbas;&h54FBC7FF;&h49A06FFF;false
+Module=IDN;URIHelpers/IDN.rbbas;&h277ADFFF;&h49A06FFF;false
 DefaultWindow=Generator
 MajorVersion=1
 MinorVersion=0
