@@ -93,6 +93,16 @@ Protected Module URIHelpers
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h1
+		Protected Function MailTo(Address As String, Subject As String = "", MessageBody As String = "") As URIHelpers.URI
+		  Dim e As EmailAddress = Address
+		  Dim u As URI = ""
+		  u.Scheme = "mailto"
+		  u.Username = e.Username
+		  u.Host = e.Host
+		  If Subject <> "" Then u.Arguments.Append("Subject", Subject)
+		  If MessageBody <> "" Then u.Arguments.Append("body", MessageBody)
+		  Return u
 		End Function
 	#tag EndMethod
 
@@ -137,6 +147,25 @@ Protected Module URIHelpers
 		  Loop
 		  dcbs.Close
 		  Return DefineEncoding(decoded, Encodings.UTF8)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function URLEncodable(Data As String) As Boolean
+		  Dim bs As New BinaryStream(Data)
+		  Dim ret As Boolean
+		  Do Until bs.EOF
+		    Dim char As Byte = bs.ReadByte
+		    Select Case char
+		    Case &h30 To &h39, &h41 To &h5A, &h61 To &h7A, &h2D, &h2E, &h5F
+		      Continue
+		    Else
+		      ret = True
+		      Exit Do
+		    End Select
+		  Loop
+		  bs.Close
+		  Return ret
 		End Function
 	#tag EndMethod
 
