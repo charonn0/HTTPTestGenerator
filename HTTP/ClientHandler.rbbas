@@ -153,6 +153,14 @@ Inherits SSLSocket
 		      End If
 		    End Select
 		    
+		    If doc = Nil Then ' something went wrong!
+		      Dim errpage As Response = ErrorPage(500)
+		      errpage.Header("Connection") = "close"
+		      Me.SendMessage(errpage)
+		      Me.Close
+		      Return
+		    End If
+		    
 		    ' Verify that the resource is of an Acceptable ContentType (HTTP 1.1 only)
 		    If EnforceContentType And ClientRequest.ProtocolVersion > 1.0 And doc.StatusCode < 300 And doc.StatusCode >= 200 Then
 		      If Not clientrequest.Accepts(doc.ContentType) Then
