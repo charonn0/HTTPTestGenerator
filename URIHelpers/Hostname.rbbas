@@ -100,7 +100,7 @@ Protected Class Hostname
 		  For i As Integer = c DownTo 0
 		    If Not literal Then
 		      If s <> "" Then s = s + "."
-		      s = s + EncodeURLComponent(mSubdomains(i))
+		      s = s + URLEncode(mSubdomains(i))
 		    ElseIf c = 0 Then' IPv6
 		      s = mSubdomains(0)
 		      Exit For
