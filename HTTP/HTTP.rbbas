@@ -364,22 +364,35 @@ Protected Module HTTP
 		Protected Function DecompressData(Data As MemoryBlock, AllegedType As String, DebugOutput As HTTP.DebugMessage = Nil) As MemoryBlock
 		  Dim out As MemoryBlock
 		  #pragma BreakOnExceptions Off
+		  If DebugOutput = Nil Then DebugOutput = AddressOf DevNull
 		  Try
 		    out = zlib.GUnZip(Data)
-		    'If DebugOutput <> Nil Then DebugOutput.Invoke("The message was gunzipped successfully.", 2)
+		    If out <> Nil And AllegedType <> "gzip" Then 
+		      DebugOutput.Invoke("Alert: The message claims to be compressed using " + AllegedType + ", but is actually using gzip.", -1)
+		    End If
 		  Catch
 		  End Try
+		  
 		  If out = Nil Then
 		    Try
 		      out = zlib.Inflate(Data)
-		      'If DebugOutput <> Nil Then DebugOutput.Invoke("The message was inflated successfully.", 2)
+		      If out <> Nil And AllegedType <> "deflate" Then 
+		        DebugOutput.Invoke("Alert: The message claims to be compressed using " + AllegedType + ", but is actually using deflate.", -1)
+		      End If
 		    Catch
 		    End Try
 		  End If
+		  
 		  If out = Nil Then
 		    Try
 		      out = zlib.Inflate(Data, Nil, zlib.RAW_ENCODING)
-		      If DebugOutput <> Nil Then DebugOutput.Invoke("Alert: The message is a raw deflate stream. Inflation was successful anyway, but this is non-standard.", -1)
+		      If DebugOutput <> Nil Then
+		        If out = Nil Then
+		          DebugOutput.Invoke("Warning: The message claims to be compressed but does not appear to be in a standard compression format.", -1)
+		        Else
+		          DebugOutput.Invoke("Alert: The message is a raw deflate stream. Inflation was successful anyway, but this is non-standard.", -1)
+		        End If
+		      End If
 		    Catch
 		    End Try
 		  End If
@@ -399,6 +412,13 @@ Protected Module HTTP
 		  
 		  Return out
 		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Attributes( hidden ) Private Sub DevNull(Message As Variant, Level As Integer)
+		  #pragma Unused Message
+		  #pragma Unused Level
+		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
