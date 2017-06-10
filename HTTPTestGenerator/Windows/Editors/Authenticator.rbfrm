@@ -596,11 +596,15 @@ End
 	#tag EndEvent
 	#tag Event
 		Function MouseDown(X As Integer, Y As Integer) As Boolean
+		  #pragma Unused X
+		  #pragma Unused Y
 		  Return True
 		End Function
 	#tag EndEvent
 	#tag Event
 		Sub MouseUp(X As Integer, Y As Integer)
+		  #pragma Unused X
+		  #pragma Unused Y
 		  PassField.Password = Not PassField.Password
 		  If PassField.Password Then
 		    Me.MouseCursor = System.Cursors.MagnifyLarger

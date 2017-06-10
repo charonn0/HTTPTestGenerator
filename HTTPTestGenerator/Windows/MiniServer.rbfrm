@@ -384,6 +384,7 @@ End
 
 	#tag Method, Flags = &h21
 		Private Function ContinueExpectedHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request) As Boolean
+		  #pragma Unused ClientRequest
 		  DoActivity()
 		  HTTPDebugHandler(Sender, "'100 Continue' is expected.", 1)
 		  Return True
