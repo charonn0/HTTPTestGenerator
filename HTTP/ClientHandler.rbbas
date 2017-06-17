@@ -40,7 +40,10 @@ Inherits SSLSocket
 		  If NthField(Me.Lookahead, CRLF + CRLF, 1).Trim = "" Then Return Nil
 		  Dim clientrequest As HTTP.Request = Me.Read(InStr(Me.Lookahead, CRLF + CRLF) + 3)
 		  
-		  If clientrequest.Header("Expect") = "100-Continue" And RaiseEvent ContinueExpected(clientrequest) Then
+		  If clientrequest.Header("Expect") = "100-Continue" And _
+		    clientrequest.Method = HTTP.RequestMethod.POST And _
+		    clientrequest.Method = HTTP.RequestMethod.PUT And _
+		    RaiseEvent ContinueExpected(clientrequest) Then
 		    Dim cont As HTTP.Response = ErrorPage(100)
 		    cont.Headers.DeleteAllHeaders
 		    cont.MessageBody = ""
