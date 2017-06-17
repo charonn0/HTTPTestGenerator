@@ -603,8 +603,8 @@ End
 		        If code = 308 Or code = 308 Then msg = msg + " (" + Str(code) + " explicitly forbids this!)"
 		        If MsgBox(msg, 4 + 32, "Client behavior compatibility option") = 6 Then 
 		          ResponseMain1.Log("Alert: The request method has been changed to 'GET'.", -1)
-		          If CurrentResponse.StatusCode = 308 Or CurrentResponse.StatusCode = 307 Then
-		            ResponseMain1.Log("Warning: Modifying the request method upon receiving a 308 redirect response is prohibited by the specification.", -1)
+		          If code = 308 Or code = 307 Then
+		            ResponseMain1.Log("Warning: Modifying the request method upon receiving a " + Str(code) + " redirect response is explicitly prohibited by the specification.", -1)
 		          End If
 		          RequestMain1.RequestMethod.ListIndex = 0
 		        End If
