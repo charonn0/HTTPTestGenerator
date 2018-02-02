@@ -351,7 +351,7 @@ Protected Module HTTP
 		  Dim instream As Readable = New BinaryStream(Data)
 		  Dim output As New MemoryBlock(0)
 		  Dim outstream As New BinaryStream(output)
-		  Dim chunk As New ChunkedStream(instream)
+		  Dim chunk As ChunkedStream = ChunkedStream.Open(instream)
 		  Do Until chunk.EOF
 		    outstream.Write(chunk.Read(64))
 		  Loop

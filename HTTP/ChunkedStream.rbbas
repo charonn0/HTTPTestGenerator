@@ -1,16 +1,19 @@
 #tag Class
 Protected Class ChunkedStream
 Implements Readable,Writeable
-	#tag Method, Flags = &h0
-		Sub Constructor(ChunkedData As Readable)
-		  ReadStream = ChunkedData
+	#tag Method, Flags = &h1
+		Protected Sub Constructor()
+		  
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub Constructor(ChunkReceiver As Writeable)
-		  WriteStream = ChunkReceiver
-		End Sub
+		 Shared Function Create(ChunkReceiver As Writeable) As HTTP.ChunkedStream
+		  Dim stream As New ChunkedStream
+		  stream.WriteStream = ChunkReceiver
+		  Return stream
+		  
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
@@ -25,6 +28,14 @@ Implements Readable,Writeable
 		  // Part of the Writeable interface.
 		  If WriteStream <> Nil Then WriteStream.Flush
 		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		 Shared Function Open(ChunkedData As Readable) As HTTP.ChunkedStream
+		  Dim stream As New ChunkedStream
+		  stream.ReadStream = ChunkedData
+		  Return stream
+		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
