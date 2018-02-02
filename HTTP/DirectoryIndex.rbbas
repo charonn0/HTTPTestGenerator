@@ -4,7 +4,7 @@ Inherits HTTP.Response
 	#tag Method, Flags = &h0
 		Sub Constructor(Target As FolderItem, ServerPath As String)
 		  Me.Target = Target
-		  Me.RequestPath = ServerPath
+		  Me.RequestURI = ServerPath
 		  Super.Constructor("HTTP/1.0 200 OK" + CRLF)
 		  Me.ContentType = "text/html"
 		  'Dim d As New Date
@@ -93,13 +93,13 @@ Inherits HTTP.Response
 		  timestart = Microseconds
 		  Dim Items() As FolderItem
 		  Dim dir As Integer
-		  Dim ai As Integer = Me.RequestPath.Arguments.IndexOf("dir")
-		  If ai > -1 Then dir = Val(Me.RequestPath.Arguments.Value(ai))
-		  Dim aCount As Integer = RequestPath.Arguments.Count - 1
+		  Dim ai As Integer = Me.RequestURI.Arguments.IndexOf("dir")
+		  If ai > -1 Then dir = Val(Me.RequestURI.Arguments.Value(ai))
+		  Dim aCount As Integer = RequestURI.Arguments.Count - 1
 		  For i As Integer = 0 To aCount
 		    Dim k, v As String
-		    k = RequestPath.Arguments.Name(i)
-		    v = RequestPath.Arguments.Value(i)
+		    k = RequestURI.Arguments.Name(i)
+		    v = RequestURI.Arguments.Value(i)
 		    Select Case k
 		    Case "Sort"
 		      Select Case v
@@ -126,7 +126,7 @@ Inherits HTTP.Response
 		    Dim line As String = TableRow
 		    Dim name, href, icon As String
 		    name = item.Name
-		    href = ReplaceAll(RequestPath.Path.ToString + "/" + name, "//", "/")
+		    href = ReplaceAll(RequestURI.Path.ToString + "/" + name, "//", "/")
 		    
 		    While Name.len > 40
 		      Dim start As Integer
@@ -156,9 +156,13 @@ Inherits HTTP.Response
 		    line = ReplaceAll(line, "%FILEDATE%", item.ModificationDate.ShortDate + " " + item.ModificationDate.ShortTime)
 		    lines.Append(line)
 		  Next
-		  If RequestPath.Path.ToString <> "/" Then
-		    Dim s As String = RequestPath.Path.Parent.ToString
-		    PageData = ReplaceAll(PageData, "%UPLINK%", "<a href=""" + s + """>Parent Directory</a>")
+		  If RequestURI.Path.ToString <> "/" Then
+		    If RequestURI.Path.Parent = Nil Then
+		      PageData = ReplaceAll(PageData, "%UPLINK%", "<a href=""/"">Parent Directory</a>")
+		    Else
+		      Dim s As String = RequestURI.Path.Parent.ToString
+		      PageData = ReplaceAll(PageData, "%UPLINK%", "<a href=""" + s + """>Parent Directory</a>")
+		    End If
 		  Else
 		    PageData = ReplaceAll(PageData, "%UPLINK%", "")
 		  End If
@@ -169,7 +173,7 @@ Inherits HTTP.Response
 		    head = ReplaceAll(head, "%DIRECTION%", "&amp;dir=0")
 		  End If
 		  pagedata = Replace(pagedata, "%TABLE%", head + Join(lines, EndOfLine))
-		  pagedata = ReplaceAll(pagedata, "%PAGETITLE%", "Index of " + DecodeURLComponent(RequestPath.Path.ToString))
+		  pagedata = ReplaceAll(pagedata, "%PAGETITLE%", "Index of " + DecodeURLComponent(RequestURI.Path.ToString))
 		  If Ubound(Items) + 1 = 1 Then
 		    pagedata = Replace(pagedata, "%ITEMCOUNT%", "1 item.")
 		  Else
@@ -193,7 +197,7 @@ Inherits HTTP.Response
 
 
 	#tag Property, Flags = &h21
-		Private RequestPath As URIHelpers.URI
+		Private RequestURI As URIHelpers.URI
 	#tag EndProperty
 
 	#tag Property, Flags = &h21
