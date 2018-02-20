@@ -753,6 +753,10 @@ End
 		  Me.RowTag(Me.LastIndex) = "Connection":"close"
 		  Me.AddRow("Accept", "text/html,*/*;q=0.8")
 		  Me.RowTag(Me.LastIndex) = "Accept":"text/html,*/*;q=0.8"
+		  If zlib.IsAvailable Then
+		    Me.AddRow("Accept-Encoding", "gzip, deflate")
+		    Me.RowTag(Me.LastIndex) = "Accept-Encoding":"gzip, deflate"
+		  End If
 		  Me.HeaderType(2) = Listbox.HeaderTypes.NotSortable
 		  Me.TextFont = App.FixedWidthFont
 		  Me.AcceptTextDrop
