@@ -28,68 +28,7 @@ Class ContentType
 		  'For strings that might contain multiple entries, use ContentType.ParseTypes
 		  
 		  If InStr(Raw, "/") = 0 Then Raise New UnsupportedFormatException
-		  
-		  If InStr(Raw, ";") > 0 Then
-		    Dim fields() As String = Split(raw, ";")
-		    Dim fcount As Integer = Ubound(fields)
-		    For i As Integer = 0 To fcount
-		      Dim entry As String = fields(i)
-		      If InStr(entry, "/") > 0 Then
-		        If NthField(entry, "/", 1).Trim <> "" Then
-		          SuperType = NthField(entry, "/", 1).Trim
-		        Else
-		          SuperType = "*"
-		        End If
-		        
-		        If NthField(entry, "/", 2).Trim <> "" Then
-		          SubType = NthField(entry, "/", 2).Trim
-		        Else
-		          SubType = "*"
-		        End If
-		      Else
-		        Dim parm, value As String
-		        parm = NthField(entry, "=", 1).Trim
-		        value = NthField(entry, "=", 2)
-		        Select Case parm
-		        Case "q"
-		          Weight = CDbl(value)
-		        Case "charset"
-		          Dim nm As String = NthField(entry, "=", 2)
-		          For e As Integer = 0 To Encodings.Count' - 1
-		            If Encodings.Item(e).internetName = nm Then
-		              Me.CharSet = Encodings.Item(e)
-		              Exit For e
-		            End If
-		          Next
-		        Case "boundary"
-		          Boundary = NthField(entry, "boundary=", 2).Trim
-		        Else
-		          ExtraParams.Value(parm) = value
-		        End Select
-		      End If
-		      
-		    Next
-		    
-		  Else
-		    If NthField(Raw, "/", 1).Trim <> "" Then
-		      SuperType = NthField(Raw, "/", 1).Trim
-		    Else
-		      SuperType = "*"
-		    End If
-		    
-		    If NthField(Raw, "/", 2).Trim <> "" Then
-		      SubType = NthField(Raw, "/", 2).Trim
-		    Else
-		      SubType = "*"
-		    End If
-		    
-		  End If
-		  If InStr(SubType, "+") > 0 Then
-		    Suffix = NthField(SubType, "+", 2)
-		    SubType = NthField(SubType, "+", 1)
-		  Else
-		    Suffix = ""
-		  End If
+		  ParseFields(Raw)
 		End Sub
 	#tag EndMethod
 
@@ -112,8 +51,7 @@ Class ContentType
 		  
 		  Dim t As String = "application/octet-stream"
 		  If FromFile <> Nil Then
-		    Dim ext As String = NthField(FromFile.Name, ".", CountFields(FromFile.Name, "."))
-		    t = MIMEType(ext)
+		    t = MIMEType(FromFile)
 		  End If
 		  Me.Constructor(t)
 		End Sub
@@ -126,6 +64,62 @@ Class ContentType
 		  '     MyContentType = "text/html"
 		  
 		  Me.Constructor(OtherType)
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub Parse(Raw As String)
+		  If NthField(Raw, "/", 1).Trim <> "" Then
+		    SuperType = NthField(Raw, "/", 1).Trim
+		  Else
+		    SuperType = "*"
+		  End If
+		  
+		  If NthField(Raw, "/", 2).Trim <> "" Then
+		    SubType = NthField(Raw, "/", 2).Trim
+		  Else
+		    SubType = "*"
+		  End If
+		  
+		  If InStr(SubType, "+") > 0 Then
+		    Suffix = NthField(SubType, "+", 2)
+		    SubType = NthField(SubType, "+", 1)
+		  Else
+		    Suffix = ""
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Sub ParseFields(Raw As String)
+		  Dim fields() As String = Split(raw, ";")
+		  Dim fcount As Integer = Ubound(fields)
+		  For i As Integer = 0 To fcount
+		    Dim entry As String = fields(i)
+		    If InStr(entry, "/") > 0 Then
+		      Parse(entry)
+		    Else
+		      Dim parm, value As String
+		      parm = NthField(entry, "=", 1).Trim
+		      value = NthField(entry, "=", 2)
+		      Select Case parm
+		      Case "q"
+		        Weight = CDbl(value)
+		      Case "charset"
+		        Dim nm As String = NthField(entry, "=", 2)
+		        For e As Integer = 0 To Encodings.Count' - 1
+		          If Encodings.Item(e).internetName = nm Then
+		            Me.CharSet = Encodings.Item(e)
+		            Exit For e
+		          End If
+		        Next
+		      Case "boundary"
+		        Boundary = NthField(entry, "boundary=", 2).Trim
+		      Else
+		        ExtraParams.Value(parm) = value
+		      End Select
+		    End If
+		  Next
 		End Sub
 	#tag EndMethod
 
