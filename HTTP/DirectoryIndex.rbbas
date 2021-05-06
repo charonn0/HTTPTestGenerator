@@ -126,7 +126,7 @@ Inherits HTTP.Response
 		    Dim line As String = TableRow
 		    Dim name, href, icon As String
 		    name = item.Name
-		    href = ReplaceAll(RequestURI.Path.ToString + "/" + name, "//", "/")
+		    href = ReplaceAll(RequestURI.Path.ToString + "/" + URIHelpers.URLEncode(name), "//", "/")
 		    
 		    While Name.len > 40
 		      Dim start As Integer
