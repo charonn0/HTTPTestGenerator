@@ -1,3 +1,7 @@
+*.dll
+*.sig
+*.zip
+
 #Windows
 Thumbs.db
 Desktop.ini
