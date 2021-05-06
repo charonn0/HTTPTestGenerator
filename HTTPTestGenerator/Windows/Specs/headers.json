@@ -29,7 +29,7 @@
         "spec_title": "RFC7230#3.3.2",
         "spec_href": "http://tools.ietf.org/html/rfc7230#section-3.3.2"
     },
-	{
+ {
         "header": "Connection",
         "description": "This header allows the sender to indicate desired control options for the current connection.",
         "spec_title": "RFC7230#6.1",
@@ -349,7 +349,7 @@
     },
     {
         "header": "Cookie",
-        "description": "Using the Set-Cookie header field, an HTTP <link=server>server</link> can pass name/value pairs and associated metadata (called cookies) to a <link=user agent>user agent</link>.  When the user agent makes subsequent requests to the server, the user agent uses the metadata and other information to determine whether to return the name/value pairs in the Cookie header	",
+        "description": "Using the Set-Cookie header field, an HTTP <link=server>server</link> can pass name/value pairs and associated metadata (called cookies) to a <link=user agent>user agent</link>.  When the user agent makes subsequent requests to the server, the user agent uses the metadata and other information to determine whether to return the name/value pairs in the Cookie header ",
         "spec_title": "RFC6265",
         "spec_href": "http://tools.ietf.org/html/rfc6265"
     },
@@ -605,7 +605,7 @@
         "spec_title": "RFC4918",
         "spec_href": "http://tools.ietf.org/html/rfc4918"
     },
-	{
+ {
         "header": "Upgrade",
         "description": "This header specifies the parameters for an optional or mandatory alternate protocol (e.g. https, websockets.)",
         "spec_title": "RFC2817#3",

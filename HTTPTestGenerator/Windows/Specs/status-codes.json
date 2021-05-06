@@ -1,504 +1,504 @@
 [{
-	"code": "1xx",
-	"deprecated": false,
-	"phrase": "Informational",
-	"description": "Status codes between 100 and 199 indicate an interim response for communicating connection status or request progress prior to completing the requested action and sending a final response.",
-	"spec_title": "RFC7231#6.2",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.2"
+ "code": "1xx",
+ "deprecated": false,
+ "phrase": "Informational",
+ "description": "Status codes between 100 and 199 indicate an interim response for communicating connection status or request progress prior to completing the requested action and sending a final response.",
+ "spec_title": "RFC7231#6.2",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.2"
 },
 {
-	"code": "100",
-	"deprecated": false,
-	"phrase": "Continue",
-	"description": "Indicates that the initial part of a request has been received and has not yet been rejected by the server.",
-	"spec_title": "RFC7231#6.2.1",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.2.1"
+ "code": "100",
+ "deprecated": false,
+ "phrase": "Continue",
+ "description": "Indicates that the initial part of a request has been received and has not yet been rejected by the server.",
+ "spec_title": "RFC7231#6.2.1",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.2.1"
 },
 {
-	"code": "101",
-	"deprecated": false,
-	"phrase": "Switching Protocols",
-	"description": "Indicates that the <link=web server>server</link> understands and is willing to comply with the client's request, via the <link=Upgrade>Upgrade</link> header field, for a change in the application protocol being used on this connection.",
-	"spec_title": "RFC7231#6.2.2",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.2.2"
+ "code": "101",
+ "deprecated": false,
+ "phrase": "Switching Protocols",
+ "description": "Indicates that the <link=web server>server</link> understands and is willing to comply with the client's request, via the <link=Upgrade>Upgrade</link> header field, for a change in the application protocol being used on this connection.",
+ "spec_title": "RFC7231#6.2.2",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.2.2"
 },
 {
-	"code": "2xx",
-	"deprecated": false,
-	"phrase": "Successful",
-	"description": "Status codes between 200 and 299 indicate that the client's request was successfully received, understood, and accepted.",
-	"spec_title": "RFC7231#6.3",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3"
+ "code": "2xx",
+ "deprecated": false,
+ "phrase": "Successful",
+ "description": "Status codes between 200 and 299 indicate that the client's request was successfully received, understood, and accepted.",
+ "spec_title": "RFC7231#6.3",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3"
 },
 {
-	"code": "200",
-	"deprecated": false,
-	"phrase": "OK",
-	"description": "Indicates that the request has succeeded.",
-	"spec_title": "RFC7231#6.3.1",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.1"
+ "code": "200",
+ "deprecated": false,
+ "phrase": "OK",
+ "description": "Indicates that the request has succeeded.",
+ "spec_title": "RFC7231#6.3.1",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.1"
 },
 {
-	"code": "201",
-	"deprecated": false,
-	"phrase": "Created",
-	"description": "Indicates that the request has been fulfilled and has resulted in one or more new resources being created.",
-	"spec_title": "RFC7231#6.3.2",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.2"
+ "code": "201",
+ "deprecated": false,
+ "phrase": "Created",
+ "description": "Indicates that the request has been fulfilled and has resulted in one or more new resources being created.",
+ "spec_title": "RFC7231#6.3.2",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.2"
 },
 {
-	"code": "202",
-	"deprecated": false,
-	"phrase": "Accepted",
-	"description": "Indicates that the request has been accepted for processing, but the processing has not been completed.",
-	"spec_title": "RFC7231#6.3.3",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.3"
+ "code": "202",
+ "deprecated": false,
+ "phrase": "Accepted",
+ "description": "Indicates that the request has been accepted for processing, but the processing has not been completed.",
+ "spec_title": "RFC7231#6.3.3",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.3"
 },
 {
-	"code": "203",
-	"deprecated": false,
-	"phrase": "Non-Authoritative Information",
-	"description": "Indicates that the request was successful but the enclosed payload has been modified from that of the <link=origin server>origin server</link>'s <link=200>200 OK</link> response by a transforming proxy.",
-	"spec_title": "RFC7231#6.3.4",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.4"
+ "code": "203",
+ "deprecated": false,
+ "phrase": "Non-Authoritative Information",
+ "description": "Indicates that the request was successful but the enclosed payload has been modified from that of the <link=origin server>origin server</link>'s <link=200>200 OK</link> response by a transforming proxy.",
+ "spec_title": "RFC7231#6.3.4",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.4"
 },
 {
-	"code": "204",
-	"deprecated": false,
-	"phrase": "No Content",
-	"description": "Indicates that the <link=web server>server</link> has successfully fulfilled the request and that there is no additional content to send in the response payload body.",
-	"spec_title": "RFC7231#6.3.5",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.5"
+ "code": "204",
+ "deprecated": false,
+ "phrase": "No Content",
+ "description": "Indicates that the <link=web server>server</link> has successfully fulfilled the request and that there is no additional content to send in the response payload body.",
+ "spec_title": "RFC7231#6.3.5",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.5"
 },
 {
-	"code": "205",
-	"deprecated": false,
-	"phrase": "Reset Content",
-	"description": "Indicates that the <link=web server>server</link> has fulfilled the request and desires that the <link=user agent>user agent</link> reset the \"document view\", which caused the request to be sent, to its original state as received from the <link=origin server>origin server</link>.",
-	"spec_title": "RFC7231#6.3.6",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.6"
+ "code": "205",
+ "deprecated": false,
+ "phrase": "Reset Content",
+ "description": "Indicates that the <link=web server>server</link> has fulfilled the request and desires that the <link=user agent>user agent</link> reset the \"document view\", which caused the request to be sent, to its original state as received from the <link=origin server>origin server</link>.",
+ "spec_title": "RFC7231#6.3.6",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.6"
 },
 {
-	"code": "206",
-	"deprecated": false,
-	"phrase": "Partial Content",
-	"description": "Indicates that the <link=web server>server</link> is successfully fulfilling a range request for the target resource by transferring one or more parts of the selected representation that correspond to the satisfiable ranges found in the request's <link=Range>Range</link> header field.",
-	"spec_title": "RFC7233#4.1",
-	"spec_href": "http://tools.ietf.org/html/rfc7233#section-4.1"
+ "code": "206",
+ "deprecated": false,
+ "phrase": "Partial Content",
+ "description": "Indicates that the <link=web server>server</link> is successfully fulfilling a range request for the target resource by transferring one or more parts of the selected representation that correspond to the satisfiable ranges found in the request's <link=Range>Range</link> header field.",
+ "spec_title": "RFC7233#4.1",
+ "spec_href": "http://tools.ietf.org/html/rfc7233#section-4.1"
 },
 {
-	"code": "3xx",
-	"deprecated": false,
-	"phrase": "Redirection",
-	"description": "Indicates that further action needs to be taken by the <link=user agent>user agent</link> in order to fulfill the request.",
-	"spec_title": "RFC7231#6.4",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4"
+ "code": "3xx",
+ "deprecated": false,
+ "phrase": "Redirection",
+ "description": "Indicates that further action needs to be taken by the <link=user agent>user agent</link> in order to fulfill the request.",
+ "spec_title": "RFC7231#6.4",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4"
 },
 {
-	"code": "300",
-	"deprecated": false,
-	"phrase": "Multiple Choices",
-	"description": "Status codes between 300 and 399 indicate that the target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or <link=user agent>user agent</link>) can select a preferred representation by redirecting its request to one or more of those identifiers (i.e. in the <link=Link>Link header(s)</link>).",
-	"spec_title": "RFC7231#6.4.1",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.1"
+ "code": "300",
+ "deprecated": false,
+ "phrase": "Multiple Choices",
+ "description": "Status codes between 300 and 399 indicate that the target resource has more than one representation, each with its own more specific identifier, and information about the alternatives is being provided so that the user (or <link=user agent>user agent</link>) can select a preferred representation by redirecting its request to one or more of those identifiers (i.e. in the <link=Link>Link header(s)</link>).",
+ "spec_title": "RFC7231#6.4.1",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.1"
 },
 {
-	"code": "301",
-	"deprecated": false,
-	"phrase": "Moved Permanently",
-	"description": "Indicates that the target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the <link=Location>enclosed URIs</link>.",
-	"spec_title": "RFC7231#6.4.2",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.2"
+ "code": "301",
+ "deprecated": false,
+ "phrase": "Moved Permanently",
+ "description": "Indicates that the target resource has been assigned a new permanent URI and any future references to this resource ought to use one of the <link=Location>enclosed URIs</link>.",
+ "spec_title": "RFC7231#6.4.2",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.2"
 },
 {
-	"code": "302",
-	"deprecated": false,
-	"phrase": "Found",
-	"description": "Indicates that the target resource resides temporarily under a <link=Location>different URI</link>.",
-	"spec_title": "RFC7231#6.4.3",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.3"
+ "code": "302",
+ "deprecated": false,
+ "phrase": "Found",
+ "description": "Indicates that the target resource resides temporarily under a <link=Location>different URI</link>.",
+ "spec_title": "RFC7231#6.4.3",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.3"
 },
 {
-	"code": "303",
-	"deprecated": false,
-	"phrase": "See Other",
-	"description": "Indicates that the <link=web server>server</link> is redirecting the <link=user agent>user agent</link> to a different resource, as indicated by a URI in the <link=Location>Location</link> header field, that is intended to provide an indirect response to the original request.",
-	"spec_title": "RFC7231#6.4.4",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.4"
+ "code": "303",
+ "deprecated": false,
+ "phrase": "See Other",
+ "description": "Indicates that the <link=web server>server</link> is redirecting the <link=user agent>user agent</link> to a different resource, as indicated by a URI in the <link=Location>Location</link> header field, that is intended to provide an indirect response to the original request.",
+ "spec_title": "RFC7231#6.4.4",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.4"
 },
 {
-	"code": "304",
-	"deprecated": false,
-	"phrase": "Not Modified",
-	"description": "Indicates that a conditional <link=GET>GET</link> request has been received and would have resulted in a <link=200>200 OK</link> response if it were not for the fact that the condition has evaluated to false.",
-	"spec_title": "RFC7232#4.1",
-	"spec_href": "http://tools.ietf.org/html/rfc7232#section-4.1"
+ "code": "304",
+ "deprecated": false,
+ "phrase": "Not Modified",
+ "description": "Indicates that a conditional <link=GET>GET</link> request has been received and would have resulted in a <link=200>200 OK</link> response if it were not for the fact that the condition has evaluated to false.",
+ "spec_title": "RFC7232#4.1",
+ "spec_href": "http://tools.ietf.org/html/rfc7232#section-4.1"
 },
 {
-	"code": "305",
-	"deprecated": true,
-	"phrase": "Use Proxy",
-	"description": "This status code has been deprecated.",
-	"spec_title": "RFC7231#6.4.5",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.5"
+ "code": "305",
+ "deprecated": true,
+ "phrase": "Use Proxy",
+ "description": "This status code has been deprecated.",
+ "spec_title": "RFC7231#6.4.5",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.5"
 },
 {
-	"code": "306",
-	"deprecated": true,
-	"phrase": "Switch Proxy",
-	"description": "This status code has been deprecated.",
-	"spec_title": "RFC7231#6.4.6",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.6"
+ "code": "306",
+ "deprecated": true,
+ "phrase": "Switch Proxy",
+ "description": "This status code has been deprecated.",
+ "spec_title": "RFC7231#6.4.6",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.6"
 },
 {
-	"code": "307",
-	"deprecated": false,
-	"phrase": "Temporary Redirect",
-	"description": "Indicates that the target resource resides temporarily under a <link=Location>different URI</link> and the <link=user agent>user agent</link> <link=MUST NOT>MUST NOT</link> change the request method if it performs an automatic redirection to that URI.",
-	"spec_title": "RFC7231#6.4.7",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.7"
+ "code": "307",
+ "deprecated": false,
+ "phrase": "Temporary Redirect",
+ "description": "Indicates that the target resource resides temporarily under a <link=Location>different URI</link> and the <link=user agent>user agent</link> <link=MUST NOT>MUST NOT</link> change the request method if it performs an automatic redirection to that URI.",
+ "spec_title": "RFC7231#6.4.7",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.7"
 },
 {
-	"code": "4xx",
-	"deprecated": false,
-	"phrase": "Client Error",
-	"description": "Status codes between 400 and 499 indicate that the <link=user agent>client</link> seems to have erred.",
-	"spec_title": "RFC7231#6.5",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5"
+ "code": "4xx",
+ "deprecated": false,
+ "phrase": "Client Error",
+ "description": "Status codes between 400 and 499 indicate that the <link=user agent>client</link> seems to have erred.",
+ "spec_title": "RFC7231#6.5",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5"
 },
 {
-	"code": "400",
-	"deprecated": false,
-	"phrase": "Bad Request",
-	"description": "Indicates that the <link=web server>server</link> cannot or will not process the request because the received syntax is invalid, nonsensical, or exceeds some limitation on what the <link=web server>server</link> is willing to process.",
-	"spec_title": "RFC7231#6.5.1",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.1"
+ "code": "400",
+ "deprecated": false,
+ "phrase": "Bad Request",
+ "description": "Indicates that the <link=web server>server</link> cannot or will not process the request because the received syntax is invalid, nonsensical, or exceeds some limitation on what the <link=web server>server</link> is willing to process.",
+ "spec_title": "RFC7231#6.5.1",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.1"
 },
 {
-	"code": "401",
-	"deprecated": false,
-	"phrase": "Unauthorized",
-	"description": "Indicates that the request has not been applied because it lacks valid <link=Authorization>authentication credentials</link> for the target resource. The server generating a 401 response <link=MUST>MUST</link> send a <link=WWW-Authenticate>WWW-Authenticate</link> header field containing at least one challenge applicable to the target resource.#EOL@If the request included authentication credentials, then the 401 response indicates that authorization has been refused for those credentials.",
-	"spec_title": "RFC7235#6.3.1",
-	"spec_href": "http://tools.ietf.org/html/rfc7235#section-3.1"
+ "code": "401",
+ "deprecated": false,
+ "phrase": "Unauthorized",
+ "description": "Indicates that the request has not been applied because it lacks valid <link=Authorization>authentication credentials</link> for the target resource. The server generating a 401 response <link=MUST>MUST</link> send a <link=WWW-Authenticate>WWW-Authenticate</link> header field containing at least one challenge applicable to the target resource.#EOL@If the request included authentication credentials, then the 401 response indicates that authorization has been refused for those credentials.",
+ "spec_title": "RFC7235#6.3.1",
+ "spec_href": "http://tools.ietf.org/html/rfc7235#section-3.1"
 },
 {
-	"code": "402",
-	"deprecated": false,
-	"phrase": "Payment Required",
-	"description": "This status code is reserved for future use.*",
-	"spec_title": "RFC7231#6.5.2",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.2"
+ "code": "402",
+ "deprecated": false,
+ "phrase": "Payment Required",
+ "description": "This status code is reserved for future use.*",
+ "spec_title": "RFC7231#6.5.2",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.2"
 },
 {
-	"code": "403",
-	"deprecated": false,
-	"phrase": "Forbidden",
-	"description": "Indicates that the <link=web server>server</link> understood the request but refuses to authorize it.",
-	"spec_title": "RFC7231#6.5.3",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.3"
+ "code": "403",
+ "deprecated": false,
+ "phrase": "Forbidden",
+ "description": "Indicates that the <link=web server>server</link> understood the request but refuses to authorize it.",
+ "spec_title": "RFC7231#6.5.3",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.3"
 },
 {
-	"code": "404",
-	"deprecated": false,
-	"phrase": "Not Found",
-	"description": "Indicates that the <link=origin server>origin server</link> did not find a current representation for the target resource or is not willing to disclose that one exists.",
-	"spec_title": "RFC7231#6.5.4",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.4"
+ "code": "404",
+ "deprecated": false,
+ "phrase": "Not Found",
+ "description": "Indicates that the <link=origin server>origin server</link> did not find a current representation for the target resource or is not willing to disclose that one exists.",
+ "spec_title": "RFC7231#6.5.4",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.4"
 },
 {
-	"code": "405",
-	"deprecated": false,
-	"phrase": "Method Not Allowed",
-	"description": "Indicates that the method specified in the request-line is known by the <link=origin server>origin server</link> but not supported by the target resource.",
-	"spec_title": "RFC7231#6.5.5",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.5"
+ "code": "405",
+ "deprecated": false,
+ "phrase": "Method Not Allowed",
+ "description": "Indicates that the method specified in the request-line is known by the <link=origin server>origin server</link> but not supported by the target resource.",
+ "spec_title": "RFC7231#6.5.5",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.5"
 },
 {
-	"code": "406",
-	"deprecated": false,
-	"phrase": "Not Acceptable",
-	"description": "Indicates that the target resource does not have a current representation that would be acceptable to the <link=user agent>user agent</link>, according to the proactive negotiation header fields received in the request (e.g. the <link=Accept>Accept</link> header; see <link=rfc7231#section-6.5.6>RFC7231#6.5.6</link>), and the <link=web server>server</link> is unwilling to supply a default representation.",
-	"spec_title": "RFC7231#6.5.6",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.6"
+ "code": "406",
+ "deprecated": false,
+ "phrase": "Not Acceptable",
+ "description": "Indicates that the target resource does not have a current representation that would be acceptable to the <link=user agent>user agent</link>, according to the proactive negotiation header fields received in the request (e.g. the <link=Accept>Accept</link> header; see <link=rfc7231#section-6.5.6>RFC7231#6.5.6</link>), and the <link=web server>server</link> is unwilling to supply a default representation.",
+ "spec_title": "RFC7231#6.5.6",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.6"
 },
 {
-	"code": "407",
-	"deprecated": false,
-	"phrase": "Proxy Authentication Required",
-	"description": "This status is similar to <link=401>401 Unauthorized</link>, but indicates that the <link=user agent>client</link> needs to authenticate itself in order to use a proxy.",
-	"spec_title": "RFC7231#6.3.2",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.2"
+ "code": "407",
+ "deprecated": false,
+ "phrase": "Proxy Authentication Required",
+ "description": "This status is similar to <link=401>401 Unauthorized</link>, but indicates that the <link=user agent>client</link> needs to authenticate itself in order to use a proxy.",
+ "spec_title": "RFC7231#6.3.2",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.3.2"
 },
 {
-	"code": "408",
-	"deprecated": false,
-	"phrase": "Request Timeout",
-	"description": "Indicates that the <link=web server>server</link> did not receive a complete request message within the time that it was prepared to wait.",
-	"spec_title": "RFC7231#6.5.7",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.7"
+ "code": "408",
+ "deprecated": false,
+ "phrase": "Request Timeout",
+ "description": "Indicates that the <link=web server>server</link> did not receive a complete request message within the time that it was prepared to wait.",
+ "spec_title": "RFC7231#6.5.7",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.7"
 },
 {
-	"code": "409",
-	"deprecated": false,
-	"phrase": "Conflict",
-	"description": "Indicates that the request could not be completed due to a conflict with the current state of the resource.",
-	"spec_title": "RFC7231#6.5.8",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.8"
+ "code": "409",
+ "deprecated": false,
+ "phrase": "Conflict",
+ "description": "Indicates that the request could not be completed due to a conflict with the current state of the resource.",
+ "spec_title": "RFC7231#6.5.8",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.8"
 },
 {
-	"code": "410",
-	"deprecated": false,
-	"phrase": "Gone",
-	"description": "Indicates that access to the target resource is no longer available at the <link=origin server>origin server</link> and that this condition is likely to be permanent.",
-	"spec_title": "RFC7231#6.5.9",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.9"
+ "code": "410",
+ "deprecated": false,
+ "phrase": "Gone",
+ "description": "Indicates that access to the target resource is no longer available at the <link=origin server>origin server</link> and that this condition is likely to be permanent.",
+ "spec_title": "RFC7231#6.5.9",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.9"
 },
 {
-	"code": "411",
-	"deprecated": false,
-	"phrase": "Length Required",
-	"description": "Indicates that the <link=web server>server</link> refuses to accept the request without a defined <link=Content-Length>Content-Length</link>.",
-	"spec_title": "RFC7231#6.5.10",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.10"
+ "code": "411",
+ "deprecated": false,
+ "phrase": "Length Required",
+ "description": "Indicates that the <link=web server>server</link> refuses to accept the request without a defined <link=Content-Length>Content-Length</link>.",
+ "spec_title": "RFC7231#6.5.10",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.10"
 },
 {
-	"code": "412",
-	"deprecated": false,
-	"phrase": "Precondition Failed",
-	"description": "Indicates that one or more preconditions given in the request header fields evaluated to false when tested on the server.",
-	"spec_title": "RFC7232#4.2",
-	"spec_href": "http://tools.ietf.org/html/rfc7232#section-4.2"
+ "code": "412",
+ "deprecated": false,
+ "phrase": "Precondition Failed",
+ "description": "Indicates that one or more preconditions given in the request header fields evaluated to false when tested on the server.",
+ "spec_title": "RFC7232#4.2",
+ "spec_href": "http://tools.ietf.org/html/rfc7232#section-4.2"
 },
 {
-	"code": "413",
-	"deprecated": false,
-	"phrase": "Payload Too Large",
-	"description": "Indicates that the <link=web server>server</link> is refusing to process a request because the request payload is larger than the <link=web server>server</link> is willing or able to process.",
-	"spec_title": "RFC7231#6.5.11",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.11"
+ "code": "413",
+ "deprecated": false,
+ "phrase": "Payload Too Large",
+ "description": "Indicates that the <link=web server>server</link> is refusing to process a request because the request payload is larger than the <link=web server>server</link> is willing or able to process.",
+ "spec_title": "RFC7231#6.5.11",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.11"
 },
 {
-	"code": "414",
-	"deprecated": false,
-	"phrase": "URI Too Long",
-	"description": "Indicates that the <link=web server>server</link> is refusing to service the request because the request-target is longer than the <link=web server>server</link> is willing to interpret.",
-	"spec_title": "RFC7231#6.5.12",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.12"
+ "code": "414",
+ "deprecated": false,
+ "phrase": "URI Too Long",
+ "description": "Indicates that the <link=web server>server</link> is refusing to service the request because the request-target is longer than the <link=web server>server</link> is willing to interpret.",
+ "spec_title": "RFC7231#6.5.12",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.12"
 },
 {
-	"code": "415",
-	"deprecated": false,
-	"phrase": "Unsupported Media Type",
-	"description": "Indicates that the <link=origin server>origin server</link> is refusing to service the request because the payload is in a format not supported by the target resource for this method.",
-	"spec_title": "RFC7231#6.5.13",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.13"
+ "code": "415",
+ "deprecated": false,
+ "phrase": "Unsupported Media Type",
+ "description": "Indicates that the <link=origin server>origin server</link> is refusing to service the request because the payload is in a format not supported by the target resource for this method.",
+ "spec_title": "RFC7231#6.5.13",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.13"
 },
 {
-	"code": "416",
-	"deprecated": false,
-	"phrase": "Range Not Satisfiable",
-	"description": "Indicates that none of the ranges in the request's <link=range>Range</link> header field overlap the current extent of the selected resource or that the set of ranges requested has been rejected due to invalid ranges or an excessive request of small or overlapping ranges.",
-	"spec_title": "RFC7233#4.4",
-	"spec_href": "http://tools.ietf.org/html/rfc7233#section-4.4"
+ "code": "416",
+ "deprecated": false,
+ "phrase": "Range Not Satisfiable",
+ "description": "Indicates that none of the ranges in the request's <link=range>Range</link> header field overlap the current extent of the selected resource or that the set of ranges requested has been rejected due to invalid ranges or an excessive request of small or overlapping ranges.",
+ "spec_title": "RFC7233#4.4",
+ "spec_href": "http://tools.ietf.org/html/rfc7233#section-4.4"
 },
 {
-	"code": "417",
-	"deprecated": false,
-	"phrase": "Expectation Failed",
-	"description": "Indicates that the expectation given in the request's Expect header field could not be met by at least one of the inbound servers.",
-	"spec_title": "RFC7231#6.5.14",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.14"
+ "code": "417",
+ "deprecated": false,
+ "phrase": "Expectation Failed",
+ "description": "Indicates that the expectation given in the request's Expect header field could not be met by at least one of the inbound servers.",
+ "spec_title": "RFC7231#6.5.14",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.14"
 },
 {
-	"code": "418",
-	"deprecated": false,
-	"phrase": "I'm a teapot",
-	"description": "The <link=web server>server</link> is a teapot; the resulting entity body <link=MAY>MAY</link> be short and stout.",
-	"spec_title": "RFC7168#2.3.3",
-	"spec_href": "https://tools.ietf.org/html/rfc7168#section-2.3.3"
+ "code": "418",
+ "deprecated": false,
+ "phrase": "I'm a teapot",
+ "description": "The <link=web server>server</link> is a teapot; the resulting entity body <link=MAY>MAY</link> be short and stout.",
+ "spec_title": "RFC7168#2.3.3",
+ "spec_href": "https://tools.ietf.org/html/rfc7168#section-2.3.3"
 },
 {
-	"code": "426",
-	"deprecated": false,
-	"phrase": "Upgrade Required",
-	"description": "Indicates that the <link=web server>server</link> refuses to perform the request using the current protocol but might be willing to do so after the <link=user agent>client</link> upgrades to a different protocol.",
-	"spec_title": "RFC7231#6.5.15",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.15"
+ "code": "426",
+ "deprecated": false,
+ "phrase": "Upgrade Required",
+ "description": "Indicates that the <link=web server>server</link> refuses to perform the request using the current protocol but might be willing to do so after the <link=user agent>client</link> upgrades to a different protocol.",
+ "spec_title": "RFC7231#6.5.15",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.5.15"
 },
 {
-	"code": "463",
-	"deprecated": false,
-	"phrase": "Restricted Client",
-	"description": "This status code indicates that the <link=web server>server</link> (likely a CDN) refuses to service the request because it did not include an acceptable <link=User-Agent>User-Agent</link> header.",
-	"spec_title": "Non-standard",
-	"spec_href": ""
+ "code": "463",
+ "deprecated": false,
+ "phrase": "Restricted Client",
+ "description": "This status code indicates that the <link=web server>server</link> (likely a CDN) refuses to service the request because it did not include an acceptable <link=User-Agent>User-Agent</link> header.",
+ "spec_title": "Non-standard",
+ "spec_href": ""
 },
 {
-	"code": "5xx",
-	"deprecated": false,
-	"phrase": "Server Error",
-	"description": "Status codes between 500 and 599 indicate that the <link=web server>server</link> is aware that it has erred or is incapable of performing the requested method.",
-	"spec_title": "RFC7231#6.6",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6"
+ "code": "5xx",
+ "deprecated": false,
+ "phrase": "Server Error",
+ "description": "Status codes between 500 and 599 indicate that the <link=web server>server</link> is aware that it has erred or is incapable of performing the requested method.",
+ "spec_title": "RFC7231#6.6",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6"
 },
 {
-	"code": "500",
-	"deprecated": false,
-	"phrase": "Internal Server Error",
-	"description": "Indicates that the <link=web server>server</link> encountered an unexpected condition that prevented it from fulfilling the request.",
-	"spec_title": "RFC7231#6.6.1",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.1"
+ "code": "500",
+ "deprecated": false,
+ "phrase": "Internal Server Error",
+ "description": "Indicates that the <link=web server>server</link> encountered an unexpected condition that prevented it from fulfilling the request.",
+ "spec_title": "RFC7231#6.6.1",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.1"
 },
 {
-	"code": "501",
-	"deprecated": false,
-	"phrase": "Not Implemented",
-	"description": "Indicates that the <link=web server>server</link> does not support the functionality required to fulfill the request.",
-	"spec_title": "RFC7231#6.6.2",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.2"
+ "code": "501",
+ "deprecated": false,
+ "phrase": "Not Implemented",
+ "description": "Indicates that the <link=web server>server</link> does not support the functionality required to fulfill the request.",
+ "spec_title": "RFC7231#6.6.2",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.2"
 },
 {
-	"code": "502",
-	"deprecated": false,
-	"phrase": "Bad Gateway",
-	"description": "Indicates that the server, while acting as a gateway or proxy, received an invalid response from an inbound <link=web server>server</link> it accessed while attempting to fulfill the request.",
-	"spec_title": "RFC7231#6.6.3",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.3"
+ "code": "502",
+ "deprecated": false,
+ "phrase": "Bad Gateway",
+ "description": "Indicates that the server, while acting as a gateway or proxy, received an invalid response from an inbound <link=web server>server</link> it accessed while attempting to fulfill the request.",
+ "spec_title": "RFC7231#6.6.3",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.3"
 },
 {
-	"code": "503",
-	"deprecated": false,
-	"phrase": "Service Unavailable",
-	"description": "Indicates that the <link=web server>server</link> is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay.",
-	"spec_title": "RFC7231#6.6.4",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.4"
+ "code": "503",
+ "deprecated": false,
+ "phrase": "Service Unavailable",
+ "description": "Indicates that the <link=web server>server</link> is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay.",
+ "spec_title": "RFC7231#6.6.4",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.4"
 },
 {
-	"code": "504",
-	"deprecated": false,
-	"phrase": "Gateway Time-out",
-	"description": "Indicates that the server, while acting as a gateway or proxy, did not receive a timely response from an upstream <link=web server>server</link> it needed to access in order to complete the request.",
-	"spec_title": "RFC7231#6.6.5",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.5"
+ "code": "504",
+ "deprecated": false,
+ "phrase": "Gateway Time-out",
+ "description": "Indicates that the server, while acting as a gateway or proxy, did not receive a timely response from an upstream <link=web server>server</link> it needed to access in order to complete the request.",
+ "spec_title": "RFC7231#6.6.5",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.5"
 },
 {
-	"code": "505",
-	"deprecated": false,
-	"phrase": "HTTP Version Not Supported",
-	"description": "Indicates that the <link=web server>server</link> does not support, or refuses to support, the protocol version that was used in the request message.",
-	"spec_title": "RFC7231#6.6.6",
-	"spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.6"
+ "code": "505",
+ "deprecated": false,
+ "phrase": "HTTP Version Not Supported",
+ "description": "Indicates that the <link=web server>server</link> does not support, or refuses to support, the protocol version that was used in the request message.",
+ "spec_title": "RFC7231#6.6.6",
+ "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.6.6"
 },
 {
-	"code": "102",
-	"deprecated": false,
-	"phrase": "Processing",
-	"description": "This status is an interim response used to inform the <link=user agent>client</link> that the <link=web server>server</link> has accepted the complete request, but has not yet completed it.",
-	"spec_title": "RFC5218#10.1",
-	"spec_href": "http://tools.ietf.org/html/rfc2518#section-10.1"
+ "code": "102",
+ "deprecated": false,
+ "phrase": "Processing",
+ "description": "This status is an interim response used to inform the <link=user agent>client</link> that the <link=web server>server</link> has accepted the complete request, but has not yet completed it.",
+ "spec_title": "RFC5218#10.1",
+ "spec_href": "http://tools.ietf.org/html/rfc2518#section-10.1"
 },
 {
-	"code": "207",
-	"deprecated": false,
-	"phrase": "Multi-Status",
-	"description": "Provides status for multiple independent operations.",
-	"spec_title": "RFC5218#10.2",
-	"spec_href": "http://tools.ietf.org/html/rfc2518#section-10.2"
+ "code": "207",
+ "deprecated": false,
+ "phrase": "Multi-Status",
+ "description": "Provides status for multiple independent operations.",
+ "spec_title": "RFC5218#10.2",
+ "spec_href": "http://tools.ietf.org/html/rfc2518#section-10.2"
 },
 {
-	"code": "226",
-	"deprecated": false,
-	"phrase": "IM Used",
-	"description": "The <link=web server>server</link> has fulfilled a <link=GET>GET</link> request for the resource, and the response is a representation of the result of one or more instance-manipulations applied to the current instance.",
-	"spec_title": "RFC3229#10.4.1",
-	"spec_href": "http://tools.ietf.org/html/rfc3229#section-10.4.1"
+ "code": "226",
+ "deprecated": false,
+ "phrase": "IM Used",
+ "description": "The <link=web server>server</link> has fulfilled a <link=GET>GET</link> request for the resource, and the response is a representation of the result of one or more instance-manipulations applied to the current instance.",
+ "spec_title": "RFC3229#10.4.1",
+ "spec_href": "http://tools.ietf.org/html/rfc3229#section-10.4.1"
 },
 {
-	"code": "308",
-	"deprecated": false,
-	"phrase": "Permanent Redirect",
-	"description": "The target resource has been assigned a new permanent URI and any future references to this resource <link=SHOULD>SHOULD</link> use one of the <link=Location>returned URIs</link>. [...] This status code is similar to <link=301>301 Moved Permanently</link>, except that it does not allow rewriting the request method from <link=POST>POST</link> to <link=GET>GET</link>.",
-	"spec_title": "RFC7238",
-	"spec_href": "http://tools.ietf.org/html/rfc7238"
+ "code": "308",
+ "deprecated": false,
+ "phrase": "Permanent Redirect",
+ "description": "The target resource has been assigned a new permanent URI and any future references to this resource <link=SHOULD>SHOULD</link> use one of the <link=Location>returned URIs</link>. [...] This status code is similar to <link=301>301 Moved Permanently</link>, except that it does not allow rewriting the request method from <link=POST>POST</link> to <link=GET>GET</link>.",
+ "spec_title": "RFC7238",
+ "spec_href": "http://tools.ietf.org/html/rfc7238"
 },
 {
-	"code": "422",
-	"deprecated": false,
-	"phrase": "Unprocessable Entity",
-	"description": "This status means the <link=web server>server</link> understands the content type of the request entity (hence a <link=415>415 Unsupported Media Type</link> status code is inappropriate), and the syntax of the request entity is correct (thus a <link=400>400 Bad Request</link> status code is inappropriate) but was unable to process the contained instructions.",
-	"spec_title": "RFC5218#10.3",
-	"spec_href": "http://tools.ietf.org/html/rfc2518#section-10.3"
+ "code": "422",
+ "deprecated": false,
+ "phrase": "Unprocessable Entity",
+ "description": "This status means the <link=web server>server</link> understands the content type of the request entity (hence a <link=415>415 Unsupported Media Type</link> status code is inappropriate), and the syntax of the request entity is correct (thus a <link=400>400 Bad Request</link> status code is inappropriate) but was unable to process the contained instructions.",
+ "spec_title": "RFC5218#10.3",
+ "spec_href": "http://tools.ietf.org/html/rfc2518#section-10.3"
 },
 {
-	"code": "423",
-	"deprecated": false,
-	"phrase": "Locked",
-	"description": "This status means the source or destination resource of a method is locked.",
-	"spec_title": "RFC5218#10.4",
-	"spec_href": "http://tools.ietf.org/html/rfc2518#section-10.4"
+ "code": "423",
+ "deprecated": false,
+ "phrase": "Locked",
+ "description": "This status means the source or destination resource of a method is locked.",
+ "spec_title": "RFC5218#10.4",
+ "spec_href": "http://tools.ietf.org/html/rfc2518#section-10.4"
 },
 {
-	"code": "424",
-	"deprecated": false,
-	"phrase": "Failed Dependency",
-	"description": "This status means that the <link=Request Method>method</link> could not be performed on the resource because the requested action depended on another action, and that action failed.",
-	"spec_title": "RFC5218#10.5",
-	"spec_href": "http://tools.ietf.org/html/rfc2518#section-10.5"
+ "code": "424",
+ "deprecated": false,
+ "phrase": "Failed Dependency",
+ "description": "This status means that the <link=Request Method>method</link> could not be performed on the resource because the requested action depended on another action, and that action failed.",
+ "spec_title": "RFC5218#10.5",
+ "spec_href": "http://tools.ietf.org/html/rfc2518#section-10.5"
 },
 {
-	"code": "428",
-	"deprecated": false,
-	"phrase": "Precondition Required",
-	"description": "Indicates that the <link=origin server>origin server</link> requires the request to be conditional, e.g. by including one or more of the request headers defined in <link=rfc7232#section-3>RFC7232#3</link>.",
-	"spec_title": "RFC6585#3",
-	"spec_href": "http://tools.ietf.org/html/rfc6585#section-3"
+ "code": "428",
+ "deprecated": false,
+ "phrase": "Precondition Required",
+ "description": "Indicates that the <link=origin server>origin server</link> requires the request to be conditional, e.g. by including one or more of the request headers defined in <link=rfc7232#section-3>RFC7232#3</link>.",
+ "spec_title": "RFC6585#3",
+ "spec_href": "http://tools.ietf.org/html/rfc6585#section-3"
 },
 {
-	"code": "429",
-	"deprecated": false,
-	"phrase": "Too Many Requests",
-	"description": "Indicates that the user has sent too many requests in a given amount of time (\"rate limiting\").",
-	"spec_title": "RFC6585#4",
-	"spec_href": "http://tools.ietf.org/html/rfc6585#section-4"
+ "code": "429",
+ "deprecated": false,
+ "phrase": "Too Many Requests",
+ "description": "Indicates that the user has sent too many requests in a given amount of time (\"rate limiting\").",
+ "spec_title": "RFC6585#4",
+ "spec_href": "http://tools.ietf.org/html/rfc6585#section-4"
 },
 {
-	"code": "431",
-	"deprecated": false,
-	"phrase": "Request Header Fields Too Large",
-	"description": "Indicates that the <link=web server>server</link> is unwilling to process the request because its header fields are too large.",
-	"spec_title": "RFC6585#5",
-	"spec_href": "http://tools.ietf.org/html/rfc6585#section-5"
+ "code": "431",
+ "deprecated": false,
+ "phrase": "Request Header Fields Too Large",
+ "description": "Indicates that the <link=web server>server</link> is unwilling to process the request because its header fields are too large.",
+ "spec_title": "RFC6585#5",
+ "spec_href": "http://tools.ietf.org/html/rfc6585#section-5"
 },
 {
-	"code": "451",
-	"deprecated": false,
-	"phrase": "Unavailable For Legal Reasons",
-	"description": "This status code indicates that the <link=web server>server</link> is denying access to the resource in response to a legal demand. This status code does not imply that the request would succeed in absence of the legal demand.",
-	"spec_title": "RFC7725",
-	"spec_href": "https://tools.ietf.org/html/rfc7725"
+ "code": "451",
+ "deprecated": false,
+ "phrase": "Unavailable For Legal Reasons",
+ "description": "This status code indicates that the <link=web server>server</link> is denying access to the resource in response to a legal demand. This status code does not imply that the request would succeed in absence of the legal demand.",
+ "spec_title": "RFC7725",
+ "spec_href": "https://tools.ietf.org/html/rfc7725"
 },
 {
-	"code": "506",
-	"deprecated": false,
-	"phrase": "Variant Also Negotiates",
-	"description": "Indicates that the <link=web server>server</link> has an internal configuration error: the chosen variant resource is configured to engage in transparent content negotiation itself, and is therefore not a proper end point in the negotiation process.",
-	"spec_title": "RFC2295#8.1",
-	"spec_href": "http://tools.ietf.org/html/rfc2295#section-8.1"
+ "code": "506",
+ "deprecated": false,
+ "phrase": "Variant Also Negotiates",
+ "description": "Indicates that the <link=web server>server</link> has an internal configuration error: the chosen variant resource is configured to engage in transparent content negotiation itself, and is therefore not a proper end point in the negotiation process.",
+ "spec_title": "RFC2295#8.1",
+ "spec_href": "http://tools.ietf.org/html/rfc2295#section-8.1"
 },
 {
-	"code": "507",
-	"deprecated": false,
-	"phrase": "Insufficient Storage",
-	"description": "This status means the method could not be performed on the resource because the <link=web server>server</link> is unable to store the representation needed to successfully complete the request.",
-	"spec_title": "RFC5218#10.6",
-	"spec_href": "http://tools.ietf.org/html/rfc2518#section-10.6"
+ "code": "507",
+ "deprecated": false,
+ "phrase": "Insufficient Storage",
+ "description": "This status means the method could not be performed on the resource because the <link=web server>server</link> is unable to store the representation needed to successfully complete the request.",
+ "spec_title": "RFC5218#10.6",
+ "spec_href": "http://tools.ietf.org/html/rfc2518#section-10.6"
 },
 {
-	"code": "511",
-	"deprecated": false,
-	"phrase": "Network Authentication Required",
-	"description": "Indicates that the <link=user agent>client</link> needs to authenticate to gain network access.",
-	"spec_title": "RFC6585#6",
-	"spec_href": "http://tools.ietf.org/html/rfc6585#section-6"
+ "code": "511",
+ "deprecated": false,
+ "phrase": "Network Authentication Required",
+ "description": "Indicates that the <link=user agent>client</link> needs to authenticate to gain network access.",
+ "spec_title": "RFC6585#6",
+ "spec_href": "http://tools.ietf.org/html/rfc6585#section-6"
 }]

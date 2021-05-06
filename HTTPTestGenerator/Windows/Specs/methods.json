@@ -1,5 +1,5 @@
 [
-	{
+ {
         "method": "BREW",
         "description": "Requests that an HTCPCP-compliant server commence brewing coffee.",
         "safe": false,
@@ -350,7 +350,7 @@
         "spec_title": "RFC3253#3.5",
         "spec_href": "http://tools.ietf.org/html/rfc3253#section-3.5"
     },
-	{
+ {
         "method": "WHEN",
         "description": "Indicates to an HTCPCP-compliant server that a sufficient quantity of milk or non-dairy creamer has been provided.",
         "safe": false,
