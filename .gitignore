@@ -1,6 +1,7 @@
 *.dll
 *.sig
 *.zip
+*.exe
 
 #Windows
 Thumbs.db
