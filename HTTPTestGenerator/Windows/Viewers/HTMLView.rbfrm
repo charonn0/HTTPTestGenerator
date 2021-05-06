@@ -189,10 +189,13 @@ End
 		  SyntaxHilightContainer1.SetText(Message, Definition)
 		  mRaw = Message
 		  mType = Type
+		  Dim i As Integer
 		  If mType.CharSet <> Nil Then
-		    Dim i As Integer = mEncodings.IndexOf(mType.CharSet.internetName)
-		    If i > -1 Then EncodingList.ListIndex = i
+		    i = mEncodings.IndexOf(mType.CharSet.internetName)
+		  Else
+		    i = mEncodings.IndexOf("UTF-8")
 		  End If
+		  If i > -1 Then EncodingList.ListIndex = i
 		  mContentLength = ContentLen
 		  mDebugOutput = DebugOutput
 		End Sub
