@@ -1,0 +1,108 @@
+#tag Class
+Protected Class zlibException
+Inherits RuntimeException
+	#tag Method, Flags = &h1000
+		Sub Constructor(ErrorCode As Integer)
+		  Me.ErrorNumber = ErrorCode
+		  
+		  Select Case ErrorCode
+		    'zlib's built-in error messages suck; these are much better
+		  Case Z_BUF_ERROR
+		    Me.Message = "The requested operation requires a larger output buffer."
+		  Case Z_DATA_ERROR
+		    Me.Message = "The input buffer contains invalid or incomplete deflate data."
+		  Case Z_MEM_ERROR
+		    Me.Message = "There is insufficient available memory to perform the requested operation."
+		  Case Z_STREAM_ERROR
+		    Me.Message = "The stream state is inconsistent or invalid."
+		  Case Z_VERSION_ERROR
+		    Me.Message = "The zlib library is a different version than what was expected (needs: 1.2.8; has: " + zlib.Version + ")."
+		  Case Z_NEED_DICT
+		    Me.Message = "The stream is compressed with a custom dictionary." ' not an error per se, but a special condition
+		  Case Z_STREAM_END
+		    Me.Message = "The stream has ended." ' not an error per se, but a special condition
+		  Case Z_ERRNO
+		    Me.Message = "A system error occurred during the operation. Consult the system last error value for details."
+		  Else
+		    If zlib.IsAvailable Then
+		      Dim err As MemoryBlock = zError(ErrorCode)
+		      Try
+		        #pragma BreakOnExceptions Off
+		        Me.Message = err.CString(0)
+		      Catch
+		        Me.Message = "Unknown error"
+		      End Try
+		    End If
+		  End Select
+		End Sub
+	#tag EndMethod
+
+
+	#tag ViewBehavior
+		#tag ViewProperty
+			Name="Reason"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Text"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="ErrorNumber"
+			Visible=false
+			Group="Behavior"
+			InitialValue="0"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Index"
+			Visible=true
+			Group="ID"
+			InitialValue="-2147483648"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Left"
+			Visible=true
+			Group="Position"
+			InitialValue="0"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Message"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Name"
+			Visible=true
+			Group="ID"
+			InitialValue=""
+			Type="String"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Super"
+			Visible=true
+			Group="ID"
+			InitialValue=""
+			Type="String"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Top"
+			Visible=true
+			Group="Position"
+			InitialValue="0"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+	#tag EndViewBehavior
+End Class
+#tag EndClass

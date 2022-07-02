@@ -1,20 +1,21 @@
 #tag Window
 Begin Window SpecIndex
-   BackColor       =   &hFFFFFF
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
    CloseButton     =   True
    Composite       =   False
    Frame           =   3
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   3.21e+2
+   HasFullScreenButton=   False
+   Height          =   321
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   False
    MaxWidth        =   32000
-   MenuBar         =   ""
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   True
@@ -23,15 +24,14 @@ Begin Window SpecIndex
    Resizeable      =   True
    Title           =   "Specification Index"
    Visible         =   True
-   Width           =   6.25e+2
+   Width           =   625
    Begin Splitter Splitter1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
+      AcceptFocus     =   False
+      AcceptTabs      =   False
       AutoDeactivate  =   True
-      Backdrop        =   ""
+      Backdrop        =   0
       DoubleBuffer    =   True
       Enabled         =   True
-      EraseBackground =   False
       Height          =   321
       HelpTag         =   ""
       Index           =   -2147483648
@@ -40,65 +40,67 @@ Begin Window SpecIndex
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
+      Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   8
    End
    Begin PushButton PushButton1
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       ButtonStyle     =   0
       Cancel          =   True
       Caption         =   "Untitled"
-      Default         =   ""
+      Default         =   False
       Enabled         =   True
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   -53
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   -61
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Visible         =   True
       Width           =   80
    End
    Begin PrettyListBox HelpIndex
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
-      Bold            =   ""
+      Bold            =   False
       Border          =   True
       ColumnCount     =   1
-      ColumnsResizable=   ""
+      ColumnsResizable=   False
       ColumnWidths    =   ""
       DataField       =   ""
       DataSource      =   ""
       DefaultRowHeight=   -1
       Enabled         =   True
-      EnableDrag      =   ""
-      EnableDragReorder=   ""
+      EnableDrag      =   False
+      EnableDragReorder=   False
       GridLinesHorizontal=   0
       GridLinesVertical=   0
-      HasHeading      =   ""
+      HasHeading      =   False
       HeadingIndex    =   -1
       Height          =   320
       HelpTag         =   ""
@@ -106,50 +108,49 @@ Begin Window SpecIndex
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   False
       LockTop         =   True
-      RequiresSelection=   ""
+      RequiresSelection=   False
       Scope           =   0
-      ScrollbarHorizontal=   ""
+      ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
+      ShowDropIndicator=   False
       TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   0
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   175
+      _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
    Begin Timer HistoryTimer
-      Height          =   32
       Index           =   -2147483648
       InitialParent   =   ""
-      Left            =   218
       LockedInPosition=   False
       Mode            =   2
       Period          =   150
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   350
-      Width           =   32
    End
    Begin Rectangle Rectangle1
       AutoDeactivate  =   True
-      BorderWidth     =   1
-      BottomRightColor=   &h000000
+      BorderWidth     =   1.0
+      BottomRightColor=   &c00000000
       Enabled         =   True
-      FillColor       =   "&cFFFFFFFF"
+      FillColor       =   &cFFFFFFFF
       Height          =   321
       HelpTag         =   ""
       Index           =   -2147483648
@@ -164,12 +165,13 @@ Begin Window SpecIndex
       TabIndex        =   15
       TabPanelIndex   =   0
       Top             =   0
-      TopLeftColor    =   &h000000
+      TopLeftColor    =   &c00000000
+      Transparent     =   True
       Visible         =   True
       Width           =   434
       Begin Label SpecLink
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -177,23 +179,24 @@ Begin Window SpecIndex
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "Rectangle1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   304
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   True
          LockTop         =   True
-         Multiline       =   ""
+         Multiline       =   False
          Scope           =   0
          Selectable      =   True
          TabIndex        =   1
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "No Selection"
          TextAlign       =   0
-         TextColor       =   &h000000FF
+         TextColor       =   &c0000FF00
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   34
          Transparent     =   True
@@ -202,12 +205,12 @@ Begin Window SpecIndex
          Width           =   310
       End
       Begin HREFArea DescText
-         AcceptTabs      =   ""
+         AcceptTabs      =   False
          Alignment       =   0
          AutoDeactivate  =   True
          AutomaticallyCheckSpelling=   True
-         BackColor       =   &hFFFFFF
-         Bold            =   ""
+         BackColor       =   &cFFFFFF00
+         Bold            =   False
          Border          =   True
          DataField       =   ""
          DataSource      =   ""
@@ -218,9 +221,11 @@ Begin Window SpecIndex
          HideSelection   =   True
          Index           =   -2147483648
          InitialParent   =   "Rectangle1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   304
          LimitText       =   0
+         LineHeight      =   0.0
+         LineSpacing     =   1.0
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
@@ -230,26 +235,28 @@ Begin Window SpecIndex
          Multiline       =   True
          ReadOnly        =   True
          Scope           =   0
-         ScrollbarHorizontal=   ""
+         ScrollbarHorizontal=   False
          ScrollbarVertical=   True
          Styled          =   True
          TabIndex        =   2
          TabPanelIndex   =   0
          TabStop         =   True
          Text            =   ""
-         TextColor       =   &h000000
+         TextColor       =   &c00000000
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   66
-         Underline       =   ""
+         Transparent     =   True
+         Underline       =   False
+         UnicodeMode     =   0
          UseFocusRing    =   True
          Visible         =   True
          Width           =   310
       End
       Begin Label Label2
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -257,33 +264,34 @@ Begin Window SpecIndex
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "Rectangle1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   199
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Multiline       =   ""
+         Multiline       =   False
          Scope           =   0
          Selectable      =   False
          TabIndex        =   4
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "Abstract:"
          TextAlign       =   2
-         TextColor       =   &h000000
+         TextColor       =   &c00000000
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   64
          Transparent     =   True
-         Underline       =   ""
+         Underline       =   False
          Visible         =   True
          Width           =   100
       End
       Begin Label Label1
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -291,33 +299,34 @@ Begin Window SpecIndex
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "Rectangle1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   199
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Multiline       =   ""
+         Multiline       =   False
          Scope           =   0
          Selectable      =   False
          TabIndex        =   5
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "Specification:"
          TextAlign       =   2
-         TextColor       =   &h000000
+         TextColor       =   &c00000000
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   34
          Transparent     =   True
-         Underline       =   ""
+         Underline       =   False
          Visible         =   True
          Width           =   100
       End
       Begin Label TypeLabel
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -325,89 +334,92 @@ Begin Window SpecIndex
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "Rectangle1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   199
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   True
-         Multiline       =   ""
+         Multiline       =   False
          Scope           =   0
          Selectable      =   False
          TabIndex        =   6
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "No Selection:"
          TextAlign       =   2
-         TextColor       =   &h000000
+         TextColor       =   &c00000000
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   8
          Transparent     =   True
-         Underline       =   ""
+         Underline       =   False
          Visible         =   True
          Width           =   100
       End
       Begin PushButton PrevItem
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          ButtonStyle     =   0
-         Cancel          =   ""
+         Cancel          =   False
          Caption         =   "<-"
-         Default         =   ""
+         Default         =   False
          Enabled         =   True
          Height          =   22
          HelpTag         =   "View previous item"
          Index           =   -2147483648
          InitialParent   =   "Rectangle1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   218
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   False
          Scope           =   0
          TabIndex        =   7
          TabPanelIndex   =   0
          TabStop         =   True
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   279
-         Underline       =   ""
+         Transparent     =   True
+         Underline       =   False
          Visible         =   False
          Width           =   21
       End
       Begin PushButton NextItem
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          ButtonStyle     =   0
-         Cancel          =   ""
+         Cancel          =   False
          Caption         =   "->"
-         Default         =   ""
+         Default         =   False
          Enabled         =   True
          Height          =   22
          HelpTag         =   "View next item"
          Index           =   -2147483648
          InitialParent   =   "Rectangle1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   240
          LockBottom      =   True
          LockedInPosition=   False
          LockLeft        =   True
-         LockRight       =   ""
+         LockRight       =   False
          LockTop         =   False
          Scope           =   0
          TabIndex        =   8
          TabPanelIndex   =   0
          TabStop         =   True
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   279
-         Underline       =   ""
+         Transparent     =   True
+         Underline       =   False
          Visible         =   False
          Width           =   21
       End
@@ -421,23 +433,24 @@ Begin Window SpecIndex
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "Rectangle1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   304
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   True
          LockTop         =   True
-         Multiline       =   ""
+         Multiline       =   False
          Scope           =   0
          Selectable      =   True
          TabIndex        =   9
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "No Selection"
          TextAlign       =   0
-         TextColor       =   &h00000000
+         TextColor       =   &c00000000
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   8
          Transparent     =   True
@@ -447,7 +460,7 @@ Begin Window SpecIndex
       End
       Begin Label ErrorPageLink
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -455,23 +468,24 @@ Begin Window SpecIndex
          HelpTag         =   ""
          Index           =   -2147483648
          InitialParent   =   "Rectangle1"
-         Italic          =   ""
+         Italic          =   False
          Left            =   199
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   False
          LockTop         =   True
-         Multiline       =   ""
+         Multiline       =   False
          Scope           =   0
          Selectable      =   True
          TabIndex        =   10
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "Run Error Server"
          TextAlign       =   2
-         TextColor       =   &h000000FF
+         TextColor       =   &c0000FF00
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   83
          Transparent     =   True
@@ -480,52 +494,14 @@ Begin Window SpecIndex
          Width           =   100
       End
    End
-   Begin Label LinkTarget
-      AutoDeactivate  =   True
-      Bold            =   ""
-      DataField       =   ""
-      DataSource      =   ""
-      Enabled         =   True
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Italic          =   True
-      Left            =   788
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   True
-      LockRight       =   True
-      LockTop         =   False
-      Multiline       =   ""
-      Scope           =   0
-      Selectable      =   False
-      TabIndex        =   16
-      TabPanelIndex   =   0
-      Text            =   "HTTP://WWW.GOOGLE.COM"
-      TextAlign       =   2
-      TextColor       =   &h00808080
-      TextFont        =   "System"
-      TextSize        =   0
-      TextUnit        =   0
-      Top             =   -78
-      Transparent     =   True
-      Underline       =   ""
-      Visible         =   True
-      Width           =   342
-   End
    Begin ServerSocket ErrorPageServer
-      Height          =   32
       Index           =   -2147483648
-      Left            =   659
       LockedInPosition=   False
       MaximumSocketsConnected=   10
       MinimumSocketsAvailable=   2
       Port            =   64535
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   0
-      Width           =   32
    End
 End
 #tag EndWindow
@@ -1001,16 +977,9 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
-#tag Events LinkTarget
-	#tag Event
-		Sub Open()
-		  Me.Text = ""
-		End Sub
-	#tag EndEvent
-#tag EndEvents
 #tag Events ErrorPageServer
 	#tag Event
-		Sub Error(ErrorCode as Integer)
+		Sub Error(ErrorCode As Integer, err As RuntimeException)
 		  #pragma Unused ErrorCode
 		  Me.StopListening
 		End Sub

@@ -47,7 +47,7 @@ Inherits VariantVolume
 
 
 	#tag Method, Flags = &h0
-		 Shared Function Create(RegFile As FolderItem) As HTTP.SessionRecord
+		Shared Function Create(RegFile As FolderItem) As HTTP.SessionRecord
 		  Dim v As VariantVolume = Super.Create(RegFile)
 		  If v = Nil Then Return Nil
 		  v = Nil
@@ -57,7 +57,7 @@ Inherits VariantVolume
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function Open(RegFile As FolderItem) As HTTP.SessionRecord
+		Shared Function Open(RegFile As FolderItem) As HTTP.SessionRecord
 		  Return HTTP.SessionRecord(Super.Open(RegFile))
 		End Function
 	#tag EndMethod
@@ -76,40 +76,48 @@ Inherits VariantVolume
 			Visible=true
 			Group="ID"
 			InitialValue="-2147483648"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="PathSeparator"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="VariantVolume"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

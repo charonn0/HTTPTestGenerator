@@ -1,15 +1,16 @@
 #tag Window
 Begin Window RawViewer
-   BackColor       =   16777215
+   BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   True
    Composite       =   False
    Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
+   HasFullScreenButton=   False
    Height          =   400
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   False
@@ -42,8 +43,9 @@ Begin Window RawViewer
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
-      TabStop         =   True
+      TabStop         =   "True"
       Top             =   0
+      Transparent     =   True
       Value           =   0
       Visible         =   True
       Width           =   600

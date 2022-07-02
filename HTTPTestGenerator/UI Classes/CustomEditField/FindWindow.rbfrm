@@ -1,20 +1,21 @@
 #tag Window
 Begin Window FindWindow
-   BackColor       =   16777215
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
    CloseButton     =   True
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
+   HasFullScreenButton=   False
    Height          =   154
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   False
    MaxWidth        =   32000
-   MenuBar         =   ""
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   False
@@ -26,7 +27,7 @@ Begin Window FindWindow
    Width           =   527
    Begin Label StaticText1
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -34,14 +35,14 @@ Begin Window FindWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   18
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Multiline       =   ""
+      Multiline       =   False
       Scope           =   0
       Selectable      =   False
       TabIndex        =   0
@@ -49,19 +50,19 @@ Begin Window FindWindow
       TabStop         =   True
       Text            =   "Find:"
       TextAlign       =   2
-      TextColor       =   0
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   14
       Transparent     =   False
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   100
    End
    Begin Label StaticText2
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -69,14 +70,14 @@ Begin Window FindWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   18
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Multiline       =   ""
+      Multiline       =   False
       Scope           =   0
       Selectable      =   False
       TabIndex        =   1
@@ -84,44 +85,46 @@ Begin Window FindWindow
       TabStop         =   True
       Text            =   "Replace With:"
       TextAlign       =   2
-      TextColor       =   0
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   46
       Transparent     =   False
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   100
    End
    Begin ComboBox txtToFind
       AutoComplete    =   False
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
       Height          =   20
       HelpTag         =   ""
+      Hint            =   ""
       Index           =   -2147483648
       InitialValue    =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   123
       ListIndex       =   0
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   15
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   384
@@ -129,38 +132,40 @@ Begin Window FindWindow
    Begin ComboBox txtToReplace
       AutoComplete    =   False
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
       Height          =   20
       HelpTag         =   ""
+      Hint            =   ""
       Index           =   -2147483648
       InitialValue    =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   123
       ListIndex       =   0
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   47
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   384
    End
    Begin CheckBox ignoreCase
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Ignore Case"
       DataField       =   ""
       DataSource      =   ""
@@ -169,12 +174,12 @@ Begin Window FindWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   123
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       State           =   1
@@ -182,17 +187,18 @@ Begin Window FindWindow
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   79
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Value           =   True
       Visible         =   True
       Width           =   100
    End
    Begin CheckBox wrapAround
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Wrap Around"
       DataField       =   ""
       DataSource      =   ""
@@ -201,12 +207,12 @@ Begin Window FindWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   235
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       State           =   1
@@ -214,112 +220,116 @@ Begin Window FindWindow
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   79
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Value           =   True
       Visible         =   True
       Width           =   110
    End
    Begin PushButton btnReplaceAll
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       ButtonStyle     =   0
-      Cancel          =   ""
+      Cancel          =   False
       Caption         =   "Replace All"
-      Default         =   ""
+      Default         =   False
       Enabled         =   True
       Height          =   20
       HelpTag         =   "Replace all occurrences of the find text"
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   100
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   6
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   114
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Visible         =   True
       Width           =   93
    End
    Begin PushButton btnReplace
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       ButtonStyle     =   0
-      Cancel          =   ""
+      Cancel          =   False
       Caption         =   "Replace"
-      Default         =   ""
+      Default         =   False
       Enabled         =   True
       Height          =   20
       HelpTag         =   "Replace selected text with the replacement text"
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   205
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   114
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Visible         =   True
       Width           =   80
    End
    Begin PushButton btnReplaceAndFind
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       ButtonStyle     =   0
-      Cancel          =   ""
+      Cancel          =   False
       Caption         =   "Replace && Find"
-      Default         =   ""
+      Default         =   False
       Enabled         =   True
       Height          =   20
       HelpTag         =   "Replace selected text and find next occurrence of the find text"
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   297
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   114
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Visible         =   True
       Width           =   118
    End
    Begin PushButton btnNext
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       ButtonStyle     =   0
-      Cancel          =   ""
+      Cancel          =   False
       Caption         =   "Next"
       Default         =   True
       Enabled         =   True
@@ -327,28 +337,29 @@ Begin Window FindWindow
       HelpTag         =   "find next occurrence of the find text"
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   427
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   9
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   114
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Visible         =   True
       Width           =   80
    End
    Begin Label results
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -356,14 +367,14 @@ Begin Window FindWindow
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   357
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Multiline       =   ""
+      Multiline       =   False
       Scope           =   0
       Selectable      =   False
       TabIndex        =   10
@@ -371,13 +382,13 @@ Begin Window FindWindow
       TabStop         =   True
       Text            =   ""
       TextAlign       =   2
-      TextColor       =   8947848
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   79
       Transparent     =   False
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   150
    End
@@ -473,7 +484,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function findNext() As boolean
+		Shared Function findNext() As boolean
 		  if CurrentFindWindow <> nil then
 		    CurrentFindWindow.results.Text = ""
 		    lastIgnoreCaseValue = CurrentFindWindow.ignoreCase.Value
@@ -506,7 +517,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Sub replace()
+		Shared Sub replace()
 		  if CurrentFindWindow <> nil then
 		    CurrentFindWindow.results.Text = ""
 		    lastIgnoreCaseValue = CurrentFindWindow.ignoreCase.Value
@@ -549,7 +560,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Sub replaceAndFind()
+		Shared Sub replaceAndFind()
 		  replace
 		  call findNext
 		End Sub

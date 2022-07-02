@@ -1,20 +1,21 @@
 #tag Window
 Begin Window SuggestionWindow
-   BackColor       =   16777215
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
    CloseButton     =   False
    Composite       =   False
    Frame           =   3
    FullScreen      =   False
    HasBackColor    =   False
+   HasFullScreenButton=   False
    Height          =   300
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   1040
    MaxHeight       =   32000
    MaximizeButton  =   False
    MaxWidth        =   32000
-   MenuBar         =   ""
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   False
@@ -27,47 +28,49 @@ Begin Window SuggestionWindow
    Begin ListBox optionList
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
-      Bold            =   ""
+      Bold            =   False
       Border          =   True
       ColumnCount     =   1
-      ColumnsResizable=   ""
+      ColumnsResizable=   False
       ColumnWidths    =   ""
       DataField       =   ""
       DataSource      =   ""
       DefaultRowHeight=   14
       Enabled         =   True
-      EnableDrag      =   ""
-      EnableDragReorder=   ""
+      EnableDrag      =   False
+      EnableDragReorder=   False
       GridLinesHorizontal=   0
       GridLinesVertical=   0
-      HasHeading      =   ""
+      HasHeading      =   False
       HeadingIndex    =   -1
       Height          =   300
       HelpTag         =   ""
-      Hierarchical    =   ""
+      Hierarchical    =   False
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      RequiresSelection=   ""
+      RequiresSelection=   False
       Scope           =   0
-      ScrollbarHorizontal=   ""
+      ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
+      ShowDropIndicator=   False
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "SmallSystem"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   0
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       UseFocusRing    =   False
       Visible         =   True
       Width           =   120
@@ -75,16 +78,13 @@ Begin Window SuggestionWindow
       _ScrollWidth    =   -1
    End
    Begin Timer Timer1
-      Height          =   32
+      Enabled         =   True
       Index           =   -2147483648
-      Left            =   0
       LockedInPosition=   False
       Mode            =   0
       Period          =   10
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   305
-      Width           =   32
    End
 End
 #tag EndWindow

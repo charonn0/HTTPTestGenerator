@@ -32,7 +32,7 @@ Inherits Canvas
 		  Dim data As String
 		  Stream.Position = Offset
 		  Do Until Buffer.Graphics.StringWidth(data) >= Buffer.Graphics.Width - Buffer.Graphics.StringWidth(" 00")
-		    Dim bt As Byte = Stream.ReadByte
+		    Dim bt As Byte = Stream.ReadUInt8
 		    data = data + " " + Hex(bt, 2, LineNumbersLittleEndian) + " "
 		  Loop
 		  
@@ -71,7 +71,9 @@ Inherits Canvas
 	#tag EndEvent
 
 	#tag Event
-		Sub Paint(g As Graphics)
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  #pragma Unused areas
+		  
 		  #If TargetWin32 Then
 		    If Buffer = Nil Or Buffer.Width <> g.Width Or Buffer.Height <> g.Height Then
 		      App.UseGDIPlus = False
@@ -132,7 +134,7 @@ Inherits Canvas
 		          Exit Do
 		        End If
 		        mVisibleByteCount = mVisibleByteCount + 1
-		        Dim bt As Byte = Stream.ReadByte
+		        Dim bt As Byte = Stream.ReadUInt8
 		        hx = Hex(bt, 2, BytesLittleEndian)
 		        data = data + " " + hx' + " "
 		        If bt < 33 Or bt > 127 Then
@@ -251,8 +253,8 @@ Inherits Canvas
 		  Loop
 		  Return count
 		  
-		Exception Err As NilObjectException
-		  Return 0
+		  Exception Err As NilObjectException
+		    Return 0
 		End Function
 	#tag EndMethod
 
@@ -317,8 +319,8 @@ Inherits Canvas
 		Function LineHeight() As Integer
 		  Return BinGraphics.StringHeight("00", BinGraphics.Width)
 		  
-		Exception Err As NilObjectException
-		  Return 0
+		  Exception Err As NilObjectException
+		    Return 0
 		End Function
 	#tag EndMethod
 
@@ -342,7 +344,7 @@ Inherits Canvas
 		  'Stream.Position = oldoffset
 		  'Return ret
 		  'Else
-		  'Call Stream.ReadByte
+		  'Call Stream.ReadUInt8
 		  'End If
 		  'Next
 		  'Next
@@ -362,7 +364,7 @@ Inherits Canvas
 		      Stream.Position = Offset
 		      Exit For
 		    End If
-		    Call Stream.ReadByte
+		    Call Stream.ReadUInt8
 		    If X > w And X < w + bytewidth Then
 		      pos = Stream.Position
 		      Stream.Position = Offset
@@ -375,14 +377,14 @@ Inherits Canvas
 		  
 		  
 		  
-		Exception Err As NilObjectException
-		  Return 0
-		  
-		  
-		  
-		  
-		  
-		  
+		  Exception Err As NilObjectException
+		    Return 0
+		    
+		    
+		    
+		    
+		    
+		    
 		End Function
 	#tag EndMethod
 
@@ -425,8 +427,8 @@ Inherits Canvas
 		  Dim h As Integer = LineHeight
 		  Return BinGraphics.Height \ h
 		  
-		Exception Err As NilObjectException
-		  Return 0
+		  Exception Err As NilObjectException
+		    Return 0
 		End Function
 	#tag EndMethod
 
@@ -914,45 +916,76 @@ Inherits Canvas
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="AcceptFocus"
-			Visible=true
-			Group="Behavior"
-			Type="Boolean"
-			InheritedFrom="Canvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="AcceptTabs"
-			Visible=true
-			Group="Behavior"
-			Type="Boolean"
-			InheritedFrom="Canvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="AutoDeactivate"
+			Name="AllowAutoDeactivate"
 			Visible=true
 			Group="Appearance"
 			InitialValue="True"
 			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Tooltip"
+			Visible=true
+			Group="Appearance"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="AllowFocusRing"
+			Visible=true
+			Group="Appearance"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="AllowFocus"
+			Visible=true
+			Group="Behavior"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="AllowTabs"
+			Visible=true
+			Group="Behavior"
+			InitialValue="False"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Transparent"
+			Visible=true
+			Group="Behavior"
+			InitialValue="True"
+			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Backdrop"
 			Visible=true
 			Group="Appearance"
+			InitialValue=""
 			Type="Picture"
-			EditorType="Picture"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Bold"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Border"
 			Visible=true
 			Group="Behavior"
+			InitialValue=""
 			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="BorderColor"
@@ -960,6 +993,7 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&c000000"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ByteBackgroundColor"
@@ -967,6 +1001,7 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&cFFFFFF00"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ByteBackgroundColorAlt"
@@ -974,6 +1009,7 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&cC0C0C000"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ByteColor"
@@ -981,6 +1017,7 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&c0000FF00"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="BytesLittleEndian"
@@ -988,6 +1025,7 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="True"
 			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="DoubleBuffer"
@@ -995,7 +1033,7 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="False"
 			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Enabled"
@@ -1003,15 +1041,7 @@ Inherits Canvas
 			Group="Appearance"
 			InitialValue="True"
 			Type="Boolean"
-			InheritedFrom="Canvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="EraseBackground"
-			Visible=true
-			Group="Behavior"
-			InitialValue="True"
-			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="GutterColor"
@@ -1019,6 +1049,7 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&cFFFFFF00"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="GutterColorAlt"
@@ -1026,51 +1057,55 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&cC0C0C000"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Height"
 			Visible=true
 			Group="Position"
+			InitialValue=""
 			Type="Integer"
-			InheritedFrom="Canvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="HelpTag"
-			Visible=true
-			Group="Appearance"
-			Type="String"
-			EditorType="MultiLineEditor"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Hilight"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="Integer"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="InitialParent"
+			Visible=false
 			Group="Initial State"
+			InitialValue=""
 			Type="String"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Italic"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
+			InitialValue=""
 			Type="Integer"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LineNumbersColor"
@@ -1078,6 +1113,7 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&c80000000"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LineNumbersLittleEndian"
@@ -1085,53 +1121,63 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="False"
 			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LockBottom"
 			Visible=true
 			Group="Position"
+			InitialValue=""
 			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LockLeft"
 			Visible=true
 			Group="Position"
+			InitialValue=""
 			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LockRight"
 			Visible=true
 			Group="Position"
+			InitialValue=""
 			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="LockTop"
 			Visible=true
 			Group="Position"
+			InitialValue=""
 			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ShowOffsets"
 			Visible=true
 			Group="Behavior"
+			InitialValue=""
 			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Canvas"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TabIndex"
@@ -1139,14 +1185,15 @@ Inherits Canvas
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TabPanelIndex"
+			Visible=false
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TabStop"
@@ -1154,7 +1201,7 @@ Inherits Canvas
 			Group="Position"
 			InitialValue="True"
 			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextBackGroundColor"
@@ -1162,6 +1209,7 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&cFFFFFF00"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextBackGroundColorAlt"
@@ -1169,38 +1217,39 @@ Inherits Canvas
 			Group="Behavior"
 			InitialValue="&cC0C0C000"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextColor"
+			Visible=false
 			Group="Behavior"
 			InitialValue="&c000000"
 			Type="Color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextFont"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextSize"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Single"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
+			InitialValue=""
 			Type="Integer"
-			InheritedFrom="Canvas"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="UseFocusRing"
-			Visible=true
-			Group="Appearance"
-			InitialValue="True"
-			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Visible"
@@ -1208,14 +1257,47 @@ Inherits Canvas
 			Group="Appearance"
 			InitialValue="True"
 			Type="Boolean"
-			InheritedFrom="Canvas"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Width"
 			Visible=true
 			Group="Position"
+			InitialValue=""
 			Type="Integer"
-			InheritedFrom="Canvas"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Offset"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="UInt64"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="SelectionEnd"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Int64"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="SelectionStart"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Int64"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="StreamLen"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="UInt64"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

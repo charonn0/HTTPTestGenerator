@@ -1,15 +1,16 @@
 #tag Window
 Begin Window ErrorHandler
-   BackColor       =   16777215
+   BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   False
    Composite       =   False
    Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   1.0e+2
+   HasFullScreenButton=   False
+   Height          =   100
    ImplicitInstance=   False
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   300
    MaximizeButton  =   False
@@ -23,7 +24,7 @@ Begin Window ErrorHandler
    Resizeable      =   True
    Title           =   "Error - HTTP Request Generator"
    Visible         =   True
-   Width           =   5.36e+2
+   Width           =   536
    Begin Label StaticText1
       AutoDeactivate  =   True
       Bold            =   False
@@ -46,11 +47,12 @@ Begin Window ErrorHandler
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "An unhandled error has caused the application to stop working. "
       TextAlign       =   0
-      TextColor       =   0
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   5
       Transparent     =   True
@@ -63,7 +65,7 @@ Begin Window ErrorHandler
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   16777215
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       DataField       =   ""
@@ -77,6 +79,8 @@ Begin Window ErrorHandler
       Italic          =   False
       Left            =   13
       LimitText       =   0
+      LineHeight      =   0.0
+      LineSpacing     =   1.0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -93,12 +97,14 @@ Begin Window ErrorHandler
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   0
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   66
+      Transparent     =   True
       Underline       =   False
+      UnicodeMode     =   0
       UseFocusRing    =   True
       Visible         =   False
       Width           =   510
@@ -130,6 +136,7 @@ Begin Window ErrorHandler
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   72
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   176
@@ -161,6 +168,7 @@ Begin Window ErrorHandler
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   72
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   83
@@ -172,7 +180,7 @@ Begin Window ErrorHandler
       Backdrop        =   0
       DoubleBuffer    =   False
       Enabled         =   True
-      EraseBackground =   True
+      EraseBackground =   "True"
       Height          =   35
       HelpTag         =   ""
       Index           =   -2147483648
@@ -188,6 +196,7 @@ Begin Window ErrorHandler
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   5
+      Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   35
@@ -219,13 +228,14 @@ Begin Window ErrorHandler
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   72
+      Transparent     =   True
       Underline       =   False
       Visible         =   False
       Width           =   83
    End
    Begin Label ShowHide
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
@@ -235,25 +245,26 @@ Begin Window ErrorHandler
       InitialParent   =   ""
       Italic          =   True
       Left            =   31
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
-      Multiline       =   ""
+      Multiline       =   False
       Scope           =   0
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Show technical details"
       TextAlign       =   0
-      TextColor       =   8421504
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   44
       Transparent     =   True
-      Underline       =   ""
+      Underline       =   False
       Visible         =   True
       Width           =   178
    End
@@ -267,16 +278,17 @@ Begin Window ErrorHandler
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   10
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   45
+      Transparent     =   True
       Value           =   False
       Visible         =   True
       Width           =   18
@@ -308,6 +320,7 @@ Begin Window ErrorHandler
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   72
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   83
@@ -410,7 +423,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function CleanStack(error as RuntimeException) As string()
+		Shared Function CleanStack(error as RuntimeException) As string()
 		  'This method was written by SirG3 <TheSirG3@gmail.com>; http://fireyesoftware.com/developer/stackcleaner/
 		  Dim result() As String
 		  
@@ -557,7 +570,7 @@ End
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function StackTrace(Err As RuntimeException) As String
+		Shared Function StackTrace(Err As RuntimeException) As String
 		  #If TargetWin32 Then
 		    If Err IsA IOException Then
 		      Declare Function FormatMessageW Lib "Kernel32" (Flags As Integer, Source As Integer, MessageId As Integer, _
@@ -618,7 +631,9 @@ End
 #tag EndEvents
 #tag Events Icon
 	#tag Event
-		Sub Paint(g As Graphics)
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  #pragma Unused areas
+		  
 		  g.DrawStopIcon(0, 0)
 		End Sub
 	#tag EndEvent

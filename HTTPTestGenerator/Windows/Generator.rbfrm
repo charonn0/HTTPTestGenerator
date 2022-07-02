@@ -1,15 +1,16 @@
 #tag Window
 Begin Window Generator
-   BackColor       =   -256
+   BackColor       =   &cFFFF00FF
    Backdrop        =   0
    CloseButton     =   True
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   5.74e+2
+   HasFullScreenButton=   False
+   Height          =   574
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   True
@@ -23,40 +24,38 @@ Begin Window Generator
    Resizeable      =   True
    Title           =   "HTTP Request Generator"
    Visible         =   True
-   Width           =   9.38e+2
+   Width           =   938
    Begin SSLSocket Sock
-      CertificateFile =   ""
+      Address         =   ""
+      BytesAvailable  =   0
+      BytesLeftToSend =   0
       CertificatePassword=   ""
-      CertificateRejectionFile=   ""
-      ConnectionType  =   2
-      Height          =   32
+      ConnectionType  =   1
       Index           =   -2147483648
-      Left            =   1000
+      LastErrorCode   =   0
       LockedInPosition=   False
+      Port            =   0
       Scope           =   0
-      Secure          =   ""
+      Secure          =   False
+      SSLConnected    =   False
+      SSLConnecting   =   False
       TabPanelIndex   =   0
-      Top             =   35
-      Width           =   32
    End
    Begin Timer DataReceivedTimer
-      Height          =   32
       Index           =   -2147483648
-      Left            =   1000
       LockedInPosition=   False
       Mode            =   0
       Period          =   200
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   79
-      Width           =   32
    End
    Begin RequestMain RequestMain1
-      AcceptFocus     =   ""
+      AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &hFFFFFF
-      Backdrop        =   ""
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   False
       HasBackColor    =   False
@@ -70,23 +69,23 @@ Begin Window Generator
       LockRight       =   False
       LockTop         =   True
       Scope           =   0
-      Security        =   ""
+      Security        =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
-      UseFocusRing    =   ""
+      Transparent     =   True
+      UseFocusRing    =   False
       Visible         =   True
       Width           =   366
    End
    Begin Splitter Canvas1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
+      AcceptFocus     =   False
+      AcceptTabs      =   False
       AutoDeactivate  =   True
-      Backdrop        =   ""
+      Backdrop        =   0
       DoubleBuffer    =   True
       Enabled         =   True
-      EraseBackground =   False
       Height          =   574
       HelpTag         =   ""
       Index           =   -2147483648
@@ -95,23 +94,25 @@ Begin Window Generator
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   False
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
+      Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   8
    End
    Begin ResponseMain ResponseMain1
-      AcceptFocus     =   ""
+      AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   16777215
-      Backdrop        =   ""
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   False
       HasBackColor    =   False
@@ -129,21 +130,18 @@ Begin Window Generator
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   0
-      UseFocusRing    =   ""
+      Transparent     =   True
+      UseFocusRing    =   False
       Visible         =   True
       Width           =   561
    End
    Begin Timer TimeOut
-      Height          =   32
       Index           =   -2147483648
-      Left            =   1000
       LockedInPosition=   False
       Mode            =   0
       Period          =   10000
       Scope           =   0
       TabPanelIndex   =   0
-      Top             =   123
-      Width           =   32
    End
 End
 #tag EndWindow
@@ -160,6 +158,7 @@ End
 
 	#tag Event
 		Sub Resized()
+		  If RequestMain1 = Nil Or Canvas1 = Nil Then Return
 		  RequestMain1.Width = Canvas1.Left ' force the UI to update, otherwise the child windows don't resize properly
 		  
 		End Sub
@@ -324,16 +323,6 @@ End
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Sub Lock(HWND As Integer)
-		  #If TargetWin32 Then
-		    Soft Declare Function SendMessageA Lib "User32" (HWND As Integer, Message As Integer, WParam As Integer, LParam As Ptr) As Integer
-		    Const WM_SETREDRAW = &h000B
-		    Call SendMessageA(HWND, WM_SETREDRAW, 0, Nil)
-		  #endif
-		End Sub
-	#tag EndMethod
-
 	#tag Method, Flags = &h21
 		Private Sub Log(Message As Variant, Level As Integer)
 		  ResponseMain1.Log(Message, Level)
@@ -356,25 +345,21 @@ End
 		  Sock.Close
 		  Sock.Address = CurrentRequest.Path.Host.ToString
 		  Select Case RequestMain1.Security
-		  Case 1 ' SSL2 only
-		    sock.Secure = True
-		    sock.ConnectionType = SSLSocket.SSLv2
-		  Case 2 ' SSL3 only
-		    sock.Secure = True
-		    sock.ConnectionType = SSLSocket.SSLv3
-		    
-		  Case 3 ' SSL2/3
-		    sock.Secure = True
-		    sock.ConnectionType = SSLSocket.SSLv23
-		    
-		  Case 4 ' TLS only
+		  Case 1 ' TLSv1 only
 		    sock.Secure = True
 		    sock.ConnectionType = SSLSocket.TLSv1
+		  Case 2 ' TLSv1.1 only
+		    sock.Secure = True
+		    sock.ConnectionType = SSLSocket.TLSv11
+		    
+		  Case 3 ' TLSv1.2 only
+		    sock.Secure = True
+		    sock.ConnectionType = SSLSocket.TLSv12
 		    
 		  Else 'auto
 		    If CurrentRequest.Path.Scheme = "https" Then
 		      Sock.Secure = True
-		      sock.ConnectionType = Sock.TLSv1
+		      sock.ConnectionType = Sock.SSLv23
 		    Else
 		      Sock.Secure = False
 		    End If
@@ -423,16 +408,6 @@ End
 		  w.Close
 		  Return data
 		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Sub Unlock(HWND As Integer)
-		  #If TargetWin32 Then
-		    Soft Declare Function SendMessageA Lib "User32" (HWND As Integer, Message As Integer, WParam As Integer, LParam As Ptr) As Integer
-		    Const WM_SETREDRAW = &h000B
-		    Call SendMessageA(HWND, WM_SETREDRAW, 1, Nil)
-		  #endif
-		End Sub
 	#tag EndMethod
 
 
@@ -529,7 +504,7 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Sub Error()
+		Sub Error(err As RuntimeException)
 		  TimeOut.Mode = Timer.ModeOff
 		  ResponseMain1.ViewResponse(Nil)
 		  
@@ -662,13 +637,13 @@ End
 		  #pragma Unused DeltaX
 		  #pragma Unused DeltaY
 		  'If Sign(DeltaX) = -1 Then Break
-		  Lock(ResponseMain1.Handle)
-		  Lock(RequestMain1.Handle)
+		  ' Lock(ResponseMain1.Handle)
+		  ' Lock(RequestMain1.Handle)
 		  ResponseMain1.Left = Me.Left + Me.Width + 1
 		  ResponseMain1.Width = Self.Width - ResponseMain1.Left
 		  RequestMain1.Width = Me.Left
-		  Unlock(ResponseMain1.Handle)
-		  Unlock(RequestMain1.Handle)
+		  ' Unlock(ResponseMain1.Handle)
+		  ' Unlock(RequestMain1.Handle)
 		  'Me.Invalidate
 		End Sub
 	#tag EndEvent
@@ -678,7 +653,7 @@ End
 		Sub Open()
 		  #If TargetWin32 Then
 		    Me.DoubleBuffer = True
-		    Me.EraseBackground = False
+		    ' Me.EraseBackground = False
 		  #endif
 		End Sub
 	#tag EndEvent

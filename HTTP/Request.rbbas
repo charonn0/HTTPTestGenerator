@@ -132,7 +132,7 @@ Inherits HTTP.Message
 		    Dim msgsz As Integer = Me.MessageBody.LenB
 		    If mHeaders.Count <= 0 And mHeaders.CookieCount <= 0 Then RaiseEvent HTTPDebug("Warning: This request contains no headers.", -1)
 		    If Me.HasHeader("Content-Length") Then
-		      If Val(Me.Header("Content-Length")) <> msgsz Then 
+		      If Val(Me.Header("Content-Length")) <> msgsz Then
 		        RaiseEvent HTTPDebug("Warning: The 'Content-Length' header does not match the message body's length.", -1)
 		      End If
 		    ElseIf msgsz > 0 Then
@@ -258,8 +258,9 @@ Inherits HTTP.Message
 			  If Me.HasHeader("Range") Then
 			    Dim range As String = Me.Header("Range")
 			    range = NthField(range, "=", 2)
-			    Dim stop As Integer = Val(NthField(range, "-", 2).Trim)
-			    Return stop
+			    range = NthField(range, "-", 2).Trim
+			    If range = "" Then Return -1
+			    Return Val(range)
 			  End If
 			End Get
 		#tag EndGetter
@@ -277,7 +278,9 @@ Inherits HTTP.Message
 			  If Me.HasHeader("Range") Then
 			    Dim range As String = Me.Header("Range")
 			    range = NthField(range, "=", 2)
-			    Dim start As Integer = Val(NthField(range, "-", 1).Trim)
+			    range = NthField(range, "-", 1).Trim
+			    If range = "" Then Return -1
+			    Dim start As Integer = Val(range)
 			    Return start
 			  End If
 			End Get
@@ -298,7 +301,7 @@ Inherits HTTP.Message
 			Group="ID"
 			InitialValue="-2147483648"
 			Type="Integer"
-			InheritedFrom="Object"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
@@ -306,35 +309,39 @@ Inherits HTTP.Message
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-			InheritedFrom="Object"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="MessageBody"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="HTTP.Message"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
-			InheritedFrom="Object"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ProtocolVersion"
+			Visible=false
 			Group="Behavior"
 			InitialValue="1.1"
 			Type="Single"
-			InheritedFrom="HTTP.Message"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
+			InitialValue=""
 			Type="String"
-			InheritedFrom="Object"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
@@ -342,7 +349,43 @@ Inherits HTTP.Message
 			Group="Position"
 			InitialValue="0"
 			Type="Integer"
-			InheritedFrom="Object"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Method"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="RequestMethod"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - GET"
+				"1 - HEAD"
+				"2 - POST"
+				"3 - PUT"
+				"4 - DELETE"
+				"5 - TRACE"
+				"6 - OPTIONS"
+				"7 - PATCH"
+				"8 - CONNECT"
+				"9 - InvalidMethod"
+			#tag EndEnumValues
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="RangeEnd"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Int64"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="RangeStart"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Int64"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

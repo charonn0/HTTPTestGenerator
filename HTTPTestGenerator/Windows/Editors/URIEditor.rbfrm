@@ -1,20 +1,21 @@
 #tag Window
 Begin Window URIEditor
-   BackColor       =   16777215
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
    CloseButton     =   False
    Composite       =   False
    Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   1.82e+2
+   HasFullScreenButton=   False
+   Height          =   182
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   False
    MaxWidth        =   32000
-   MenuBar         =   ""
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   False
@@ -23,14 +24,14 @@ Begin Window URIEditor
    Resizeable      =   True
    Title           =   "URI Editor"
    Visible         =   True
-   Width           =   4.92e+2
+   Width           =   492
    Begin TextField TextField1
-      AcceptTabs      =   ""
+      AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   16777215
-      Bold            =   ""
+      BackColor       =   &cFFFFFF00
+      Bold            =   False
       Border          =   True
       CueText         =   ""
       DataField       =   ""
@@ -40,28 +41,29 @@ Begin Window URIEditor
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
-      Italic          =   ""
+      Italic          =   False
       Left            =   0
       LimitText       =   0
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
       Mask            =   ""
-      Password        =   ""
-      ReadOnly        =   ""
+      Password        =   False
+      ReadOnly        =   False
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   "PROTOCOL://USER:PASS@SUB.DOMAIN.TLD:65535/DIR/SERVER FILE.EXT?arg1=1&arg2=2#Fragment"
-      TextColor       =   0
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   0
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   492
@@ -69,7 +71,7 @@ Begin Window URIEditor
    Begin Listbox Listbox1
       AutoDeactivate  =   True
       AutoHideScrollbars=   True
-      Bold            =   ""
+      Bold            =   False
       Border          =   True
       ColumnCount     =   2
       ColumnsResizable=   True
@@ -78,8 +80,8 @@ Begin Window URIEditor
       DataSource      =   ""
       DefaultRowHeight=   -1
       Enabled         =   True
-      EnableDrag      =   ""
-      EnableDragReorder=   ""
+      EnableDrag      =   False
+      EnableDragReorder=   False
       GridLinesHorizontal=   1
       GridLinesVertical=   0
       HasHeading      =   True
@@ -90,36 +92,39 @@ Begin Window URIEditor
       Index           =   -2147483648
       InitialParent   =   ""
       InitialValue    =   "URI Part	Value"
-      Italic          =   ""
+      Italic          =   False
       Left            =   0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      RequiresSelection=   ""
+      RequiresSelection=   False
       Scope           =   0
-      ScrollbarHorizontal=   ""
+      ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
+      ShowDropIndicator=   False
       TabIndex        =   3
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   27
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   492
+      _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
    Begin PushButton PushButton2
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       ButtonStyle     =   0
-      Cancel          =   ""
+      Cancel          =   False
       Caption         =   "OK"
       Default         =   True
       Enabled         =   True
@@ -127,7 +132,7 @@ Begin Window URIEditor
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   252
       LockBottom      =   True
       LockedInPosition=   False
@@ -139,16 +144,17 @@ Begin Window URIEditor
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   12
+      TextSize        =   12.0
       TextUnit        =   0
       Top             =   160
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Visible         =   True
       Width           =   65
    End
    Begin PushButton PushButton3
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       ButtonStyle     =   0
       Cancel          =   True
       Caption         =   "Cancel"
@@ -158,7 +164,7 @@ Begin Window URIEditor
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   175
       LockBottom      =   True
       LockedInPosition=   False
@@ -170,10 +176,11 @@ Begin Window URIEditor
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   12
+      TextSize        =   12.0
       TextUnit        =   0
       Top             =   160
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Visible         =   True
       Width           =   65
    End

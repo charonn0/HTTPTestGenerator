@@ -1,10 +1,11 @@
 #tag Window
 Begin ContainerControl MessageBody
-   AcceptFocus     =   ""
+   AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
-   BackColor       =   &hFFFFFF
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
+   DoubleBuffer    =   False
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
@@ -20,19 +21,20 @@ Begin ContainerControl MessageBody
    TabPanelIndex   =   0
    TabStop         =   True
    Top             =   32
-   UseFocusRing    =   ""
+   Transparent     =   True
+   UseFocusRing    =   False
    Visible         =   True
    Width           =   354
    Begin GroupBox GroupBox1
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "Message body"
       Enabled         =   True
       Height          =   206
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   0
       LockBottom      =   True
       LockedInPosition=   False
@@ -42,11 +44,13 @@ Begin ContainerControl MessageBody
       Scope           =   0
       TabIndex        =   0
       TabPanelIndex   =   0
+      TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   0
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Visible         =   True
       Width           =   354
       Begin PagePanel PagePanel1
@@ -67,18 +71,19 @@ Begin ContainerControl MessageBody
          Scope           =   0
          TabIndex        =   0
          TabPanelIndex   =   0
+         TabStop         =   True
          Top             =   46
+         Transparent     =   True
          Value           =   0
          Visible         =   True
          Width           =   346
          Begin Canvas NoBodyView
-            AcceptFocus     =   ""
-            AcceptTabs      =   ""
+            AcceptFocus     =   False
+            AcceptTabs      =   False
             AutoDeactivate  =   True
-            Backdrop        =   ""
+            Backdrop        =   0
             DoubleBuffer    =   True
             Enabled         =   True
-            EraseBackground =   False
             Height          =   151
             HelpTag         =   ""
             Index           =   -2147483648
@@ -94,58 +99,64 @@ Begin ContainerControl MessageBody
             TabPanelIndex   =   1
             TabStop         =   True
             Top             =   46
+            Transparent     =   True
             UseFocusRing    =   True
             Visible         =   True
             Width           =   346
          End
          Begin HexViewer HexViewer1
-            AcceptFocus     =   ""
-            AcceptTabs      =   ""
+            AcceptFocus     =   False
+            AcceptTabs      =   False
             AutoDeactivate  =   True
-            Backdrop        =   ""
-            Bold            =   ""
-            Border          =   ""
-            BorderColor     =   "&c000000"
-            ByteBackgroundColor=   "&cFFFFFF00"
-            ByteBackgroundColorAlt=   "&cC0C0C000"
-            ByteColor       =   "&c0000FF00"
+            Backdrop        =   0
+            Bold            =   False
+            Border          =   False
+            BorderColor     =   &c00000000
+            ByteBackgroundColor=   &cFFFFFF00
+            ByteBackgroundColorAlt=   &cC0C0C000
+            ByteColor       =   &c0000FF00
             BytesLittleEndian=   True
             DoubleBuffer    =   True
             Enabled         =   True
-            EraseBackground =   True
-            GutterColor     =   "&cFFFFFF00"
-            GutterColorAlt  =   "&cC0C0C000"
+            GutterColor     =   &cFFFFFF00
+            GutterColorAlt  =   &cC0C0C000
             Height          =   133
             HelpTag         =   ""
-            Hilight         =   ""
+            Hilight         =   False
             Index           =   -2147483648
             InitialParent   =   "PagePanel1"
-            Italic          =   ""
+            Italic          =   False
             Left            =   5
-            LineNumbersColor=   "&c80000000"
+            LineNumbersColor=   &c80000000
             LineNumbersLittleEndian=   False
             LockBottom      =   True
             LockedInPosition=   False
             LockLeft        =   True
             LockRight       =   True
             LockTop         =   True
+            Offset          =   ""
             Scope           =   0
-            ShowOffsets     =   ""
+            SelectionEnd    =   ""
+            SelectionStart  =   ""
+            ShowOffsets     =   False
+            StreamLen       =   ""
             TabIndex        =   0
             TabPanelIndex   =   2
             TabStop         =   True
-            TextBackGroundColor=   "&cFFFFFF00"
-            TextBackGroundColorAlt=   "&cC0C0C000"
+            TextBackGroundColor=   &cFFFFFF00
+            TextBackGroundColorAlt=   &cC0C0C000
+            TextColor       =   &c00000000
             TextFont        =   "System"
-            TextSize        =   0
+            TextSize        =   0.0
             Top             =   64
+            Transparent     =   True
             UseFocusRing    =   True
             Visible         =   True
             Width           =   346
          End
          Begin Label MessageBodyFilePath
             AutoDeactivate  =   True
-            Bold            =   ""
+            Bold            =   False
             DataField       =   ""
             DataSource      =   ""
             Enabled         =   True
@@ -153,27 +164,28 @@ Begin ContainerControl MessageBody
             HelpTag         =   ""
             Index           =   -2147483648
             InitialParent   =   "PagePanel1"
-            Italic          =   ""
+            Italic          =   False
             Left            =   5
-            LockBottom      =   ""
+            LockBottom      =   False
             LockedInPosition=   False
             LockLeft        =   True
             LockRight       =   True
             LockTop         =   True
-            Multiline       =   ""
+            Multiline       =   False
             Scope           =   0
             Selectable      =   True
             TabIndex        =   1
             TabPanelIndex   =   2
+            TabStop         =   True
             Text            =   "X:\\Foo\\bar.bat"
             TextAlign       =   0
-            TextColor       =   &h000000
+            TextColor       =   &c00000000
             TextFont        =   "System"
-            TextSize        =   0
+            TextSize        =   0.0
             TextUnit        =   0
             Top             =   46
             Transparent     =   True
-            Underline       =   ""
+            Underline       =   False
             Visible         =   True
             Width           =   346
          End
@@ -181,19 +193,20 @@ Begin ContainerControl MessageBody
       Begin ComboBox MessageBodyType
          AutoComplete    =   True
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
          Height          =   20
          HelpTag         =   ""
+         Hint            =   ""
          Index           =   -2147483648
          InitialParent   =   "GroupBox1"
          InitialValue    =   "No body\r\nHTML form\r\nFile\r\nRaw/User defined"
-         Italic          =   ""
+         Italic          =   False
          Left            =   5
          ListIndex       =   0
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   True
          LockRight       =   True
@@ -203,17 +216,18 @@ Begin ContainerControl MessageBody
          TabPanelIndex   =   0
          TabStop         =   True
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   20
-         Underline       =   ""
+         Transparent     =   True
+         Underline       =   False
          UseFocusRing    =   True
          Visible         =   True
          Width           =   185
       End
       Begin Label MessageBodySize
          AutoDeactivate  =   True
-         Bold            =   ""
+         Bold            =   False
          DataField       =   ""
          DataSource      =   ""
          Enabled         =   True
@@ -223,25 +237,26 @@ Begin ContainerControl MessageBody
          InitialParent   =   "GroupBox1"
          Italic          =   True
          Left            =   193
-         LockBottom      =   ""
+         LockBottom      =   False
          LockedInPosition=   False
          LockLeft        =   False
          LockRight       =   True
          LockTop         =   True
-         Multiline       =   ""
+         Multiline       =   False
          Scope           =   0
          Selectable      =   False
          TabIndex        =   2
          TabPanelIndex   =   0
+         TabStop         =   True
          Text            =   "0.0 KB"
          TextAlign       =   2
-         TextColor       =   &h00000000
+         TextColor       =   &c00000000
          TextFont        =   "System"
-         TextSize        =   0
+         TextSize        =   0.0
          TextUnit        =   0
          Top             =   22
          Transparent     =   True
-         Underline       =   ""
+         Underline       =   False
          Visible         =   True
          Width           =   140
       End
@@ -321,7 +336,9 @@ End
 
 #tag Events NoBodyView
 	#tag Event
-		Sub Paint(g As Graphics)
+		Sub Paint(g As Graphics, areas() As REALbasic.Rect)
+		  #pragma Unused areas
+		  
 		  If g.Width <= 0 Or g.Height <= 0 Then Return
 		  Static mBuffer As Picture
 		  
@@ -337,7 +354,7 @@ End
 		    If MessageBodyFile = Nil Then
 		      s = MessageBodyDescription
 		    Else
-		      s = MessageBodyFile.AbsolutePath
+		      s = MessageBodyFile.NativePath
 		    End If
 		    w = gg.StringWidth(s)
 		    h = gg.StringHeight(s, w)
@@ -467,3 +484,221 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag ViewBehavior
+	#tag ViewProperty
+		Name="Name"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Super"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Width"
+		Visible=true
+		Group="Size"
+		InitialValue="300"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Height"
+		Visible=true
+		Group="Size"
+		InitialValue="300"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="InitialParent"
+		Visible=false
+		Group="Position"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Left"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Top"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockLeft"
+		Visible=true
+		Group="Position"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockTop"
+		Visible=true
+		Group="Position"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockRight"
+		Visible=true
+		Group="Position"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockBottom"
+		Visible=true
+		Group="Position"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="TabIndex"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="TabPanelIndex"
+		Visible=false
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="TabStop"
+		Visible=true
+		Group="Position"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowAutoDeactivate"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Enabled"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Tooltip"
+		Visible=true
+		Group="Appearance"
+		InitialValue=""
+		Type="String"
+		EditorType="MultiLineEditor"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowFocusRing"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Visible"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="BackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="&hFFFFFF"
+		Type="Color"
+		EditorType="Color"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Backdrop"
+		Visible=true
+		Group="Background"
+		InitialValue=""
+		Type="Picture"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasBackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowFocus"
+		Visible=true
+		Group="Behavior"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowTabs"
+		Visible=true
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="EraseBackground"
+		Visible=false
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Transparent"
+		Visible=true
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="DoubleBuffer"
+		Visible=true
+		Group="Windows Behavior"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+#tag EndViewBehavior

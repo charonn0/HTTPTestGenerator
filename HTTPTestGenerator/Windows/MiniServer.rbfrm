@@ -1,20 +1,21 @@
 #tag Window
 Begin Window MiniServer
-   BackColor       =   &hFFFFFF
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
    CloseButton     =   True
    Composite       =   False
    Frame           =   0
    FullScreen      =   False
    HasBackColor    =   False
-   Height          =   3.23e+2
+   HasFullScreenButton=   False
+   Height          =   323
    ImplicitInstance=   False
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   False
    MaxWidth        =   32000
-   MenuBar         =   ""
+   MenuBar         =   0
    MenuBarVisible  =   True
    MinHeight       =   64
    MinimizeButton  =   True
@@ -23,13 +24,13 @@ Begin Window MiniServer
    Resizeable      =   True
    Title           =   "HTTP Server"
    Visible         =   True
-   Width           =   5.83e+2
+   Width           =   583
    Begin TextField port
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   "&cFFFFFF00"
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -55,12 +56,13 @@ Begin Window MiniServer
       TabIndex        =   2
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   8080
-      TextColor       =   "&c00000000"
+      Text            =   "8080"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   301
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -75,6 +77,7 @@ Begin Window MiniServer
       Enabled         =   True
       Height          =   20
       HelpTag         =   ""
+      Hint            =   ""
       Index           =   -2147483648
       InitialValue    =   ""
       Italic          =   False
@@ -93,6 +96,7 @@ Begin Window MiniServer
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   300
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -123,7 +127,7 @@ Begin Window MiniServer
       TabStop         =   True
       Text            =   ":"
       TextAlign       =   0
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -135,17 +139,17 @@ Begin Window MiniServer
    End
    Begin PushButton PushButton1
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       ButtonStyle     =   0
-      Cancel          =   ""
+      Cancel          =   False
       Caption         =   "Listen"
-      Default         =   ""
+      Default         =   False
       Enabled         =   True
       Height          =   22
       HelpTag         =   ""
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   497
       LockBottom      =   True
       LockedInPosition=   False
@@ -157,36 +161,29 @@ Begin Window MiniServer
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   301
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Visible         =   True
       Width           =   80
    End
    Begin ServerSocket Socket
-      Enabled         =   True
-      Height          =   32
       Index           =   -2147483648
-      Left            =   619
       LockedInPosition=   False
       MaximumSocketsConnected=   10
       MinimumSocketsAvailable=   2
       Port            =   0
       Scope           =   0
-      TabIndex        =   4
       TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   0
-      Visible         =   True
-      Width           =   32
    End
    Begin HREFArea HTTPLog
       AcceptTabs      =   False
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   &h00EFEFEF
+      BackColor       =   &cEFEFEF00
       Bold            =   False
       Border          =   True
       DataField       =   ""
@@ -201,6 +198,8 @@ Begin Window MiniServer
       Italic          =   False
       Left            =   0
       LimitText       =   0
+      LineHeight      =   0.0
+      LineSpacing     =   1.0
       LockBottom      =   True
       LockedInPosition=   False
       LockLeft        =   True
@@ -217,47 +216,33 @@ Begin Window MiniServer
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   &h00000000
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   0
+      Transparent     =   True
       Underline       =   False
+      UnicodeMode     =   0
       UseFocusRing    =   True
       Visible         =   True
       Width           =   583
    End
    Begin Timer LogTimer
-      Enabled         =   True
-      Height          =   32
       Index           =   -2147483648
-      Left            =   619
       LockedInPosition=   False
       Mode            =   0
       Period          =   1
       Scope           =   0
-      TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   34
-      Visible         =   True
-      Width           =   32
    End
    Begin Timer ListenTimer
-      Enabled         =   True
-      Height          =   32
       Index           =   -2147483648
-      Left            =   619
       LockedInPosition=   False
       Mode            =   0
       Period          =   1
       Scope           =   0
-      TabIndex        =   7
       TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   67
-      Visible         =   True
-      Width           =   32
    End
    Begin ComboBox SecurityLevel
       AutoComplete    =   False
@@ -268,8 +253,9 @@ Begin Window MiniServer
       Enabled         =   True
       Height          =   20
       HelpTag         =   ""
+      Hint            =   ""
       Index           =   -2147483648
-      InitialValue    =   "No security\r\nAutomatic\r\nSSLv2 Only\r\nSSLv3 Only\r\nSSLv3 or SSLv2\r\nTLSv1 Only"
+      InitialValue    =   "No security\r\nAutomatic\r\nTLSv1 Only\r\nTLSv1.1 Only\r\nTLSv1.2 Only"
       Italic          =   False
       Left            =   313
       ListIndex       =   0
@@ -286,6 +272,7 @@ Begin Window MiniServer
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   298
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -318,37 +305,11 @@ Begin Window MiniServer
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   301
+      Transparent     =   True
       Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   98
-   End
-   Begin Canvas Activity
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
-      AutoDeactivate  =   True
-      Backdrop        =   ""
-      DoubleBuffer    =   True
-      Enabled         =   True
-      EraseBackground =   False
-      Height          =   20
-      HelpTag         =   ""
-      Index           =   -2147483648
-      InitialParent   =   ""
-      Left            =   476
-      LockBottom      =   True
-      LockedInPosition=   False
-      LockLeft        =   False
-      LockRight       =   True
-      LockTop         =   False
-      Scope           =   0
-      TabIndex        =   14
-      TabPanelIndex   =   0
-      TabStop         =   True
-      Top             =   301
-      UseFocusRing    =   True
-      Visible         =   True
-      Width           =   20
    End
 End
 #tag EndWindow
@@ -385,22 +346,13 @@ End
 	#tag Method, Flags = &h21
 		Private Function ContinueExpectedHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request) As Boolean
 		  #pragma Unused ClientRequest
-		  DoActivity()
 		  HTTPDebugHandler(Sender, "'100 Continue' is expected.", 1)
 		  Return True
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
-		Private Sub DoActivity()
-		  Active = True
-		  Activity.Invalidate(False)
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
 		Private Function HandleRequestHandler(Sender As HTTP.ClientHandler, ClientRequest As HTTP.Request, ByRef ResponseDocument As HTTP.Response) As Boolean
-		  DoActivity()
 		  Dim sessid As String = ClientRequest.Cookie("SessionID")
 		  If sessid <> "" Then
 		    Dim cache As Dictionary = mSessionCache.Lookup(sessid, New Dictionary)
@@ -448,7 +400,7 @@ End
 		      Else
 		        ResponseDocument = New HTTP.DirectoryIndex(item, ClientRequest.Path.ToString)
 		        ResponseDocument.StatusCode = 200
-		        HTTPDebugHandler(Sender, "Generating directory index for '" + item.AbsolutePath + "'", 1)
+		        HTTPDebugHandler(Sender, "Generating directory index for '" + item.NativePath + "'", 1)
 		        HTTP.DirectoryIndex(ResponseDocument).Populate
 		      End If
 		      
@@ -470,15 +422,15 @@ End
 		    End Select
 		    
 		    Select Case True
-		    Case ClientRequest.RangeStart > ResponseDocument.MessageBody.LenB, _
-		      ClientRequest.RangeStart < 0, _
-		      ClientRequest.RangeEnd > ResponseDocument.MessageBody.LenB, _
-		      ClientRequest.RangeEnd < 0, _
-		      ClientRequest.RangeEnd - ClientRequest.RangeStart > ResponseDocument.MessageBody.LenB, _
-		      ClientRequest.RangeEnd < ClientRequest.RangeStart
-		      Dim sz As Integer = ResponseDocument.MessageBody.LenB
-		      ResponseDocument = HTTP.ErrorPage(416) ' Requested Range is not Satisfiable
-		      ResponseDocument.Header("Content-Range") = "bytes */" + Str(sz)
+		      'Case ClientRequest.RangeStart > ResponseDocument.MessageBody.LenB, _
+		      'ClientRequest.RangeStart < -1, _
+		      'ClientRequest.RangeEnd > ResponseDocument.MessageBody.LenB, _
+		      'ClientRequest.RangeEnd < -1, _
+		      'ClientRequest.RangeEnd - ClientRequest.RangeStart > ResponseDocument.MessageBody.LenB, _
+		      'ClientRequest.RangeEnd < ClientRequest.RangeStart
+		      'Dim sz As Integer = ResponseDocument.MessageBody.LenB
+		      'ResponseDocument = HTTP.ErrorPage(416) ' Requested Range is not Satisfiable
+		      'ResponseDocument.Header("Content-Range") = "bytes */" + Str(sz)
 		      
 		    Case ClientRequest.RangeEnd - ClientRequest.RangeStart > 0
 		      ResponseDocument.StatusCode = 206 'partial content
@@ -589,7 +541,6 @@ End
 	#tag Method, Flags = &h21
 		Private Sub MessageSentHandler(Sender As HTTP.ClientHandler, Message As HTTP.Response)
 		  #pragma Unused Sender
-		  DoActivity()
 		  msgs.Append(Message)
 		  AddHandler Message.HTTPDebug, WeakAddressOf HTTPMessageDebugHandler
 		  LogTimer.Mode = Timer.ModeSingle
@@ -604,10 +555,6 @@ End
 		End Sub
 	#tag EndMethod
 
-
-	#tag Property, Flags = &h21
-		Private Active As Boolean
-	#tag EndProperty
 
 	#tag Property, Flags = &h0
 		AuthenticationPass As String
@@ -728,7 +675,7 @@ End
 		      HTTPLog.PrintOther(sr)
 		      sr.Underline = True
 		      sr.TextColor = &c0000FF00
-		      sr.Text = DocumentRoot.AbsolutePath
+		      sr.Text = DocumentRoot.NativePath
 		      HTTPLog.PrintOther(sr, DocumentRoot)
 		      sr.Text = CRLF + CRLF
 		      sr.Underline = False
@@ -754,13 +701,12 @@ End
 		    sr.Text = "Server stopped." + CRLF + CRLF
 		    HTTPLog.PrintOther(sr)
 		  End If
-		  DoActivity()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
 #tag Events Socket
 	#tag Event
-		Sub Error(ErrorCode as Integer)
+		Sub Error(ErrorCode As Integer, err As RuntimeException)
 		  PushButton1.Caption = "Listen"
 		  Me.StopListening
 		  Dim l, r As String
@@ -776,7 +722,6 @@ End
 		  sr.Text = ": " + r + CRLF + CRLF
 		  HTTPLog.PrintOther(sr)
 		  KillAllClients()
-		  DoActivity()
 		End Sub
 	#tag EndEvent
 	#tag Event
@@ -795,14 +740,14 @@ End
 		    sock.CertificatePassword = CertificatePassword
 		    sock.CertificateFile = CertificateFile
 		    Select Case SecurityLevel.Text
-		    Case "SSLv2 Only"
-		      sock.ConnectionType = SSLSocket.SSLv2
-		    Case "SSLv3 Only"
-		      sock.ConnectionType = SSLSocket.SSLv3
-		    Case "SSLv3 or SSLv2"
-		      sock.ConnectionType = SSLSocket.SSLv23
-		    Case "TLSv1 Only", "Automatic"
+		    Case "TLSv1 Only"
 		      sock.ConnectionType = SSLSocket.TLSv1
+		    Case "TLSv1.1 Only"
+		      sock.ConnectionType = SSLSocket.TLSv11
+		    Case "TLSv1.2 Only"
+		      sock.ConnectionType = SSLSocket.TLSv12
+		    Case "Automatic"
+		      sock.ConnectionType = SSLSocket.SSLv23
 		    End Select
 		  End If
 		  
@@ -810,8 +755,6 @@ End
 		  sock.AuthenticationRealm = AuthenticationRealm
 		  sock.EnforceContentType = EnforceContentType
 		  socks.Append(New WeakRef(sock))
-		  Active = False
-		  Activity.Invalidate(False)
 		  Return sock
 		End Function
 	#tag EndEvent
@@ -910,8 +853,6 @@ End
 		      Break
 		    End Select
 		  Wend
-		  Active = False
-		  Activity.Invalidate(False)
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -935,7 +876,6 @@ End
 		    Socket.Listen
 		    Me.Mode = Timer.ModeOff
 		  End If
-		  DoActivity()
 		End Sub
 	#tag EndEvent
 #tag EndEvents
@@ -952,7 +892,7 @@ End
 		      Me.ListIndex = 0
 		    End If
 		  Else
-		    CertificateFile.Delete
+		    If CertificateFile <> Nil And CertificateFile.Exists Then CertificateFile.Delete
 		    CertificateFile = Nil
 		    CertificatePassword = ""
 		  End If
@@ -972,23 +912,6 @@ End
 		  Else
 		    AuthenticationRequired = False
 		  End If
-		End Sub
-	#tag EndEvent
-#tag EndEvents
-#tag Events Activity
-	#tag Event
-		Sub Paint(g As Graphics)
-		  Dim p As Picture
-		  Select Case True
-		  Case Active
-		    p = greenledonmd
-		  Case Socket.IsListening
-		    p = greenledoffmd
-		  Else
-		    p = greenledoffdisabledmd
-		  End Select
-		  g.DrawPicture(p, 0, 0)
-		  
 		End Sub
 	#tag EndEvent
 #tag EndEvents

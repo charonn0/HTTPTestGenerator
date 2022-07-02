@@ -155,7 +155,7 @@ Protected Module URIHelpers
 		  Dim bs As New BinaryStream(Data)
 		  Dim ret As Boolean
 		  Do Until bs.EOF
-		    Dim char As Byte = bs.ReadByte
+		    Dim char As Byte = bs.ReadUInt8
 		    Select Case char
 		    Case &h30 To &h39, &h41 To &h5A, &h61 To &h7A, &h2D, &h2E, &h5F
 		      Continue
@@ -176,10 +176,10 @@ Protected Module URIHelpers
 		  Dim enbs As New BinaryStream(encoded)
 		  
 		  Do Until bs.EOF
-		    Dim char As Byte = bs.ReadByte
+		    Dim char As Byte = bs.ReadUInt8
 		    Select Case char
 		    Case &h30 To &h39, &h41 To &h5A, &h61 To &h7A, &h2D, &h2E, &h5F
-		      enbs.WriteByte(char)
+		      enbs.WriteUInt8(char)
 		    Else
 		      enbs.Write("%" + Right("0" + Hex(char), 2))
 		    End Select
@@ -290,33 +290,40 @@ Protected Module URIHelpers
 			Visible=true
 			Group="ID"
 			InitialValue="-2147483648"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Module

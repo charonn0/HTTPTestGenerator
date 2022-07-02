@@ -8,11 +8,18 @@ Implements Readable,Writeable
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function Create(ChunkReceiver As Writeable) As HTTP.ChunkedStream
+		Shared Function Create(ChunkReceiver As Writeable) As HTTP.ChunkedStream
 		  Dim stream As New ChunkedStream
 		  stream.WriteStream = ChunkReceiver
 		  Return stream
 		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h21
+		Private Function EndOfFile() As Boolean
+		  // Part of the Readable interface.
+		  Return EOF()
 		End Function
 	#tag EndMethod
 
@@ -31,7 +38,7 @@ Implements Readable,Writeable
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function Open(ChunkedData As Readable) As HTTP.ChunkedStream
+		Shared Function Open(ChunkedData As Readable) As HTTP.ChunkedStream
 		  Dim stream As New ChunkedStream
 		  stream.ReadStream = ChunkedData
 		  Return stream
@@ -133,39 +140,48 @@ Implements Readable,Writeable
 			Visible=true
 			Group="ID"
 			InitialValue="-2147483648"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="MinChunkSize"
+			Visible=false
 			Group="Behavior"
 			InitialValue="1024"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

@@ -14,7 +14,7 @@ Inherits SSLSocket
 	#tag EndEvent
 
 	#tag Event
-		Sub Error()
+		Sub Error(err As RuntimeException)
 		  If Worker <> Nil And Worker.State <> Thread.NotRunning Then 
 		    Worker.Kill
 		    RaiseEvent HTTPDebug("Worker thread killed.", 2)
@@ -227,15 +227,15 @@ Inherits SSLSocket
 		  
 		  
 		  
-		Exception Err As RuntimeException
-		  If Err IsA EndException Or Err IsA ThreadEndException Then Raise Err
-		  'Return an HTTP 500 Internal Server Error page.
-		  RaiseEvent HTTPDebug("A runtime error was not handled while processing the request.", -1)
-		  Dim errpage As Response = ErrorPage(500)
-		  errpage.Header("Connection") = "close"
-		  'Me.Purge
-		  Me.SendMessage(errpage)
-		  Me.Close
+		  Exception Err As RuntimeException
+		    If Err IsA EndException Or Err IsA ThreadEndException Then Raise Err
+		    'Return an HTTP 500 Internal Server Error page.
+		    RaiseEvent HTTPDebug("A runtime error was not handled while processing the request.", -1)
+		    Dim errpage As Response = ErrorPage(500)
+		    errpage.Header("Connection") = "close"
+		    'Me.Purge
+		    Me.SendMessage(errpage)
+		    Me.Close
 		End Sub
 	#tag EndMethod
 
@@ -288,7 +288,86 @@ Inherits SSLSocket
 
 	#tag ViewBehavior
 		#tag ViewProperty
+			Name="Address"
+			Visible=true
+			Group="Behavior"
+			InitialValue=""
+			Type="String"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Port"
+			Visible=true
+			Group="Behavior"
+			InitialValue="0"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="SSLConnectionType"
+			Visible=true
+			Group="Behavior"
+			InitialValue="3"
+			Type="SSLConnectionTypes"
+			EditorType="Enum"
+			#tag EnumValues
+				"1 - SSLv23"
+				"3 - TLSv1"
+				"4 - TLSv11"
+				"5 - TLSv12"
+			#tag EndEnumValues
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="SSLEnabled"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="SSLConnected"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="SSLConnecting"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BytesAvailable"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="BytesLeftToSend"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="LastErrorCode"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
 			Name="AuthenticationRealm"
+			Visible=false
 			Group="Behavior"
 			InitialValue="Restricted Area"
 			Type="String"
@@ -296,82 +375,51 @@ Inherits SSLSocket
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="AuthenticationRequired"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Boolean"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="CertificateFile"
-			Visible=true
-			Group="Behavior"
-			Type="FolderItem"
-			InheritedFrom="SSLSocket"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="CertificatePassword"
 			Visible=true
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
-			InheritedFrom="SSLSocket"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="CertificateRejectionFile"
-			Visible=true
-			Group="Behavior"
-			Type="FolderItem"
-			InheritedFrom="SSLSocket"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="ConnectionType"
-			Visible=true
-			Group="Behavior"
-			InitialValue="2"
-			Type="Integer"
-			InheritedFrom="SSLSocket"
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="EnforceContentType"
+			Visible=false
 			Group="Behavior"
 			InitialValue="True"
 			Type="Boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"
-			InheritedFrom="SSLSocket"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Left"
-			Visible=true
-			Group="Position"
+			InitialValue=""
 			Type="Integer"
-			InheritedFrom="SSLSocket"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
-			InheritedFrom="SSLSocket"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Secure"
-			Visible=true
-			Group="Behavior"
-			Type="Boolean"
-			InheritedFrom="SSLSocket"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InheritedFrom="SSLSocket"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="Top"
-			Visible=true
-			Group="Position"
-			Type="Integer"
-			InheritedFrom="SSLSocket"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

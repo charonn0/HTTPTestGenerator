@@ -5,62 +5,79 @@ Protected Module zlib
 		  ' Calculate the Adler32 checksum for the NewData. Pass back the returned value
 		  ' to continue processing.
 		  '    Dim adler As UInt32
-		  '    While True
+		  '    Do
 		  '      adler = zlib.Adler32(NextInputData, adler)
-		  '    Wend
+		  '    Loop
 		  ' If NewData.Size is not known (-1) then specify the size as NewDataSize
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Adler32
 		  
-		  If Not zlib.IsAvailable Then Return 0
+		  If Not zlib.IsAvailable Or NewData = Nil Then Return 0
 		  Static ADLER_POLYNOMIAL As UInt32
 		  If ADLER_POLYNOMIAL = 0 Then ADLER_POLYNOMIAL = _adler32(0, Nil, 0)
 		  
 		  If NewDataSize = -1 Then NewDataSize = NewData.Size
 		  If LastAdler = 0 Then LastAdler = ADLER_POLYNOMIAL
-		  If NewData <> Nil Then Return _adler32(LastAdler, NewData, NewDataSize)
+		  Return _adler32(LastAdler, NewData, NewDataSize)
 		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function Compress(Data As MemoryBlock, CompressionLevel As Integer = Z_DEFAULT_COMPRESSION, DataSize As Integer = - 1) As MemoryBlock
+		Protected Function Adler32Combine(Adler1 As UInt32, Adler2 As UInt32, Length2 As UInt32) As UInt32
+		  ' Combine Adler1 and Adler2, needing only then length of the data for Adler2
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Adler32Combine
+		  
+		  If Not zlib.IsAvailable Then Return 0
+		  Return _adler32_combine(Adler1, Adler2, Length2)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Attributes( deprecated = "zlib.Deflate" ) Protected Function Compress(Data As MemoryBlock, CompressionLevel As Integer = Z_DEFAULT_COMPRESSION, DataSize As Integer = - 1) As MemoryBlock
 		  ' Compress memory in one operation using deflate. If Data.Size is not known (-1) then specify the size as DataSize
 		  ' Use Uncompress to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Compress
 		  
 		  If Not zlib.IsAvailable Then Raise New PlatformNotSupportedException
 		  
 		  If DataSize = -1 Then DataSize = Data.Size
-		  Dim OutSize As UInt32 = zlib.compressBound(DataSize)
-		  Dim OutBuffer As New MemoryBlock(OutSize)
+		  Dim OutSize As UInt32 = compressBound(DataSize)
+		  Dim OutBuffer As MemoryBlock
 		  Dim err As Integer
+		  If CompressionLevel < Z_NO_COMPRESSION Or CompressionLevel > Z_BEST_COMPRESSION Then CompressionLevel = Z_DEFAULT_COMPRESSION
 		  
 		  Do
+		    If OutBuffer <> Nil Then OutSize = OutSize * 2
+		    OutBuffer = New MemoryBlock(OutSize)
 		    If CompressionLevel = Z_DEFAULT_COMPRESSION Then
-		      err = zlib._compress(OutBuffer, OutSize, Data, DataSize)
+		      err = _compress(OutBuffer, OutSize, Data, DataSize)
 		    Else
-		      err = zlib._compress2(OutBuffer, OutSize, Data, DataSize, CompressionLevel)
+		      err = _compress2(OutBuffer, OutSize, Data, DataSize, CompressionLevel)
 		    End If
-		    Select Case err
-		    Case Z_STREAM_ERROR
-		      Break ' CompressionLevel is invalid; using default
-		      Return Compress(Data, Z_DEFAULT_COMPRESSION, DataSize)
-		      
-		    Case Z_BUF_ERROR
-		      OutSize = OutSize * 2
-		      OutBuffer = New MemoryBlock(OutSize)
-		      
-		    Case Z_MEM_ERROR
-		      Raise New OutOfMemoryException
-		      
-		    End Select
 		  Loop Until err <> Z_BUF_ERROR
 		  
 		  If err <> Z_OK Then Raise New zlibException(err)
-		  Return OutBuffer.StringValue(0, OutSize)
+		  
+		  OutBuffer.Size = OutSize
+		  Return OutBuffer
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function CompressBound(DataLength As UInt32) As UInt32
+		  ' Computes the upper bound of the compressed size after deflation of DataLength bytes.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.CompressBound
+		  
+		  If Not zlib.IsAvailable Then Raise New PlatformNotSupportedException
+		  
+		  Return compressBound_(DataLength)
+		  
 		End Function
 	#tag EndMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function compressBound Lib zlib1 (sourceLen As UInt64) As UInt32
+		Private Soft Declare Function compressBound_ Lib zlib1 Alias "compressBound" (sourceLen As UInt32) As UInt32
 	#tag EndExternalMethod
 
 	#tag Method, Flags = &h1
@@ -72,25 +89,32 @@ Protected Module zlib
 		  '      crc = zlib.CRC32(NextInputData, crc)
 		  '    Wend
 		  ' If NewData.Size is not known (-1) then specify the size as NewDataSize
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.CRC32
 		  
-		  If Not zlib.IsAvailable Then Return 0
-		  Static CRC_POLYNOMIAL As UInt32
-		  If CRC_POLYNOMIAL = 0 Then CRC_POLYNOMIAL = _crc32(0, Nil, 0)
+		  Static avail As Boolean
+		  If Not avail Then avail = zlib.IsAvailable
+		  If Not avail Or NewData = Nil Then Return 0
 		  
 		  If NewDataSize = -1 Then NewDataSize = NewData.Size
-		  If LastCRC = 0 Then LastCRC = CRC_POLYNOMIAL
-		  If NewData <> Nil Then Return _crc32(LastCRC, NewData, NewDataSize)
+		  Return _crc32(LastCRC, NewData, NewDataSize)
 		  
 		End Function
 	#tag EndMethod
 
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflate Lib zlib1 (ByRef Stream As z_stream, Flush As Integer) As Integer
-	#tag EndExternalMethod
+	#tag Method, Flags = &h1
+		Protected Function CRC32Combine(CRC1 As UInt32, CRC2 As UInt32, Length2 As UInt32) As UInt32
+		  ' Combine CRC1 and CRC2, needing only then length of the data for crc2
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.CRC32Combine
+		  
+		  If Not zlib.IsAvailable Then Return 0
+		  Return _crc32_combine(CRC1, CRC2, Length2)
+		End Function
+	#tag EndMethod
 
 	#tag Method, Flags = &h1
 		Protected Function Deflate(Source As FolderItem, Destination As FolderItem, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Overwrite As Boolean = False, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
 		  ' Compress the Source file into the Destination file. Use Inflate to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Deflate
 		  
 		  Dim dst As BinaryStream = BinaryStream.Create(Destination, Overwrite)
 		  Dim src As BinaryStream = BinaryStream.Open(Source)
@@ -109,6 +133,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Deflate(Source As FolderItem, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Encoding As Integer = zlib.DEFLATE_ENCODING) As MemoryBlock
 		  ' Compress the Source file and return it. Use Inflate to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Deflate
 		  
 		  Dim buffer As New MemoryBlock(0)
 		  Dim dst As New BinaryStream(buffer)
@@ -127,7 +152,8 @@ Protected Module zlib
 
 	#tag Method, Flags = &h1
 		Protected Function Deflate(Source As FolderItem, Destination As Writeable, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
-		  ' Gzip the Source file into the Destination stream. Reverses the Deflate method
+		  ' Compress the Source file into the Destination stream. Use Inflate to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Deflate
 		  
 		  Dim src As BinaryStream = BinaryStream.Open(Source)
 		  Dim ok As Boolean
@@ -144,6 +170,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Deflate(Source As MemoryBlock, Destination As FolderItem, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Overwrite As Boolean = False, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
 		  ' Compress the Source data into the Destination file. Use Inflate to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Deflate
 		  
 		  Dim dst As BinaryStream = BinaryStream.Create(Destination, Overwrite)
 		  Dim ok As Boolean
@@ -160,6 +187,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Deflate(Source As MemoryBlock, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Encoding As Integer = zlib.DEFLATE_ENCODING) As MemoryBlock
 		  ' Compress the Source data and return it. Use Inflate to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Deflate
 		  
 		  Dim buffer As New MemoryBlock(0)
 		  Dim dst As New BinaryStream(buffer)
@@ -174,6 +202,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Deflate(Source As MemoryBlock, Destination As Writeable, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
 		  ' Compress the Source data into the Destination stream. Use Inflate to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Deflate
 		  
 		  Dim src As New BinaryStream(Source)
 		  ' calls Deflate(Readable, Writeable, Integer, Integer) As Boolean
@@ -182,8 +211,8 @@ Protected Module zlib
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function Deflate(Source As Readable, Destination As FolderItem, Overwrite As Boolean = False, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
-		  ' Compress the Source stream into the Destination file. Reverses the Deflate method
+		Protected Function Deflate(Source As Readable, Destination As FolderItem, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Overwrite As Boolean = False, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
+		  ' Compress the Source stream into the Destination file. Use Inflate to reverse.
 		  
 		  Dim dst As BinaryStream = BinaryStream.Create(Destination, Overwrite)
 		  Dim ok As Boolean
@@ -200,6 +229,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Deflate(Source As Readable, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Encoding As Integer = zlib.DEFLATE_ENCODING) As MemoryBlock
 		  ' Compress the Source stream and return it. Use Inflate to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Deflate
 		  
 		  Dim buffer As New MemoryBlock(0)
 		  Dim stream As New BinaryStream(buffer)
@@ -216,77 +246,79 @@ Protected Module zlib
 		  ' Calling this method with the default parameters produces the same output as zlib.Compress. The difference
 		  ' is that the size of the input to this method is not limited by available memory whereas Compress() has less
 		  ' memory overhead.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Deflate
 		  
-		  Dim z As ZStream
-		  If Encoding = DEFLATE_ENCODING Then
-		    z = ZStream.Create(Destination, CompressionLevel)
-		  Else
-		    z = ZStream.Create(Destination, CompressionLevel, Z_DEFAULT_STRATEGY, Encoding)
-		  End If
+		  Dim z As ZStream = ZStream.Create(Destination, CompressionLevel, Encoding)
 		  Try
 		    Do Until Source.EOF
 		      z.Write(Source.Read(CHUNK_SIZE))
 		    Loop
-		  Finally
 		    z.Close
+		  Catch
+		    Return False
 		  End Try
 		  Return True
 		End Function
 	#tag EndMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateBound Lib zlib1 (ByRef Stream As z_stream, DataLength As UInt32) As UInt32
+		Private Soft Declare Function deflateBound Lib zlib1 (Stream As Ptr, DataLength As UInt32) As UInt32
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateCopy Lib zlib1 (ByRef Dst As z_stream, Src As z_stream) As Integer
+		Private Soft Declare Function deflateCopy Lib zlib1 (Dst As Ptr, Src As Ptr) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateEnd Lib zlib1 (ByRef Stream As z_stream) As Integer
+		Private Soft Declare Function deflateEnd Lib zlib1 (Stream As Ptr) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateInit2_ Lib zlib1 (ByRef Stream As z_stream, CompressionLevel As Integer, CompressionMethod As Integer, WindowBits As Integer, MemLevel As Integer, Strategy As Integer, Version As CString, StreamSz As Integer) As Integer
+		Private Soft Declare Function deflateInit2_ Lib zlib1 (Stream As Ptr, CompressionLevel As Integer, CompressionMethod As Integer, Encoding As Integer, MemLevel As Integer, Strategy As Integer, Version As CString, StreamSz As Integer) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateInit_ Lib zlib1 (ByRef Stream As z_stream, CompressionLevel As Integer, Version As CString, StreamSz As Integer) As Integer
+		Private Soft Declare Function deflateInit_ Lib zlib1 (Stream As Ptr, CompressionLevel As Integer, Version As CString, StreamSz As Integer) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateParams Lib zlib1 (ByRef Stream As z_stream, Level As Integer, Strategy As Integer) As Integer
+		Private Soft Declare Function deflateParams Lib zlib1 (Stream As Ptr, Level As Integer, Strategy As Integer) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflatePending Lib zlib1 (ByRef Stream As z_stream, ByRef Pending As UInt32, ByRef Bits As Integer) As Integer
+		Private Soft Declare Function deflatePending Lib zlib1 (Stream As Ptr, ByRef Pending As UInt32, ByRef Bits As Integer) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflatePrime Lib zlib1 (ByRef Stream As z_stream, Bits As Integer, Value As Integer) As Integer
+		Private Soft Declare Function deflatePrime Lib zlib1 (Stream As Ptr, Bits As Integer, Value As Integer) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateReset Lib zlib1 (ByRef Stream As z_stream) As Integer
+		Private Soft Declare Function deflateReset Lib zlib1 (Stream As Ptr) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateSetDictionary Lib zlib1 (ByRef Stream As z_stream, Dictionary As Ptr, DictLength As UInt32) As Integer
+		Private Soft Declare Function deflateSetDictionary Lib zlib1 (Stream As Ptr, Dictionary As Ptr, DictLength As UInt32) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateSetHeader Lib zlib1 (ByRef Stream As z_stream, Header As gz_headerp) As Integer
+		Private Soft Declare Function deflateSetHeader Lib zlib1 (Stream As Ptr, Header As gz_headerp) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function deflateTune Lib zlib1 (ByRef Stream As z_stream, GoodLength As Integer, MaxLazy As Integer, NiceLength As Integer, MaxChain As Integer) As Integer
+		Private Soft Declare Function deflateTune Lib zlib1 (Stream As Ptr, GoodLength As Integer, MaxLazy As Integer, NiceLength As Integer, MaxChain As Integer) As Integer
+	#tag EndExternalMethod
+
+	#tag ExternalMethod, Flags = &h21
+		Private Soft Declare Function deflate_ Lib zlib1 Alias "deflate" (Stream As Ptr, Flush As Integer) As Integer
 	#tag EndExternalMethod
 
 	#tag Method, Flags = &h1
 		Protected Function GUnZip(Source As FolderItem) As MemoryBlock
 		  ' GUnZip the Source file and return it. Reverses the GZip method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GUnZip
 		  
-		  ' calls Inflate(Readable, MemoryBlock, Integer) As MemoryBlock
+		  ' calls Inflate(FolderItem, MemoryBlock, Integer) As MemoryBlock
 		  Return Inflate(Source, Nil, GZIP_ENCODING)
 		End Function
 	#tag EndMethod
@@ -294,6 +326,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function GUnZip(Source As FolderItem, Destination As FolderItem, Overwrite As Boolean = False) As Boolean
 		  ' GUnZip the Source file and write the output to the Destination file. Reverses the GZip method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GUnZip
 		  
 		  ' calls Inflate(FolderItem, FolderItem, Boolean, MemoryBlock, Integer) As Boolean
 		  Return Inflate(Source, Destination, Overwrite, Nil, GZIP_ENCODING)
@@ -301,8 +334,19 @@ Protected Module zlib
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Function GUnZip(Source As FolderItem, Destination As Writeable) As Boolean
+		  ' Gunzip the Source file into the Destination stream. Reverses the GZip method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GUnZip
+		  
+		  ' calls Inflate(FolderItem, Writeable, Integer, Integer) As Boolean
+		  Return Inflate(Source, Destination, Nil, GZIP_ENCODING)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function GUnZip(Source As MemoryBlock) As MemoryBlock
 		  ' GUnZip the Source data and return it. Reverses the GZip method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GUnZip
 		  
 		  ' calls Inflate(MemoryBlock, MemoryBlock, Integer) As MemoryBlock
 		  Return Inflate(Source, Nil, GZIP_ENCODING)
@@ -310,17 +354,29 @@ Protected Module zlib
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function GUnZip(Source As MemoryBlock, Destination As FolderItem, Overwrite As Boolean = False, Dictionary As MemoryBlock = Nil) As Boolean
+		Protected Function GUnZip(Source As MemoryBlock, Destination As FolderItem, Overwrite As Boolean = False) As Boolean
 		  ' GUnzips the Source data into the Destination file. Reverses the GZip method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GUnZip
 		  
 		  ' calls Inflate(MemoryBlock, FolderItem, Boolean, MemoryBlock, Integer) As Boolean
-		  Return Inflate(Source, Destination, Overwrite, Dictionary, GZIP_ENCODING)
+		  Return Inflate(Source, Destination, Overwrite, Nil, GZIP_ENCODING)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function GUnZip(Source As MemoryBlock, Destination As Writeable) As Boolean
+		  ' GUnzips the Source data into the Destination stream. Reverses the GZip method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GUnZip
+		  
+		  ' calls Inflate(MemoryBlock, Writeable, MemoryBlock, Integer) As Boolean
+		  Return Inflate(Source, Destination, Nil, GZIP_ENCODING)
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
 		Protected Function GUnZip(Source As Readable) As MemoryBlock
-		  ' GUnZip the Source stream and Return it. Reverses the GZip method
+		  ' GUnZip the Source stream and Return it. Reverses the GZip method.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GUnZip
 		  
 		  ' calls Inflate(Readable, MemoryBlock, Integer) As MemoryBlock
 		  Return Inflate(Source, Nil, GZIP_ENCODING)
@@ -328,8 +384,9 @@ Protected Module zlib
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function GUnzip(Source As Readable, Destination As FolderItem, Overwrite As Boolean = False) As Boolean
-		  ' Gunzip the Source stream into the Destination file. Reverses the Deflate method
+		Protected Function GUnZip(Source As Readable, Destination As FolderItem, Overwrite As Boolean = False) As Boolean
+		  ' GUnZip the Source stream into the Destination file. Reverses the GZip method.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GUnZip
 		  
 		  ' calls Inflate(Readable, FolderItem, Boolean, MemoryBlock, Integer) As Boolean
 		  Return Inflate(Source, Destination, Overwrite, Nil, GZIP_ENCODING)
@@ -338,34 +395,20 @@ Protected Module zlib
 
 	#tag Method, Flags = &h1
 		Protected Function GUnZip(Source As Readable, Destination As Writeable) As Boolean
-		  ' gunzip the Source stream and write the output to the Destination stream. Reverses the GZip method
+		  ' GUnZip the Source stream and write the output to the Destination stream. Reverses the GZip method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GUnZip
 		  
 		  ' calls Inflate(Readable, Writeable, MemoryBlock, Integer) As Boolean
 		  Return Inflate(Source, Destination, Nil, GZIP_ENCODING)
 		End Function
 	#tag EndMethod
 
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Sub gzclearerr Lib zlib1 (gzFile As Ptr)
-	#tag EndExternalMethod
-
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function gzclose Lib zlib1 (gzFile As Ptr) As Integer
-	#tag EndExternalMethod
-
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function gzeof Lib zlib1 (gzFile As Ptr) As Boolean
-	#tag EndExternalMethod
-
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function gzflush Lib zlib1 (gzFile As Ptr, Flush As Integer) As Integer
-	#tag EndExternalMethod
-
 	#tag Method, Flags = &h1
 		Protected Function GZip(Source As FolderItem, Destination As FolderItem, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Overwrite As Boolean = False) As Boolean
 		  ' GZip the Source file into the Destination file. Use GUnZip to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GZip
 		  
-		  ' calls Deflate(Readable, Writeable, Integer, Integer) As Boolean
+		  ' calls Deflate(FolderItem, FolderItem, Integer, Boolean, Integer) As Boolean
 		  Return Deflate(Source, Destination, CompressionLevel, Overwrite, GZIP_ENCODING)
 		End Function
 	#tag EndMethod
@@ -373,15 +416,28 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function GZip(Source As FolderItem, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION) As MemoryBlock
 		  ' GZip the Source file and return it. Use GUnZip to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GZip
 		  
-		  ' calls Deflate(FolderItem, Integer, Integer) As Boolean
+		  ' calls Deflate(FolderItem, Integer, Integer) As MemoryBlock
 		  Return Deflate(Source, CompressionLevel, GZIP_ENCODING)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function GZip(Source As FolderItem, Destination As Writeable, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION) As Boolean
+		  ' GZip the Source file into the Destination stream. Use GUnZip to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GZip
+		  
+		  ' calls Deflate(FolderItem, Writeable, Integer, Integer) As Boolean
+		  Return Deflate(Source, Destination, CompressionLevel, GZIP_ENCODING)
+		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
 		Protected Function GZip(Source As MemoryBlock, Destination As FolderItem, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Overwrite As Boolean = False) As Boolean
 		  ' GZip the Source data into the Destination file. Use GUnZip to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GZip
 		  
 		  ' calls Deflate(MemoryBlock, FolderItem, Integer, Boolean, Integer) As Boolean
 		  Return Deflate(Source, Destination, CompressionLevel, Overwrite, GZIP_ENCODING)
@@ -391,6 +447,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function GZip(Source As MemoryBlock, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION) As MemoryBlock
 		  ' GZip the Source data and return it. Use GUnZip to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GZip
 		  
 		  ' calls Deflate(MemoryBlock, Integer, Integer) As MemoryBlock
 		  Return Deflate(Source, CompressionLevel, GZIP_ENCODING)
@@ -398,17 +455,30 @@ Protected Module zlib
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function GZip(Source As Readable, Destination As FolderItem, Overwrite As Boolean = False, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION) As Boolean
-		  ' Gunzip the Source stream into the Destination file. Reverses the Deflate method
+		Protected Function GZip(Source As MemoryBlock, Destination As Writeable, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION) As Boolean
+		  ' GZip the Source data into the Destination stream. Use GUnZip to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GZip
 		  
-		  ' calls Deflate(Readable, FolderItem, Boolean, Integer, Integer) As Boolean
-		  Return Deflate(Source, Destination, Overwrite, CompressionLevel, GZIP_ENCODING)
+		  Dim src As New BinaryStream(Source)
+		  ' calls Deflate(Readable, Writeable, Integer, Integer) As Boolean
+		  Return Deflate(src, Destination, CompressionLevel, GZIP_ENCODING)
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
+		Protected Function GZip(Source As Readable, Destination As FolderItem, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION, Overwrite As Boolean = False) As Boolean
+		  ' GZip the Source stream into the Destination file. Use GUnZip to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GZip
+		  
+		  ' calls Deflate(Readable, FolderItem, Integer, Boolean, Integer) As Boolean
+		  Return Deflate(Source, Destination, CompressionLevel, Overwrite, GZIP_ENCODING)
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
 		Protected Function GZip(Source As Readable, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION) As MemoryBlock
 		  ' GZip the Source stream and return it. Use GUnZip to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GZip
 		  
 		  ' calls Deflate(Readable, Integer, Integer) As MemoryBlock
 		  Return Deflate(Source, CompressionLevel, GZIP_ENCODING)
@@ -418,43 +488,17 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function GZip(Source As Readable, Destination As Writeable, CompressionLevel As Integer = zlib.Z_DEFAULT_COMPRESSION) As Boolean
 		  ' GZip the Source stream and write the output to the Destination stream. Use GUnZip to reverse.
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.GZip
 		  
 		  ' calls Deflate(Readable, Writeable, Integer, Integer) As Boolean
 		  Return Deflate(Source, Destination, CompressionLevel, GZIP_ENCODING)
 		End Function
 	#tag EndMethod
 
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function gzoffset Lib zlib1 (gzFile As Ptr) As Integer
-	#tag EndExternalMethod
-
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function gzopen Lib zlib1 (Path As CString, Mode As CString) As Ptr
-	#tag EndExternalMethod
-
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function gzread Lib zlib1 (gzFile As Ptr, Buffer As Ptr, Length As UInt32) As Integer
-	#tag EndExternalMethod
-
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function gzseek Lib zlib1 (gzFile As Ptr, Offset As Integer, Whence As Integer) As Integer
-	#tag EndExternalMethod
-
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function gzsetparams Lib zlib1 (gzFile As Ptr, Level As Integer, Strategy As Integer) As Integer
-	#tag EndExternalMethod
-
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function gzwrite Lib zlib1 (gzFile As Ptr, Buffer As Ptr, Length As UInt32) As Integer
-	#tag EndExternalMethod
-
-	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflate Lib zlib1 (ByRef Stream As z_stream, Flush As Integer) As Integer
-	#tag EndExternalMethod
-
 	#tag Method, Flags = &h1
 		Protected Function Inflate(Source As FolderItem, Destination As FolderItem, Overwrite As Boolean = False, Dictionary As MemoryBlock = Nil, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
 		  ' Decompress the Source file and write the output to the Destination file. Reverses the Deflate method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Inflate
 		  
 		  Dim dst As BinaryStream = BinaryStream.Create(Destination, Overwrite)
 		  Dim src As BinaryStream = BinaryStream.Open(Source)
@@ -473,6 +517,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Inflate(Source As FolderItem, Dictionary As MemoryBlock = Nil, Encoding As Integer = zlib.DEFLATE_ENCODING) As MemoryBlock
 		  ' Decompress the Source file and return it. Reverses the Deflate method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Inflate
 		  
 		  Dim buffer As New MemoryBlock(0)
 		  Dim dst As New BinaryStream(buffer)
@@ -490,8 +535,26 @@ Protected Module zlib
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
+		Protected Function Inflate(Source As FolderItem, Destination As Writeable, Dictionary As MemoryBlock = Nil, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
+		  ' Decompresses the Source file into the Destination stream. Reverses the Deflate method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Inflate
+		  
+		  Dim src As BinaryStream = BinaryStream.Open(Source)
+		  Dim ok As Boolean
+		  Try
+		    ' calls Inflate(Readable, Writeable, Integer, Integer) As Boolean
+		    ok = Inflate(src, Destination, Dictionary, Encoding)
+		  Finally
+		    src.Close
+		  End Try
+		  Return ok
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h1
 		Protected Function Inflate(Source As MemoryBlock, Destination As FolderItem, Overwrite As Boolean = False, Dictionary As MemoryBlock = Nil, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
 		  ' Decompress the Source data into the Destination file. Reverses the Deflate method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Inflate
 		  
 		  Dim dst As BinaryStream = BinaryStream.Create(Destination, Overwrite)
 		  Dim src As New BinaryStream(Source)
@@ -510,6 +573,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Inflate(Source As MemoryBlock, Dictionary As MemoryBlock = Nil, Encoding As Integer = zlib.DEFLATE_ENCODING) As MemoryBlock
 		  ' Decompress the Source data and return it. Reverses the Deflate method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Inflate
 		  
 		  Dim src As New BinaryStream(Source)
 		  ' calls Inflate(Readable, MemoryBlock, Integer) As MemoryBlock
@@ -520,6 +584,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Inflate(Source As MemoryBlock, Destination As Writeable, Dictionary As MemoryBlock = Nil, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
 		  ' Decompress the Source data into the Destination stream. Reverses the Deflate method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Inflate
 		  
 		  Dim src As New BinaryStream(Source)
 		  Dim ok As Boolean
@@ -533,9 +598,14 @@ Protected Module zlib
 		End Function
 	#tag EndMethod
 
+	#tag ExternalMethod, Flags = &h21
+		Private Soft Declare Function inflate Lib zlib1 (Stream As Ptr, Flush As Integer) As Integer
+	#tag EndExternalMethod
+
 	#tag Method, Flags = &h1
 		Protected Function Inflate(Source As Readable, Destination As FolderItem, Overwrite As Boolean = False, Dictionary As MemoryBlock = Nil, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
 		  ' Decompress the Source stream into the Destination file. Reverses the Deflate method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Inflate
 		  
 		  Dim dst As BinaryStream = BinaryStream.Create(Destination, Overwrite)
 		  Dim ok As Boolean
@@ -552,6 +622,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Inflate(Source As Readable, Dictionary As MemoryBlock = Nil, Encoding As Integer = zlib.DEFLATE_ENCODING) As MemoryBlock
 		  ' Decompress the Source stream and return it. Reverses the Deflate method
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Inflate
 		  
 		  Dim buffer As New MemoryBlock(0)
 		  Dim stream As New BinaryStream(buffer)
@@ -565,14 +636,7 @@ Protected Module zlib
 	#tag Method, Flags = &h1
 		Protected Function Inflate(Source As Readable, Destination As Writeable, Dictionary As MemoryBlock = Nil, Encoding As Integer = zlib.DEFLATE_ENCODING) As Boolean
 		  ' Decompress the Source stream and write the output to the Destination stream. Reverses the Deflate method
-		  
-		  'If Source IsA BinaryStream Then
-		  'If Encoding = GZIP_ENCODING And Not BinaryStream(Source).IsGZipped Then
-		  'Encoding = Z_DETECT
-		  'ElseIf Encoding <> DEFLATE_ENCODING And BinaryStream(Source).IsDeflated Then
-		  'Encoding = DEFLATE_ENCODING
-		  'End If
-		  'End If
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.Inflate
 		  
 		  Dim z As ZStream = ZStream.Open(Source, Encoding)
 		  Try
@@ -582,59 +646,63 @@ Protected Module zlib
 		      Dim data As MemoryBlock = z.Read(CHUNK_SIZE)
 		      If data <> Nil And data.Size > 0 Then Destination.Write(Data)
 		    Loop
-		  Finally
 		    z.Close
+		  Catch
+		    Return False
 		  End Try
 		  Return True
 		End Function
 	#tag EndMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateCopy Lib zlib1 (ByRef Dst As z_stream, Src As z_stream) As Integer
+		Private Soft Declare Function inflateCopy Lib zlib1 (Dst As Ptr, Src As Ptr) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateEnd Lib zlib1 (ByRef Stream As z_stream) As Integer
+		Private Soft Declare Function inflateEnd Lib zlib1 (Stream As Ptr) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateGetDictionary Lib zlib1 (ByRef Stream As z_stream, Dictionary As Ptr, ByRef DictLength As UInt32) As Integer
+		Private Soft Declare Function inflateGetDictionary Lib zlib1 (Stream As Ptr, Dictionary As Ptr, ByRef DictLength As UInt32) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateGetHeader Lib zlib1 (ByRef Stream As z_stream, ByRef Header As gz_headerp) As Integer
+		Private Soft Declare Function inflateGetHeader Lib zlib1 (Stream As Ptr, ByRef Header As gz_headerp) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateInit2_ Lib zlib1 (ByRef Stream As z_stream, WindowBits As Integer, Version As CString, StreamSz As Integer) As Integer
+		Private Soft Declare Function inflateInit2_ Lib zlib1 (Stream As Ptr, Encoding As Integer, Version As CString, StreamSz As Integer) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateInit_ Lib zlib1 (ByRef Stream As z_stream, Version As CString, StreamSz As Integer) As Integer
+		Private Soft Declare Function inflateInit_ Lib zlib1 (Stream As Ptr, Version As CString, StreamSz As Integer) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateMark Lib zlib1 (ByRef Stream As z_stream) As UInt32
+		Private Soft Declare Function inflateMark Lib zlib1 (Stream As Ptr) As UInt32
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateReset Lib zlib1 (ByRef Stream As z_stream) As Integer
+		Private Soft Declare Function inflateReset Lib zlib1 (Stream As Ptr) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateReset2 Lib zlib1 (ByRef Stream As z_stream, WindowBits As Integer) As Integer
+		Private Soft Declare Function inflateReset2 Lib zlib1 (Stream As Ptr, Encoding As Integer) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateSetDictionary Lib zlib1 (ByRef Stream As z_stream, Dictionary As Ptr, DictLength As UInt32) As Integer
+		Private Soft Declare Function inflateSetDictionary Lib zlib1 (Stream As Ptr, Dictionary As Ptr, DictLength As UInt32) As Integer
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function inflateSync Lib zlib1 (ByRef Dst As z_stream) As Integer
+		Private Soft Declare Function inflateSync Lib zlib1 (Dst As Ptr) As Integer
 	#tag EndExternalMethod
 
 	#tag Method, Flags = &h1
 		Protected Function IsAvailable() As Boolean
+		  ' Returns True if zlib is available at runtime,
+		  ' See: https://github.com/charonn0/RB-zlib/wiki/zlib.IsAvailable
+		  
 		  Static mIsAvailable As Boolean
 		  
 		  If Not mIsAvailable Then mIsAvailable = System.IsFunctionAvailable("zlibVersion", zlib1)
@@ -648,7 +716,7 @@ Protected Module zlib
 		  
 		  Dim IsDeflate As Boolean
 		  Dim pos As UInt64 = Target.Position
-		  If Target.ReadByte = &h78 Then IsDeflate = True 'maybe
+		  If Target.ReadUInt8 = &h78 Then IsDeflate = True 'maybe
 		  Target.Position = pos
 		  Return IsDeflate
 		End Function
@@ -699,7 +767,7 @@ Protected Module zlib
 		  
 		  Dim IsGZ As Boolean
 		  Dim pos As UInt64 = Target.Position
-		  If Target.ReadByte = &h1F And Target.ReadByte = &h8B Then IsGZ = True
+		  If Target.ReadUInt8 = &h1F And Target.ReadUInt8 = &h8B Then IsGZ = True
 		  Target.Position = pos
 		  Return IsGZ
 		End Function
@@ -744,25 +812,7 @@ Protected Module zlib
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
-		Protected Function ReadTar(TarFile As FolderItem, ExtractTo As FolderItem, Overwrite As Boolean = False) As FolderItem()
-		  ' Extracts a TAR file to the ExtractTo directory
-		  Dim tar As TapeArchive = zlib.TapeArchive.Open(TarFile)
-		  Dim bs As BinaryStream
-		  Dim fs() As FolderItem
-		  Do
-		    If bs <> Nil Then bs.Close
-		    Dim g As FolderItem = ExtractTo.Child(tar.CurrentName)
-		    bs = BinaryStream.Create(g, Overwrite)
-		    fs.Append(g)
-		  Loop Until Not tar.MoveNext(bs)
-		  bs.Close
-		  tar.Close
-		  Return fs
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function Uncompress(Data As MemoryBlock, ExpandedSize As Integer = - 1, DataSize As Integer = - 1) As MemoryBlock
+		Attributes( deprecated = "zlib.Inflate" ) Protected Function Uncompress(Data As MemoryBlock, ExpandedSize As Integer = - 1, DataSize As Integer = - 1) As MemoryBlock
 		  ' Decompress memory in one operation using deflate. If Data.Size is not known (-1) then specify the size as DataSize
 		  ' If the size of the decompressed data is known then pass it as ExpandedSize. Reverses the Compress method
 		  
@@ -777,47 +827,23 @@ Protected Module zlib
 		  Do
 		    OutputBuffer = New MemoryBlock(ExpandedSize)
 		    OutSize = OutputBuffer.Size
-		    err = zlib._uncompress(OutputBuffer, OutSize, Data, DataSize)
+		    err = _uncompress(OutputBuffer, OutSize, Data, DataSize)
 		    ExpandedSize = ExpandedSize * 2
-		    Select Case err
-		    Case Z_MEM_ERROR
-		      Raise New OutOfMemoryException
-		      
-		    Case Z_DATA_ERROR
-		      Raise New UnsupportedFormatException
-		      
-		    End Select
 		  Loop Until err <> Z_BUF_ERROR
 		  
 		  If err <> Z_OK Then Raise New zlibException(err)
-		  Return OutputBuffer.StringValue(0, OutSize)
+		  
+		  OutputBuffer.Size = OutSize
+		  Return OutputBuffer
+		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h1
 		Protected Function Version() As String
 		  If Not zlib.IsAvailable Then Return ""
-		  Dim mb As MemoryBlock = zlib.zlibVersion
+		  Dim mb As MemoryBlock = zlibVersion
 		  Return mb.CString(0)
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h1
-		Protected Function WriteTar(ToArchive() As FolderItem, OutputFile As FolderItem) As Boolean
-		  ' Creates/appends a TAR file with the ToArchive FolderItems
-		  Dim tar As zlib.TapeArchive
-		  If OutputFile.Exists Then
-		    tar = zlib.TapeArchive.Open(OutputFile)
-		  Else
-		    tar = zlib.TapeArchive.Create(OutputFile)
-		  End If
-		  For i As Integer = 0 To UBound(ToArchive)
-		    If Not tar.AppendFile(ToArchive(i)) Then Return False
-		  Next
-		  tar.Close
-		  Return True
-		  
-		  
 		End Function
 	#tag EndMethod
 
@@ -838,6 +864,10 @@ Protected Module zlib
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
+		Private Soft Declare Function _adler32_combine Lib zlib1 Alias "adler32_combine" (adler1 As UInt32, adler2 As UInt32, Length2 As Int32) As UInt32
+	#tag EndExternalMethod
+
+	#tag ExternalMethod, Flags = &h21
 		Private Soft Declare Function _compress Lib zlib1 Alias "compress" (Output As Ptr, ByRef OutLen As UInt32, Source As Ptr, SourceLen As UInt32) As Integer
 	#tag EndExternalMethod
 
@@ -850,7 +880,7 @@ Protected Module zlib
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
-		Private Soft Declare Function _get_errno Lib "msvcrt" (ByRef errno As Integer) As Boolean
+		Private Soft Declare Function _crc32_combine Lib zlib1 Alias "crc32_combine" (crc1 As UInt32, crc2 As UInt32, Length2 As Int32) As UInt32
 	#tag EndExternalMethod
 
 	#tag ExternalMethod, Flags = &h21
@@ -860,6 +890,29 @@ Protected Module zlib
 	#tag ExternalMethod, Flags = &h21
 		Private Soft Declare Function _uncompress Lib zlib1 Alias "uncompress" (Output As Ptr, ByRef OutLen As UInt32, Source As Ptr, SourceLen As UInt32) As Integer
 	#tag EndExternalMethod
+
+
+	#tag Note, Name = Copying
+		RB-zlib (https://github.com/charonn0/RB-zlib)
+		
+		Copyright (c)2015-19 Andrew Lambert, all rights reserved.
+		
+		 Permission to use, copy, modify, and distribute this software for any purpose
+		 with or without fee is hereby granted, provided that the above copyright
+		 notice and this permission notice appear in all copies.
+		 
+		    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+		    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+		    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. IN
+		    NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+		    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+		    OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
+		    OR OTHER DEALINGS IN THE SOFTWARE.
+		 
+		 Except as contained in this notice, the name of a copyright holder shall not
+		 be used in advertising or otherwise to promote the sale, use or other dealings
+		 in this Software without prior written authorization of the copyright holder.
+	#tag EndNote
 
 
 	#tag Constant, Name = CHUNK_SIZE, Type = Double, Dynamic = False, Default = \"16384", Scope = Private
@@ -877,7 +930,7 @@ Protected Module zlib
 	#tag Constant, Name = RAW_ENCODING, Type = Double, Dynamic = False, Default = \"-15", Scope = Protected
 	#tag EndConstant
 
-	#tag Constant, Name = zlib1, Type = String, Dynamic = False, Default = \"", Scope = Private
+	#tag Constant, Name = zlib1, Type = String, Dynamic = False, Default = \"libz.so.1", Scope = Private
 		#Tag Instance, Platform = Windows, Language = Default, Definition  = \"zlib1.dll"
 		#Tag Instance, Platform = Mac OS, Language = Default, Definition  = \"/usr/lib/libz.dylib"
 		#Tag Instance, Platform = Linux, Language = Default, Definition  = \"libz.so.1"
@@ -970,9 +1023,6 @@ Protected Module zlib
 	#tag Constant, Name = Z_TREES, Type = Double, Dynamic = False, Default = \"6", Scope = Protected
 	#tag EndConstant
 
-	#tag Constant, Name = Z_UNFINISHED_ERROR, Type = Double, Dynamic = False, Default = \"-99", Scope = Private
-	#tag EndConstant
-
 	#tag Constant, Name = Z_UNKNOWN, Type = Double, Dynamic = False, Default = \"2", Scope = Protected
 	#tag EndConstant
 
@@ -980,7 +1030,7 @@ Protected Module zlib
 	#tag EndConstant
 
 
-	#tag Structure, Name = gz_headerp, Flags = &h1
+	#tag Structure, Name = gz_headerp, Flags = &h1, Attributes = \"StructureAlignment \x3D 1"
 		Text As Integer
 		  Time As UInt32
 		  xflags As Integer
@@ -996,7 +1046,7 @@ Protected Module zlib
 		Done As Integer
 	#tag EndStructure
 
-	#tag Structure, Name = z_stream, Flags = &h21
+	#tag Structure, Name = z_stream_32_1, Flags = &h21, Attributes = \"StructureAlignment \x3D 1"
 		next_in as Ptr
 		  avail_in as UInt32
 		  total_in as UInt32
@@ -1013,6 +1063,40 @@ Protected Module zlib
 		reserved as UInt32
 	#tag EndStructure
 
+	#tag Structure, Name = z_stream_32_8, Flags = &h21, Attributes = \"StructureAlignment \x3D 8"
+		next_in as Ptr
+		  avail_in as UInt32
+		  total_in as UInt32
+		  next_out as Ptr
+		  avail_out as UInt32
+		  total_out as UInt32
+		  msg as Ptr
+		  internal_state as Ptr
+		  zalloc as Ptr
+		  zfree as Ptr
+		  opaque as Ptr
+		  data_type as Int32
+		  adler as UInt32
+		reserved as UInt32
+	#tag EndStructure
+
+	#tag Structure, Name = z_stream_64_8, Flags = &h21, Attributes = \"StructureAlignment \x3D 8"
+		next_in as Ptr
+		  avail_in as UInt64
+		  total_in as UInt64
+		  next_out as Ptr
+		  avail_out as UInt64
+		  total_out as UInt64
+		  msg as Ptr
+		  internal_state as Ptr
+		  zalloc as Ptr
+		  zfree as Ptr
+		  opaque as Ptr
+		  data_type as Int64
+		  adler as UInt64
+		reserved as UInt64
+	#tag EndStructure
+
 
 	#tag ViewBehavior
 		#tag ViewProperty
@@ -1020,33 +1104,40 @@ Protected Module zlib
 			Visible=true
 			Group="ID"
 			InitialValue="-2147483648"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Module

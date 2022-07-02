@@ -154,9 +154,17 @@
  "code": "307",
  "deprecated": false,
  "phrase": "Temporary Redirect",
- "description": "Indicates that the target resource resides temporarily under a <link=Location>different URI</link> and the <link=user agent>user agent</link> <link=MUST NOT>MUST NOT</link> change the request method if it performs an automatic redirection to that URI.",
+ "description": "Indicates that the target resource resides temporarily under a <link=Location>different URI</link>. This status code is the same as <link=302>302 Found</link>, except the <link=user agent>user agent</link> <link=MUST NOT>MUST NOT</link> change the <link=Request Method>request method</link> if it performs an automatic redirection.",
  "spec_title": "RFC7231#6.4.7",
  "spec_href": "http://tools.ietf.org/html/rfc7231#section-6.4.7"
+},
+{
+ "code": "308",
+ "deprecated": false,
+ "phrase": "Permanent Redirect",
+ "description": "Indicates that the target resource has moved permanently to a <link=Location>new URI</link>. This status code is the same as <link=301>301 Moved Permanently</link>, except the <link=user agent>user agent</link> <link=MUST NOT>MUST NOT</link> change the <link=Request Method>request method</link> if it performs an automatic redirection.",
+ "spec_title": "RFC7538#3",
+ "spec_href": "https://datatracker.ietf.org/doc/html/rfc7538#section-3"
 },
 {
  "code": "4xx",
@@ -413,14 +421,6 @@
  "description": "The <link=web server>server</link> has fulfilled a <link=GET>GET</link> request for the resource, and the response is a representation of the result of one or more instance-manipulations applied to the current instance.",
  "spec_title": "RFC3229#10.4.1",
  "spec_href": "http://tools.ietf.org/html/rfc3229#section-10.4.1"
-},
-{
- "code": "308",
- "deprecated": false,
- "phrase": "Permanent Redirect",
- "description": "The target resource has been assigned a new permanent URI and any future references to this resource <link=SHOULD>SHOULD</link> use one of the <link=Location>returned URIs</link>. [...] This status code is similar to <link=301>301 Moved Permanently</link>, except that it does not allow rewriting the request method from <link=POST>POST</link> to <link=GET>GET</link>.",
- "spec_title": "RFC7238",
- "spec_href": "http://tools.ietf.org/html/rfc7238"
 },
 {
  "code": "422",

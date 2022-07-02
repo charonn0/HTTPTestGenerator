@@ -1,9 +1,9 @@
 [
  {
         "method": "BREW",
-        "description": "Requests that an HTCPCP-compliant server commence brewing coffee.",
+        "description": "Requests that an HTCPCP-compliant server commence brewing coffee. \r\n\r\n[...]A coffee pot server <link=MUST>MUST</link> accept both the BREW and <link=POST>POST</link> method equivalently. However, the use of POST for causing actions to happen is deprecated. \r\n\r\n[...]POST may be a trademark for coffee, and so the BREW method has been added. The BREW method may be used with other HTTP-based protocols (e.g., the Hyper Text Brewery Control Protocol).",
         "safe": false,
-        "idempotent": true,
+        "idempotent": false,
         "cacheable": false,
         "spec_title": "RFC2324#2.1.1",
         "spec_href": "http://tools.ietf.org/html/rfc2324#section-2.1.1"

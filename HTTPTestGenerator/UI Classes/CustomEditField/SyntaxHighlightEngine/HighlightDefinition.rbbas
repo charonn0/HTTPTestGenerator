@@ -48,7 +48,7 @@ Protected Class HighlightDefinition
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		 Shared Function ColorToText(c as Color) As String
+		Shared Function ColorToText(c as Color) As String
 		  dim v as Variant = c
 		  return Right("0000000"+Hex(v.IntegerValue),6) // aIntegerValue doesn't include a Color's transparency, so we're safe here
 		End Function
@@ -161,7 +161,7 @@ Protected Class HighlightDefinition
 	#tag Method, Flags = &h0
 		Function Highlight(text as string, tokens() as textsegment, placeholders() as textplaceholder, forceMatch as highlightContext = nil) As highlightcontext
 		  #pragma DisableBackgroundTasks
-		  #pragma DisableAutoWaitCursor
+		  ' #pragma DisableAutoWaitCursor
 		  
 		  #if DebugBuild and EditFieldGlobals.DebugTiming
 		    dim runtimer as new Debugging.AccumulationTimer(CurrentMethodName)
@@ -886,49 +886,59 @@ Protected Class HighlightDefinition
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="caseSensitive"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="defaultColor"
+			Visible=false
 			Group="Behavior"
 			InitialValue="&h000000"
 			Type="color"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"
 			InitialValue="-2147483648"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
-			Type="string"
-			EditorType="MultiLineEditor"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

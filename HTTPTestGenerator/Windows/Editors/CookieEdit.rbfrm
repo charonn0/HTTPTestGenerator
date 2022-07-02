@@ -1,15 +1,16 @@
 #tag Window
 Begin Window CookieEdit
-   BackColor       =   &h00FFFFFF
+   BackColor       =   &cFFFFFF00
    Backdrop        =   0
    CloseButton     =   True
    Composite       =   False
    Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
+   HasFullScreenButton=   False
    Height          =   157
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   False
@@ -49,7 +50,7 @@ Begin Window CookieEdit
       TabStop         =   True
       Text            =   "Name:"
       TextAlign       =   2
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -84,7 +85,7 @@ Begin Window CookieEdit
       TabStop         =   True
       Text            =   "Value:"
       TextAlign       =   2
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -119,7 +120,7 @@ Begin Window CookieEdit
       TabStop         =   True
       Text            =   "Expires:"
       TextAlign       =   2
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -154,7 +155,7 @@ Begin Window CookieEdit
       TabStop         =   True
       Text            =   "Path:"
       TextAlign       =   2
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -189,7 +190,7 @@ Begin Window CookieEdit
       TabStop         =   True
       Text            =   "Domain:"
       TextAlign       =   2
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -204,7 +205,7 @@ Begin Window CookieEdit
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &hFFFFFF
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -231,11 +232,12 @@ Begin Window CookieEdit
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   0
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -246,7 +248,7 @@ Begin Window CookieEdit
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &hFFFFFF
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -273,11 +275,12 @@ Begin Window CookieEdit
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   23
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -288,7 +291,7 @@ Begin Window CookieEdit
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &hFFFFFF
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -315,11 +318,12 @@ Begin Window CookieEdit
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   46
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -330,7 +334,7 @@ Begin Window CookieEdit
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &hFFFFFF
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -357,11 +361,12 @@ Begin Window CookieEdit
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   69
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -372,7 +377,7 @@ Begin Window CookieEdit
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   &hFFFFFF
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -399,11 +404,12 @@ Begin Window CookieEdit
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   &h000000
+      TextColor       =   &c000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   92
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -436,6 +442,7 @@ Begin Window CookieEdit
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   126
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   80
@@ -467,6 +474,7 @@ Begin Window CookieEdit
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   126
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   80

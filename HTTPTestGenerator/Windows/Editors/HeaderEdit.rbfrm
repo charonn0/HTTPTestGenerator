@@ -1,15 +1,16 @@
 #tag Window
 Begin Window HeaderEdit
-   BackColor       =   -256
+   BackColor       =   &cFFFF00FF
    Backdrop        =   0
    CloseButton     =   True
    Composite       =   False
    Frame           =   1
    FullScreen      =   False
    HasBackColor    =   False
+   HasFullScreenButton=   False
    Height          =   114
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   False
@@ -46,9 +47,10 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Name:"
       TextAlign       =   2
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -80,9 +82,10 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   6
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Value:"
       TextAlign       =   2
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -97,7 +100,7 @@ Begin Window HeaderEdit
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   "&cFFFFFF00"
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -124,11 +127,12 @@ Begin Window HeaderEdit
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   0
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -161,6 +165,7 @@ Begin Window HeaderEdit
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   83
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   80
@@ -192,6 +197,7 @@ Begin Window HeaderEdit
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   83
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   80
@@ -205,6 +211,7 @@ Begin Window HeaderEdit
       Enabled         =   True
       Height          =   22
       HelpTag         =   ""
+      Hint            =   ""
       Index           =   -2147483648
       InitialValue    =   ""
       Italic          =   False
@@ -223,6 +230,7 @@ Begin Window HeaderEdit
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   49
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -250,9 +258,10 @@ Begin Window HeaderEdit
       Selectable      =   False
       TabIndex        =   7
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Auto:"
       TextAlign       =   2
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -267,7 +276,7 @@ Begin Window HeaderEdit
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   "&cFFFFFF00"
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -294,11 +303,12 @@ Begin Window HeaderEdit
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   23
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -312,6 +322,7 @@ Begin Window HeaderEdit
          Enabled         =   True
          Height          =   22
          HelpTag         =   ""
+         Hint            =   ""
          Index           =   -2147483648
          InitialParent   =   "HeaderValue"
          InitialValue    =   "BSHTTP\\1.0\r\nGoogle Chrome\r\nMozilla Firefox\r\nInternet Exlorer 11\r\nSafari"
@@ -331,6 +342,7 @@ Begin Window HeaderEdit
          TextSize        =   0.0
          TextUnit        =   0
          Top             =   23
+         Transparent     =   True
          Underline       =   False
          UseFocusRing    =   True
          Visible         =   False

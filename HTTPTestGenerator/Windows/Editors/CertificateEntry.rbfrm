@@ -1,15 +1,16 @@
 #tag Window
 Begin Window CertificateEntry
-   BackColor       =   -256
+   BackColor       =   &cFFFF00FF
    Backdrop        =   0
    CloseButton     =   False
    Composite       =   False
    Frame           =   3
    FullScreen      =   False
    HasBackColor    =   False
+   HasFullScreenButton=   False
    Height          =   548
    ImplicitInstance=   True
-   LiveResize      =   True
+   LiveResize      =   "True"
    MacProcID       =   0
    MaxHeight       =   32000
    MaximizeButton  =   False
@@ -29,7 +30,7 @@ Begin Window CertificateEntry
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   "&cFFFFFF00"
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       DataField       =   ""
@@ -43,6 +44,8 @@ Begin Window CertificateEntry
       Italic          =   False
       Left            =   7
       LimitText       =   0
+      LineHeight      =   0.0
+      LineSpacing     =   1.0
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -59,12 +62,14 @@ Begin Window CertificateEntry
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   21
+      Transparent     =   True
       Underline       =   False
+      UnicodeMode     =   0
       UseFocusRing    =   True
       Visible         =   True
       Width           =   580
@@ -74,7 +79,7 @@ Begin Window CertificateEntry
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   True
-      BackColor       =   "&cFFFFFF00"
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       DataField       =   ""
@@ -88,6 +93,8 @@ Begin Window CertificateEntry
       Italic          =   False
       Left            =   7
       LimitText       =   0
+      LineHeight      =   0.0
+      LineSpacing     =   1.0
       LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
@@ -104,12 +111,14 @@ Begin Window CertificateEntry
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   263
+      Transparent     =   True
       Underline       =   False
+      UnicodeMode     =   0
       UseFocusRing    =   True
       Visible         =   True
       Width           =   580
@@ -119,7 +128,7 @@ Begin Window CertificateEntry
       Alignment       =   0
       AutoDeactivate  =   True
       AutomaticallyCheckSpelling=   False
-      BackColor       =   "&cFFFFFF00"
+      BackColor       =   &cFFFFFF00
       Bold            =   False
       Border          =   True
       CueText         =   ""
@@ -146,11 +155,12 @@ Begin Window CertificateEntry
       TabPanelIndex   =   0
       TabStop         =   True
       Text            =   ""
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   482
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -178,9 +188,10 @@ Begin Window CertificateEntry
       Selectable      =   False
       TabIndex        =   3
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Certificate"
       TextAlign       =   0
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -212,9 +223,10 @@ Begin Window CertificateEntry
       Selectable      =   False
       TabIndex        =   4
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "RSA Private Key Block"
       TextAlign       =   0
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -246,9 +258,10 @@ Begin Window CertificateEntry
       Selectable      =   False
       TabIndex        =   5
       TabPanelIndex   =   0
+      TabStop         =   True
       Text            =   "Certificate Password"
       TextAlign       =   2
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   0.0
       TextUnit        =   0
@@ -285,6 +298,7 @@ Begin Window CertificateEntry
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   515
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   80
@@ -316,6 +330,7 @@ Begin Window CertificateEntry
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   515
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   80

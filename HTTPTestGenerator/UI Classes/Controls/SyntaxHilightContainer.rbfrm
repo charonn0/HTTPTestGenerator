@@ -1,10 +1,11 @@
 #tag Window
 Begin ContainerControl SyntaxHilightContainer
-   AcceptFocus     =   ""
+   AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
-   BackColor       =   &hFFFFFF
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
+   DoubleBuffer    =   False
    Enabled         =   True
    EraseBackground =   True
    HasBackColor    =   False
@@ -20,11 +21,12 @@ Begin ContainerControl SyntaxHilightContainer
    TabPanelIndex   =   0
    TabStop         =   True
    Top             =   32
-   UseFocusRing    =   ""
+   Transparent     =   True
+   UseFocusRing    =   False
    Visible         =   True
    Width           =   614
    Begin ScrollBar horizontalSB
-      AcceptFocus     =   true
+      AcceptFocus     =   True
       AutoDeactivate  =   True
       Enabled         =   True
       Height          =   16
@@ -38,7 +40,7 @@ Begin ContainerControl SyntaxHilightContainer
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
-      LockTop         =   ""
+      LockTop         =   False
       Maximum         =   0
       Minimum         =   0
       PageStep        =   20
@@ -47,6 +49,7 @@ Begin ContainerControl SyntaxHilightContainer
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   284
+      Transparent     =   True
       Value           =   0
       Visible         =   True
       Width           =   594
@@ -54,37 +57,39 @@ Begin ContainerControl SyntaxHilightContainer
    Begin CustomEditField SyntaxHilighter
       AcceptFocus     =   True
       AcceptTabs      =   True
-      AutoCloseBrackets=   false
-      AutocompleteAppliesStandardCase=   true
+      AutoCloseBrackets=   False
+      AutocompleteAppliesStandardCase=   True
       AutoDeactivate  =   True
-      AutoIndentNewLines=   true
-      BackColor       =   16777215
-      Backdrop        =   ""
-      Border          =   true
-      BorderColor     =   8947848
-      BracketHighlightColor=   16776960
-      CaretColor      =   0
+      AutoIndentNewLines=   True
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      Border          =   True
+      BorderColor     =   &c88888800
+      BracketHighlightColor=   &cFFFF0000
+      CaretColor      =   &c00000000
+      CaretLine       =   0
+      CaretPos        =   0
       ClearHighlightedRangesOnTextChange=   False
-      DirtyLinesColor =   16751001
+      DirtyLinesColor =   &cFF999900
+      disableReset    =   False
       DisplayDirtyLines=   True
       DisplayInvisibleCharacters=   True
-      DisplayLineNumbers=   true
+      DisplayLineNumbers=   True
       DisplayRightMarginMarker=   True
       DoubleBuffer    =   False
       EnableAutocomplete=   False
       Enabled         =   True
-      EnableLineFoldings=   false
-      enableLineFoldingSetting=   ""
-      EraseBackground =   False
-      GutterBackgroundColor=   15658734
-      GutterSeparationLineColor=   8947848
+      EnableLineFoldings=   False
+      enableLineFoldingSetting=   False
+      GutterBackgroundColor=   &cEEEEEE00
+      GutterSeparationLineColor=   &c88888800
       GutterWidth     =   10
       Height          =   281
       HelpTag         =   ""
       HighlightBlocksOnMouseOverGutter=   False
       HighlightMatchingBrackets=   False
       HighlightMatchingBracketsMode=   1
-      ignoreRepaint   =   0
+      ignoreRepaint   =   False
       IndentPixels    =   16
       IndentVisually  =   True
       Index           =   -2147483648
@@ -92,7 +97,7 @@ Begin ContainerControl SyntaxHilightContainer
       KeepEntireTextIndented=   True
       Left            =   0
       leftMarginOffset=   4
-      LineNumbersColor=   8947848
+      LineNumbersColor=   &c88888800
       LineNumbersTextFont=   "System"
       LineNumbersTextSize=   9
       LockBottom      =   True
@@ -100,27 +105,37 @@ Begin ContainerControl SyntaxHilightContainer
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
+      MaxVisibleLines =   0
       ReadOnly        =   True
       RightMarginAtPixel=   0
       RightScrollMargin=   150
       Scope           =   0
+      ScrollPosition  =   0
+      ScrollPositionX =   0
+      selLength       =   0
+      selStart        =   0
+      SelText         =   ""
+      Stats           =   ""
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
       TabWidth        =   4
       Text            =   ""
-      TextColor       =   0
+      TextColor       =   &c00000000
       TextFont        =   "smallSystem"
-      TextSelectionColor=   0
+      TextHeight      =   0
+      TextLength      =   0
+      TextSelectionColor=   &c00000000
       TextSize        =   0
-      ThickInsertionPoint=   true
+      ThickInsertionPoint=   True
       Top             =   0
+      Transparent     =   True
       UseFocusRing    =   False
       Visible         =   True
       Width           =   594
    End
    Begin ScrollBar verticalSB
-      AcceptFocus     =   true
+      AcceptFocus     =   True
       AutoDeactivate  =   True
       Enabled         =   True
       Height          =   277
@@ -132,7 +147,7 @@ Begin ContainerControl SyntaxHilightContainer
       LiveScroll      =   True
       LockBottom      =   True
       LockedInPosition=   False
-      LockLeft        =   ""
+      LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
       Maximum         =   0
@@ -143,6 +158,7 @@ Begin ContainerControl SyntaxHilightContainer
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   4
+      Transparent     =   True
       Value           =   0
       Visible         =   True
       Width           =   16
@@ -318,7 +334,7 @@ End
 		End Sub
 	#tag EndEvent
 	#tag Event
-		Function ConstructContextualMenu(base as menuitem, x as integer, y as integer) As boolean
+		Function ConstructContextualMenu(base as MenuItem, x as Integer, y as Integer) As Boolean
 		  #pragma Unused x
 		  #pragma Unused y
 		  //Paul Rodman's Suggestion
@@ -369,3 +385,221 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag ViewBehavior
+	#tag ViewProperty
+		Name="Name"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Super"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Width"
+		Visible=true
+		Group="Size"
+		InitialValue="300"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Height"
+		Visible=true
+		Group="Size"
+		InitialValue="300"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="InitialParent"
+		Visible=false
+		Group="Position"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Left"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Top"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockLeft"
+		Visible=true
+		Group="Position"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockTop"
+		Visible=true
+		Group="Position"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockRight"
+		Visible=true
+		Group="Position"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockBottom"
+		Visible=true
+		Group="Position"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="TabIndex"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="TabPanelIndex"
+		Visible=false
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="TabStop"
+		Visible=true
+		Group="Position"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowAutoDeactivate"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Enabled"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Tooltip"
+		Visible=true
+		Group="Appearance"
+		InitialValue=""
+		Type="String"
+		EditorType="MultiLineEditor"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowFocusRing"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Visible"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="BackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="&hFFFFFF"
+		Type="Color"
+		EditorType="Color"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Backdrop"
+		Visible=true
+		Group="Background"
+		InitialValue=""
+		Type="Picture"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasBackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowFocus"
+		Visible=true
+		Group="Behavior"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowTabs"
+		Visible=true
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="EraseBackground"
+		Visible=false
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Transparent"
+		Visible=true
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="DoubleBuffer"
+		Visible=true
+		Group="Windows Behavior"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+#tag EndViewBehavior

@@ -1,10 +1,11 @@
 #tag Window
 Begin ContainerControl RequestMain
-   AcceptFocus     =   ""
+   AcceptFocus     =   False
    AcceptTabs      =   True
    AutoDeactivate  =   True
-   BackColor       =   &hFFFFFF
-   Backdrop        =   ""
+   BackColor       =   &cFFFFFF00
+   Backdrop        =   0
+   DoubleBuffer    =   False
    Enabled         =   True
    EraseBackground =   False
    HasBackColor    =   False
@@ -20,7 +21,8 @@ Begin ContainerControl RequestMain
    TabPanelIndex   =   0
    TabStop         =   True
    Top             =   32
-   UseFocusRing    =   ""
+   Transparent     =   True
+   UseFocusRing    =   False
    Visible         =   True
    Width           =   366
    Begin HeaderList RequestHeaders
@@ -59,6 +61,7 @@ Begin ContainerControl RequestMain
       ScrollbarHorizontal=   False
       ScrollBarVertical=   True
       SelectionType   =   0
+      ShowDropIndicator=   False
       TabIndex        =   7
       TabPanelIndex   =   0
       TabStop         =   True
@@ -66,10 +69,12 @@ Begin ContainerControl RequestMain
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   66
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   354
+      _ScrollOffset   =   0
       _ScrollWidth    =   -1
    End
    Begin ComboBox RequestMethod
@@ -81,6 +86,7 @@ Begin ContainerControl RequestMain
       Enabled         =   True
       Height          =   20
       HelpTag         =   ""
+      Hint            =   ""
       Index           =   -2147483648
       InitialValue    =   "GET\r\nHEAD\r\nPOST\r\nPUT\r\nTRACE\r\nOPTIONS\r\nDELETE\r\nCONNECT\r\nACL\r\nBASELINE-CONTROL\r\nBIND\r\nCHECKIN\r\nCHECKOUT\r\nCOPY\r\nLABEL\r\nLINK\r\nLOCK\r\nMERGE\r\nMKACTIVITY\r\nMKCALENDAR\r\nMKCOL\r\nMKREDIRECTREF\r\nMKWORKSPACE\r\nMOVE\r\nORDERPATCH\r\nPATCH\r\nPROPFIND\r\nPROPPATCH\r\nREBIND\r\nREPORT\r\nSEARCH\r\nUNBIND\r\nUNCHECKOUT\r\nUNLINK\r\nUNLOCK\r\nUPDATE\r\nUPDATEREDIRECTREF\r\nVERSION-CONTROL"
       Italic          =   False
@@ -99,6 +105,7 @@ Begin ContainerControl RequestMain
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   7
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -113,6 +120,7 @@ Begin ContainerControl RequestMain
       Enabled         =   True
       Height          =   20
       HelpTag         =   ""
+      Hint            =   ""
       Index           =   -2147483648
       InitialValue    =   "HTTP/1.1\r\nHTTP/1.0"
       Italic          =   False
@@ -131,6 +139,7 @@ Begin ContainerControl RequestMain
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   7
+      Transparent     =   True
       Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
@@ -163,6 +172,7 @@ Begin ContainerControl RequestMain
       TextSize        =   0.0
       TextUnit        =   0
       Top             =   33
+      Transparent     =   True
       Underline       =   False
       Visible         =   True
       Width           =   98
@@ -172,6 +182,7 @@ Begin ContainerControl RequestMain
       Enabled         =   True
       Height          =   7
       HelpTag         =   ""
+      Indeterminate   =   False
       Index           =   -2147483648
       InitialParent   =   ""
       Left            =   119
@@ -182,16 +193,18 @@ Begin ContainerControl RequestMain
       LockTop         =   True
       Maximum         =   0
       Scope           =   0
+      TabIndex        =   4
       TabPanelIndex   =   0
       Top             =   57
-      Value           =   0
+      Transparent     =   True
+      Value           =   0.0
       Visible         =   False
       Width           =   124
    End
    Begin BevelButton EditRaw
       AcceptFocus     =   True
       AutoDeactivate  =   True
-      BackColor       =   "&c00000000"
+      BackColor       =   &c00000000
       Bevel           =   0
       Bold            =   False
       ButtonType      =   0
@@ -212,21 +225,21 @@ Begin ContainerControl RequestMain
       InitialParent   =   ""
       Italic          =   False
       Left            =   457
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
-      MenuValue       =   0
       Scope           =   0
       TabIndex        =   5
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   ""
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   303
+      Transparent     =   True
       Underline       =   False
       Value           =   False
       Visible         =   True
@@ -235,7 +248,7 @@ Begin ContainerControl RequestMain
    Begin BevelButton EditCookies
       AcceptFocus     =   True
       AutoDeactivate  =   True
-      BackColor       =   &h00000000
+      BackColor       =   &c00000000
       Bevel           =   0
       Bold            =   False
       ButtonType      =   0
@@ -256,21 +269,21 @@ Begin ContainerControl RequestMain
       InitialParent   =   ""
       Italic          =   False
       Left            =   339
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
-      MenuValue       =   0
       Scope           =   0
       TabIndex        =   6
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   &h00000000
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   ""
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   42
+      Transparent     =   True
       Underline       =   False
       Value           =   False
       Visible         =   True
@@ -279,7 +292,7 @@ Begin ContainerControl RequestMain
    Begin BevelButton StopButton
       AcceptFocus     =   False
       AutoDeactivate  =   True
-      BackColor       =   "&c00000000"
+      BackColor       =   &c00000000
       Bevel           =   0
       Bold            =   False
       ButtonType      =   0
@@ -300,21 +313,21 @@ Begin ContainerControl RequestMain
       InitialParent   =   ""
       Italic          =   False
       Left            =   228
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
-      MenuValue       =   0
       Scope           =   0
       TabIndex        =   8
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   ""
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   33
+      Transparent     =   True
       Underline       =   False
       Value           =   False
       Visible         =   False
@@ -323,7 +336,7 @@ Begin ContainerControl RequestMain
    Begin BevelButton EditSecurity
       AcceptFocus     =   True
       AutoDeactivate  =   True
-      BackColor       =   "&c00000000"
+      BackColor       =   &c00000000
       Bevel           =   0
       Bold            =   False
       ButtonType      =   0
@@ -344,21 +357,21 @@ Begin ContainerControl RequestMain
       InitialParent   =   ""
       Italic          =   False
       Left            =   316
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
-      MenuValue       =   0
       Scope           =   0
       TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   ""
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   42
+      Transparent     =   True
       Underline       =   False
       Value           =   False
       Visible         =   True
@@ -366,7 +379,7 @@ Begin ContainerControl RequestMain
    End
    Begin CheckBox HonorRobots
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       Caption         =   "robots.txt"
       DataField       =   ""
       DataSource      =   ""
@@ -375,12 +388,12 @@ Begin ContainerControl RequestMain
       HelpTag         =   "If enabled, the robots.txt for each website will be requested, and compared to the current user-agent string, if any."
       Index           =   -2147483648
       InitialParent   =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   5
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
-      LockRight       =   ""
+      LockRight       =   False
       LockTop         =   True
       Scope           =   0
       State           =   0
@@ -388,10 +401,11 @@ Begin ContainerControl RequestMain
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   35
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   100
@@ -399,18 +413,19 @@ Begin ContainerControl RequestMain
    Begin ComboBox URL
       AutoComplete    =   True
       AutoDeactivate  =   True
-      Bold            =   ""
+      Bold            =   False
       DataField       =   ""
       DataSource      =   ""
       Enabled         =   True
       Height          =   20
       HelpTag         =   ""
+      Hint            =   ""
       Index           =   -2147483648
       InitialValue    =   ""
-      Italic          =   ""
+      Italic          =   False
       Left            =   77
       ListIndex       =   0
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   True
       LockRight       =   True
@@ -420,10 +435,11 @@ Begin ContainerControl RequestMain
       TabPanelIndex   =   0
       TabStop         =   True
       TextFont        =   "System"
-      TextSize        =   0
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   7
-      Underline       =   ""
+      Transparent     =   True
+      Underline       =   False
       UseFocusRing    =   True
       Visible         =   True
       Width           =   174
@@ -431,7 +447,7 @@ Begin ContainerControl RequestMain
    Begin BevelButton EditURIBtn
       AcceptFocus     =   True
       AutoDeactivate  =   True
-      BackColor       =   "&c00000000"
+      BackColor       =   &c00000000
       Bevel           =   0
       Bold            =   False
       ButtonType      =   0
@@ -452,32 +468,33 @@ Begin ContainerControl RequestMain
       InitialParent   =   ""
       Italic          =   False
       Left            =   251
-      LockBottom      =   ""
+      LockBottom      =   False
       LockedInPosition=   False
       LockLeft        =   False
       LockRight       =   True
       LockTop         =   True
-      MenuValue       =   0
       Scope           =   0
       TabIndex        =   11
       TabPanelIndex   =   0
       TabStop         =   True
-      TextColor       =   "&c00000000"
+      TextColor       =   &c00000000
       TextFont        =   "System"
-      TextSize        =   ""
+      TextSize        =   0.0
       TextUnit        =   0
       Top             =   8
+      Transparent     =   True
       Underline       =   False
       Value           =   False
       Visible         =   True
       Width           =   22
    End
    Begin MessageBody MessageBody1
-      AcceptFocus     =   ""
+      AcceptFocus     =   False
       AcceptTabs      =   True
       AutoDeactivate  =   True
-      BackColor       =   &hFFFFFF
-      Backdrop        =   ""
+      BackColor       =   &cFFFFFF00
+      Backdrop        =   0
+      DoubleBuffer    =   False
       Enabled         =   True
       EraseBackground =   False
       HasBackColor    =   False
@@ -495,18 +512,18 @@ Begin ContainerControl RequestMain
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   219
-      UseFocusRing    =   ""
+      Transparent     =   True
+      UseFocusRing    =   False
       Visible         =   True
       Width           =   354
    End
    Begin Splitter Splitter1
-      AcceptFocus     =   ""
-      AcceptTabs      =   ""
+      AcceptFocus     =   False
+      AcceptTabs      =   False
       AutoDeactivate  =   True
-      Backdrop        =   ""
+      Backdrop        =   0
       DoubleBuffer    =   True
       Enabled         =   True
-      EraseBackground =   False
       Height          =   8
       HelpTag         =   ""
       Index           =   -2147483648
@@ -522,6 +539,7 @@ Begin ContainerControl RequestMain
       TabPanelIndex   =   0
       TabStop         =   True
       Top             =   210
+      Transparent     =   True
       UseFocusRing    =   True
       Visible         =   True
       Width           =   365
@@ -534,7 +552,7 @@ End
 		Sub Open()
 		  #If TargetWin32 Then
 		    Me.DoubleBuffer = True
-		    Me.EraseBackground = False
+		    ' Me.EraseBackground = False
 		  #endif
 		  NextRequest = ""
 		End Sub
@@ -542,6 +560,7 @@ End
 
 	#tag Event
 		Sub Resized()
+		  If Sender = Nil Then Break
 		  Sender.Left = (Me.Width \ 2) - (Sender.Width \ 2)
 		End Sub
 	#tag EndEvent
@@ -1088,20 +1107,16 @@ End
 		  chld.Checked = (Security = 0)
 		  mnu.Append(chld)
 		  
-		  chld = New MenuItem("SSLv2 Only")
+		  chld = New MenuItem("TLSv1 Only")
 		  chld.Checked = (Security = 1)
 		  mnu.Append(chld)
 		  
-		  chld = New MenuItem("SSLv3 Only")
+		  chld = New MenuItem("TLSv1.1 Only")
 		  chld.Checked = (Security = 2)
 		  mnu.Append(chld)
 		  
-		  chld = New MenuItem("SSLv3 or SSLv2")
+		  chld = New MenuItem("TLSv1.2 Only")
 		  chld.Checked = (Security = 3)
-		  mnu.Append(chld)
-		  
-		  chld = New MenuItem("TLSv1 Only")
-		  chld.Checked = (Security = 4)
 		  mnu.Append(chld)
 		  
 		  Dim res As MenuItem = mnu.PopUp
@@ -1110,17 +1125,15 @@ End
 		    Case "Automatic"
 		      Security = 0
 		      
-		    Case "SSLv2 Only"
+		    Case "TLSv1 Only"
 		      Security = 1
 		      
-		    Case "SSLv3 Only"
+		    Case "TLSv1.1 Only"
 		      Security = 2
 		      
-		    Case "SSLv3 or SSLv2"
+		    Case "TLSv1.2 Only"
 		      Security = 3
 		      
-		    Case "TLSv1 Only"
-		      Security = 4
 		    End Select
 		  End If
 		  
@@ -1194,3 +1207,229 @@ End
 		End Sub
 	#tag EndEvent
 #tag EndEvents
+#tag ViewBehavior
+	#tag ViewProperty
+		Name="Name"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Super"
+		Visible=true
+		Group="ID"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Width"
+		Visible=true
+		Group="Size"
+		InitialValue="300"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Height"
+		Visible=true
+		Group="Size"
+		InitialValue="300"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="InitialParent"
+		Visible=false
+		Group="Position"
+		InitialValue=""
+		Type="String"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Left"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Top"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockLeft"
+		Visible=true
+		Group="Position"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockTop"
+		Visible=true
+		Group="Position"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockRight"
+		Visible=true
+		Group="Position"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="LockBottom"
+		Visible=true
+		Group="Position"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="TabIndex"
+		Visible=true
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="TabPanelIndex"
+		Visible=false
+		Group="Position"
+		InitialValue="0"
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="TabStop"
+		Visible=true
+		Group="Position"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowAutoDeactivate"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Enabled"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Tooltip"
+		Visible=true
+		Group="Appearance"
+		InitialValue=""
+		Type="String"
+		EditorType="MultiLineEditor"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowFocusRing"
+		Visible=true
+		Group="Appearance"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Visible"
+		Visible=true
+		Group="Appearance"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="BackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="&hFFFFFF"
+		Type="Color"
+		EditorType="Color"
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Backdrop"
+		Visible=true
+		Group="Background"
+		InitialValue=""
+		Type="Picture"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="HasBackgroundColor"
+		Visible=true
+		Group="Background"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowFocus"
+		Visible=true
+		Group="Behavior"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="AllowTabs"
+		Visible=true
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="EraseBackground"
+		Visible=false
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Transparent"
+		Visible=true
+		Group="Behavior"
+		InitialValue="True"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="DoubleBuffer"
+		Visible=true
+		Group="Windows Behavior"
+		InitialValue="False"
+		Type="Boolean"
+		EditorType=""
+	#tag EndViewProperty
+	#tag ViewProperty
+		Name="Security"
+		Visible=false
+		Group="Behavior"
+		InitialValue=""
+		Type="Integer"
+		EditorType=""
+	#tag EndViewProperty
+#tag EndViewBehavior

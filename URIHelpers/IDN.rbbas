@@ -65,29 +65,6 @@ Protected Module IDN
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h1
-		Protected Function StrComp(String1 As MemoryBlock, String2 As MemoryBlock, Mode As Integer) As Integer
-		  If Not System.IsFunctionAvailable("GetStringScripts", "Kernel32") Then Return -2
-		  
-		  Dim sz As Integer = GetStringScripts(0, String1, String1.Size, Nil, 0)
-		  Dim scripts1 As New MemoryBlock(sz)
-		  sz = GetStringScripts(0, String2, String2.Size, Nil, 0)
-		  Dim scripts2 As New MemoryBlock(sz)
-		  Const VS_ALLOW_LATIN = &h0001
-		  If GetStringScripts(0, String1, String1.Size, scripts1, scripts1.Size) <> scripts1.Size Or _
-		    GetStringScripts(0, String2, String2.Size, scripts2, scripts2.Size) <> scripts2.Size Or _
-		    Not VerifyScripts(VS_ALLOW_LATIN, scripts1, scripts1.Size, scripts2, scripts2.Size) Then
-		    sz = GetLastError()
-		    Dim err As New RuntimeException
-		    err.ErrorNumber = sz
-		    Raise err
-		  End If
-		  
-		  Return REALbasic.StrComp(String1, String2, Mode)
-		  
-		End Function
-	#tag EndMethod
-
 	#tag ExternalMethod, Flags = &h21
 		Private Soft Declare Function VerifyScripts Lib "Kernel32" (Flags As Integer, LocaleScripts As Ptr, LocaleScriptsSize As Integer, TestScripts As Ptr, TestScriptsSize As Integer) As Boolean
 	#tag EndExternalMethod
@@ -106,33 +83,40 @@ Protected Module IDN
 			Visible=true
 			Group="ID"
 			InitialValue="-2147483648"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Module

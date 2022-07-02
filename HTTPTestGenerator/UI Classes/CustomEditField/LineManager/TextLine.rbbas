@@ -106,7 +106,7 @@ Inherits TextSegment
 	#tag Method, Flags = &h0
 		Function Highlight(definition as highlightdefinition, storage as gapBuffer, forcedContext as highlightcontext = nil, defaultColor as color = &c0) As highlightcontext
 		  #pragma DisableBackgroundTasks
-		  #pragma DisableAutoWaitCursor
+		  ' #pragma DisableAutoWaitCursor
 		  
 		  ReDim Words(-1)
 		  ReDim placeholders(-1)
@@ -913,82 +913,105 @@ Inherits TextSegment
 	#tag ViewBehavior
 		#tag ViewProperty
 			Name="BackgroundColor"
+			Visible=false
 			Group="Behavior"
 			InitialValue="&h000000"
 			Type="color"
-			InheritedFrom="TextSegment"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="blockIndentation"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="bold"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="boolean"
-			InheritedFrom="TextSegment"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="DebugDescription"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
-			InheritedFrom="DataRange"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="delimiterLength"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="EndOffset"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="Integer"
-			InheritedFrom="DataRange"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="folded"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="HasBackgroundColor"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="boolean"
-			InheritedFrom="TextSegment"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="icon"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="Picture"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ID"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="string"
 			EditorType="MultiLineEditor"
-			InheritedFrom="TextSegment"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="indent"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="IndentationStateIn"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="IndentationStateOut"
+			Visible=false
 			Group="Behavior"
+			InitialValue=""
 			Type="String"
 			EditorType="MultiLineEditor"
 		#tag EndViewProperty
@@ -997,118 +1020,144 @@ Inherits TextSegment
 			Visible=true
 			Group="ID"
 			InitialValue="-2147483648"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="isBlockEnd"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="isBlockStart"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="isContinuedFromLine"
+			Visible=false
 			Group="Behavior"
 			InitialValue="-1"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="isDirty"
+			Visible=false
 			Group="Behavior"
 			InitialValue="false"
 			Type="boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="italic"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="boolean"
-			InheritedFrom="TextSegment"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Left"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="length"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="Integer"
-			InheritedFrom="DataRange"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Name"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="offset"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="Integer"
-			InheritedFrom="DataRange"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="ScreenWidth"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Super"
 			Visible=true
 			Group="ID"
-			InheritedFrom="Object"
+			InitialValue=""
+			Type="String"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="TextColor"
+			Visible=false
 			Group="Behavior"
 			InitialValue="&h000000"
 			Type="color"
-			InheritedFrom="TextSegment"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Top"
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			InheritedFrom="Object"
+			Type="Integer"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Type"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="Integer"
-			InheritedFrom="TextSegment"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="underline"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="boolean"
-			InheritedFrom="TextSegment"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="visible"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="boolean"
+			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
 			Name="width"
+			Visible=false
 			Group="Behavior"
 			InitialValue="0"
 			Type="double"
-			InheritedFrom="TextSegment"
+			EditorType=""
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class
