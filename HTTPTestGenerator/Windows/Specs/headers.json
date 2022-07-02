@@ -3,151 +3,151 @@
         "header": "Content-Encoding",
         "description": "Indicates what content codings have been applied to the representation, beyond those inherent in the media type, and thus what decoding mechanisms have to be applied in order to obtain data in the media type referenced by the <link=Content-Type>Content-Type</link> header field.",
         "spec_title": "RFC7231#3.1.2.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-3.1.2.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-3.1.2.2"
     },
     {
         "header": "Content-Language",
         "description": "Describes the natural language(s) of the intended audience for the representation.",
         "spec_title": "RFC7231#3.1.3.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-3.1.3.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-3.1.3.2"
     },
     {
         "header": "Content-Location",
         "description": "References a URI that can be used as an identifier for a specific resource corresponding to the representation in this message's payload.",
         "spec_title": "RFC7231#3.1.4.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-3.1.4.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-3.1.4.2"
     },
     {
         "header": "Content-Type",
         "description": "Indicates the media type of the associated representation: either the representation enclosed in the message payload or the selected representation, as determined by the message semantics.",
         "spec_title": "RFC7231#3.1.1.5",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-3.1.1.5"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-3.1.1.5"
     },
     {
         "header": "Content-Length",
         "description": "This header can provide the anticipated size, as a decimal number of octets, for a potential payload body.",
         "spec_title": "RFC7230#3.3.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7230#section-3.3.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.2"
     },
  {
         "header": "Connection",
         "description": "This header allows the sender to indicate desired control options for the current connection.",
         "spec_title": "RFC7230#6.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7230#section-6.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7230#section-6.1"
     },
     {
         "header": "Content-Range",
         "description": "This header is sent in a single part <link=206>206 Partial Content</link> response to indicate the partial <link=Range>range</link> of the selected representation enclosed as the message payload, sent in each part of a multipart 206 response to indicate the range enclosed within each body part, and sent in <link=416>416 Range Not Satisfiable</link> responses to provide information about the selected representation.",
         "spec_title": "RFC7233#4.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7233#section-4.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7233#section-4.2"
     },
     {
         "header": "Transfer-Encoding",
         "description": "This header lists the transfer coding names corresponding to the sequence of transfer codings that have been (or will be) applied to the payload body in order to form the message body.",
         "spec_title": "RFC7230#3.3.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7230#section-3.3.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7230#section-3.3.1"
     },
     {
         "header": "Expect",
         "description": "This header is used to indicate that particular <link=web server>server</link> behaviors are required by the client.",
         "spec_title": "RFC7231#5.1.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.1.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-5.1.1"
     },
     {
         "header": "Host",
         "description": "This header provides the host and port information from the target URI, enabling the <link=origin server>origin server</link> to distinguish among resources while servicing requests for multiple host names on a single IP address.",
         "spec_title": "RFC7230#5.4",
-        "spec_href": "http://tools.ietf.org/html/rfc7230#section-5.4"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7230#section-5.4"
     },
     {
         "header": "Max-Forwards",
         "description": "This header provides a mechanism with the <link=TRACE>TRACE</link> and <link=OPTIONS>OPTIONS</link> methods to limit the number of times that the request is forwarded by proxies.",
         "spec_title": "RFC7231#5.1.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.1.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-5.1.2"
     },
     {
         "header": "Pragma",
         "description": "This header allows backwards compatibility with HTTP/1.0 caches, so that clients can specify a \"no-cache\" request that they will understand (as <link=Cache-Control>Cache-Control</link> was not defined until HTTP/1.1).",
         "spec_title": "RFC7234#7.4",
-        "spec_href": "http://tools.ietf.org/html/rfc7234#section-7.4"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7234#section-7.4"
     },
     {
         "header": "Range",
         "description": "This header modifies the method semantics to request transfer of only one or more subranges of the selected representation data, rather than the entire selected representation data.",
         "spec_title": "RFC7233#3.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7233#section-3.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7233#section-3.1"
     },
     {
         "header": "TE",
         "description": "Indicates what transfer codings, besides chunked, the <link=user agent>client</link> is willing to accept in response, and whether or not the <link=user agent>client</link> is willing to accept trailer fields in a chunked transfer coding.",
         "spec_title": "RFC7230#4.3",
-        "spec_href": "http://tools.ietf.org/html/rfc7230#section-4.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7230#section-4.3"
     },
     {
         "header": "If-Match",
         "description": "This header can be used to make a request method conditional on the current existence or value of an entity-tag for one or more representations of the target resource.",
         "spec_title": "RFC7232#3.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7232#section-3.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7232#section-3.1"
     },
     {
         "header": "If-Modified-Since",
         "description": "This header can be used with <link=GET>GET</link> or <link=HEAD>HEAD</link> to make the method conditional by modification date: if the selected representation has not been modified since the time specified in this field, then do not perform the request method; instead, respond as detailed below.",
         "spec_title": "RFC7232#3.3",
-        "spec_href": "http://tools.ietf.org/html/rfc7232#section-3.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7232#section-3.3"
     },
     {
         "header": "If-None-Match",
         "description": "This header can be used to make a request method conditional on not matching any of the current entity-tag values for representations of the target resource.",
         "spec_title": "RFC7232#3.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7232#section-3.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7232#section-3.2"
     },
     {
         "header": "If-Range",
         "description": "Informally, its meaning is: if the representation is unchanged, send me the part(s) that I am requesting in <link=range>Range</link>; otherwise, send me the entire representation.",
         "spec_title": "RFC7233#3.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7233#section-3.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7233#section-3.2"
     },
     {
         "header": "If-Unmodified-Since",
         "description": "This header can be used to make a request method conditional by modification date: if the selected representation has been modified since the time specified in this field, then the <link=web server>server</link> <link=MUST NOT>MUST NOT</link> perform the requested operation and <link=MUST>MUST</link> instead respond with the <link=412>412 Precondition Failed</link> status code.",
         "spec_title": "RFC7232#3.4",
-        "spec_href": "http://tools.ietf.org/html/rfc7232#section-3.4"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7232#section-3.4"
     },
     {
         "header": "Accept",
         "description": "This header can be used to specify certain media types which are acceptable for the response.",
         "spec_title": "RFC7231#5.3.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.3.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-5.3.2"
     },
     {
         "header": "Accept-Charset",
         "description": "This header can be sent by a <link=user agent>user agent</link> to indicate what charsets are acceptable in textual response content.",
         "spec_title": "RFC7231#5.3.3",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.3.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-5.3.3"
     },
     {
         "header": "Accept-Encoding",
         "description": "This header can be used by <link=user agent>user agents</link> to indicate what response content-codings are acceptable in the response.",
         "spec_title": "RFC7231#5.3.4",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.3.4"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-5.3.4"
     },
     {
         "header": "Accept-Language",
         "description": "This header can be used by <link=user agent>user agents</link> to indicate the set of natural languages that are preferred in the response.",
         "spec_title": "RFC7231#5.3.5",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.3.5"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-5.3.5"
     },
     {
         "header": "Authorization",
         "description": "This header allows a <link=user agent>user agent</link> to authenticate itself with a <link=web server>server</link> -- usually, but not necessarily, after receiving a <link=401>401 Unauthorized</link> response.",
         "spec_title": "RFC7235#4.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7235#section-4.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7235#section-4.2"
     },
     {
         "header": "Proxy-Authorization",
         "description": "This header allows the <link=user agent>client</link> to identify itself (or its user) to a proxy that requires authentication.",
         "spec_title": "RFC7235#4.4",
-        "spec_href": "http://tools.ietf.org/html/rfc7235#section-4.4"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7235#section-4.4"
     },
     {
         "header": "DNT",
@@ -159,55 +159,55 @@
         "header": "From",
         "description": "This header contains an Internet email address for a human user who controls the requesting <link=user agent>user agent</link>.",
         "spec_title": "RFC7231#5.5.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.5.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-5.5.1"
     },
     {
         "header": "Referer",
         "description": "This header allows the <link=user agent>user agent</link> to specify a URI reference for the resource from which the target URI was obtained (i.e., the \"referrer\", though the field name is misspelled).",
         "spec_title": "RFC7231#5.5.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.5.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-5.5.2"
     },
     {
         "header": "User-Agent",
         "description": "This header contains information about the <link=user agent>user agent</link> originating the request, which is often used by servers to help identify the scope of reported interoperability problems, to work around or tailor responses to avoid particular <link=user agent>user agent</link> limitations, and for analytics regarding browser or operating system use.",
         "spec_title": "RFC7231#5.5.3",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-5.5.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-5.5.3"
     },
     {
         "header": "Age",
         "description": "This header conveys the sender's estimate of the amount of time since the response was generated or successfully validated at the <link=origin server>origin server</link>.",
         "spec_title": "RFC7234#5.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7234#section-5.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7234#section-5.1"
     },
     {
         "header": "Cache-Control",
         "description": "This header is used to specify directives for caches along the request/response chain.",
         "spec_title": "RFC7234#5.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7234#section-5.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7234#section-5.2"
     },
     {
         "header": "Expires",
         "description": "This header gives the date/time after which the response is considered stale.",
         "spec_title": "RFC7234#7.3",
-        "spec_href": "http://tools.ietf.org/html/rfc7234#section-7.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7234#section-7.3"
     },
     {
         "header": "Date",
         "description": "This header represents the date and time at which the message was originated",
         "spec_title": "RFC7231#7.1.1.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.1.1.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.1.2"
     },
     {
         "header": "Location",
         "description": "This header is used in some responses to refer to a specific resource in relation to the response.",
         "spec_title": "RFC7231#7.1.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.1.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.2"
     },
     {
         "header": "Retry-After",
         "description": "Indicates how long the <link=user agent>user agent</link> ought to wait before making a follow-up request.",
         "spec_title": "RFC7231#7.1.3",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.1.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.3"
     },
     {
         "header": "Tk",
@@ -219,67 +219,67 @@
         "header": "Vary",
         "description": "Describes what parts of a request message, aside from the method and request target, might influence the <link=origin server>origin server</link>'s process for selecting and representing the response.",
         "spec_title": "RFC7231#7.1.4",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.1.4"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.4"
     },
     {
         "header": "Warning",
         "description": "This header is used to carry additional information about the status or transformation of a message that might not be reflected in the message.",
         "spec_title": "RFC7234#7.6",
-        "spec_href": "http://tools.ietf.org/html/rfc7234#section-7.6"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7234#section-7.6"
     },
     {
         "header": "ETag",
         "description": "This header provides the current entity-tag for the selected representation, as determined at the conclusion of handling the request.",
         "spec_title": "RFC7232#2.3",
-        "spec_href": "http://tools.ietf.org/html/rfc7232#section-2.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7232#section-2.3"
     },
     {
         "header": "Last-Modified",
         "description": "This header provides a timestamp indicating the date and time at which the <link=origin server>origin server</link> believes the selected representation was last modified, as determined at the conclusion of handling the request.",
         "spec_title": "RFC7232#2.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7232#section-2.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7232#section-2.2"
     },
     {
         "header": "WWW-Authenticate",
         "description": "This header consists of at least one challenge that indicates the authentication scheme(s) and parameters applicable to the effective request URI.",
         "spec_title": "RFC7235#4.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7235#section-4.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7235#section-4.1"
     },
     {
         "header": "Proxy-Authenticate",
         "description": "This header consists of at least one challenge that indicates the authentication scheme(s) and parameters applicable to the proxy for this effective request URI.",
         "spec_title": "RFC7235#4.3",
-        "spec_href": "http://tools.ietf.org/html/rfc7235#section-4.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7235#section-4.3"
     },
     {
         "header": "Accept-Ranges",
         "description": "This header allows a <link=web server>server</link> to indicate that it supports range requests for the target resource.",
         "spec_title": "RFC7233#2.3",
-        "spec_href": "http://tools.ietf.org/html/rfc7233#section-2.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7233#section-2.3"
     },
     {
         "header": "Allow",
         "description": "This header lists the set of methods advertised as supported by the target resource.",
         "spec_title": "RFC7231#7.4.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.4.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-7.4.1"
     },
     {
         "header": "Server",
         "description": "This header contains information about the software used by the <link=origin server>origin server</link> to handle the request, which is often used by clients to help identify the scope of reported interoperability problems, to work around or tailor requests to avoid particular <link=web server>server</link> limitations, and for analytics regarding <link=web server>server</link> or operating system use.",
         "spec_title": "RFC7231#7.4.2",
-        "spec_href": "http://tools.ietf.org/html/rfc7231#section-7.4.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7231#section-7.4.2"
     },
     {
         "header": "Accept-Patch",
         "description": "This header is used to specify the patch document formats accepted by the server.",
         "spec_title": "RFC5789#3.1",
-        "spec_href": "http://tools.ietf.org/html/rfc5789#section-3.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc5789#section-3.1"
     },
     {
         "header": "Accept-Post",
         "description": "Indicates <link=web server>server</link> support for specific media types for entity bodies in HTTP <link=POST>POST</link> requests.",
         "spec_title": "draft-wilde-accept-post",
-        "spec_href": "http://tools.ietf.org/html/draft-wilde-accept-post"
+        "spec_href": "https://datatracker.ietf.org/doc/html/draft-wilde-accept-post"
     },
     {
         "header": "Access-Control-Allow-Credentials",
@@ -333,7 +333,7 @@
         "header": "Content-Disposition",
         "description": "a means for the <link=origin server>origin server</link> to suggest a default filename if the user requests that the content is saved to a file. This usage is derived from the definition of Content-Disposition in <link=rfc1806>RFC 1806</link>",
         "spec_title": "RFC6266",
-        "spec_href": "http://tools.ietf.org/html/rfc6266"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6266"
     },
     {
         "header": "Content-Security-Policy",
@@ -351,151 +351,151 @@
         "header": "Cookie",
         "description": "Using the Set-Cookie header field, an HTTP <link=server>server</link> can pass name/value pairs and associated metadata (called cookies) to a <link=user agent>user agent</link>.  When the user agent makes subsequent requests to the server, the user agent uses the metadata and other information to determine whether to return the name/value pairs in the Cookie header ",
         "spec_title": "RFC6265",
-        "spec_href": "http://tools.ietf.org/html/rfc6265"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6265"
     },
     {
         "header": "Forwarded",
         "description": "standard",
         "spec_title": "RFC7239",
-        "spec_href": "http://tools.ietf.org/html/rfc7239"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7239"
     },
     {
         "header": "Link",
         "description": "This header provides a means for serialising one or more links in HTTP headers.",
         "spec_title": "RFC5988#5",
-        "spec_href": "http://tools.ietf.org/html/rfc5988#section-5"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc5988#section-5"
     },
     {
         "header": "Origin",
         "description": "standard",
         "spec_title": "RFC6454",
-        "spec_href": "http://tools.ietf.org/html/rfc6454"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6454"
     },
     {
         "header": "Prefer",
         "description": "This header is used to indicate that particular <link=web server>server</link> behaviors are preferred by the client, but not required for successful completion of the request.",
         "spec_title": "draft-snell-http-prefer#2",
-        "spec_href": "http://tools.ietf.org/html/draft-snell-http-prefer#section-2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/draft-snell-http-prefer#section-2"
     },
     {
         "header": "Preference-Applied",
         "description": "<link=MAY>MAY</link> be included within a response message as an indication as to which <link=Prefer>Prefer</link> tokens were honored by the <link=web server>server</link> and applied to the processing of a request.",
         "spec_title": "draft-snell-http-prefer#3",
-        "spec_href": "http://tools.ietf.org/html/draft-snell-http-prefer#section-3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/draft-snell-http-prefer#section-3"
     },
     {
         "header": "Set-Cookie",
         "description": "See: <link=Cookie>Cookie</link>.",
         "spec_title": "RFC6265",
-        "spec_href": "http://tools.ietf.org/html/rfc6265"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6265"
     },
     {
         "header": "Strict-Transport-Security",
         "description": "standard",
         "spec_title": "RFC6797",
-        "spec_href": "http://tools.ietf.org/html/rfc6797"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6797"
     },
     {
         "header": "Via",
         "description": "The \"Via\" header field indicates the presence of intermediate protocols and recipients between the user agent and the <link=server>server</link> (on requests) or between the <link=origin server>origin server</link> and the <link=client>client</link> (on responses), similar to the <link=rfc5322#section-3.6.7>\"Received\"</link> header field in email. Via can be used for tracking message forwards, avoiding request loops, and identifying the protocol capabilities of senders along the request/response chain.",
         "spec_title": "RFC7230#5.7.1",
-        "spec_href": "http://tools.ietf.org/html/rfc7230#section-5.7.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7230#section-5.7.1"
     },
     {
         "header": "A-IM",
         "description": "This header is similar to <link=Accept>Accept</link>, but restricts the instance-manipulations that are acceptable in the response.",
         "spec_title": "RFC3229#10.5.3",
-        "spec_href": "http://tools.ietf.org/html/rfc3229#section-10.5.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc3229#section-10.5.3"
     },
     {
         "header": "Accept-Features",
         "description": "This header can be used by a <link=user agent>user agent</link> to give information about the presence or absence of certain features in the feature set of the current request.",
         "spec_title": "RFC2295#8.2",
-        "spec_href": "http://tools.ietf.org/html/rfc2295#section-8.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc2295#section-8.2"
     },
     {
         "header": "Alt-Svc",
         "description": "This header is advertising the availability of alternate services to HTTP/1.1 and HTTP/2.0 clients by adding an Alt-Svc header field to responses.",
         "spec_title": "draft-nottingham-httpbis-alt-svc",
-        "spec_href": "http://tools.ietf.org/html/draft-nottingham-httpbis-alt-svc"
+        "spec_href": "https://datatracker.ietf.org/doc/html/draft-nottingham-httpbis-alt-svc"
     },
     {
         "header": "Alternates",
         "description": "This header is used to convey the list of variants bound to a negotiable resource.",
         "spec_title": "RFC2295#8.3",
-        "spec_href": "http://tools.ietf.org/html/rfc2295#section-8.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc2295#section-8.3"
     },
     {
         "header": "Apply-To-Redirect-Ref",
         "description": "This header is an extension to Web Distributed Authoring and Versioning (WebDAV) to allow clients to author HTTP redirect reference resources whose default response is an HTTP/1.1 <link=3xx>3xx Redirection</link> status code.",
         "spec_title": "RFC4437",
-        "spec_href": "http://tools.ietf.org/html/rfc4437"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc4437"
     },
     {
         "header": "CH",
         "description": "Describes an example list of <link=user agent>client</link> preferences that the <link=web server>server</link> can use to adapt and optimize the resource to satisfy a given request.",
         "spec_title": "draft-grigorik-http-client-hints",
-        "spec_href": "http://tools.ietf.org/html/draft-grigorik-http-client-hints"
+        "spec_href": "https://datatracker.ietf.org/doc/html/draft-grigorik-http-client-hints"
     },
     {
         "header": "Content-Base",
         "description": "obsoleted",
         "spec_title": "RFC2068#14.11",
-        "spec_href": "http://tools.ietf.org/html/rfc2068#section-14.11"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc2068#section-14.11"
     },
     {
         "header": "Cookie2",
         "description": "obsoleted",
         "spec_title": "RFC2965",
-        "spec_href": "http://tools.ietf.org/html/rfc2965"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc2965"
     },
     {
         "header": "DASL",
         "description": "standard",
         "spec_title": "RFC5323",
-        "spec_href": "http://tools.ietf.org/html/rfc5323"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc5323"
     },
     {
         "header": "DAV",
         "description": "standard",
         "spec_title": "RFC4918",
-        "spec_href": "http://tools.ietf.org/html/rfc4918"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc4918"
     },
     {
         "header": "Delta-Base",
         "description": "This header is used in a delta-encoded response to specify the entity tag of the base instance.",
         "spec_title": "RFC3229#10.5.1",
-        "spec_href": "http://tools.ietf.org/html/rfc3229#section-10.5.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc3229#section-10.5.1"
     },
     {
         "header": "Depth",
         "description": "The Depth header may be used with the <link=LOCK>LOCK</link> method. Values other than 0 or infinity <link=MUST NOT>MUST NOT</link> be used with the Depth header on a LOCK method. All resources that support the LOCK method <link=MUST>MUST</link> support the Depth header.\r\nA Depth header of value 0 means to just lock the resource specified by the <link=Request-URI>Request-URI</link>.",
         "spec_title": "RFC4918",
-        "spec_href": "http://tools.ietf.org/html/rfc4918"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc4918"
     },
     {
         "header": "Destination",
         "description": "This header specifies the URI that identifies a destination resource for methods such as <link=COPY>COPY</link> and <link=MOVE>MOVE</link>, which take two URIs as parameters.",
         "spec_title": "RFC4918#10.3",
-        "spec_href": "http://tools.ietf.org/html/rfc4918#section-10.3"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc4918#section-10.3"
     },
     {
         "header": "IM",
         "description": "The IM response-header field is used to indicate the instance-manipulations, if any, that have been applied to the instance represented by the response. Typical instance manipulations include delta encoding and compression.",
         "spec_title": "RFC3229#10.5.2",
-        "spec_href": "http://tools.ietf.org/html/rfc3229#section-10.5.2"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc3229#section-10.5.2"
     },
     {
         "header": "If",
         "description": "standard",
         "spec_title": "RFC4918",
-        "spec_href": "http://tools.ietf.org/html/rfc4918"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc4918"
     },
     {
         "header": "If-Schedule-Tag-Match",
         "description": "standard",
         "spec_title": "RFC6638",
-        "spec_href": "http://tools.ietf.org/html/rfc6638"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6638"
     },
     {
         "header": "Last-Event-ID",
@@ -507,7 +507,7 @@
         "header": "Link-Template",
         "description": "This header provides a means for serialising one or more links into HTTP headers.",
         "spec_title": "draft-nottingham-link-template",
-        "spec_href": "http://tools.ietf.org/html/draft-nottingham-link-template"
+        "spec_href": "https://datatracker.ietf.org/doc/html/draft-nottingham-link-template"
     },
     {
         "header": "Lock-Token",
@@ -519,91 +519,91 @@
         "header": "Negotiate",
         "description": "This header can contain directives for any content negotiation process initiated by the request.",
         "spec_title": "RFC2295#8.4",
-        "spec_href": "http://tools.ietf.org/html/rfc2295#section-8.4"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc2295#section-8.4"
     },
     {
         "header": "Nice",
         "description": "Indicates that a request is less important than a request that doesn't bear this header.",
         "spec_title": "draft-thomson-http-nice",
-        "spec_href": "http://tools.ietf.org/html/draft-thomson-http-nice"
+        "spec_href": "https://datatracker.ietf.org/doc/html/draft-thomson-http-nice"
     },
     {
         "header": "Overwrite",
         "description": "standard",
         "spec_title": "RFC4918",
-        "spec_href": "http://tools.ietf.org/html/rfc4918"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc4918"
     },
     {
         "header": "Redirect-Ref",
         "description": "The Redirect-Ref header is used in all <link=3xx>3xx</link> responses from redirect reference resources.  The value is the link target as specified during redirect reference resource creation.",
         "spec_title": "RFC4437#12.1",
-        "spec_href": "http://tools.ietf.org/html/rfc4437#section-12.1"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc4437#section-12.1"
     },
     {
         "header": "Schedule-Reply",
         "description": "standard",
         "spec_title": "RFC6638",
-        "spec_href": "http://tools.ietf.org/html/rfc6638"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6638"
     },
     {
         "header": "Schedule-Tag",
         "description": "standard",
         "spec_title": "RFC6638",
-        "spec_href": "http://tools.ietf.org/html/rfc6638"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6638"
     },
     {
         "header": "Sec-WebSocket-Accept",
         "description": "standard",
         "spec_title": "RFC6455",
-        "spec_href": "http://tools.ietf.org/html/rfc6455"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6455"
     },
     {
         "header": "Sec-WebSocket-Extensions",
         "description": "standard",
         "spec_title": "RFC6455",
-        "spec_href": "http://tools.ietf.org/html/rfc6455"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6455"
     },
     {
         "header": "Sec-WebSocket-Key",
         "description": "standard",
         "spec_title": "RFC6455",
-        "spec_href": "http://tools.ietf.org/html/rfc6455"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6455"
     },
     {
         "header": "Sec-WebSocket-Protocol",
         "description": "standard",
         "spec_title": "RFC6455",
-        "spec_href": "http://tools.ietf.org/html/rfc6455"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6455"
     },
     {
         "header": "Sec-WebSocket-Version",
         "description": "standard",
         "spec_title": "RFC6455",
-        "spec_href": "http://tools.ietf.org/html/rfc6455"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc6455"
     },
     {
         "header": "Set-Cookie2",
         "description": "obsoleted",
         "spec_title": "RFC2965",
-        "spec_href": "http://tools.ietf.org/html/rfc2965"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc2965"
     },
     {
         "header": "SLUG",
         "description": "standard",
         "spec_title": "RFC5023",
-        "spec_href": "http://tools.ietf.org/html/rfc5023"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc5023"
     },
     {
         "header": "TCN",
         "description": "This header is used by a <link=web server>server</link> to signal that the resource is transparently negotiated.",
         "spec_title": "RFC2295#8.5",
-        "spec_href": "http://tools.ietf.org/html/rfc2295#section-8.5"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc2295#section-8.5"
     },
     {
         "header": "Timeout",
         "description": "standard",
         "spec_title": "RFC4918",
-        "spec_href": "http://tools.ietf.org/html/rfc4918"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc4918"
     },
  {
         "header": "Upgrade",
@@ -615,12 +615,12 @@
         "header": "Variant-Vary",
         "description": "This header can be used in a choice response to record any vary information which applies to the variant data (the entity body combined with some of the entity headers) contained in the response, rather than to the response as a whole.",
         "spec_title": "RFC2295#8.6",
-        "spec_href": "http://tools.ietf.org/html/rfc2295#section-8.6"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc2295#section-8.6"
     },
     {
         "header": "X-Frame-Options",
         "description": "Indicates a policy that specifies whether the browser should render the transmitted resource within a frame or an iframe. Servers can declare this policy in the header of their HTTP responses to prevent clickjacking attacks, which ensures that their content is not embedded into other pages or frames.",
         "spec_title": "RFC7034",
-        "spec_href": "http://tools.ietf.org/html/rfc7034"
+        "spec_href": "https://datatracker.ietf.org/doc/html/rfc7034"
     }
 ]

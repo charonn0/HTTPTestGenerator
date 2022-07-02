@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "HTTP Request Generator"
-#define MyAppVersion "0.30"
+#define MyAppVersion "0.40"
 #define MyAppPublisher "Andrew Lambert"
 #define MyAppURL "http://www.boredomsoft.org/http-request-generator.bs"
 #define MyAppExeName "httpreq.exe"
@@ -35,8 +35,10 @@ Name: english; MessagesFile: compiler:Default.isl
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: ..\Builds - HTTP Request Generator.rbvcp\Windows\httpreq\httpreq.exe; DestDir: {app}; Flags: ignoreversion
-Source: ..\Builds - HTTP Request Generator.rbvcp\Windows\httpreq\httpreq Libs\*; DestDir: {app}; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ..\Builds - HTTP Request Generator\Windows\httpreq\httpreq.exe; DestDir: {app}; Flags: ignoreversion
+Source: ..\Builds - HTTP Request Generator\Windows\httpreq\zlib1.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\Builds - HTTP Request Generator\Windows\httpreq\httpreq Libs\*; DestDir: {app}\httpreq Libs\; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ..\Builds - HTTP Request Generator\Windows\httpreq\httpreq Resources\*; DestDir: {app}\httpreq Resources\; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: zlib1.dll; DestDir: {app}; Flags: ignoreversion
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files

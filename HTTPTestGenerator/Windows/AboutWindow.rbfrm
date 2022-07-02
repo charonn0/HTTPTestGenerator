@@ -32,7 +32,6 @@ Begin Window AboutWindow
       Backdrop        =   0
       DoubleBuffer    =   False
       Enabled         =   True
-      EraseBackground =   "True"
       Height          =   64
       HelpTag         =   ""
       Index           =   -2147483648
@@ -110,7 +109,7 @@ Begin Window AboutWindow
       TabStop         =   True
       Text            =   "HTTP Request Generator"
       TextAlign       =   0
-      TextColor       =   &c000000
+      TextColor       =   &c00000000
       TextFont        =   "System"
       TextSize        =   25.0
       TextUnit        =   0
@@ -143,7 +142,7 @@ Begin Window AboutWindow
       TabIndex        =   4
       TabPanelIndex   =   0
       TabStop         =   True
-      Text            =   "Copyright ©2014-17 Andrew Lambert, All Rights Reserved."
+      Text            =   "Copyright ©2014-22 Andrew Lambert, All Rights Reserved."
       TextAlign       =   0
       TextColor       =   &c00000000
       TextFont        =   "System"
